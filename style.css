@@ -48,8 +48,8 @@ body, html {
 }
 
 .video-wrapper {
-  width: 250%;
-  height: 355px;
+  width: 900px;
+  height: 425px;
   border: 4px solid #fff;
   border-radius: 20px;
   box-sizing: border-box;

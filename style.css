@@ -45,13 +45,3 @@ p {
   color: #111;
   text-decoration: none;
   font-weight: 600;
-  font-size: 18px;
-  margin: 10px 0;
-  padding: 15px 20px;
-  border-radius: 30px;
-  transition: background-color 0.3s ease;
-}
-
-.links a:hover {
-  background-color: #eee;
-}

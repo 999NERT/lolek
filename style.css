@@ -34,25 +34,26 @@ h1 {
 }
 
 p {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   color: #bbb;
   font-weight: 400;
 }
 
-.flat-button {
-  display: inline-block;
-  background-color: #000;
-  color: #fff;
+.links a {
+  display: block;
+  background: #fff;
+  color: #000;
   text-decoration: none;
   font-weight: 600;
-  font-size: 16px;
-  padding: 10px 24px;
-  border: 2px solid #fff;
-  border-radius: 999px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 18px;
+  margin: 10px auto;
+  padding: 14px 24px;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  width: 200px;
 }
 
-.flat-button:hover {
-  background-color: #fff;
-  color: #000;
+.links a:hover {
+  background-color: #e4e4e4;
 }

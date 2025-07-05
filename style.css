@@ -14,12 +14,10 @@ body, html {
 
 .main-wrapper {
   text-align: center;
-  max-width: 1200px;
-  width: 90%;
+  max-width: 900px;
+  width: 100%;
   padding: 20px;
   box-sizing: border-box;
-  background: #111;
-  border-radius: 25px;
 }
 
 .links a {
@@ -29,7 +27,7 @@ body, html {
   text-decoration: none;
   font-weight: 600;
   font-size: 18px;
-  margin: 30px auto 0;
+  margin: 0 auto 30px;
   padding: 14px 24px;
   border-radius: 30px;
   transition: background-color 0.3s ease;
@@ -41,18 +39,18 @@ body, html {
   background-color: #e4e4e4;
 }
 
-.video-wrapper iframe {
+.video-wrapper {
   width: 100%;
+  max-width: 850px;
   height: 315px;
   border: 4px solid #fff;
   border-radius: 20px;
   box-sizing: border-box;
-  display: block;
-  margin: 0 auto;
+  margin: 0 auto 30px;
 }
 
 .bottom-title {
   font-weight: 600;
   font-size: 36px;
-  margin-top: 30px;
+  margin-top: 0;
 }

@@ -20,41 +20,45 @@ body, html {
   box-sizing: border-box;
 }
 
-.links .expand-btn {
+.links .expand-container {
   display: inline-block;
-  overflow: hidden;
+  text-align: left;
   border-radius: 30px;
   background: #fff;
-  transition: width 0.4s ease;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  width: 200px;
+  padding: 14px 24px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  position: relative;
 }
 
-.links .expand-btn a {
-  display: inline-block;
+.links .expand-container a {
   color: #000;
   text-decoration: none;
   font-weight: 600;
   font-size: 18px;
-  padding: 14px 24px;
-  white-space: nowrap;
-  transition: all 0.3s ease;
 }
 
-.links .expand-btn .extra-text {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.links .expand-btn:hover {
-  width: 460px;
+.links .expand-container:hover {
   background-color: #e4e4e4;
 }
 
-.links .expand-btn:hover .extra-text {
-  visibility: visible;
+.expand-info {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease 0.2s;
+  font-size: 15px;
+  margin-top: 8px;
+  color: #000;
+  pointer-events: none;
+}
+
+/* Efekt rozwijania po najechaniu */
+.expand-container:hover .expand-info {
+  max-height: 200px;
   opacity: 1;
+  pointer-events: auto;
 }
 
 .video-center {

@@ -57,15 +57,16 @@ body, html {
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   margin-top: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px;
+  white-space: normal; /* tekst może się zawijać */
+  overflow: visible;
+  max-width: 220px; /* troszkę szerzej żeby tekst mieścił się wygodnie */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   width: max-content;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Pokaż blok jeśli mysz jest na przycisku lub na popupie */

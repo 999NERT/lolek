@@ -20,23 +20,41 @@ body, html {
   box-sizing: border-box;
 }
 
-.links a {
+.links .expand-btn {
   display: inline-block;
-  background: #fff;
-  color: #000;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 18px;
-  margin: 0 auto 30px;
-  padding: 14px 24px;
+  overflow: hidden;
   border-radius: 30px;
-  transition: background-color 0.3s ease;
+  background: #fff;
+  transition: width 0.4s ease;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   width: 200px;
 }
 
-.links a:hover {
+.links .expand-btn a {
+  display: inline-block;
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 14px 24px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.links .expand-btn .extra-text {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.links .expand-btn:hover {
+  width: 460px;
   background-color: #e4e4e4;
+}
+
+.links .expand-btn:hover .extra-text {
+  visibility: visible;
+  opacity: 1;
 }
 
 .video-center {
@@ -52,7 +70,7 @@ body, html {
   border: 4px solid #fff;
   border-radius: 20px;
   box-sizing: border-box;
-  overflow: hidden; /* <<< kluczowy element */
+  overflow: hidden;
 }
 
 .bottom-title {

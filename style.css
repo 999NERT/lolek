@@ -20,44 +20,57 @@ body, html {
   box-sizing: border-box;
 }
 
-.links .expand-container {
+.links .button-with-popup {
   display: inline-block;
-  text-align: left;
-  border-radius: 30px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  padding: 14px 24px;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
   position: relative;
+  text-align: center;
 }
 
-.links .expand-container a {
+.links .button-with-popup a {
+  display: inline-block;
+  background: #fff;
   color: #000;
   text-decoration: none;
   font-weight: 600;
   font-size: 18px;
+  padding: 14px 24px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  width: 200px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
-.links .expand-container:hover {
+.links .button-with-popup a:hover {
   background-color: #e4e4e4;
 }
 
-.expand-info {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.6s ease, opacity 0.4s ease 0.2s;
-  font-size: 15px;
-  margin-top: 8px;
+.links .button-with-popup .popup-text {
+  position: absolute;
+  top: 100%; /* pod przyciskiem */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
   color: #000;
+  font-size: 15px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  width: max-content;
+  max-width: 180px;
 }
 
-/* Efekt rozwijania po najechaniu */
-.expand-container:hover .expand-info {
-  max-height: 200px;
+/* Pokaż blok jeśli mysz jest na przycisku lub na popupie */
+.links .button-with-popup:hover .popup-text,
+.links .button-with-popup .popup-text:hover {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 

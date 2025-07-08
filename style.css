@@ -12,25 +12,27 @@ html, body {
   overflow: hidden;
 }
 
-/* Pełnoekranowe tło wideo */
+/* Pełnoekranowe tło wideo z ukrytym UI */
 .video-background {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
   width: 100vw;
   height: 100vh;
+  transform: translate(-50%, -50%);
   z-index: -2;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .video-background iframe {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  pointer-events: none;
+  transform: scale(1.2); /* Powiększenie tła */
 }
 
-/* Efekt zatrzymania po 6s */
+/* Efekt zatrzymania po 6s (poprawiony) */
 .freeze-overlay {
   position: fixed;
   top: 0;
@@ -45,7 +47,7 @@ html, body {
 }
 
 @keyframes freeze {
-  0%, 99% { opacity: 0; }
+  0%, 95% { opacity: 0; }
   100% { opacity: 1; }
 }
 
@@ -118,56 +120,4 @@ html, body {
   font-size: 15px;
   padding: 8px 16px;
   border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  margin-top: 8px;
-  white-space: normal;
-  max-width: 220px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  word-break: break-word;
-}
-
-.links .button-with-popup:hover .popup-text {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Wideo na środku (poprawione wymiary) */
-.video-center {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-  width: 100%;
-}
-
-.video-wrapper {
-  width: 900px;
-  height: 425px;
-  border: 4px solid #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.video-wrapper iframe {
-  width: 100%;
-  height: 100%;
-}
-
-.bottom-title {
-  font-weight: 600;
-  font-size: 36px;
-  margin-top: 0;
-  color: #fff;
-  text-shadow: 0 0 8px rgba(0,0,0,0.7);
-}
-
-@media (max-width: 950px) {
-  .video-wrapper {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16/9;
-  }
-}
+  b

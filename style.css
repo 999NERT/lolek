@@ -12,43 +12,44 @@ html, body {
   overflow: hidden;
 }
 
-/* Tło wideo YouTube */
+/* Pełnoekranowe tło wideo */
 .video-background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   z-index: -2;
+  overflow: hidden;
 }
 
 .video-background iframe {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
   pointer-events: none;
 }
 
-/* Nakładka efektu zatrzymania */
+/* Efekt zatrzymania po 6s */
 .freeze-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
   opacity: 0;
   animation: freeze 6s forwards;
   pointer-events: none;
+  z-index: -1;
 }
 
 @keyframes freeze {
-  99% { opacity: 0; }
+  0%, 99% { opacity: 0; }
   100% { opacity: 1; }
 }
 
-/* Reszta stylów pozostaje bez zmian */
+/* Przezroczyste okienko */
 .overlay-frame {
   position: fixed;
   top: 0;
@@ -62,6 +63,7 @@ html, body {
   -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
 }
 
+/* Główna zawartość */
 .main-wrapper {
   position: relative;
   z-index: 1;
@@ -79,6 +81,7 @@ html, body {
   text-shadow: 0 0 10px black;
 }
 
+/* Przycisk */
 .links .button-with-popup {
   display: inline-block;
   position: relative;
@@ -126,18 +129,16 @@ html, body {
   word-break: break-word;
 }
 
-.links .button-with-popup:hover .popup-text,
-.links .button-with-popup .popup-text:hover {
+.links .button-with-popup:hover .popup-text {
   opacity: 1;
   visibility: visible;
-  pointer-events: auto;
 }
 
+/* Wideo na środku (poprawione wymiary) */
 .video-center {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
-  overflow-x: clip;
   width: 100%;
 }
 
@@ -146,9 +147,13 @@ html, body {
   height: 425px;
   border: 4px solid #fff;
   border-radius: 20px;
-  box-sizing: border-box;
   overflow: hidden;
   max-width: 100%;
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
 }
 
 .bottom-title {

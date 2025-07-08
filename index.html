@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strona AngelkaCSS</title>
+  <title>AngelkaCSS</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Tło wideo z YouTube -->
+  <!-- Tło wideo YouTube (pełnoekranowe) -->
   <div class="video-background">
     <iframe 
       id="bgVideo"
-      src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=0&mute=1&loop=1&playlist=G3CS73CRt4s&controls=0" 
+      src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0" 
       frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
       allowfullscreen>
     </iframe>
     <div class="freeze-overlay"></div>
@@ -35,6 +35,7 @@
       </div>
     </div>
 
+    <!-- Wideo na środku (poprawione wymiary) -->
     <div class="video-center">
       <div class="video-wrapper">
         <iframe 
@@ -50,6 +51,5 @@
     <h1 class="bottom-title">AngelkaCSS</h1>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>

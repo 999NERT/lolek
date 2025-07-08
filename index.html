@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Tło wideo YouTube (pełnoekranowe) -->
+  <!-- Tło wideo YouTube (pełnoekranowe, ukryte UI) -->
   <div class="video-background">
     <iframe 
-      id="bgVideo"
-      src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0" 
+      src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" 
       frameborder="0" 
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
       allowfullscreen>
@@ -35,9 +34,9 @@
       </div>
     </div>
 
-    <!-- Wideo na środku (poprawione wymiary) -->
+    <!-- Wideo na środku (poprawione, dopasowane do ramki) -->
     <div class="video-center">
-      <div class="video-wrapper">
+      <div class="video-container">
         <iframe 
           src="https://www.youtube.com/embed/DjwxqjaJ8Zo?rel=0" 
           title="YouTube video player" 
@@ -50,6 +49,5 @@
 
     <h1 class="bottom-title">AngelkaCSS</h1>
   </div>
-
 </body>
 </html>

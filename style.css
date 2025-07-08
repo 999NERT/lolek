@@ -9,7 +9,7 @@ body, html {
   background-color: black;
 }
 
-/* Vimeo jako tło */
+/* Vimeo video jako tło */
 .video-background {
   position: fixed;
   top: 0; left: 0;
@@ -20,10 +20,14 @@ body, html {
 }
 
 .video-background iframe {
-  width: 100vw !important;    /* wymuszamy szerokość */
-  height: 100vh !important;   /* wymuszamy wysokość */
-  border: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.77vh; /* 16:9 ratio: 100vh * 16/9 */
+  height: 100vh;
+  transform: translate(-50%, -50%);
   pointer-events: none;
+  border: none;
 }
 
 /* Zawartość strony na wierzchu */

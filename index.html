@@ -3,19 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strona z tłem wideo</title>
+  <title>Strona AngelkaCSS</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Tło wideo z YouTube -->
   <div class="video-background">
-    <video id="bgVideo" autoplay muted playsinline>
-      <source src="https://store-eu-par-4.gofile.io/download/web/dddcc4b9-a129-4fa3-a884-d14f897e1534/ASTEROIDKA.mp4" type="video/mp4" />
-      Twój przeglądarka nie obsługuje tagu video.
-    </video>
+    <iframe 
+      id="bgVideo"
+      src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=0&mute=1&loop=1&playlist=G3CS73CRt4s&controls=0" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+    <div class="freeze-overlay"></div>
   </div>
 
+  <!-- Przezroczyste okienko -->
   <div class="overlay-frame"></div>
 
+  <!-- Główna zawartość -->
   <div class="main-wrapper">
     <div class="links">
       <div class="button-with-popup">
@@ -31,12 +38,10 @@
     <div class="video-center">
       <div class="video-wrapper">
         <iframe 
-          width="100%" 
-          height="100%" 
-          src="https://www.youtube.com/embed/DjwxqjaJ8Zo" 
+          src="https://www.youtube.com/embed/DjwxqjaJ8Zo?rel=0" 
           title="YouTube video player" 
           frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           allowfullscreen>
         </iframe>
       </div>

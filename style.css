@@ -14,7 +14,7 @@ html, body {
   color: white;
 }
 
-/* Vimeo jako tło */
+/* Tło wideo */
 .video-background {
   position: fixed;
   top: 0; left: 0;
@@ -28,14 +28,14 @@ html, body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 177.77vh; /* 16:9 ratio */
+  width: 177.77vh; /* 16:9 proporcje */
   height: 100vh;
   transform: translate(-50%, -50%);
   pointer-events: none;
   border: none;
 }
 
-/* Zawartość na wierzchu */
+/* Główna zawartość */
 .main-wrapper {
   position: relative;
   z-index: 1;

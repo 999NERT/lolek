@@ -22,10 +22,10 @@ body, html {
 .video-background iframe {
   width: 100vw;
   height: 100vh;
-  pointer-events: none; /* kliknięcia przechodzą przez iframe */
+  pointer-events: none;
 }
 
-/* Główna zawartość na wierzchu */
+/* Zawartość strony na wierzchu */
 .main-wrapper {
   position: relative;
   z-index: 1;

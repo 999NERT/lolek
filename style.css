@@ -4,26 +4,45 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #000;
-  color: #fff;
   font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+/* Wideo tło */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.4);
+}
+
+/* Główna zawartość */
+.main-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   justify-content: center;
   align-items: center;
 }
 
-.main-wrapper {
-  text-align: center;
-  max-width: 1200px;
-  width: 90%;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
+/* Przycisk i popup */
 .links .button-with-popup {
   display: inline-block;
   position: relative;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .links .button-with-popup a {
@@ -47,7 +66,7 @@ body, html {
 
 .links .button-with-popup .popup-text {
   position: absolute;
-  top: 100%; /* pod przyciskiem */
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
@@ -57,9 +76,8 @@ body, html {
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   margin-top: 8px;
-  white-space: normal; /* tekst może się zawijać */
-  overflow: visible;
-  max-width: 220px; /* troszkę szerzej żeby tekst mieścił się wygodnie */
+  white-space: normal;
+  max-width: 220px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -69,7 +87,6 @@ body, html {
   word-break: break-word;
 }
 
-/* Pokaż blok jeśli mysz jest na przycisku lub na popupie */
 .links .button-with-popup:hover .popup-text,
 .links .button-with-popup .popup-text:hover {
   opacity: 1;
@@ -77,11 +94,13 @@ body, html {
   pointer-events: auto;
 }
 
+/* Wideo centrum */
 .video-center {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
   overflow-x: clip;
+  width: 100%;
 }
 
 .video-wrapper {
@@ -91,10 +110,21 @@ body, html {
   border-radius: 20px;
   box-sizing: border-box;
   overflow: hidden;
+  max-width: 100%;
 }
 
 .bottom-title {
   font-weight: 600;
   font-size: 36px;
   margin-top: 0;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0,0,0,0.7);
+}
+
+@media (max-width: 950px) {
+  .video-wrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
 }

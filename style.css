@@ -6,21 +6,25 @@ body, html {
   height: 100%;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
+  background-color: black;
 }
 
-/* Wideo tło */
-.bg-video {
+/* Vimeo video as background */
+.video-background {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-background iframe {
   width: 100vw;
   height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  filter: brightness(0.4);
+  pointer-events: none; /* kliknięcia przechodzą */
 }
 
-/* Główna zawartość */
+/* Główna zawartość na wierzchu */
 .main-wrapper {
   position: relative;
   z-index: 1;
@@ -37,7 +41,6 @@ body, html {
   align-items: center;
 }
 
-/* Przycisk i popup */
 .links .button-with-popup {
   display: inline-block;
   position: relative;
@@ -94,7 +97,6 @@ body, html {
   pointer-events: auto;
 }
 
-/* Wideo centrum */
 .video-center {
   display: flex;
   justify-content: center;

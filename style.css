@@ -12,7 +12,7 @@ html, body {
   overflow: hidden;
 }
 
-/* YouTube Video Background */
+/* 🔁 Tło wideo + spowolniony efekt (zoom-out i animacja) */
 .video-background {
   position: fixed;
   top: 0;
@@ -20,7 +20,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  z-index: -1;
+  z-index: -2;
 }
 
 .video-foreground {
@@ -29,23 +29,49 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
+  transform: scale(1.05); /* lekkie oddalenie */
+  transition: transform 5s ease;
+  animation: slowZoom 30s infinite alternate ease-in-out;
   pointer-events: none;
+}
+
+@keyframes slowZoom {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1.02);
+  }
 }
 
 .video-foreground iframe {
   width: 100vw;
-  height: 56.25vw; /* 16:9 aspect ratio (100 / (16/9)) */
+  height: 56.25vw;
   min-height: 100vh;
-  min-width: 177.77vh; /* 16:9 ratio based on height */
+  min-width: 177.77vh;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  pointer-events: none;
   border: none;
+  pointer-events: none;
 }
 
-/* Content wrapper */
+/* 🔲 Przezroczyste okienko */
+.overlay-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: -1;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
+}
+
+/* Zawartość */
 .main-wrapper {
   position: relative;
   z-index: 1;
@@ -63,7 +89,7 @@ html, body {
   text-shadow: 0 0 10px black;
 }
 
-/* Button with popup */
+/* Przycisk */
 .links .button-with-popup {
   display: inline-block;
   position: relative;
@@ -118,7 +144,7 @@ html, body {
   pointer-events: auto;
 }
 
-/* Video embed */
+/* Wideo osadzone */
 .video-center {
   display: flex;
   justify-content: center;

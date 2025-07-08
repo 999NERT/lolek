@@ -12,7 +12,6 @@ html, body {
   overflow: hidden;
 }
 
-/* 🔁 Tło wideo + spowolniony efekt (zoom-out i animacja) */
 .video-background {
   position: fixed;
   top: 0;
@@ -40,7 +39,6 @@ html, body {
   }
 }
 
-/* 🔲 Przezroczyste okienko */
 .overlay-frame {
   position: fixed;
   top: 0;
@@ -54,7 +52,6 @@ html, body {
   -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
 }
 
-/* Zawartość */
 .main-wrapper {
   position: relative;
   z-index: 1;
@@ -72,7 +69,6 @@ html, body {
   text-shadow: 0 0 10px black;
 }
 
-/* Przycisk */
 .links .button-with-popup {
   display: inline-block;
   position: relative;
@@ -127,7 +123,6 @@ html, body {
   pointer-events: auto;
 }
 
-/* Wideo osadzone */
 .video-center {
   display: flex;
   justify-content: center;

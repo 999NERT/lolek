@@ -71,11 +71,10 @@ html, body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 40px 20px;
+  padding-top: 100px;
   color: white;
-  text-shadow: 0 0 10px black;
 }
 
 /* Przycisk na górze */
@@ -83,7 +82,7 @@ html, body {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: auto;
+  margin-bottom: 30px;
 }
 
 .button-with-popup {
@@ -93,21 +92,20 @@ html, body {
 
 .button-with-popup a {
   display: inline-block;
-  background: #fff;
-  color: #000;
+  background: #0D2345;
+  color: white;
   text-decoration: none;
   font-weight: 600;
   font-size: 18px;
   padding: 14px 24px;
   border-radius: 30px;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   width: 200px;
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
 
 .button-with-popup a:hover {
-  background-color: #e4e4e4;
+  background-color: #1a3a6b;
 }
 
 .button-with-popup .popup-text {
@@ -115,13 +113,13 @@ html, body {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #fff;
-  color: #000;
+  background: #0D2345;
+  color: white;
   font-size: 15px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  white-space: nowrap;
-  margin-top: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 15px;
+  width: 300px;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -147,6 +145,8 @@ html, body {
   padding-bottom: 56.25%; /* 16:9 aspect ratio */
   height: 0;
   overflow: hidden;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .video-container iframe {
@@ -159,8 +159,12 @@ html, body {
 
 /* Tytuł na dole */
 .bottom-title {
-  margin-top: auto;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 2.5rem;
   text-align: center;
-  padding-bottom: 20px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }

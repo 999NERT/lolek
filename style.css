@@ -15,24 +15,22 @@ html, body {
 /* Pełnoekranowe tło wideo z ukrytym UI */
 .video-background {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  transform: translate(-50%, -50%);
   z-index: -2;
   overflow: hidden;
-  pointer-events: none;
 }
 
 .video-background iframe {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  transform: scale(1.2); /* Powiększenie tła */
+  transform: scale(1.2);
 }
 
-/* Efekt zatrzymania po 6s (poprawiony) */
+/* Efekt zatrzymania po 6s */
 .freeze-overlay {
   position: fixed;
   top: 0;
@@ -69,29 +67,31 @@ html, body {
 .main-wrapper {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
-  width: 90%;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 40px 20px;
   color: white;
   text-shadow: 0 0 10px black;
 }
 
-/* Przycisk */
-.links .button-with-popup {
-  display: inline-block;
-  position: relative;
-  text-align: center;
-  margin-bottom: 30px;
+/* Przycisk na górze */
+.top-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: auto;
 }
 
-.links .button-with-popup a {
+.button-with-popup {
+  position: relative;
+  text-align: center;
+}
+
+.button-with-popup a {
   display: inline-block;
   background: #fff;
   color: #000;
@@ -106,11 +106,11 @@ html, body {
   cursor: pointer;
 }
 
-.links .button-with-popup a:hover {
+.button-with-popup a:hover {
   background-color: #e4e4e4;
 }
 
-.links .button-with-popup .popup-text {
+.button-with-popup .popup-text {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -120,4 +120,47 @@ html, body {
   font-size: 15px;
   padding: 8px 16px;
   border-radius: 20px;
-  b
+  white-space: nowrap;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.button-with-popup:hover .popup-text {
+  opacity: 1;
+}
+
+/* Wideo na środku */
+.center-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  z-index: 1;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tytuł na dole */
+.bottom-title {
+  margin-top: auto;
+  font-size: 2.5rem;
+  text-align: center;
+  padding-bottom: 20px;
+}

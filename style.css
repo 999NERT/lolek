@@ -77,14 +77,18 @@ html, body {
   color: white;
 }
 
-/* Przycisk na górze */
-.top-button {
-  width: 100%;
+/* Kontener przycisków */
+.buttons-container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
   margin-bottom: 30px;
+  width: 90%;
+  max-width: 1200px;
 }
 
+/* Ogólne style przycisków */
 .button-with-popup {
   position: relative;
   text-align: center;
@@ -93,15 +97,12 @@ html, body {
 .button-with-popup a {
   display: inline-block;
   position: relative;
-  background: #0D2345;
-  color: white;
   text-decoration: none;
   font-weight: 700;
-  font-size: 25px;
+  font-size: 22px;
   padding: 10px 20px;
   border-radius: 30px;
-  width: auto;
-  min-width: 200px;
+  min-width: 140px;
   overflow: hidden;
   cursor: pointer;
   z-index: 1;
@@ -114,7 +115,6 @@ html, body {
   left: 50%;
   width: 0;
   height: 0;
-  background: #14A3C7;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.8s ease, height 0.8s ease;
@@ -122,32 +122,13 @@ html, body {
   pointer-events: none;
 }
 
-.button-with-popup a:hover .hover-fill {
-  width: 300%;
-  height: 300%;
-}
-
 .button-text {
   display: inline-block;
   position: relative;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6); /* Cień widoczny cały czas */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
   padding: 2px 0;
-}
-
-.blue-o {
-  color: #4fc3f7 !important;
-  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
-  text-stroke: 0.5px rgba(0,0,0,0.4);
-}
-
-.yellow-text {
-  color: #FFD700 !important;
-}
-
-.green-text {
-  color: #90EE90 !important;
 }
 
 .button-with-popup .popup-text {
@@ -155,7 +136,6 @@ html, body {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #0D2345;
   color: white;
   font-weight: 700;
   font-size: 16px;
@@ -175,6 +155,97 @@ html, body {
 
 .button-with-popup:hover .popup-text {
   opacity: 1;
+}
+
+/* Style dla poszczególnych przycisków */
+
+/* LOGITECH */
+.logitech-btn a {
+  background: white;
+  color: white;
+}
+
+.logitech-tech {
+  color: #00FFFF !important; /* CYAN */
+}
+
+.logitech-btn .hover-fill {
+  background: #808080; /* Szary */
+}
+
+.logitech-btn .popup-text {
+  background: white;
+  color: black;
+}
+
+/* PIRATESWAP */
+.pirateswap-btn a {
+  background: #1E1D22;
+  color: white;
+}
+
+.pirateswap-swap {
+  color: #DB6034 !important;
+}
+
+.pirateswap-btn .hover-fill {
+  background: #DB6034;
+}
+
+.pirateswap-btn .popup-text {
+  background: #1E1D22;
+}
+
+/* CSGOSKINS (oryginalny) */
+.csgoskins-btn a {
+  background: #0D2345;
+  color: white;
+}
+
+.blue-o {
+  color: #4fc3f7 !important;
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-stroke: 0.5px rgba(0,0,0,0.4);
+}
+
+.csgoskins-btn .hover-fill {
+  background: #14A3C7;
+}
+
+.csgoskins-btn .popup-text {
+  background: #0D2345;
+}
+
+/* BETTERS */
+.betters-btn a {
+  background: black;
+  color: white;
+}
+
+.betters-ters {
+  color: #E50420 !important;
+}
+
+.betters-btn .hover-fill {
+  background: #E50420;
+}
+
+.betters-btn .popup-text {
+  background: black;
+}
+
+/* DZIK */
+.dzik-btn a {
+  background: black;
+  color: white;
+}
+
+.dzik-btn .hover-fill {
+  background: white;
+}
+
+.dzik-btn .popup-text {
+  background: black;
 }
 
 /* Wideo na środku */
@@ -216,4 +287,16 @@ html, body {
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   font-weight: 700;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button-with-popup {
+    margin-bottom: 15px;
+  }
 }

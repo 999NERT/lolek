@@ -106,7 +106,7 @@ html, body {
   overflow: hidden;
   cursor: pointer;
   z-index: 1;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .button-text {
@@ -118,30 +118,27 @@ html, body {
   padding: 2px 0;
 }
 
-/* Wspólny kontener na opisy */
-.popup-container {
-  position: relative;
-  width: 80%;
-  max-width: 800px;
-  min-height: 80px;
-  margin-bottom: 30px;
-}
-
 .popup-text {
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 700;
   font-size: 16px;
   padding: 12px 20px;
   border-radius: 10px;
-  width: 100%;
+  margin-top: 15px;
+  width: 300px;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
   text-transform: uppercase;
   text-align: center;
+  z-index: 10;
+}
+
+.button-with-popup:hover .popup-text {
+  opacity: 1;
 }
 
 /* Style dla poszczególnych przycisków */
@@ -157,10 +154,10 @@ html, body {
 }
 
 .logitech-btn a:hover {
-  background: #808080; /* Szary */
+  background: #00FFFF; /* Kolor TECH */
 }
 
-.logitech-popup {
+.logitech-btn .popup-text {
   background: white;
   color: black;
 }
@@ -179,7 +176,7 @@ html, body {
   background: #DB6034;
 }
 
-.pirateswap-popup {
+.pirateswap-btn .popup-text {
   background: #1E1D22;
   color: white;
 }
@@ -200,8 +197,24 @@ html, body {
   background: #14A3C7;
 }
 
-.csgoskins-popup {
+.csgoskins-btn .popup-text {
   background: #0D2345;
+  color: white;
+}
+
+/* WKDZIK */
+.wkdzik-btn a {
+  background: black;
+  color: white;
+}
+
+.wkdzik-btn a:hover {
+  background: white;
+  color: black;
+}
+
+.wkdzik-btn .popup-text {
+  background: black;
   color: white;
 }
 
@@ -219,38 +232,9 @@ html, body {
   background: #E50420;
 }
 
-.betters-popup {
+.betters-btn .popup-text {
   background: black;
   color: white;
-}
-
-/* WKDZIK */
-.wkdzik-btn a {
-  background: #505050;
-  color: white;
-}
-
-.wkdzik-btn a:hover {
-  background: #505050;
-  opacity: 0.8;
-}
-
-.wkdzik-popup {
-  background: #505050;
-  color: white;
-}
-
-/* Efekty hover */
-.button-with-popup:hover .popup-text {
-  opacity: 0;
-}
-
-.logitech-btn:hover ~ .popup-container .logitech-popup,
-.pirateswap-btn:hover ~ .popup-container .pirateswap-popup,
-.csgoskins-btn:hover ~ .popup-container .csgoskins-popup,
-.betters-btn:hover ~ .popup-container .betters-popup,
-.wkdzik-btn:hover ~ .popup-container .wkdzik-popup {
-  opacity: 1;
 }
 
 /* Wideo na środku */

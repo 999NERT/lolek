@@ -96,16 +96,21 @@ html, body {
   color: white;
   text-decoration: none;
   font-weight: 700;
-  font-size: 18px;
-  padding: 14px 24px;
+  font-size: 22px; /* Zwiększony rozmiar czcionki */
+  padding: 16px 28px; /* Zwiększony padding */
   border-radius: 30px;
-  width: 200px;
+  width: auto; /* Zmienione z fixed width na auto */
+  min-width: 220px; /* Minimalna szerokość */
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
 
+.button-text {
+  display: inline-block;
+}
+
 .blue-o {
-  color: #4fc3f7; /* Jasny niebieski */
+  color: #4fc3f7 !important; /* Jasny niebieski z ważnością */
 }
 
 .button-with-popup a:hover {

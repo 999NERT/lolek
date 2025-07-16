@@ -130,14 +130,10 @@ html, body {
 .button-text {
   display: inline-block;
   position: relative;
-  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4); /* Subtelny obrys tekstu */
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Dodany cień tekstu */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6); /* Cień widoczny cały czas */
   padding: 2px 0;
-}
-
-.button-with-popup a:hover .button-text {
-  text-shadow: 0 2px 5px rgba(0,0,0,0.7); /* Wzmocniony cień przy hover */
 }
 
 .blue-o {

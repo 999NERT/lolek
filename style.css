@@ -97,7 +97,7 @@ html, body {
   color: white;
   text-decoration: none;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 25px; /* Zwiększony rozmiar tekstu do 25px */
   padding: 8px 18px;
   border-radius: 30px;
   width: auto;
@@ -110,18 +110,21 @@ html, body {
 
 .hover-fill {
   position: absolute;
-  width: 200%;
-  height: 200%;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
   background: #14A3C7;
   border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.5s ease;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
   z-index: -1;
   pointer-events: none;
 }
 
 .button-with-popup a:hover .hover-fill {
-  transform: translate(-50%, -50%) scale(1);
+  width: 300%;
+  height: 300%;
 }
 
 .button-text {
@@ -131,7 +134,7 @@ html, body {
 }
 
 .button-with-popup a:hover .button-text {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); /* Wzmocniony cień */
 }
 
 .blue-o {
@@ -154,7 +157,7 @@ html, body {
   background: #0D2345;
   color: white;
   font-weight: 700;
-  font-size: 16px; /* Zwiększony rozmiar tekstu */
+  font-size: 16px;
   padding: 12px 20px;
   border-radius: 10px;
   margin-top: 15px;

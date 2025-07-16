@@ -106,7 +106,6 @@ html, body {
   cursor: pointer;
   z-index: 1;
   isolation: isolate;
-  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.5); /* Stały obrys */
 }
 
 .hover-fill {
@@ -131,16 +130,20 @@ html, body {
 .button-text {
   display: inline-block;
   position: relative;
-  text-shadow: 0 0 0 rgba(0,0,0,0); /* Wyłączony cień */
-  -webkit-text-stroke: 1px rgba(0,0,0,0.7); /* Stały obrys tekstu */
-  text-stroke: 1px rgba(0,0,0,0.7);
-  padding: 2px 0; /* Dodatkowe miejsce dla obrysu */
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4); /* Subtelny obrys tekstu */
+  text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Dodany cień tekstu */
+  padding: 2px 0;
+}
+
+.button-with-popup a:hover .button-text {
+  text-shadow: 0 2px 5px rgba(0,0,0,0.7); /* Wzmocniony cień przy hover */
 }
 
 .blue-o {
   color: #4fc3f7 !important;
-  -webkit-text-stroke: 1px rgba(0,0,0,0.7); /* Obrys dla niebieskiej litery */
-  text-stroke: 1px rgba(0,0,0,0.7);
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-stroke: 0.5px rgba(0,0,0,0.4);
 }
 
 .yellow-text {

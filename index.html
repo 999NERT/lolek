@@ -29,9 +29,6 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
         </a>
-        <div class="popup-text">
-          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
-        </div>
       </div>
 
       <!-- Przycisk 2 - PIRATESWAP -->
@@ -39,9 +36,6 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
         </a>
-        <div class="popup-text">
-          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
-        </div>
       </div>
 
       <!-- Przycisk 3 - CSGOSKINS (oryginalny) -->
@@ -49,9 +43,6 @@
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
         </a>
-        <div class="popup-text">
-          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
-        </div>
       </div>
 
       <!-- Przycisk 4 - WKDZIK -->
@@ -59,9 +50,6 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
         </a>
-        <div class="popup-text">
-          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
-        </div>
       </div>
 
       <!-- Przycisk 5 - BETTERS -->
@@ -69,7 +57,23 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
         </a>
-        <div class="popup-text">
+      </div>
+      
+      <!-- Wspólny kontener dla popupów -->
+      <div class="popup-container">
+        <div class="popup-text logitech-popup">
+          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
+        </div>
+        <div class="popup-text pirateswap-popup">
+          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
+        </div>
+        <div class="popup-text csgoskins-popup">
+          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
+        </div>
+        <div class="popup-text wkdzik-popup">
+          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
+        </div>
+        <div class="popup-text betters-popup">
           WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
         </div>
       </div>
@@ -90,5 +94,33 @@
 
     <h1 class="bottom-title">ANGELKACS</h1>
   </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.button-with-popup');
+      const popups = document.querySelectorAll('.popup-text');
+      
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          // Ukryj wszystkie popupy
+          popups.forEach(popup => popup.style.display = 'none');
+          
+          // Pokaż odpowiedni popup
+          const buttonClass = this.classList[1]; // np. 'logitech-btn'
+          const popupClass = buttonClass.replace('-btn', '-popup');
+          const popupToShow = document.querySelector(`.${popupClass}`);
+          
+          if (popupToShow) {
+            popupToShow.style.display = 'block';
+          }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+          // Opcjonalnie: ukryj popup po opuszczeniu przycisku
+          // popups.forEach(popup => popup.style.display = 'none');
+        });
+      });
+    });
+  </script>
 </body>
 </html>

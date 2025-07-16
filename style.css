@@ -98,7 +98,7 @@ html, body {
   text-decoration: none;
   font-weight: 700;
   font-size: 25px;
-  padding: 8px 18px;
+  padding: 10px 20px;
   border-radius: 30px;
   width: auto;
   min-width: 200px;
@@ -106,6 +106,7 @@ html, body {
   cursor: pointer;
   z-index: 1;
   isolation: isolate;
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.5); /* Stały obrys */
 }
 
 .hover-fill {
@@ -130,18 +131,16 @@ html, body {
 .button-text {
   display: inline-block;
   position: relative;
-  transition: text-shadow 0.3s ease;
-  -webkit-text-stroke: 0px black; /* Domyślnie wyłączone */
-  text-stroke: 0px black;
-}
-
-.button-with-popup a:hover .button-text {
-  -webkit-text-stroke: 1px black; /* Obramowanie tylko tekstu */
-  text-stroke: 1px black;
+  text-shadow: 0 0 0 rgba(0,0,0,0); /* Wyłączony cień */
+  -webkit-text-stroke: 1px rgba(0,0,0,0.7); /* Stały obrys tekstu */
+  text-stroke: 1px rgba(0,0,0,0.7);
+  padding: 2px 0; /* Dodatkowe miejsce dla obrysu */
 }
 
 .blue-o {
   color: #4fc3f7 !important;
+  -webkit-text-stroke: 1px rgba(0,0,0,0.7); /* Obrys dla niebieskiej litery */
+  text-stroke: 1px rgba(0,0,0,0.7);
 }
 
 .yellow-text {

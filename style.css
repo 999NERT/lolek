@@ -86,6 +86,7 @@ html, body {
   margin-bottom: 30px;
   width: 90%;
   max-width: 1200px;
+  position: relative;
 }
 
 /* Ogólne style przycisków */
@@ -118,27 +119,44 @@ html, body {
   padding: 2px 0;
 }
 
-.popup-text {
+/* Kontener dla popupów */
+.popup-container {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.popup-text {
+  position: absolute;
   font-weight: 700;
   font-size: 16px;
   padding: 12px 20px;
   border-radius: 10px;
-  margin-top: 15px;
   width: 300px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   pointer-events: none;
   text-transform: uppercase;
   text-align: center;
   z-index: 10;
+  display: none;
+  transform: translateY(0);
+  animation: popupSlide 0.5s forwards;
 }
 
-.button-with-popup:hover .popup-text {
-  opacity: 1;
+@keyframes popupSlide {
+  0% { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Style dla poszczególnych przycisków */
@@ -157,7 +175,7 @@ html, body {
   background: #00FFFF; /* Kolor TECH */
 }
 
-.logitech-btn .popup-text {
+.logitech-popup {
   background: white;
   color: black;
 }
@@ -176,7 +194,7 @@ html, body {
   background: #DB6034;
 }
 
-.pirateswap-btn .popup-text {
+.pirateswap-popup {
   background: #1E1D22;
   color: white;
 }
@@ -197,7 +215,7 @@ html, body {
   background: #14A3C7;
 }
 
-.csgoskins-btn .popup-text {
+.csgoskins-popup {
   background: #0D2345;
   color: white;
 }
@@ -213,7 +231,7 @@ html, body {
   color: black;
 }
 
-.wkdzik-btn .popup-text {
+.wkdzik-popup {
   background: black;
   color: white;
 }
@@ -232,7 +250,7 @@ html, body {
   background: #E50420;
 }
 
-.betters-btn .popup-text {
+.betters-popup {
   background: black;
   color: white;
 }
@@ -288,4 +306,22 @@ html, body {
   .button-with-popup {
     margin-bottom: 15px;
   }
+  
+  .popup-container {
+    position: relative;
+    margin-top: 40px;
+  }
+  
+  .popup-text {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.yellow-text {
+  color: #FFD700;
+}
+
+.green-text {
+  color: #00FF00;
 }

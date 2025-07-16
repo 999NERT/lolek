@@ -106,20 +106,7 @@ html, body {
   overflow: hidden;
   cursor: pointer;
   z-index: 1;
-  isolation: isolate;
-}
-
-.hover-fill {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.8s ease, height 0.8s ease;
-  z-index: -1;
-  pointer-events: none;
+  transition: background-color 0.3s ease;
 }
 
 .button-text {
@@ -131,30 +118,30 @@ html, body {
   padding: 2px 0;
 }
 
-.button-with-popup .popup-text {
+/* Wspólny kontener na opisy */
+.popup-container {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  min-height: 80px;
+  margin-bottom: 30px;
+}
+
+.popup-text {
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  color: white;
   font-weight: 700;
   font-size: 16px;
   padding: 12px 20px;
   border-radius: 10px;
-  margin-top: 15px;
-  width: auto;
-  white-space: nowrap;
-  max-width: 90vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: 100%;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
   text-transform: uppercase;
-}
-
-.button-with-popup:hover .popup-text {
-  opacity: 1;
+  text-align: center;
 }
 
 /* Style dla poszczególnych przycisków */
@@ -169,11 +156,11 @@ html, body {
   color: #00FFFF !important; /* CYAN */
 }
 
-.logitech-btn .hover-fill {
+.logitech-btn a:hover {
   background: #808080; /* Szary */
 }
 
-.logitech-btn .popup-text {
+.logitech-popup {
   background: white;
   color: black;
 }
@@ -188,12 +175,13 @@ html, body {
   color: #DB6034 !important;
 }
 
-.pirateswap-btn .hover-fill {
+.pirateswap-btn a:hover {
   background: #DB6034;
 }
 
-.pirateswap-btn .popup-text {
+.pirateswap-popup {
   background: #1E1D22;
+  color: white;
 }
 
 /* CSGOSKINS (oryginalny) */
@@ -208,12 +196,13 @@ html, body {
   text-stroke: 0.5px rgba(0,0,0,0.4);
 }
 
-.csgoskins-btn .hover-fill {
+.csgoskins-btn a:hover {
   background: #14A3C7;
 }
 
-.csgoskins-btn .popup-text {
+.csgoskins-popup {
   background: #0D2345;
+  color: white;
 }
 
 /* BETTERS */
@@ -226,26 +215,42 @@ html, body {
   color: #E50420 !important;
 }
 
-.betters-btn .hover-fill {
+.betters-btn a:hover {
   background: #E50420;
 }
 
-.betters-btn .popup-text {
-  background: black;
-}
-
-/* DZIK */
-.dzik-btn a {
+.betters-popup {
   background: black;
   color: white;
 }
 
-.dzik-btn .hover-fill {
-  background: white;
+/* WKDZIK */
+.wkdzik-btn a {
+  background: #505050;
+  color: white;
 }
 
-.dzik-btn .popup-text {
-  background: black;
+.wkdzik-btn a:hover {
+  background: #505050;
+  opacity: 0.8;
+}
+
+.wkdzik-popup {
+  background: #505050;
+  color: white;
+}
+
+/* Efekty hover */
+.button-with-popup:hover .popup-text {
+  opacity: 0;
+}
+
+.logitech-btn:hover ~ .popup-container .logitech-popup,
+.pirateswap-btn:hover ~ .popup-container .pirateswap-popup,
+.csgoskins-btn:hover ~ .popup-container .csgoskins-popup,
+.betters-btn:hover ~ .popup-container .betters-popup,
+.wkdzik-btn:hover ~ .popup-container .wkdzik-popup {
+  opacity: 1;
 }
 
 /* Wideo na środku */

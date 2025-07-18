@@ -23,9 +23,6 @@
 
   <!-- Główna zawartość -->
   <div class="main-wrapper">
-    <!-- Wspólny kontener dla popupu -->
-    <div class="popup-container"></div>
-
     <div class="buttons-container">
       <!-- Przycisk 1 - LOGITECH -->
       <div class="button-with-popup logitech-btn" data-popup="-5% ZNIŻKI Z KODEM <span class='logitech-tech'>'ANGELKACS'</span> NA CAŁY ASORTYMENT LOGITECH">
@@ -46,6 +43,8 @@
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
         </a>
+        <!-- Kontener dla opisu pod przyciskiem 3 -->
+        <div class="popup-under-button"></div>
       </div>
 
       <!-- Przycisk 4 - WKDZIK -->
@@ -82,23 +81,30 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const buttons = document.querySelectorAll('.button-with-popup');
-      const popupContainer = document.querySelector('.popup-container');
+      const popupContainer = document.querySelector('.popup-under-button');
       
       buttons.forEach(button => {
         button.addEventListener('mouseenter', function() {
           // Pobierz zawartość popupu z atrybutu data
           const popupContent = this.getAttribute('data-popup');
+          const buttonClass = this.classList[1];
           
           // Ustaw zawartość i klasę popupu
-          popupContainer.innerHTML = `<div class="popup-text ${this.classList[1].replace('-btn', '-popup')}">${popupContent}</div>`;
+          popupContainer.innerHTML = `<div class="popup-text ${buttonClass.replace('-btn', '-popup')}">${popupContent}</div>`;
           popupContainer.style.opacity = '1';
-          popupContainer.style.transform = 'translateY(0)';
+          
+          // Dodaj odpowiednią animację w zależności od przycisku
+          if (buttonClass === 'logitech-btn' || buttonClass === 'csgoskins-btn' || buttonClass === 'betters-btn') {
+            popupContainer.style.animation = 'slideFromLeft 0.3s forwards';
+          } else {
+            popupContainer.style.animation = 'slideFromRight 0.3s forwards';
+          }
         });
         
         button.addEventListener('mouseleave', function() {
           // Ukryj popup
           popupContainer.style.opacity = '0';
-          popupContainer.style.transform = 'translateY(-20px)';
+          popupContainer.style.animation = 'none';
         });
       });
     });

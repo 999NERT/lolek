@@ -23,15 +23,31 @@
 
   <!-- Główna zawartość -->
   <div class="main-wrapper">
+    <!-- Wspólny kontener dla popupów -->
+    <div class="popup-container">
+      <div class="popup-text logitech-popup">
+        -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
+      </div>
+      <div class="popup-text pirateswap-popup">
+        CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
+      </div>
+      <div class="popup-text csgoskins-popup">
+        WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
+      </div>
+      <div class="popup-text wkdzik-popup">
+        CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
+      </div>
+      <div class="popup-text betters-popup">
+        ZAREJESTRUJ SIĘ W I GRAJ WSPIERAJĄC ANGELKĘ. WSPIERAJĄC ANGELKĘ Z KLIKAJAC TU - OTRZYMUJESZ SPECJALNY PODWYŻSZONY FREEBET <span class="betters-ters">35 PLN</span> PRZY OKAZJI OFERTY POWITALNEJ
+      </div>
+    </div>
+
     <div class="buttons-container">
       <!-- Przycisk 1 - LOGITECH -->
       <div class="button-with-popup logitech-btn">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
         </a>
-        <div class="popup-text left-popup">
-          -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
-        </div>
       </div>
 
       <!-- Przycisk 2 - PIRATESWAP -->
@@ -39,9 +55,6 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
         </a>
-        <div class="popup-text right-popup">
-          CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
-        </div>
       </div>
 
       <!-- Przycisk 3 - CSGOSKINS (oryginalny) -->
@@ -49,9 +62,6 @@
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
         </a>
-        <div class="popup-text left-popup">
-          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">„ANGELKACS”</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
-        </div>
       </div>
 
       <!-- Przycisk 4 - WKDZIK -->
@@ -59,9 +69,6 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
         </a>
-        <div class="popup-text right-popup">
-          CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
-        </div>
       </div>
 
       <!-- Przycisk 5 - BETTERS -->
@@ -69,9 +76,6 @@
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
         </a>
-        <div class="popup-text left-popup">
-          ZAREJESTRUJ SIĘ W I GRAJ WSPIERAJĄC ANGELKĘ. WSPIERAJĄC ANGELKĘ Z KLIKAJAC TU - OTRZYMUJESZ SPECJALNY PODWYŻSZONY FREEBET <span class="betters-ters">35 PLN</span> PRZY OKAZJI OFERTY POWITALNEJ
-        </div>
       </div>
     </div>
 
@@ -90,5 +94,45 @@
 
     <h1 class="bottom-title">ANGELKACS</h1>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.button-with-popup');
+      const popups = document.querySelectorAll('.popup-text');
+      
+      // Ukryj wszystkie popupy na starcie
+      popups.forEach(popup => {
+        popup.style.opacity = '0';
+        popup.style.transform = 'translateY(20px)';
+      });
+      
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          // Ukryj wszystkie popupy
+          popups.forEach(popup => {
+            popup.style.opacity = '0';
+            popup.style.transform = 'translateY(20px)';
+          });
+          
+          // Pokaż odpowiedni popup
+          const buttonClass = this.classList[1]; // np. 'logitech-btn'
+          const popupClass = buttonClass.replace('-btn', '-popup');
+          const popupToShow = document.querySelector(`.${popupClass}`);
+          
+          if (popupToShow) {
+            popupToShow.style.opacity = '1';
+            popupToShow.style.transform = 'translateY(0)';
+            
+            // Dodaj animację "rozjeżdżania" na boki
+            if (buttonClass === 'logitech-btn' || buttonClass === 'csgoskins-btn' || buttonClass === 'betters-btn') {
+              popupToShow.style.animation = 'slideFromLeft 0.5s forwards';
+            } else {
+              popupToShow.style.animation = 'slideFromRight 0.5s forwards';
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

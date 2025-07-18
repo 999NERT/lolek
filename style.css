@@ -86,19 +86,20 @@ html, body {
   margin-bottom: 30px;
   width: 90%;
   max-width: 1200px;
+  position: relative;
 }
 
-/* Wspólny kontener dla popupu */
-.popup-container {
+/* Kontener dla opisu pod przyciskiem 3 */
+.popup-under-button {
   position: absolute;
-  top: 20%;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
   opacity: 0;
-  transition: all 0.3s ease;
-  transform: translateY(-20px);
+  transition: opacity 0.3s ease;
   z-index: 10;
+  margin-top: 15px;
 }
 
 .popup-text {
@@ -108,6 +109,29 @@ html, body {
   border-radius: 10px;
   text-transform: uppercase;
   text-align: center;
+  width: 100%;
+}
+
+@keyframes slideFromLeft {
+  0% { 
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% { 
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromRight {
+  0% { 
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% { 
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Ogólne style przycisków */
@@ -292,13 +316,13 @@ html, body {
     margin-bottom: 15px;
   }
   
-  .popup-container {
+  .popup-under-button {
     position: relative;
     top: auto;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    transform: none;
     left: auto;
+    transform: none;
+    margin-top: 10px;
+    width: 100%;
   }
 }
 

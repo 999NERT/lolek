@@ -86,7 +86,6 @@ html, body {
   margin-bottom: 30px;
   width: 90%;
   max-width: 1200px;
-  position: relative;
 }
 
 /* Ogólne style przycisków */
@@ -119,17 +118,6 @@ html, body {
   padding: 2px 0;
 }
 
-/* Kontener dla popupów */
-.popup-container {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
 .popup-text {
   position: absolute;
   font-weight: 700;
@@ -138,25 +126,27 @@ html, body {
   border-radius: 10px;
   width: 300px;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
   pointer-events: none;
   text-transform: uppercase;
   text-align: center;
   z-index: 10;
-  display: none;
-  transform: translateY(0);
-  animation: popupSlide 0.5s forwards;
 }
 
-@keyframes popupSlide {
-  0% { 
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% { 
-    opacity: 1;
-    transform: translateY(0);
-  }
+.left-popup {
+  left: -320px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right-popup {
+  right: -320px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.button-with-popup:hover .popup-text {
+  opacity: 1;
 }
 
 /* Style dla poszczególnych przycisków */
@@ -175,7 +165,7 @@ html, body {
   background: #00FFFF; /* Kolor TECH */
 }
 
-.logitech-popup {
+.logitech-btn .popup-text {
   background: white;
   color: black;
 }
@@ -194,7 +184,7 @@ html, body {
   background: #DB6034;
 }
 
-.pirateswap-popup {
+.pirateswap-btn .popup-text {
   background: #1E1D22;
   color: white;
 }
@@ -215,7 +205,7 @@ html, body {
   background: #14A3C7;
 }
 
-.csgoskins-popup {
+.csgoskins-btn .popup-text {
   background: #0D2345;
   color: white;
 }
@@ -226,12 +216,16 @@ html, body {
   color: white;
 }
 
+.wkdzik-highlight {
+  color: white !important;
+}
+
 .wkdzik-btn a:hover {
   background: white;
   color: black;
 }
 
-.wkdzik-popup {
+.wkdzik-btn .popup-text {
   background: black;
   color: white;
 }
@@ -250,7 +244,7 @@ html, body {
   background: #E50420;
 }
 
-.betters-popup {
+.betters-btn .popup-text {
   background: black;
   color: white;
 }
@@ -307,14 +301,12 @@ html, body {
     margin-bottom: 15px;
   }
   
-  .popup-container {
-    position: relative;
-    margin-top: 40px;
-  }
-  
   .popup-text {
+    position: static;
+    opacity: 1;
     width: 100%;
-    max-width: 300px;
+    margin-top: 10px;
+    transform: none !important;
   }
 }
 

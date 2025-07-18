@@ -88,6 +88,57 @@ html, body {
   max-width: 1200px;
 }
 
+/* Wspólny kontener dla popupów */
+.popup-container {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.popup-text {
+  position: absolute;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  width: 300px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 10;
+  transform: translateY(20px);
+}
+
+@keyframes slideFromLeft {
+  0% { 
+    opacity: 0;
+    transform: translateX(-100px) translateY(0);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes slideFromRight {
+  0% { 
+    opacity: 0;
+    transform: translateX(100px) translateY(0);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
 /* Ogólne style przycisków */
 .button-with-popup {
   position: relative;
@@ -118,37 +169,6 @@ html, body {
   padding: 2px 0;
 }
 
-.popup-text {
-  position: absolute;
-  font-weight: 700;
-  font-size: 16px;
-  padding: 12px 20px;
-  border-radius: 10px;
-  width: 300px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  text-transform: uppercase;
-  text-align: center;
-  z-index: 10;
-}
-
-.left-popup {
-  left: -320px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.right-popup {
-  right: -320px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.button-with-popup:hover .popup-text {
-  opacity: 1;
-}
-
 /* Style dla poszczególnych przycisków */
 
 /* LOGITECH */
@@ -165,7 +185,7 @@ html, body {
   background: #00FFFF; /* Kolor TECH */
 }
 
-.logitech-btn .popup-text {
+.logitech-popup {
   background: white;
   color: black;
 }
@@ -184,7 +204,7 @@ html, body {
   background: #DB6034;
 }
 
-.pirateswap-btn .popup-text {
+.pirateswap-popup {
   background: #1E1D22;
   color: white;
 }
@@ -205,7 +225,7 @@ html, body {
   background: #14A3C7;
 }
 
-.csgoskins-btn .popup-text {
+.csgoskins-popup {
   background: #0D2345;
   color: white;
 }
@@ -225,7 +245,7 @@ html, body {
   color: black;
 }
 
-.wkdzik-btn .popup-text {
+.wkdzik-popup {
   background: black;
   color: white;
 }
@@ -244,7 +264,7 @@ html, body {
   background: #E50420;
 }
 
-.betters-btn .popup-text {
+.betters-popup {
   background: black;
   color: white;
 }
@@ -301,12 +321,20 @@ html, body {
     margin-bottom: 15px;
   }
   
+  .popup-container {
+    position: relative;
+    top: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  
   .popup-text {
     position: static;
     opacity: 1;
     width: 100%;
     margin-top: 10px;
     transform: none !important;
+    animation: none !important;
   }
 }
 

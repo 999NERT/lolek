@@ -65,13 +65,13 @@ html, body {
 /* Nowy panel na opisy */
 .description-panel {
   position: fixed;
-  top: 30%;
+  top: 17%;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 70%;
   max-width: 800px;
-  height: 120px;
-  background: black;
+  height: 80px;
+  background: gray;
   border-radius: 15px;
   display: flex;
   justify-content: center;
@@ -84,12 +84,18 @@ html, body {
 }
 
 .panel-content {
-  color: white;
   font-weight: 700;
   font-size: 16px;
   text-align: center;
   text-transform: uppercase;
   width: 100%;
+}
+
+/* Większa czcionka dla wybranych przycisków */
+.logitech-btn .popup-text,
+.pirateswap-btn .popup-text,
+.wkdzik-btn .popup-text {
+  font-size: 18px;
 }
 
 /* Główna zawartość */
@@ -237,14 +243,19 @@ html, body {
   }
   
   .description-panel {
-    top: 25%;
     width: 90%;
     height: auto;
-    min-height: 100px;
+    min-height: 80px;
     padding: 15px;
   }
   
   .panel-content {
     font-size: 14px;
+  }
+  
+  .logitech-btn .popup-text,
+  .pirateswap-btn .popup-text,
+  .wkdzik-btn .popup-text {
+    font-size: 16px;
   }
 }

@@ -21,6 +21,11 @@
   <!-- Przezroczyste okienko -->
   <div class="overlay-frame"></div>
 
+  <!-- Nowy panel na opisy -->
+  <div class="description-panel">
+    <div class="panel-content"></div>
+  </div>
+
   <!-- Główna zawartość -->
   <div class="main-wrapper">
     <div class="buttons-container">
@@ -90,5 +95,21 @@
 
     <h1 class="bottom-title">ANGELKACS</h1>
   </div>
+
+  <script>
+    document.querySelectorAll('.button-with-popup').forEach(button => {
+      const popupText = button.querySelector('.popup-text');
+      const panelContent = document.querySelector('.panel-content');
+      
+      button.addEventListener('mouseenter', () => {
+        panelContent.innerHTML = popupText.innerHTML;
+        document.querySelector('.description-panel').style.opacity = '1';
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        document.querySelector('.description-panel').style.opacity = '0';
+      });
+    });
+  </script>
 </body>
 </html>

@@ -30,7 +30,7 @@
   <div class="main-wrapper">
     <div class="buttons-container">
       <!-- Przycisk 1 - LOGITECH -->
-      <div class="button-with-popup logitech-btn">
+      <div class="button-with-popup logitech-btn" data-color="#ffffff" data-text-color="#000000">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
         </a>
@@ -40,7 +40,7 @@
       </div>
 
       <!-- Przycisk 2 - PIRATESWAP -->
-      <div class="button-with-popup pirateswap-btn">
+      <div class="button-with-popup pirateswap-btn" data-color="#1E1D22" data-text-color="#ffffff">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
         </a>
@@ -50,7 +50,7 @@
       </div>
 
       <!-- Przycisk 3 - CSGOSKINS -->
-      <div class="button-with-popup csgoskins-btn">
+      <div class="button-with-popup csgoskins-btn" data-color="#0D2345" data-text-color="#ffffff">
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
         </a>
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Przycisk 4 - WKDZIK -->
-      <div class="button-with-popup wkdzik-btn">
+      <div class="button-with-popup wkdzik-btn" data-color="#000000" data-text-color="#ffffff">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
         </a>
@@ -70,7 +70,7 @@
       </div>
 
       <!-- Przycisk 5 - BETTERS -->
-      <div class="button-with-popup betters-btn">
+      <div class="button-with-popup betters-btn" data-color="#000000" data-text-color="#ffffff">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
         </a>
@@ -100,14 +100,28 @@
     document.querySelectorAll('.button-with-popup').forEach(button => {
       const popupText = button.querySelector('.popup-text');
       const panelContent = document.querySelector('.panel-content');
+      const descriptionPanel = document.querySelector('.description-panel');
       
       button.addEventListener('mouseenter', () => {
+        // Ustawienie pozycji panelu pod przyciskiem
+        const buttonRect = button.getBoundingClientRect();
+        descriptionPanel.style.left = `${buttonRect.left + window.scrollX}px`;
+        descriptionPanel.style.top = `${buttonRect.bottom + window.scrollY + 10}px`;
+        descriptionPanel.style.transform = 'translateX(0)';
+        
+        // Ustawienie koloru panelu zgodnego z przyciskiem
+        const bgColor = button.getAttribute('data-color');
+        const textColor = button.getAttribute('data-text-color');
+        descriptionPanel.style.backgroundColor = bgColor;
+        descriptionPanel.style.color = textColor;
+        
+        // Wstawienie treści
         panelContent.innerHTML = popupText.innerHTML;
-        document.querySelector('.description-panel').style.opacity = '1';
+        descriptionPanel.style.opacity = '1';
       });
       
       button.addEventListener('mouseleave', () => {
-        document.querySelector('.description-panel').style.opacity = '0';
+        descriptionPanel.style.opacity = '0';
       });
     });
   </script>

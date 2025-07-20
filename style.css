@@ -64,22 +64,30 @@ html, body {
 
 /* Nowy panel na opisy */
 .description-panel {
-  position: absolute;
-  width: 300px;
-  min-height: 80px;
-  background: rgba(255, 105, 180, 0.7);
-  border-radius: 10px;
-  padding: 15px;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 800px;
+  height: 120px;
+  background: black;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
   opacity: 0;
-  transition: opacity 0.3s ease, background-color 0.3s ease;
-  z-index: 10;
+  transition: opacity 0.3s ease;
+  z-index: 2;
   pointer-events: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .panel-content {
+  color: white;
   font-weight: 700;
   font-size: 16px;
+  text-align: center;
   text-transform: uppercase;
   width: 100%;
 }
@@ -229,13 +237,11 @@ html, body {
   }
   
   .description-panel {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 25%;
     width: 90%;
-    max-width: 300px;
-    opacity: 0.9 !important;
+    height: auto;
+    min-height: 100px;
+    padding: 15px;
   }
   
   .panel-content {

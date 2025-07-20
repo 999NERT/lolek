@@ -62,6 +62,36 @@ html, body {
   -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
 }
 
+/* Nowy panel na opisy */
+.description-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  height: 120px;
+  background: rgba(255, 105, 180, 0.7);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.panel-content {
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
 /* Główna zawartość */
 .main-wrapper {
   position: relative;
@@ -110,48 +140,9 @@ html, body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
-/* Opisy pod przyciskami */
+/* Opisy pod przyciskami (ukryte) */
 .popup-text {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 16px;
-  text-transform: uppercase;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 10;
-  margin-top: 15px;
-}
-
-.button-with-popup:hover .popup-text {
-  opacity: 1;
-}
-
-/* Animacje opisów */
-.logitech-btn .popup-text,
-.csgoskins-btn .popup-text,
-.betters-btn .popup-text {
-  animation: slideFromLeft 0.3s forwards;
-}
-
-.pirateswap-btn .popup-text,
-.wkdzik-btn .popup-text {
-  animation: slideFromRight 0.3s forwards;
-}
-
-@keyframes slideFromLeft {
-  0% { transform: translateX(-100px); opacity: 0; }
-  100% { transform: translateX(-50%); opacity: 1; }
-}
-
-@keyframes slideFromRight {
-  0% { transform: translateX(100px); opacity: 0; }
-  100% { transform: translateX(-50%); opacity: 1; }
+  display: none;
 }
 
 /* Style poszczególnych przycisków */
@@ -161,7 +152,6 @@ html, body {
 }
 .logitech-tech { color: #00FFFF !important; }
 .logitech-btn a:hover { background: #00FFFF; }
-.logitech-btn .popup-text { background: white; color: black; }
 
 .pirateswap-btn a {
   background: #1E1D22;
@@ -169,7 +159,6 @@ html, body {
 }
 .pirateswap-swap { color: #DB6034 !important; }
 .pirateswap-btn a:hover { background: #DB6034; }
-.pirateswap-btn .popup-text { background: #1E1D22; color: white; }
 
 .csgoskins-btn a {
   background: #0D2345;
@@ -177,7 +166,6 @@ html, body {
 }
 .blue-o { color: #4fc3f7 !important; }
 .csgoskins-btn a:hover { background: #14A3C7; }
-.csgoskins-btn .popup-text { background: #0D2345; color: white; }
 
 .wkdzik-btn a {
   background: black;
@@ -185,7 +173,6 @@ html, body {
 }
 .wkdzik-highlight { color: white !important; }
 .wkdzik-btn a:hover { background: white; color: black; }
-.wkdzik-btn .popup-text { background: black; color: white; }
 
 .betters-btn a {
   background: black;
@@ -193,7 +180,6 @@ html, body {
 }
 .betters-ters { color: #E50420 !important; }
 .betters-btn a:hover { background: #E50420; }
-.betters-btn .popup-text { background: black; color: white; }
 
 /* Wideo na środku */
 .center-video {
@@ -250,12 +236,14 @@ html, body {
     margin-bottom: 15px;
   }
   
-  .popup-text {
-    position: static;
-    width: 100%;
-    transform: none !important;
-    animation: none !important;
-    opacity: 1;
-    margin-top: 10px;
+  .description-panel {
+    width: 90%;
+    height: auto;
+    min-height: 100px;
+    padding: 15px;
+  }
+  
+  .panel-content {
+    font-size: 14px;
   }
 }

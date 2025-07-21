@@ -1,4 +1,3 @@
-/* Podstawowe style */
 * {
   margin: 0;
   padding: 0;
@@ -7,11 +6,11 @@
 
 html, body {
   height: 100%;
-  font-family: sans-serif;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 800;
   overflow: hidden;
 }
 
-/* Tło wideo */
 .video-background {
   position: fixed;
   top: 0;
@@ -29,7 +28,6 @@ html, body {
   transform: scale(1.2);
 }
 
-/* Efekt zamrożenia */
 .freeze-overlay {
   position: fixed;
   top: 0;
@@ -48,7 +46,6 @@ html, body {
   100% { opacity: 1; }
 }
 
-/* Przezroczyste okienko */
 .overlay-frame {
   position: fixed;
   top: 0;
@@ -62,7 +59,6 @@ html, body {
   -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
 }
 
-/* Nowy panel na opisy */
 .description-panel {
   position: fixed;
   top: 16%;
@@ -85,7 +81,7 @@ html, body {
 }
 
 .panel-content {
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
   text-transform: uppercase;
   width: 100%;
@@ -94,16 +90,14 @@ html, body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
-/* Większa czcionka dla przycisków 3 i 5 */
 .large-text-other {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
-/* Główna zawartość */
 .main-wrapper {
   position: relative;
   z-index: 1;
@@ -117,7 +111,6 @@ html, body {
   color: white;
 }
 
-/* Przyciski */
 .buttons-container {
   display: flex;
   justify-content: center;
@@ -136,7 +129,7 @@ html, body {
 .button-with-popup a {
   display: inline-block;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 22px;
   padding: 10px 20px;
   border-radius: 30px;
@@ -154,16 +147,14 @@ html, body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
-/* Opisy pod przyciskami (ukryte) */
 .popup-text {
   display: none;
-  font-weight: 700;
+  font-weight: 800;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
-/* Style poszczególnych przycisków */
 .logitech-btn a {
   background: white;
   color: white;
@@ -199,7 +190,6 @@ html, body {
 .betters-ters { color: #E50420 !important; }
 .betters-btn a:hover { background: #E50420; }
 
-/* Wideo na środku */
 .center-video {
   position: absolute;
   top: 50%;
@@ -226,7 +216,6 @@ html, body {
   height: 100%;
 }
 
-/* Tytuł na dole */
 .bottom-title {
   position: absolute;
   bottom: 20%;
@@ -236,16 +225,14 @@ html, body {
   text-align: center;
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  font-weight: 700;
+  font-weight: 800;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
 }
 
-/* Kolory tekstu */
 .yellow-text { color: #FFD700; }
 .green-text { color: #00FF00; }
 
-/* Responsywność */
 @media (max-width: 768px) {
   .buttons-container {
     flex-direction: column;
@@ -268,6 +255,6 @@ html, body {
   }
   
   .large-text-other {
-    font-size: 18px;
+    font-size: 16px;
   }
 }

@@ -91,14 +91,13 @@ html, body {
   width: 100%;
 }
 
-/* Style dla konkretnych przycisków */
-.logitech-popup,
-.pirateswap-popup,
-.wkdzik-popup {
+/* Większa czcionka dla wybranych przycisków */
+.large-text {
   font-size: 18px;
 }
 
-.logitech-popup {
+/* Styl dla przycisku Logitech */
+.logitech-btn .large-text {
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -259,9 +258,7 @@ html, body {
     font-size: 14px;
   }
   
-  .logitech-popup,
-  .pirateswap-popup,
-  .wkdzik-popup {
+  .large-text {
     font-size: 16px;
   }
 }

@@ -70,7 +70,7 @@
       </div>
 
       <!-- Przycisk 5 - BETTERS -->
-      <div class="button-with-popup betters-btn" data-panel-color="black" data-text-color="white">
+      <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
         </a>
@@ -116,13 +116,11 @@
         document.getElementById('panelContent').style.color = textColor;
         showTextInPanel(popupText.innerHTML);
         
-        // Dodatkowe style dla przycisku 1 (Logitech)
-        if (button.classList.contains('logitech-btn')) {
-          document.getElementById('panelContent').classList.add('large-text-logitech');
-        } else if (button.classList.contains('pirateswap-btn') || button.classList.contains('wkdzik-btn')) {
+        // Dodatkowe style dla przycisków 3 i 5 (większa czcionka)
+        if (button.classList.contains('csgoskins-btn') || button.classList.contains('betters-btn')) {
           document.getElementById('panelContent').classList.add('large-text-other');
-        } else {
-          document.getElementById('panelContent').className = 'panel-content';
+        } else if (button.classList.contains('logitech-btn') || button.classList.contains('pirateswap-btn') || button.classList.contains('wkdzik-btn')) {
+          document.getElementById('panelContent').classList.add('panel-content');
         }
       });
       

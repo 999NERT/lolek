@@ -85,15 +85,25 @@ html, body {
 }
 
 .panel-content {
-  font-weight: 700;
+  font-weight: 900; /* Pogrubienie tekstu */
   text-align: center;
   text-transform: uppercase;
   width: 100%;
 }
 
-/* Większa czcionka dla przycisku 1 */
-.large-text {
-  font-size: 18px;
+/* Większa czcionka dla przycisku 1 (Logitech) */
+.large-text-logitech {
+  font-size: 22px;
+  font-weight: 900;
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+/* Większa czcionka dla PirateSwap i WKDZIK */
+.large-text-other {
+  font-size: 22px;
+  font-weight: 900;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -254,7 +264,8 @@ html, body {
     font-size: 14px;
   }
   
-  .large-text {
-    font-size: 16px;
+  .large-text-logitech,
+  .large-text-other {
+    font-size: 18px;
   }
 }

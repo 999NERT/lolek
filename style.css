@@ -91,13 +91,9 @@ html, body {
   width: 100%;
 }
 
-/* Większa czcionka dla wybranych przycisków */
-.large-text {
+/* Większa czcionka tylko dla przycisku Logitech */
+.logitech-popup {
   font-size: 18px;
-}
-
-/* Styl dla przycisku Logitech */
-.logitech-btn .large-text {
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -258,7 +254,7 @@ html, body {
     font-size: 14px;
   }
   
-  .large-text {
+  .logitech-popup {
     font-size: 16px;
   }
 }

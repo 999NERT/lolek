@@ -89,18 +89,12 @@ html, body {
   text-align: center;
   text-transform: uppercase;
   width: 100%;
-}
-
-/* Większa czcionka dla przycisku 1 (Logitech) */
-.large-text-logitech {
-  font-size: 22px;
-  font-weight: 700;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
-/* Większa czcionka dla PirateSwap i WKDZIK */
+/* Większa czcionka dla przycisków 3 i 5 */
 .large-text-other {
   font-size: 22px;
   font-weight: 700;
@@ -148,6 +142,9 @@ html, body {
   border-radius: 30px;
   min-width: 140px;
   transition: all 0.3s ease;
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
 .button-text {
@@ -161,6 +158,9 @@ html, body {
 .popup-text {
   display: none;
   font-weight: 700;
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
 /* Style poszczególnych przycisków */
@@ -193,7 +193,7 @@ html, body {
 .wkdzik-btn a:hover { background: white; color: black; }
 
 .betters-btn a {
-  background: black;
+  background: #262D3A;
   color: white;
 }
 .betters-ters { color: #E50420 !important; }
@@ -237,6 +237,8 @@ html, body {
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   font-weight: 700;
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
+  text-stroke: 0.5px rgba(0,0,0,0.4);
 }
 
 /* Kolory tekstu */
@@ -265,7 +267,6 @@ html, body {
     font-size: 14px;
   }
   
-  .large-text-logitech,
   .large-text-other {
     font-size: 18px;
   }

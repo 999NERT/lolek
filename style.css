@@ -7,7 +7,6 @@
 
 html, body {
   height: 100%;
-  font-family: 'Poppins', sans-serif;
   overflow: hidden;
 }
 
@@ -85,7 +84,8 @@ html, body {
 }
 
 .panel-content {
-  font-weight: 900; /* Pogrubienie tekstu */
+  font-family: 'MySims Racing DS Large', sans-serif;
+  font-weight: normal;
   text-align: center;
   text-transform: uppercase;
   width: 100%;
@@ -94,7 +94,7 @@ html, body {
 /* Większa czcionka dla przycisku 1 (Logitech) */
 .large-text-logitech {
   font-size: 22px;
-  font-weight: 900;
+  font-family: 'MySims Racing DS Large', sans-serif;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -103,7 +103,7 @@ html, body {
 /* Większa czcionka dla PirateSwap i WKDZIK */
 .large-text-other {
   font-size: 22px;
-  font-weight: 900;
+  font-family: 'MySims Racing DS Large', sans-serif;
   -webkit-text-stroke: 0.5px rgba(0,0,0,0.4);
   text-stroke: 0.5px rgba(0,0,0,0.4);
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -142,7 +142,8 @@ html, body {
 .button-with-popup a {
   display: inline-block;
   text-decoration: none;
-  font-weight: 700;
+  font-family: 'Gimbot', sans-serif;
+  font-weight: normal;
   font-size: 22px;
   padding: 10px 20px;
   border-radius: 30px;
@@ -160,6 +161,7 @@ html, body {
 /* Opisy pod przyciskami (ukryte) */
 .popup-text {
   display: none;
+  font-family: 'MySims Racing DS Large', sans-serif;
 }
 
 /* Style poszczególnych przycisków */
@@ -236,6 +238,7 @@ html, body {
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   font-weight: 700;
+  font-family: 'Gimbot', sans-serif;
 }
 
 /* Kolory tekstu */

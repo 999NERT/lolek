@@ -118,9 +118,11 @@
         
         // Dodatkowe style dla przycisku 1 (Logitech)
         if (button.classList.contains('logitech-btn')) {
-          document.getElementById('panelContent').classList.add('large-text');
+          document.getElementById('panelContent').classList.add('large-text-logitech');
+        } else if (button.classList.contains('pirateswap-btn') || button.classList.contains('wkdzik-btn')) {
+          document.getElementById('panelContent').classList.add('large-text-other');
         } else {
-          document.getElementById('panelContent').classList.remove('large-text');
+          document.getElementById('panelContent').className = 'panel-content';
         }
       });
       

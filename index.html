@@ -5,31 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AngelkaCSS</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Tło wideo YouTube -->
   <div class="video-background">
-    <iframe 
-      src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" 
-      frameborder="0" 
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen>
-    </iframe>
+    <iframe src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
     <div class="freeze-overlay"></div>
   </div>
 
-  <!-- Przezroczyste okienko -->
   <div class="overlay-frame"></div>
 
-  <!-- Nowy panel na opisy -->
   <div class="description-panel">
     <div class="panel-content" id="panelContent"></div>
   </div>
 
-  <!-- Główna zawartość -->
   <div class="main-wrapper">
     <div class="buttons-container">
-      <!-- Przycisk 1 - LOGITECH -->
       <div class="button-with-popup logitech-btn" data-panel-color="white" data-text-color="black">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
@@ -39,7 +30,6 @@
         </div>
       </div>
 
-      <!-- Przycisk 2 - PIRATESWAP -->
       <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
@@ -49,7 +39,6 @@
         </div>
       </div>
 
-      <!-- Przycisk 3 - CSGOSKINS -->
       <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
@@ -59,7 +48,6 @@
         </div>
       </div>
 
-      <!-- Przycisk 4 - WKDZIK -->
       <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
@@ -69,7 +57,6 @@
         </div>
       </div>
 
-      <!-- Przycisk 5 - BETTERS -->
       <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
@@ -80,16 +67,9 @@
       </div>
     </div>
 
-    <!-- Wideo na środku -->
     <div class="center-video">
       <div class="video-container">
-        <iframe 
-          src="https://www.youtube.com/embed/DjwxqjaJ8Zo?rel=0" 
-          title="YouTube video player" 
-          frameborder="0" 
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
+        <iframe src="https://www.youtube.com/embed/DjwxqjaJ8Zo?rel=0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
 
@@ -97,14 +77,12 @@
   </div>
 
   <script>
-    // Funkcja do wyświetlania tekstu w panelu
     function showTextInPanel(text) {
       const panelContent = document.getElementById('panelContent');
       panelContent.innerHTML = text;
       document.querySelector('.description-panel').style.opacity = '1';
     }
 
-    // Obsługa przycisków
     document.querySelectorAll('.button-with-popup').forEach(button => {
       const popupText = button.querySelector('.popup-text');
       const panelColor = button.getAttribute('data-panel-color');
@@ -116,11 +94,10 @@
         document.getElementById('panelContent').style.color = textColor;
         showTextInPanel(popupText.innerHTML);
         
-        // Dodatkowe style dla przycisków 3 i 5 (większa czcionka)
         if (button.classList.contains('csgoskins-btn') || button.classList.contains('betters-btn')) {
           document.getElementById('panelContent').classList.add('large-text-other');
-        } else if (button.classList.contains('logitech-btn') || button.classList.contains('pirateswap-btn') || button.classList.contains('wkdzik-btn')) {
-          document.getElementById('panelContent').classList.add('panel-content');
+        } else {
+          document.getElementById('panelContent').className = 'panel-content';
         }
       });
       
@@ -129,7 +106,6 @@
       });
     });
 
-    // Funkcja do edycji tekstu
     document.querySelectorAll('.editable-text').forEach(element => {
       element.addEventListener('dblclick', function() {
         const currentText = this.innerHTML;
@@ -146,13 +122,10 @@
         input.addEventListener('blur', function() {
           const newText = this.value;
           element.innerHTML = newText;
-          
-          // Zapis do localStorage
           localStorage.setItem(textId, newText);
         });
       });
       
-      // Wczytanie zapisanego tekstu
       const textId = element.getAttribute('data-text-id');
       const savedText = localStorage.getItem(textId);
       if (savedText) {

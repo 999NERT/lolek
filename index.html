@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@800&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Tło wideo -->
   <div class="video-background">
     <iframe src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
     <div class="freeze-overlay"></div>
@@ -21,6 +22,7 @@
 
   <div class="main-wrapper">
     <div class="buttons-container">
+      <!-- Przycisk 1 - LOGITECH (domyślna wielkość czcionki) -->
       <div class="button-with-popup logitech-btn" data-panel-color="white" data-text-color="black">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
@@ -30,6 +32,7 @@
         </div>
       </div>
 
+      <!-- Przycisk 2 - PIRATESWAP (domyślna wielkość czcionki) -->
       <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
@@ -39,6 +42,7 @@
         </div>
       </div>
 
+      <!-- Przycisk 3 - CSGOSKINS (zmniejszona czcionka 19px) -->
       <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
@@ -48,6 +52,7 @@
         </div>
       </div>
 
+      <!-- Przycisk 4 - WKDZIK (domyślna wielkość czcionki) -->
       <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
@@ -57,6 +62,7 @@
         </div>
       </div>
 
+      <!-- Przycisk 5 - BETTERS (zmniejszona czcionka 19px) -->
       <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
@@ -95,9 +101,9 @@
         showTextInPanel(popupText.innerHTML);
         
         if (button.classList.contains('csgoskins-btn') || button.classList.contains('betters-btn')) {
-          document.getElementById('panelContent').classList.add('large-text-other');
+          document.getElementById('panelContent').classList.add('smaller-text');
         } else {
-          document.getElementById('panelContent').className = 'panel-content';
+          document.getElementById('panelContent').classList.remove('smaller-text');
         }
       });
       

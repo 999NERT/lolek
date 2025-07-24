@@ -1,137 +1,187 @@
+/* Reset & fonts */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: 'Titillium Web', sans-serif;
+}
 
-body, html {
+/* Video background */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+}
+.video-background iframe {
   width: 100%;
   height: 100%;
-  font-family: 'Titillium Web', sans-serif;
-  background-color: #111;
-  color: white;
+  object-fit: cover;
+  transform: scale(1.2);
+}
+.freeze-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  opacity: 0;
+  animation: freeze 6s forwards;
+  z-index: -1;
+}
+@keyframes freeze {
+  0%, 95% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
-.main-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 50px;
-  text-align: center;
+/* Overlay mask */
+.overlay-frame {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,0) 200px, rgba(0,0,0,1) 500px);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,0) 200px, rgba(0,0,0,1) 500px);
+  z-index: -1;
 }
 
-.buttons-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 1000px;
-}
-
-.button-with-popup {
-  text-align: center;
-  position: relative;
-}
-
-.button-with-popup a {
-  text-decoration: none;
-  font-weight: 900;
-  font-size: 24px; /* zwiększona o 2px */
-  padding: 14px 28px;
-  border-radius: 30px;
-  display: inline-block;
-  min-width: 160px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.button-text {
-  font-weight: 900;
-}
-
-/* Panele opisowe */
+/* Panel */
 .description-panel {
-  margin-top: 10px;
-  background-color: #333;
-  border-radius: 10px;
-  padding: 10px 15px;
-  max-width: 250px;
-  margin-inline: auto;
+  position: fixed;
+  top: 16%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 800px;
+  background: gray;
+  border-radius: 15px;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  text-align: center;
 }
-
 .panel-content {
   font-family: 'Paytone One', sans-serif;
   font-weight: 900;
   text-transform: uppercase;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
-
 .large-text {
   font-size: 24px;
 }
-
-.custom-smaller-text .large-text {
-  font-size: 22px !important; /* zmniejszona o 2px dla opisów 1, 3, 5 */
+.small-text {
+  font-size: 22px;
 }
 
-/* Stylizacja kolorystyczna przycisków */
-.logitech-btn a {
-  background-color: white;
-  color: black;
+/* Buttons */
+.main-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
 }
-.logitech-btn a:hover {
-  background-color: #00FFFF;
-  color: black;
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
 }
-
-.pirateswap-btn a {
-  background-color: #1E1D22;
+.button-with-popup a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 26px; /* zwiększone o 2 */
+  padding: 14px 28px;
+  border-radius: 30px;
+  min-width: 160px;
+  height: 60px;
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
-.pirateswap-btn a:hover {
-  background-color: #DB6034;
-}
-
-.csgoskins-btn a {
-  background-color: #0D2345;
-}
-.csgoskins-btn a:hover {
-  background-color: #14A3C7;
-}
-
-.wkdzik-btn a {
-  background-color: black;
-}
-.wkdzik-btn a:hover {
-  background-color: white;
-  color: black;
-}
-
-.betters-btn a {
-  background-color: #262D3A;
-}
-.betters-btn a:hover {
-  background-color: #E50420;
+.button-text {
+  font-weight: 900;
 }
 
-/* Responsive */
+/* Popup text */
+.popup-text {
+  display: none;
+  font-weight: 900;
+}
+
+/* Button styles */
+.logitech-btn a { background: white; color: black; }
+.logitech-btn a:hover { background: #00FFFF; }
+.logitech-tech { color: #00FFFF !important; }
+
+.pirateswap-btn a { background: #1E1D22; color: white; }
+.pirateswap-btn a:hover { background: #DB6034; }
+.pirateswap-swap { color: #DB6034 !important; }
+
+.csgoskins-btn a { background: #0D2345; color: white; }
+.csgoskins-btn a:hover { background: #14A3C7; }
+.blue-o { color: #4fc3f7 !important; }
+
+.wkdzik-btn a { background: black; color: white; }
+.wkdzik-btn a:hover { background: white; color: black; }
+.wkdzik-highlight { color: white !important; }
+
+.betters-btn a { background: #262D3A; color: white; }
+.betters-btn a:hover { background: #E50420; }
+.betters-ters { color: #E50420 !important; }
+
+.center-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+}
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+.video-container iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* Title */
+.bottom-title {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* Helpers */
+.yellow-text { color: #FFD700; }
+.green-text { color: #00FF00; }
+
 @media (max-width: 768px) {
   .button-with-popup a {
-    font-size: 20px;
-    padding: 12px 20px;
+    font-size: 22px;
+    padding: 12px 24px;
   }
-
-  .large-text {
-    font-size: 20px;
-  }
-
-  .custom-smaller-text .large-text {
-    font-size: 18px !important;
-  }
+  .large-text { font-size: 20px; }
+  .small-text { font-size: 18px; }
 }

@@ -3,109 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AngelkaCSS</title>
+  <title>Angelka Buttons</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&family=Paytone+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="video-background">
-    <iframe src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
-    <div class="freeze-overlay"></div>
+
+  <div class="description-panel" id="descriptionPanel">
+    <p id="panelText">Opis pojawi się tutaj...</p>
   </div>
 
-  <div class="overlay-frame"></div>
-
-  <div class="description-panel">
-    <div class="panel-content" id="panelContent"></div>
-  </div>
-
-  <div class="main-wrapper">
-    <div class="buttons-container">
-      <!-- LOGITECH -->
-      <div class="button-with-popup logitech-btn" data-panel-color="white" data-text-color="black">
-        <a href="#" target="_blank" rel="noopener">
-          <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
-        </a>
-        <div class="popup-text editable-text" data-text-id="logitech-text">
-          -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
-        </div>
-      </div>
-
-      <!-- PIRATESWAP -->
-      <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
-        <a href="#" target="_blank" rel="noopener">
-          <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
-        </a>
-        <div class="popup-text editable-text" data-text-id="pirateswap-text">
-          CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
-        </div>
-      </div>
-
-      <!-- CSGOSKINS -->
-      <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
-        <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
-          <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
-        </a>
-        <div class="popup-text editable-text" data-text-id="csgoskins-text">
-          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
-        </div>
-      </div>
-
-      <!-- WKDZIK -->
-      <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
-        <a href="#" target="_blank" rel="noopener">
-          <span class="button-text">WKDZIK</span>
-        </a>
-        <div class="popup-text editable-text" data-text-id="wkdzik-text">
-          CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
-        </div>
-      </div>
-
-      <!-- BETTERS -->
-      <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
-        <a href="#" target="_blank" rel="noopener">
-          <span class="button-text">BET<span class="betters-ters">TERS</span></span>
-        </a>
-        <div class="popup-text editable-text" data-text-id="betters-text">
-          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. KLIKAJĄC TU OTRZYMASZ PODWYŻSZONY FREEBET <span class="betters-ters">35 PLN</span>
-        </div>
-      </div>
+  <div class="buttons-container">
+    <div class="button-with-popup logitech" data-color="white" data-text="black" data-textsize="large">
+      <a href="#"><span>LOGITECH</span></a>
+      <div class="description" data-text="ZNIŻKA -5% KOD: ANGELKACS"></div>
     </div>
 
-    <div class="center-video">
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/DjwxqjaJ8Zo?rel=0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-      </div>
+    <div class="button-with-popup pirateswap" data-color="#1E1D22" data-text="white" data-textsize="large">
+      <a href="#"><span>PIRATESWAP</span></a>
+      <div class="description" data-text='KOD "ANGELKACS" – +35% DO DOŁADOWANIA'></div>
     </div>
 
-    <h1 class="bottom-title">ANGELKACS</h1>
+    <div class="button-with-popup csgoskins" data-color="#0D2345" data-text="white" data-textsize="small">
+      <a href="#"><span>CSGOSKINS</span></a>
+      <div class="description" data-text='20 ZŁ Z KODEM "ANGELKACS" – WYGRYWAJ SKINY ZA 200 PLN'></div>
+    </div>
+
+    <div class="button-with-popup wkdzik" data-color="black" data-text="white" data-textsize="large">
+      <a href="#"><span>WK DZIK</span></a>
+      <div class="description" data-text='KOD "ANGELKA" – ZNIŻKA -5%'></div>
+    </div>
+
+    <div class="button-with-popup betters" data-color="#262D3A" data-text="white" data-textsize="large">
+      <a href="#"><span>BETTERS</span></a>
+      <div class="description" data-text='FREEBET 35 ZŁ DLA NOWYCH UŻYTKOWNIKÓW'></div>
+    </div>
   </div>
 
   <script>
-    function showTextInPanel(text, isSmall) {
-      const panelContent = document.getElementById('panelContent');
-      panelContent.innerHTML = text;
-      panelContent.className = 'panel-content ' + (isSmall ? 'small-text' : 'large-text');
-      document.querySelector('.description-panel').style.opacity = '1';
-    }
+    const buttons = document.querySelectorAll('.button-with-popup');
+    const panel = document.getElementById('descriptionPanel');
+    const panelText = document.getElementById('panelText');
 
-    document.querySelectorAll('.button-with-popup').forEach(button => {
-      const popupText = button.querySelector('.popup-text');
-      const panelColor = button.getAttribute('data-panel-color');
-      const textColor = button.getAttribute('data-text-color');
-      const descriptionPanel = document.querySelector('.description-panel');
-      const isSmall = button.classList.contains('csgoskins-btn');
-
+    buttons.forEach(button => {
       button.addEventListener('mouseenter', () => {
-        descriptionPanel.style.backgroundColor = panelColor;
-        document.getElementById('panelContent').style.color = textColor;
-        showTextInPanel(popupText.innerHTML, isSmall);
+        const text = button.querySelector('.description').dataset.text;
+        const bg = button.dataset.color;
+        const color = button.dataset.text;
+        const size = button.dataset.textsize;
+
+        panel.style.backgroundColor = bg;
+        panelText.style.color = color;
+        panelText.style.fontSize = size === "small" ? "20px" : "24px";
+        panelText.textContent = text;
+        panel.style.opacity = 1;
       });
 
       button.addEventListener('mouseleave', () => {
-        document.querySelector('.description-panel').style.opacity = '0';
+        panel.style.opacity = 0;
       });
     });
   </script>
+
 </body>
 </html>

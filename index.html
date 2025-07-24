@@ -22,7 +22,7 @@
 
   <div class="main-wrapper">
     <div class="buttons-container">
-      <!-- Przycisk 1 - LOGITECH (domyślna wielkość czcionki) -->
+      <!-- Przycisk 1 - LOGITECH (20px) -->
       <div class="button-with-popup logitech-btn" data-panel-color="white" data-text-color="black">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <!-- Przycisk 2 - PIRATESWAP (domyślna wielkość czcionki) -->
+      <!-- Przycisk 2 - PIRATESWAP (20px) -->
       <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <!-- Przycisk 3 - CSGOSKINS (zmniejszona czcionka 19px) -->
+      <!-- Przycisk 3 - CSGOSKINS (16px) -->
       <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <!-- Przycisk 4 - WKDZIK (domyślna wielkość czcionki) -->
+      <!-- Przycisk 4 - WKDZIK (20px) -->
       <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <!-- Przycisk 5 - BETTERS (zmniejszona czcionka 19px) -->
+      <!-- Przycisk 5 - BETTERS (16px) -->
       <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
@@ -101,14 +101,15 @@
         showTextInPanel(popupText.innerHTML);
         
         if (button.classList.contains('csgoskins-btn') || button.classList.contains('betters-btn')) {
-          document.getElementById('panelContent').classList.add('smaller-text');
+          document.getElementById('panelContent').classList.add('small-text');
         } else {
-          document.getElementById('panelContent').classList.remove('smaller-text');
+          document.getElementById('panelContent').classList.add('large-text');
         }
       });
       
       button.addEventListener('mouseleave', () => {
         document.querySelector('.description-panel').style.opacity = '0';
+        document.getElementById('panelContent').classList.remove('small-text', 'large-text');
       });
     });
 

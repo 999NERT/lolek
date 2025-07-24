@@ -134,7 +134,7 @@ html, body {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-family: 'Paytone One', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-weight: 400;
   font-size: 24px;
   padding: 12px 24px;
@@ -150,7 +150,7 @@ html, body {
 
 .button-text {
   display: inline-block;
-  font-family: 'Paytone One', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   -webkit-text-stroke: 1px rgba(0,0,0,0.6);
   text-stroke: 1px rgba(0,0,0,0.6);
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -233,7 +233,7 @@ html, body {
   bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Paytone One', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 2.5rem;
   text-align: center;
   color: white;

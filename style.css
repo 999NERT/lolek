@@ -79,10 +79,16 @@ html, body {
 
 .panel-content {
   font-family: 'Paytone One', sans-serif;
-  font-weight: 600;
+  font-weight: 900; /* BLACK */
   text-align: center;
   text-transform: uppercase;
   width: 100%;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.popup-text {
+  display: none;
+  font-weight: 900; /* BLACK */
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
@@ -130,8 +136,8 @@ html, body {
   align-items: center;
   text-decoration: none;
   font-family: 'Titillium Web', sans-serif;
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 900; /* BLACK */
+  font-size: 22px; /* zmniejszony o 2px */
   padding: 14px 28px;
   border-radius: 30px;
   min-width: 160px;
@@ -142,13 +148,7 @@ html, body {
 
 .button-text {
   display: inline-block;
-  font-weight: 600;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.popup-text {
-  display: none;
-  font-weight: 600;
+  font-weight: 900;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
@@ -219,7 +219,7 @@ html, body {
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Titillium Web', sans-serif;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 3rem;
   text-align: center;
   color: white;
@@ -255,7 +255,7 @@ html, body {
   }
 
   .button-with-popup a {
-    font-size: 20px;
+    font-size: 18px;
     padding: 12px 24px;
     height: 55px;
   }

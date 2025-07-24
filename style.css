@@ -134,8 +134,8 @@ html, body {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-family: 'Luckiest Guy', cursive;
-  font-weight: 400;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
   font-size: 24px;
   padding: 12px 24px;
   border-radius: 30px;
@@ -150,7 +150,8 @@ html, body {
 
 .button-text {
   display: inline-block;
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
   -webkit-text-stroke: 1px rgba(0,0,0,0.6);
   text-stroke: 1px rgba(0,0,0,0.6);
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -233,12 +234,12 @@ html, body {
   bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
   font-size: 2.5rem;
   text-align: center;
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  font-weight: 400;
   -webkit-text-stroke: 1px rgba(0,0,0,0.6);
   text-stroke: 1px rgba(0,0,0,0.6);
   letter-spacing: 1px;

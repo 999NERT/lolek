@@ -64,7 +64,7 @@ html, body {
   transform: translateX(-50%);
   width: 70%;
   max-width: 800px;
-  height: 100px;
+  height: auto;
   background: gray;
   border-radius: 15px;
   display: flex;
@@ -113,11 +113,11 @@ html, body {
 .buttons-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 20px;
   margin-bottom: 40px;
-  width: 90%;
-  max-width: 1200px;
+  width: 100%;
 }
 
 .button-with-popup {
@@ -132,7 +132,7 @@ html, body {
   text-decoration: none;
   font-family: 'Titillium Web', sans-serif;
   font-weight: bold;
-  font-size: 26px;
+  font-size: 24px;
   padding: 14px 28px;
   border-radius: 30px;
   min-width: 160px;
@@ -256,7 +256,7 @@ html, body {
   }
 
   .button-with-popup a {
-    font-size: 22px;
+    font-size: 20px;
     padding: 12px 24px;
     height: 55px;
   }

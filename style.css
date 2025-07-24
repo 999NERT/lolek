@@ -4,263 +4,134 @@
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-.video-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
-  overflow: hidden;
-}
-
-.video-background iframe {
+body, html {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: scale(1.2);
+  font-family: 'Titillium Web', sans-serif;
+  background-color: #111;
+  color: white;
 }
 
-.freeze-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.7);
-  opacity: 0;
-  animation: freeze 6s forwards;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes freeze {
-  0%, 95% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-.overlay-frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: -1;
-  pointer-events: none;
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
-  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
-}
-
-.description-panel {
-  position: fixed;
-  top: 16%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  max-width: 800px;
-  background: gray;
-  border-radius: 15px;
+.main-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  pointer-events: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  justify-content: flex-start;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.button-with-popup {
+  text-align: center;
+  position: relative;
+}
+
+.button-with-popup a {
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 24px; /* zwiększona o 2px */
+  padding: 14px 28px;
+  border-radius: 30px;
+  display: inline-block;
+  min-width: 160px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.button-text {
+  font-weight: 900;
+}
+
+/* Panele opisowe */
+.description-panel {
+  margin-top: 10px;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 10px 15px;
+  max-width: 250px;
+  margin-inline: auto;
 }
 
 .panel-content {
   font-family: 'Paytone One', sans-serif;
-  font-weight: 900; /* BLACK */
-  text-align: center;
+  font-weight: 900;
   text-transform: uppercase;
-  width: 100%;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.popup-text {
-  display: none;
-  font-weight: 900; /* BLACK */
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .large-text {
   font-size: 24px;
-  line-height: 1.3;
 }
 
-.small-text {
-  font-size: 22px;
-  line-height: 1.3;
+.custom-smaller-text .large-text {
+  font-size: 22px !important; /* zmniejszona o 2px dla opisów 1, 3, 5 */
 }
 
-.main-wrapper {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 80px;
-  color: white;
-}
-
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 40px;
-  width: 100%;
-}
-
-.button-with-popup {
-  position: relative;
-  text-align: center;
-}
-
-.button-with-popup a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 900; /* BLACK */
-  font-size: 22px; /* zmniejszony o 2px */
-  padding: 14px 28px;
-  border-radius: 30px;
-  min-width: 160px;
-  height: 60px;
-  transition: all 0.3s ease;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.button-text {
-  display: inline-block;
-  font-weight: 900;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
+/* Stylizacja kolorystyczna przycisków */
 .logitech-btn a {
-  background: white;
+  background-color: white;
   color: black;
 }
-.logitech-tech { color: #00FFFF !important; }
-.logitech-btn a:hover { background: #00FFFF; }
+.logitech-btn a:hover {
+  background-color: #00FFFF;
+  color: black;
+}
 
 .pirateswap-btn a {
-  background: #1E1D22;
-  color: white;
+  background-color: #1E1D22;
 }
-.pirateswap-swap { color: #DB6034 !important; }
-.pirateswap-btn a:hover { background: #DB6034; }
+.pirateswap-btn a:hover {
+  background-color: #DB6034;
+}
 
 .csgoskins-btn a {
-  background: #0D2345;
-  color: white;
+  background-color: #0D2345;
 }
-.blue-o { color: #4fc3f7 !important; }
-.csgoskins-btn a:hover { background: #14A3C7; }
+.csgoskins-btn a:hover {
+  background-color: #14A3C7;
+}
 
 .wkdzik-btn a {
-  background: black;
-  color: white;
+  background-color: black;
 }
-.wkdzik-highlight { color: white !important; }
-.wkdzik-btn a:hover { background: white; color: black; }
+.wkdzik-btn a:hover {
+  background-color: white;
+  color: black;
+}
 
 .betters-btn a {
-  background: #262D3A;
-  color: white;
+  background-color: #262D3A;
 }
-.betters-ters { color: #E50420 !important; }
-.betters-btn a:hover { background: #E50420; }
-
-.center-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 800px;
-  z-index: 1;
+.betters-btn a:hover {
+  background-color: #E50420;
 }
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.bottom-title {
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 900;
-  font-size: 3rem;
-  text-align: center;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.yellow-text { color: #FFD700; }
-.green-text { color: #00FF00; }
-
+/* Responsive */
 @media (max-width: 768px) {
-  .buttons-container {
-    flex-direction: column;
-    align-items: center;
+  .button-with-popup a {
+    font-size: 20px;
+    padding: 12px 20px;
   }
 
-  .button-with-popup {
-    margin-bottom: 20px;
-  }
-
-  .description-panel {
-    width: 90%;
-    height: auto;
-    min-height: 100px;
-    padding: 15px;
-  }
-
-  .panel-content, .large-text {
+  .large-text {
     font-size: 20px;
   }
 
-  .small-text {
-    font-size: 18px;
-  }
-
-  .button-with-popup a {
-    font-size: 18px;
-    padding: 12px 24px;
-    height: 55px;
-  }
-
-  .bottom-title {
-    font-size: 2.5rem;
+  .custom-smaller-text .large-text {
+    font-size: 18px !important;
   }
 }

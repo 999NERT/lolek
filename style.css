@@ -81,7 +81,7 @@ html, body { height: 100%; overflow: hidden; }
 /* PANEL OPISU – STATYCZNY W STRUMIENIU, NIE ZASŁANIA */
 .description-panel {
   width: min(90%, 900px);
-  min-height: 64px; /* rezerwuje miejsce -> brak skakania układu */
+  height: 80px; /* STAŁA WYSOKOŚĆ - zapobiega przemieszczaniu się elementów poniżej */
   margin: 8px auto 18px;
   padding: 14px 20px;
   background: rgba(0,0,0,0.55);
@@ -89,12 +89,20 @@ html, body { height: 100%; overflow: hidden; }
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   opacity: 0; transition: opacity 0.25s ease;
   pointer-events: none; /* nie przechwytuje klików */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .panel-content {
   font-family: 'Paytone One', sans-serif;
   font-weight: 900; text-align: center; text-transform: uppercase;
   width: 100%;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Ogranicz do 2 linii */
+  -webkit-box-orient: vertical;
 }
 .large-text { font-size: 22px; line-height: 1.3; }
 .small-text { font-size: 18px; line-height: 1.3; }
@@ -155,7 +163,10 @@ html, body { height: 100%; overflow: hidden; }
 /* RESPONSYWNOŚĆ */
 @media (max-width: 768px) {
   .buttons-container { flex-direction: column; gap: 16px; }
-  .description-panel { min-height: 56px; padding: 12px 14px; }
+  .description-panel { 
+    height: 70px; /* Mniejsza stała wysokość na mobile */
+    padding: 10px 14px; 
+  }
   .panel-content, .large-text { font-size: 18px; }
   .small-text { font-size: 16px; }
   .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }

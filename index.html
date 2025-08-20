@@ -8,13 +8,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&family=Paytone+One&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Wideo w tle -->
+  <!-- Tło YouTube -->
   <div class="video-background">
     <iframe src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
     <div class="freeze-overlay"></div>
   </div>
   <div class="overlay-frame"></div>
 
+  <!-- Wrapper -->
   <div class="main-wrapper">
     <!-- Przyciski sponsorów -->
     <div class="buttons-container">
@@ -46,20 +47,19 @@
       <button id="watchButton">Oglądaj teraz</button>
     </div>
 
-    <!-- Napis na dole -->
+    <!-- Tytuł na dole -->
     <h1 class="bottom-title">ANGELKACS</h1>
   </div>
 
   <!-- Skrypty -->
   <script>
+    // Automatyczne pobranie najnowszego filmu z RSS
     async function loadLatestVideo() {
       try {
-        const rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCb4KZzyxv9-PL_BcKOrpFyQ";
-        
-        // Proxy CORS
+        const rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCMYcjsl6ZzrN2xjG5dU6yKQ";
         const response = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(rssUrl));
         const data = await response.json();
-        
+
         const parser = new DOMParser();
         const xml = parser.parseFromString(data.contents, "application/xml");
 
@@ -68,22 +68,18 @@
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-        // Ustawienie miniaturki i przycisku
         const img = document.getElementById("latestThumbnail");
         const btn = document.getElementById("watchButton");
 
         img.src = thumbnailUrl;
-        btn.addEventListener("click", () => {
-          window.open(videoUrl, "_blank");
-        });
+        btn.onclick = () => window.open(videoUrl, "_blank");
       } catch (e) {
         console.error("Błąd wczytywania filmu:", e);
       }
     }
-
     loadLatestVideo();
 
-    // Obsługa panelu opisu przy przyciskach
+    // Panel opisów
     const buttons = document.querySelectorAll('.button-with-popup');
     const panel = document.querySelector('.description-panel');
     const panelContent = document.getElementById('panelContent');

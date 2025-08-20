@@ -97,12 +97,11 @@ html, body { height: 100%; overflow: hidden; }
 .latest-video-container {
   position: relative;
   width: min(80%, 800px);
-  margin: 0 auto 20px; /* MNIEJSZY MARGINES NA DOLE */
+  margin: 0 auto 0px; /* MNIEJSZY MARGINES NA DOLE */
   text-align: center;
-  border: 2px solid white;
   border-radius: 12px;
-  padding: 2px;
-  background: rgba(0,0,0,0.3);
+  padding: 5px;
+  background: red;
   box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 

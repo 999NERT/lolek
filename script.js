@@ -1,4 +1,4 @@
-// --- PANEL OPISU (fade-in bez zasłaniania czegokolwiek) ---
+// --- PANEL OPISU ---
 function showTextInPanel(html, isSmall) {
   const panelContent = document.getElementById('panelContent');
   panelContent.innerHTML = html;
@@ -24,22 +24,17 @@ document.querySelectorAll('.button-with-popup').forEach(button => {
   });
 });
 
-// --- ZOPTYMALIZOWANE ŁADOWANIE MINIATURKI ---
+// --- ŁADOWANIE MINIATURKI ---
 async function loadLatestVideo() {
-  const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ'; // @angelkacs
+  const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ';
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
 
   const img = document.getElementById('latestThumbnail');
   const btn = document.getElementById('watchButton');
-  const box = document.getElementById('latestBox');
-  const loading = box.querySelector('.loading');
   const err = document.getElementById('videoError');
 
   try {
-    // UKRYJ ŁADOWANIE OD RAZU
-    loading.style.display = 'none';
-    
     const res = await fetch(proxy);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const { contents } = await res.json();
@@ -48,7 +43,6 @@ async function loadLatestVideo() {
     const xml = parser.parseFromString(contents, 'application/xml');
     const entries = xml.getElementsByTagName('entry');
     
-    // Znajdź pierwszy film, który nie jest shortem
     let videoEntry = null;
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i];
@@ -78,7 +72,6 @@ async function loadLatestVideo() {
 
     btn.href = videoUrl;
     
-    // Ładuj od razu maxres bez pośrednich kroków
     const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     img.src = maxres;
     
@@ -88,7 +81,6 @@ async function loadLatestVideo() {
     };
     
     img.onerror = function() {
-      // Fallback jeśli maxres nie istnieje
       const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.src = hq;
     };
@@ -100,5 +92,64 @@ async function loadLatestVideo() {
   }
 }
 
-// Rozpocznij ładowanie od razu
-loadLatestVideo();
+// --- SPRAWDZANIE LIVE STREAMÓW ---
+async function checkStreamStatus() {
+  const twitchPanel = document.getElementById('twitchLivePanel');
+  const kickPanel = document.getElementById('kickLivePanel');
+
+  // Twitch API - wymaga Client-ID (to jest przykładowe podejście)
+  async function checkTwitch() {
+    try {
+      // To jest uproszczone - Twitch API wymaga autoryzacji
+      // W rzeczywistości potrzebowałbyś Client-ID i możliwe że OAuth
+      const response = await fetch('https://api.twitch.tv/helix/streams?user_login=angelkacs', {
+        headers: {
+          'Client-ID': 'twoj_client_id', // Wymaga prawdziwego Client-ID
+          'Authorization': 'Bearer twoj_token' // Wymaga tokena
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data && data.data.length > 0) {
+          twitchPanel.classList.add('live');
+          twitchPanel.querySelector('.live-text').textContent = 'LIVE';
+        }
+      }
+    } catch (error) {
+      console.log('Twitch API error:', error);
+    }
+  }
+
+  // Kick.com API - sprawdzenie czy stream jest live
+  async function checkKick() {
+    try {
+      const response = await fetch('https://kick.com/api/v2/channels/angelkacs');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.livestream && data.livestream.is_live) {
+          kickPanel.classList.add('live');
+          kickPanel.querySelector('.live-text').textContent = 'LIVE';
+        }
+      }
+    } catch (error) {
+      console.log('Kick API error:', error);
+    }
+  }
+
+  // Sprawdzaj co 60 sekund
+  setInterval(async () => {
+    await checkTwitch();
+    await checkKick();
+  }, 60000);
+
+  // Pierwsze sprawdzenie
+  await checkTwitch();
+  await checkKick();
+}
+
+// --- URUCHOMIENIE WSZYSTKIEGO ---
+document.addEventListener('DOMContentLoaded', () => {
+  loadLatestVideo();
+  checkStreamStatus();
+});

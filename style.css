@@ -20,7 +20,7 @@ html, body { height: 100%; overflow: hidden; }
   width: 100%; height: 100vh;
   display: flex; flex-direction: column;
   justify-content: flex-start; align-items: center;
-  padding: 90px 20px 20px; /* MNIEJSZY PADDING NA GÓRZE */
+  padding: 90px 20px 20px;
   color: white;
 }
 
@@ -64,17 +64,17 @@ html, body { height: 100%; overflow: hidden; }
 .betters-ters { color: #E50420 !important; }
 .betters-btn a:hover { background: #E50420; }
 
-/* PANEL OPISU – STATYCZNY W STRUMIENIU, NIE ZASŁANIA */
+/* PANEL OPISU */
 .description-panel {
   width: min(90%, 900px);
-  height: 80px; /* STAŁA WYSOKOŚĆ - zapobiega przemieszczaniu się elementów poniżej */
+  height: 80px;
   margin: 8px auto 18px;
   padding: 14px 20px;
   background: rgba(0,0,0,0.55);
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   opacity: 0; transition: opacity 0.25s ease;
-  pointer-events: none; /* nie przechwytuje klików */
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,17 +87,17 @@ html, body { height: 100%; overflow: hidden; }
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Ogranicz do 2 linii */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 .large-text { font-size: 22px; line-height: 1.3; }
 .small-text { font-size: 18px; line-height: 1.3; }
 
-/* OKNO NAJNOWSZEGO FILMU Z BIAŁYM OUTLINE */
+/* OKNO NAJNOWSZEGO FILMU */
 .latest-video-container {
   position: relative;
   width: min(80%, 800px);
-  margin: 0 auto 0px; /* MNIEJSZY MARGINES NA DOLE */
+  margin: 0 auto 0px;
   text-align: center;
   border-radius: 12px;
   padding: 5px;
@@ -112,11 +112,8 @@ html, body { height: 100%; overflow: hidden; }
   transform: scale(1);
   opacity: 1 !important;
 }
-.latest-video-container img.thumb-visible {
-  transform: scale(1);
-}
 
-/* PRZYCISK Z OBRAZKIEM YTCLICK - MNIEJSZY O POŁOWĘ */
+/* PRZYCISK Z OBRAZKIEM YTCLICK */
 .play-button {
   position: absolute; inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
@@ -138,7 +135,7 @@ html, body { height: 100%; overflow: hidden; }
 }
 
 .yt-click-image {
-  width: 50px; /* MNIEJSZA IKONA O POŁOWĘ */
+  width: 50px;
   height: auto;
   transition: all 0.3s ease;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
@@ -149,14 +146,21 @@ html, body { height: 100%; overflow: hidden; }
   filter: drop-shadow(0 4px 10px rgba(0,0,0,1));
 }
 
-/* NOWE PRZYCISKI STREAMINGOWE - POWIĘKSZONE I WYŚRODKOWANE */
+/* NOWE PRZYCISKI STREAMINGOWE Z PANELAMI LIVE */
 .stream-buttons-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 40px;
-  margin-top: 15px; /* MNIEJSZY MARGINES NA GÓRZE */
+  margin-top: 15px;
   width: 100%;
+}
+
+.stream-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .stream-button {
@@ -175,7 +179,46 @@ html, body { height: 100%; overflow: hidden; }
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* PRZYCISK TWITCH - FIOLETOWY JAK LOGO TWITCH */
+/* PANEL LIVE - KWADRATOWY */
+.live-panel {
+  width: 100px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ff4444;
+  transition: all 0.3s ease;
+}
+
+.live-panel.live {
+  background: rgba(255, 68, 68, 0.3);
+  border-color: #00ff00;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+.live-text {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  color: #ff4444;
+  text-transform: uppercase;
+}
+
+.live-panel.live .live-text {
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+  animation: pulseLive 1.5s infinite;
+}
+
+@keyframes pulseLive {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* PRZYCISK TWITCH */
 .twitch-btn {
   background: #9146FF;
   color: white;
@@ -185,7 +228,7 @@ html, body { height: 100%; overflow: hidden; }
   transform: scale(1.05);
 }
 
-/* PRZYCISK KICK - KOLOR JAK STRONA KICK.COM Z BIAŁYM TEKSTEM */
+/* PRZYCISK KICK */
 .kick-btn {
   background: #53FC18;
   color: white;
@@ -196,7 +239,7 @@ html, body { height: 100%; overflow: hidden; }
   transform: scale(1.05);
 }
 
-/* TYTUŁ - WYŚRODKOWANY */
+/* TYTUŁ */
 .bottom-title {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 600; 
@@ -219,14 +262,9 @@ html, body { height: 100%; overflow: hidden; }
   z-index: 4;
 }
 
-/* UKRYJ NAPIS ŁADOWANIA */
 .latest-video-container .loading {
   display: none !important;
 }
-
-/* DODATKOWE KOLORY TEKSTU */
-.yellow-text { color: #FFD700; }
-.green-text { color: #00FF00; }
 
 /* RESPONSYWNOŚĆ */
 @media (max-width: 768px) {
@@ -238,17 +276,12 @@ html, body { height: 100%; overflow: hidden; }
   .panel-content, .large-text { font-size: 18px; }
   .small-text { font-size: 16px; }
   .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }
-  .latest-video-container { 
-    width: 90%;
-    border-width: 1.5px;
-  }
-  .yt-click-image {
-    width: 40px; /* MNIEJSZA IKONA NA MOBILE */
-  }
+  .latest-video-container { width: 90%; }
+  .yt-click-image { width: 40px; }
   
   .stream-buttons-container {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
   
   .stream-button {
@@ -256,6 +289,15 @@ html, body { height: 100%; overflow: hidden; }
     padding: 16px 30px;
     height: 65px;
     min-width: 160px;
+  }
+  
+  .live-panel {
+    width: 80px;
+    height: 35px;
+  }
+  
+  .live-text {
+    font-size: 16px;
   }
   
   .bottom-title {
@@ -273,6 +315,15 @@ html, body { height: 100%; overflow: hidden; }
     min-width: 140px;
   }
   
+  .live-panel {
+    width: 70px;
+    height: 30px;
+  }
+  
+  .live-text {
+    font-size: 14px;
+  }
+  
   .bottom-title {
     font-size: 2rem;
   }
@@ -282,6 +333,6 @@ html, body { height: 100%; overflow: hidden; }
   }
   
   .main-wrapper {
-    padding: 80px 20px 15px; /* MNIEJSZE PADDING NA MOBILE */
+    padding: 80px 20px 15px;
   }
 }

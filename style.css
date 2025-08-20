@@ -56,45 +56,6 @@ html, body {
   mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
 }
 
-.description-panel {
-  position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  max-width: 800px;
-  background: gray;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  pointer-events: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.panel-content {
-  font-family: 'Paytone One', sans-serif;
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.large-text {
-  font-size: 26px;
-  line-height: 1.3;
-}
-
-.small-text {
-  font-size: 20px;
-  line-height: 1.3;
-}
-
 .main-wrapper {
   position: relative;
   z-index: 1;
@@ -150,6 +111,47 @@ html, body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
+/* === PANEL OPISU PRZENIESIONY NA DÓŁ === */
+.description-panel {
+  position: fixed;
+  bottom: 10%; /* zamiast top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 800px;
+  background: gray;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.panel-content {
+  font-family: 'Paytone One', sans-serif;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.large-text {
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.small-text {
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+/* === PRZYCISKI === */
 .logitech-btn a {
   background: white;
   color: black;
@@ -185,6 +187,7 @@ html, body {
 .betters-ters { color: #E50420 !important; }
 .betters-btn a:hover { background: #E50420; }
 
+/* === WIDEO I NAPIS === */
 .center-video {
   position: absolute;
   top: 50%;
@@ -213,7 +216,7 @@ html, body {
 
 .bottom-title {
   position: absolute;
-  bottom: 20%;
+  bottom: 3%; /* niżej, bo panel jest nad nim */
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Titillium Web', sans-serif;
@@ -227,21 +230,17 @@ html, body {
 .yellow-text { color: #FFD700; }
 .green-text { color: #00FF00; }
 
+/* === RESPONSYWNOŚĆ === */
 @media (max-width: 768px) {
   .buttons-container {
     flex-direction: column;
     align-items: center;
   }
 
-  .button-with-popup {
-    margin-bottom: 20px;
-  }
-
   .description-panel {
     width: 90%;
-    height: auto;
-    min-height: 100px;
     padding: 15px;
+    bottom: 15%;
   }
 
   .panel-content, .large-text {
@@ -259,6 +258,7 @@ html, body {
   }
 
   .bottom-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    bottom: 5%;
   }
 }

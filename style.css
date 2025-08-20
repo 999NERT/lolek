@@ -107,23 +107,37 @@ html, body { height: 100%; overflow: hidden; }
 .large-text { font-size: 22px; line-height: 1.3; }
 .small-text { font-size: 18px; line-height: 1.3; }
 
-/* OKNO NAJNOWSZEGO FILMU Z BIAŁYM OUTLINE */
+/* OKNO NAJNOWSZEGO FILMU Z POPRAWIONYM BIAŁYM OUTLINE */
 .latest-video-container {
   position: relative;
   width: min(80%, 800px);
   margin: 0 auto 26px;
   text-align: center;
-  border: 2px solid white; /* BIAŁY OUTLINE */
-  border-radius: 12px; /* DOPASOWANY BORDER RADIUS */
-  padding: 4px; /* ODSTĘP MIĘDZY OUTLINE A MINIATURKĄ */
-  background: rgba(0,0,0,0.3); /* TŁO DLA OUTLINE */
+  border-radius: 12px;
+  overflow: hidden; /* UKRYWA WYCHODZĄCE ELEMENTY */
 }
+
+.latest-video-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid white;
+  border-radius: 14px; /* TROSZKĘ WIĘKSZY RADIUS DLA OUTLINE */
+  pointer-events: none;
+  z-index: 2;
+}
+
 .latest-video-container img {
   width: 100%;
-  border-radius: 8px; /* MNIEJSZY BORDER RADIUS DOPASOWANY DO OUTLINE */
+  border-radius: 10px;
   display: block;
   opacity: 0; transform: scale(0.985);
   transition: opacity .5s ease, transform .5s ease;
+  position: relative;
+  z-index: 1;
 }
 .latest-video-container img.thumb-visible {
   opacity: 1; transform: scale(1);
@@ -140,7 +154,7 @@ html, body { height: 100%; overflow: hidden; }
   box-shadow: 0 6px 15px rgba(0,0,0,0.4);
   transition: all 0.3s ease;
   opacity: 0;
-  z-index: 10;
+  z-index: 3;
 }
 
 .play-button.visible {
@@ -171,13 +185,13 @@ html, body { height: 100%; overflow: hidden; }
   text-stroke: 0.5px black;
 }
 
-/* NOWE PRZYCISKI STREAMINGOWE */
+/* NOWE PRZYCISKI STREAMINGOWE - POWIĘKSZONE */
 .stream-buttons-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  margin-top: 10px;
+  gap: 40px;
+  margin-top: 20px;
   width: 100%;
 }
 
@@ -188,11 +202,11 @@ html, body { height: 100%; overflow: hidden; }
   text-decoration: none;
   font-family: 'Titillium Web', sans-serif;
   font-weight: 900;
-  font-size: 28px;
-  padding: 14px 28px;
-  border-radius: 30px;
-  min-width: 160px;
-  height: 60px;
+  font-size: 32px; /* WIĘKSZA CZCIONKA */
+  padding: 18px 35px; /* WIĘKSZE PADDING */
+  border-radius: 35px;
+  min-width: 180px;
+  height: 70px; /* WIĘKSZA WYSOKOŚĆ */
   transition: all 0.3s ease;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
@@ -204,26 +218,29 @@ html, body { height: 100%; overflow: hidden; }
 }
 .twitch-btn:hover {
   background: #772ce8;
+  transform: scale(1.05);
 }
 
-/* PRZYCISK KICK - KOLOR JAK STRONA KICK.COM */
+/* PRZYCISK KICK - KOLOR JAK STRONA KICK.COM Z BIAŁYM TEKSTEM */
 .kick-btn {
   background: #53FC18;
-  color: black;
+  color: white; /* BIAŁY TEKST ZAMIAST CZARNEGO */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 .kick-btn:hover {
   background: #45d40f;
+  transform: scale(1.05);
 }
 
 /* TYTUŁ */
 .bottom-title {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 600; 
-  font-size: 3rem;
+  font-size: 3.2rem; /* TROSZKĘ WIĘKSZY TYTUŁ */
   text-align: center; 
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  margin: 0 20px;
+  margin: 0 30px;
 }
 
 .latest-video-container .loading,
@@ -235,6 +252,7 @@ html, body { height: 100%; overflow: hidden; }
   background: rgba(0,0,0,0.6);
   padding: 8px 14px; border-radius: 10px;
   transition: opacity 0.5s ease;
+  z-index: 4;
 }
 
 /* DODATKOWE KOLORY TEKSTU */
@@ -275,19 +293,36 @@ html, body { height: 100%; overflow: hidden; }
   
   .stream-buttons-container {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
   
   .stream-button {
+    font-size: 28px;
+    padding: 16px 30px;
+    height: 65px;
+    min-width: 160px;
+  }
+  
+  .bottom-title {
+    font-size: 2.4rem;
+    margin: 15px 0;
+    order: -1;
+  }
+  
+  .latest-video-container::before {
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stream-button {
     font-size: 24px;
-    padding: 12px 24px;
-    height: 55px;
+    padding: 14px 25px;
+    height: 60px;
     min-width: 140px;
   }
   
   .bottom-title {
-    font-size: 2.2rem;
-    margin: 10px 0;
-    order: -1; /* TYTUŁ NA GÓRZE NA MOBILE */
+    font-size: 2rem;
   }
 }

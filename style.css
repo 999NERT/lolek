@@ -1,238 +1,149 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
+/* Wideo w tle */
 .video-background {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   overflow: hidden;
+  z-index: -1;
 }
-
 .video-background iframe {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transform: scale(1.2);
 }
-
 .freeze-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.7);
-  opacity: 0;
-  animation: freeze 6s forwards;
-  pointer-events: none;
-  z-index: -1;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  animation: freeze 2s forwards 4s;
 }
-
 @keyframes freeze {
-  0%, 95% { opacity: 0; }
-  100% { opacity: 1; }
+  to { background-color: rgba(0,0,0,0.7); }
 }
-
 .overlay-frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: -1;
-  pointer-events: none;
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 200px, rgba(0,0,0,1) 500px);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0) 70%, rgba(0,0,0,0.9) 100%);
 }
 
+/* Wrapper */
 .main-wrapper {
   position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100vh;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  padding-top: 120px;
-  color: white;
+  justify-content: center;
+  min-height: 100vh;
 }
 
+/* Przyciski sponsorów */
 .buttons-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
   gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 20px;
-  width: 100%;
 }
-
-/* === PANEL OPISU TERAZ POMIĘDZY PRZYCISKAMI A WIDEO === */
-.description-panel {
-  width: 70%;
-  max-width: 800px;
-  background: gray;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  margin: 10px 0 30px; /* odstępy od przycisków i wideo */
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  pointer-events: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.panel-content {
-  font-family: 'Paytone One', sans-serif;
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.large-text {
-  font-size: 26px;
-  line-height: 1.3;
-}
-
-.small-text {
-  font-size: 20px;
-  line-height: 1.3;
-}
-
-/* === PRZYCISKI === */
-.button-with-popup {
-  position: relative;
-  text-align: center;
-}
-
 .button-with-popup a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  padding: 12px 24px;
+  border-radius: 30px;
+  color: white;
   text-decoration: none;
   font-family: 'Titillium Web', sans-serif;
   font-weight: 900;
-  font-size: 28px;
-  padding: 14px 28px;
-  border-radius: 30px;
-  min-width: 160px;
-  height: 60px;
-  transition: all 0.3s ease;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  transition: background 0.3s;
 }
+.button-with-popup.logitech a { background: #006eff; }
+.button-with-popup.pirateswap a { background: orange; }
+.button-with-popup.csgoskins a { background: red; }
+.button-with-popup.wkdzik a { background: green; }
+.button-with-popup.betters a { background: purple; }
+.button-with-popup a:hover { opacity: 0.8; }
 
-.button-text {
-  font-weight: 900;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.popup-text {
+/* Panel opisu */
+.description-panel {
   display: none;
-  font-weight: 900;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  margin: 10px 0 20px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: white;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 500px;
 }
 
-.logitech-btn a { background: white; color: black; }
-.logitech-tech { color: #00FFFF !important; }
-.logitech-btn a:hover { background: #00FFFF; }
-
-.pirateswap-btn a { background: #1E1D22; color: white; }
-.pirateswap-swap { color: #DB6034 !important; }
-.pirateswap-btn a:hover { background: #DB6034; }
-
-.csgoskins-btn a { background: #0D2345; color: white; }
-.blue-o { color: #4fc3f7 !important; }
-.csgoskins-btn a:hover { background: #14A3C7; }
-
-.wkdzik-btn a { background: black; color: white; }
-.wkdzik-highlight { color: white !important; }
-.wkdzik-btn a:hover { background: white; color: black; }
-
-.betters-btn a { background: #262D3A; color: white; }
-.betters-ters { color: #E50420 !important; }
-.betters-btn a:hover { background: #E50420; }
-
-/* === WIDEO I NAPIS === */
-.center-video {
+/* Najnowszy film */
+.latest-video-container {
+  position: relative;
   width: 80%;
   max-width: 800px;
-  z-index: 1;
-}
-
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.bottom-title {
-  margin-top: 30px;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 600;
-  font-size: 3rem;
+  margin: 0 auto 30px;
   text-align: center;
+}
+.latest-video-container img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+.latest-video-container button {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
   color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.latest-video-container button:hover {
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
-.yellow-text { color: #FFD700; }
-.green-text { color: #00FF00; }
+/* Napis na dole */
+.bottom-title {
+  font-family: 'Paytone One', sans-serif;
+  font-size: 4rem;
+  color: white;
+  text-shadow: 2px 2px 10px black;
+  margin-top: 30px;
+}
 
-/* === RESPONSYWNOŚĆ === */
+/* Responsywność */
 @media (max-width: 768px) {
   .buttons-container {
     flex-direction: column;
-    align-items: center;
+    gap: 10px;
   }
-
   .description-panel {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+  .latest-video-container {
     width: 90%;
-    padding: 15px;
-    margin: 15px 0 25px;
+    margin-bottom: 20px;
   }
-
-  .panel-content, .large-text {
-    font-size: 20px;
+  .latest-video-container button {
+    font-size: 1rem;
+    padding: 10px 20px;
   }
-
-  .small-text {
-    font-size: 18px;
-  }
-
-  .button-with-popup a {
-    font-size: 24px;
-    padding: 12px 24px;
-    height: 55px;
-  }
-
   .bottom-title {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
 }

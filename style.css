@@ -118,22 +118,21 @@ html, body { height: 100%; overflow: hidden; }
 }
 
 /* PRZYCISK Z OBRAZKIEM YTCLICK */
-.play-button {
-  position: absolute; inset: 50% auto auto 50%;
+.yt-click-button {
+  position: absolute; 
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  text-decoration: none;
+  cursor: pointer;
   transition: all 0.3s ease;
   opacity: 0;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
-.play-button.visible {
+.yt-click-button.visible {
   opacity: 1;
 }
 
@@ -144,7 +143,7 @@ html, body { height: 100%; overflow: hidden; }
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
 }
 
-.play-button:hover .yt-click-image {
+.yt-click-button:hover .yt-click-image {
   transform: scale(1.15);
   filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
 }

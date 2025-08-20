@@ -3,7 +3,7 @@
 
 html, body { height: 100%; overflow: hidden; }
 
-/* TŁO ZDJĘCIE */
+/* TŁO ZDJĘCIE BEZ PRZYCIEMNIENIA */
 .image-background {
   position: fixed; inset: 0;
   width: 100vw; height: 100vh;
@@ -12,20 +12,6 @@ html, body { height: 100%; overflow: hidden; }
 .background-image {
   width: 100%; height: 100%;
   object-fit: cover;
-}
-.freeze-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
-  opacity: 0; animation: freeze 6s forwards;
-  pointer-events: none; z-index: -1;
-}
-@keyframes freeze { 0%,95%{opacity:0;} 100%{opacity:1;} }
-
-.overlay-frame {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.75);
-  z-index: -1; pointer-events: none;
-  mask-image: radial-gradient(circle at center, rgba(0,0,0,0) 220px, rgba(0,0,0,1) 520px);
 }
 
 /* LAYOUT */
@@ -142,6 +128,9 @@ html, body { height: 100%; overflow: hidden; }
   display: flex;
   justify-content: center;
   align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .play-button.visible {

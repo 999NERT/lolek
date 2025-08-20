@@ -82,17 +82,27 @@
       <div class="error" id="videoError" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</div>
     </div>
 
-    <!-- NOWE PRZYCISKI STREAMINGOWE - WYŻEJ I WYŚRODKOWANE -->
+    <!-- NOWE PRZYCISKI STREAMINGOWE Z PANELAMI LIVE -->
     <div class="stream-buttons-container">
-      <a href="#" class="stream-button twitch-btn" target="_blank" rel="noopener">
-        <span class="button-text">TWITCH</span>
-      </a>
+      <div class="stream-button-wrapper">
+        <a href="https://www.twitch.tv/angelkacs" class="stream-button twitch-btn" target="_blank" rel="noopener">
+          <span class="button-text">TWITCH</span>
+        </a>
+        <div class="live-panel" id="twitchLivePanel">
+          <span class="live-text">OFFLINE</span>
+        </div>
+      </div>
       
       <h1 class="bottom-title">ANGELKACS</h1>
       
-      <a href="#" class="stream-button kick-btn" target="_blank" rel="noopener">
-        <span class="button-text">KOPNIAK</span>
-      </a>
+      <div class="stream-button-wrapper">
+        <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank" rel="noopener">
+          <span class="button-text">KOPNIAK</span>
+        </a>
+        <div class="live-panel" id="kickLivePanel">
+          <span class="live-text">OFFLINE</span>
+        </div>
+      </div>
     </div>
   </div>
 

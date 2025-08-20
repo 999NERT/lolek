@@ -3,97 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AngelkaCS</title>
+  <title>AngelkaCSS</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&family=Paytone+One&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Tło YouTube -->
+  <!-- TŁO WIDEO -->
   <div class="video-background">
     <iframe src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
     <div class="freeze-overlay"></div>
   </div>
   <div class="overlay-frame"></div>
 
-  <!-- Wrapper -->
   <div class="main-wrapper">
-    <!-- Przyciski sponsorów -->
+    <!-- PRZYCISKI -->
     <div class="buttons-container">
-      <div class="button-with-popup logitech" data-content="Partner Logitech" data-color="rgba(0, 150, 255, 0.8)">
-        <a href="#">Logitech</a>
+      <!-- LOGITECH -->
+      <div class="button-with-popup logitech-btn" data-panel-color="white" data-text-color="black">
+        <a href="#" target="_blank" rel="noopener">
+          <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
+        </a>
+        <div class="popup-text editable-text" data-text-id="logitech-text">
+          -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
+        </div>
       </div>
-      <div class="button-with-popup pirateswap" data-content="Partner Pirateswap" data-color="rgba(255, 165, 0, 0.8)">
-        <a href="#">Pirateswap</a>
+
+      <!-- PIRATESWAP -->
+      <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
+        <a href="#" target="_blank" rel="noopener">
+          <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
+        </a>
+        <div class="popup-text editable-text" data-text-id="pirateswap-text">
+          CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
+        </div>
       </div>
-      <div class="button-with-popup csgoskins" data-content="Partner CSGOSkins" data-color="rgba(255, 0, 0, 0.8)">
-        <a href="#">CSGOSkins</a>
+
+      <!-- CSGOSKINS -->
+      <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
+        <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
+          <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
+        </a>
+        <div class="popup-text editable-text" data-text-id="csgoskins-text">
+          WPŁAĆ 20 ZŁ Z KODEM <span class="yellow-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI <span class="green-text">200 PLN</span> DLA POJEDYNCZEJ OSOBY
+        </div>
       </div>
-      <div class="button-with-popup wkdzik" data-content="Partner WKDZIK" data-color="rgba(0, 200, 0, 0.8)">
-        <a href="#">WKDZIK</a>
+
+      <!-- WKDZIK -->
+      <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
+        <a href="#" target="_blank" rel="noopener">
+          <span class="button-text">WKDZIK</span>
+        </a>
+        <div class="popup-text editable-text" data-text-id="wkdzik-text">
+          CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
+        </div>
       </div>
-      <div class="button-with-popup betters" data-content="Partner Betters" data-color="rgba(128, 0, 128, 0.8)">
-        <a href="#">Betters</a>
+
+      <!-- BETTERS -->
+      <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
+        <a href="#" target="_blank" rel="noopener">
+          <span class="button-text">BET<span class="betters-ters">TERS</span></span>
+        </a>
+        <div class="popup-text editable-text" data-text-id="betters-text">
+          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. KLIKAJĄC TU OTRZYMASZ PODWYŻSZONY FREEBET <span class="betters-ters">35 PLN</span>
+        </div>
       </div>
     </div>
 
-    <!-- Panel opisu -->
-    <div class="description-panel">
+    <!-- PANEL OPISU (MIĘDZY PRZYCISKAMI A OKNEM) -->
+    <div class="description-panel" id="descPanel">
       <div class="panel-content" id="panelContent"></div>
     </div>
 
-    <!-- Najnowszy film -->
-    <div class="latest-video-container">
-      <img id="latestThumbnail" src="" alt="Miniaturka najnowszego filmu" />
-      <button id="watchButton">Oglądaj teraz</button>
+    <!-- NAJNOWSZY FILM – MINIATURKA + PRZYCISK -->
+    <div class="latest-video-container" id="latestBox">
+      <img id="latestThumbnail" alt="Miniaturka najnowszego filmu" />
+      <a id="watchButton" class="play-button" href="#" target="_blank" rel="noopener">Oglądaj teraz</a>
+      <div class="loading">Ładowanie najnowszego filmu…</div>
+      <div class="error" id="videoError" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</div>
     </div>
 
-    <!-- Tytuł na dole -->
+    <!-- TYTUŁ -->
     <h1 class="bottom-title">ANGELKACS</h1>
   </div>
 
-  <!-- Skrypty -->
   <script>
-    // Automatyczne pobranie najnowszego filmu z RSS
+    // --- PANEL OPISU (fade-in bez zasłaniania czegokolwiek) ---
+    function showTextInPanel(html, isSmall) {
+      const panelContent = document.getElementById('panelContent');
+      panelContent.innerHTML = html;
+      panelContent.className = 'panel-content ' + (isSmall ? 'small-text' : 'large-text');
+      document.getElementById('descPanel').style.opacity = '1';
+    }
+
+    document.querySelectorAll('.button-with-popup').forEach(button => {
+      const popupText = button.querySelector('.popup-text');
+      const panelColor = button.getAttribute('data-panel-color');
+      const textColor = button.getAttribute('data-text-color');
+      const isSmall = button.classList.contains('csgoskins-btn');
+
+      button.addEventListener('mouseenter', () => {
+        const panel = document.getElementById('descPanel');
+        panel.style.backgroundColor = panelColor || 'rgba(0,0,0,0.6)';
+        document.getElementById('panelContent').style.color = textColor || 'white';
+        showTextInPanel(popupText.innerHTML, isSmall);
+      });
+
+      button.addEventListener('mouseleave', () => {
+        document.getElementById('descPanel').style.opacity = '0';
+      });
+    });
+
+    // --- AUTOMATYCZNE WYCZYTANIE NAJNOWSZEGO FILMU Z RSS ---
     async function loadLatestVideo() {
+      const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ'; // @angelkacs
+      const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+      const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
+
+      const img = document.getElementById('latestThumbnail');
+      const btn = document.getElementById('watchButton');
+      const box = document.getElementById('latestBox');
+      const loading = box.querySelector('.loading');
+      const err = document.getElementById('videoError');
+
       try {
-        const rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCMYcjsl6ZzrN2xjG5dU6yKQ";
-        const response = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(rssUrl));
-        const data = await response.json();
+        loading.style.display = 'block';
+        const res = await fetch(proxy);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const { contents } = await res.json();
 
         const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, "application/xml");
+        const xml = parser.parseFromString(contents, 'application/xml');
+        const entry = xml.getElementsByTagName('entry')[0];
+        if (!entry) throw new Error('Brak entry');
 
-        const latestEntry = xml.querySelector("entry");
-        const videoId = latestEntry.querySelector("yt\\:videoId").textContent;
+        // Bezpieczne pobranie yt:videoId (różne przeglądarki, przestrzeń nazw)
+        let videoIdNode =
+          entry.querySelector('yt\\:videoId') ||
+          entry.getElementsByTagName('yt:videoId')[0] ||
+          entry.getElementsByTagName('videoId')[0];
+        if (!videoIdNode) throw new Error('Brak videoId');
+
+        const videoId = videoIdNode.textContent.trim();
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-        const img = document.getElementById("latestThumbnail");
-        const btn = document.getElementById("watchButton");
+        // Najpierw spróbuj maxres, jak nie ma – fallback na hqdefault
+        const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-        img.src = thumbnailUrl;
-        btn.onclick = () => window.open(videoUrl, "_blank");
+        img.onload = () => {
+          loading.style.display = 'none';
+          img.classList.add('thumb-visible');
+        };
+        img.onerror = () => {
+          img.src = hq; // fallback
+        };
+
+        img.src = maxres;
+        btn.href = videoUrl;
       } catch (e) {
-        console.error("Błąd wczytywania filmu:", e);
+        console.error(e);
+        loading.style.display = 'none';
+        err.hidden = false;
       }
     }
     loadLatestVideo();
-
-    // Panel opisów
-    const buttons = document.querySelectorAll('.button-with-popup');
-    const panel = document.querySelector('.description-panel');
-    const panelContent = document.getElementById('panelContent');
-
-    buttons.forEach(button => {
-      button.addEventListener('mouseenter', () => {
-        panelContent.textContent = button.getAttribute('data-content');
-        panel.style.backgroundColor = button.getAttribute('data-color');
-        panel.style.display = 'block';
-      });
-      button.addEventListener('mouseleave', () => {
-        panel.style.display = 'none';
-      });
-    });
   </script>
 </body>
 </html>

@@ -146,9 +146,20 @@
         const videoId = videoIdNode.textContent.trim();
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
+        // Przykładowa lista filmów
+        const videos = [
+         { title: "Film 1", url: "https://youtube.com/watch?v=abc123" },
+        { title: "Short 1", url: "https://youtube.com/shorts/xyz456" }];
+
+        // Filtrujemy tylko zwykłe filmy
+         const normalVideos = videos.filter(video => !video.url.includes('/shorts/'));
+
         // Najpierw spróbuj maxres, jak nie ma – fallback na hqdefault
         const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
         const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        
+       
+        
 
         img.onload = () => {
           loading.style.display = 'none';

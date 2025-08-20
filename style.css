@@ -3,15 +3,29 @@
 
 html, body { height: 100%; overflow: hidden; }
 
-/* TŁO ZDJĘCIE BEZ PRZYCIEMNIENIA */
-.image-background {
+/* TŁO WIDEO */
+.video-background {
   position: fixed; inset: 0;
   width: 100vw; height: 100vh;
   z-index: -2; overflow: hidden;
 }
-.background-image {
+.video-background iframe {
   width: 100%; height: 100%;
-  object-fit: cover;
+  object-fit: cover; transform: scale(1.2);
+}
+.freeze-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  opacity: 0; animation: freeze 6s forwards;
+  pointer-events: none; z-index: -1;
+}
+@keyframes freeze { 0%,95%{opacity:0;} 100%{opacity:1;} }
+
+.overlay-frame {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: -1; pointer-events: none;
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,0) 220px, rgba(0,0,0,1) 520px);
 }
 
 /* LAYOUT */
@@ -93,19 +107,13 @@ html, body { height: 100%; overflow: hidden; }
 .large-text { font-size: 22px; line-height: 1.3; }
 .small-text { font-size: 18px; line-height: 1.3; }
 
-/* OKNO NAJNOWSZEGO FILMU Z BIAŁYM OUTLINE */
+/* OKNO NAJNOWSZEGO FILMU */
 .latest-video-container {
   position: relative;
   width: min(80%, 800px);
   margin: 0 auto 26px;
   text-align: center;
-  border: 2px solid white;
-  border-radius: 12px;
-  padding: 2px;
-  background: rgba(0,0,0,0.3);
-  box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
-
 .latest-video-container img {
   width: 100%;
   border-radius: 10px;
@@ -117,93 +125,37 @@ html, body { height: 100%; overflow: hidden; }
   opacity: 1; transform: scale(1);
 }
 
-/* PRZYCISK Z OBRAZKIEM YTCLICK */
-.yt-click-button {
-  position: absolute; 
-  top: 50%;
-  left: 50%;
+/* PRZYCISK Z OBRAZKIEM YTCLICK - MNIEJSZY */
+.play-button {
+  position: absolute; inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
-  cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease;
   opacity: 0;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
-.yt-click-button.visible {
+.play-button.visible {
   opacity: 1;
 }
 
 .yt-click-image {
-  width: 180px;
+  width: 100px; /* MNIEJSZA IKONA */
   height: auto;
   transition: all 0.3s ease;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
 }
 
-.yt-click-button:hover .yt-click-image {
-  transform: scale(1.15);
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
-}
-
-/* NOWE PRZYCISKI STREAMINGOWE - POWIĘKSZONE */
-.stream-buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  margin-top: 20px;
-  width: 100%;
-}
-
-.stream-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 900;
-  font-size: 32px;
-  padding: 18px 35px;
-  border-radius: 35px;
-  min-width: 180px;
-  height: 70px;
-  transition: all 0.3s ease;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-/* PRZYCISK TWITCH - FIOLETOWY JAK LOGO TWITCH */
-.twitch-btn {
-  background: #9146FF;
-  color: white;
-}
-.twitch-btn:hover {
-  background: #772ce8;
-  transform: scale(1.05);
-}
-
-/* PRZYCISK KICK - KOLOR JAK STRONA KICK.COM Z BIAŁYM TEKSTEM */
-.kick-btn {
-  background: #53FC18;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-.kick-btn:hover {
-  background: #45d40f;
-  transform: scale(1.05);
-}
-
-/* TYTUŁ */
-.bottom-title {
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 600; 
-  font-size: 3.2rem;
-  text-align: center; 
-  color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  margin: 0 30px;
+.play-button:hover .yt-click-image {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,1));
 }
 
 .latest-video-container .loading,
@@ -215,7 +167,14 @@ html, body { height: 100%; overflow: hidden; }
   background: rgba(0,0,0,0.6);
   padding: 8px 14px; border-radius: 10px;
   transition: opacity 0.5s ease;
-  z-index: 4;
+}
+
+/* TYTUŁ */
+.bottom-title {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600; font-size: 3rem;
+  text-align: center; color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 /* DODATKOWE KOLORY TEKSTU */
@@ -237,52 +196,15 @@ html, body { height: 100%; overflow: hidden; }
 @media (max-width: 768px) {
   .buttons-container { flex-direction: column; gap: 16px; }
   .description-panel { 
-    height: 70px;
+    height: 70px; /* Mniejsza stała wysokość na mobile */
     padding: 10px 14px; 
   }
   .panel-content, .large-text { font-size: 18px; }
   .small-text { font-size: 16px; }
   .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }
-  .latest-video-container { 
-    width: 90%;
-    border-width: 1.5px;
-  }
+  .bottom-title { font-size: 2.2rem; }
+  .latest-video-container { width: 90%; }
   .yt-click-image {
-    width: 140px;
-  }
-  
-  .stream-buttons-container {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .stream-button {
-    font-size: 28px;
-    padding: 16px 30px;
-    height: 65px;
-    min-width: 160px;
-  }
-  
-  .bottom-title {
-    font-size: 2.4rem;
-    margin: 15px 0;
-    order: -1;
-  }
-}
-
-@media (max-width: 480px) {
-  .stream-button {
-    font-size: 24px;
-    padding: 14px 25px;
-    height: 60px;
-    min-width: 140px;
-  }
-  
-  .bottom-title {
-    font-size: 2rem;
-  }
-  
-  .yt-click-image {
-    width: 120px;
+    width: 80px; /* MNIEJSZA IKONA NA MOBILE */
   }
 }

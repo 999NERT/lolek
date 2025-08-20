@@ -37,15 +37,10 @@ async function loadLatestVideo() {
   const err = document.getElementById('videoError');
 
   try {
-    loading.style.display = 'block';
+    // UKRYJ ŁADOWANIE OD RAZU
+    loading.style.display = 'none';
     
-    // Optymalizacja: Ładujemy dane w tle, nie blokując interfejsu
-    const fetchPromise = fetch(proxy);
-    
-    // Dodajemy małe opóźnienie, aby pokazać animację ładowania (opcjonalnie)
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const res = await fetchPromise;
+    const res = await fetch(proxy);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const { contents } = await res.json();
 
@@ -61,7 +56,6 @@ async function loadLatestVideo() {
       const mediaGroup = entry.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'group')[0];
       const description = mediaGroup ? mediaGroup.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'description')[0].textContent.toLowerCase() : '';
       
-      // Sprawdź, czy to nie jest short (brak słów kluczowych związanych z shorts)
       if (!title.includes('#shorts') && 
           !title.includes('short') && 
           !description.includes('#shorts') && 
@@ -73,7 +67,6 @@ async function loadLatestVideo() {
 
     if (!videoEntry) throw new Error('Brak filmów (tylko shorty)');
 
-    // Bezpieczne pobranie yt:videoId (różne przeglądarki, przestrzeń nazw)
     let videoIdNode =
       videoEntry.querySelector('yt\\:videoId') ||
       videoEntry.getElementsByTagName('yt:videoId')[0] ||
@@ -83,57 +76,29 @@ async function loadLatestVideo() {
     const videoId = videoIdNode.textContent.trim();
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // Ustawiamy od razu URL przycisku
     btn.href = videoUrl;
     
-    // Optymalizacja: Ładujemy najpierw mniejszą miniaturkę, potem większą
-    const sd = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-    const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    // Ładuj od razu maxres bez pośrednich kroków
     const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-    
-    // Najpierw ładujemy mniejszą wersję dla szybszego ładowania
-    img.src = hq;
+    img.src = maxres;
     
     img.onload = function() {
-      // Gdy mniejsza miniaturka się załaduje, pokazujemy ją
-      loading.style.display = 'none';
       img.classList.add('thumb-visible');
       btn.classList.add('visible');
-      
-      // W tle ładujemy lepszą jakość
-      const highResImg = new Image();
-      highResImg.src = maxres;
-      highResImg.onload = function() {
-        // Zamieniamy na lepszą jakość gdy już jest załadowana
-        img.src = maxres;
-      };
-      
-      highResImg.onerror = function() {
-        // Fallback jeśli maxres nie istnieje
-        const fallbackImg = new Image();
-        fallbackImg.src = sd;
-        fallbackImg.onload = function() {
-          img.src = sd;
-        };
-      };
     };
     
     img.onerror = function() {
-      // Fallback na hqdefault jeśli hq nie działa
+      // Fallback jeśli maxres nie istnieje
+      const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.src = hq;
     };
 
   } catch (e) {
     console.error(e);
-    loading.style.display = 'none';
     err.hidden = false;
     err.textContent = 'Nie udało się wczytać filmu. Spróbuj odświeżyć.';
   }
 }
 
-// Rozpocznij ładowanie gdy strona jest gotowa
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadLatestVideo);
-} else {
-  loadLatestVideo();
-}
+// Rozpocznij ładowanie od razu
+loadLatestVideo();

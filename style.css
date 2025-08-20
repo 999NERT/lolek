@@ -109,8 +109,8 @@ html, body { height: 100%; overflow: hidden; }
   width: 100%;
   border-radius: 10px;
   display: block;
-  transform: scale(0.985);
-  transition: transform .5s ease;
+  transform: scale(1);
+  opacity: 1 !important;
 }
 .latest-video-container img.thumb-visible {
   transform: scale(1);
@@ -219,20 +219,14 @@ html, body { height: 100%; overflow: hidden; }
   z-index: 4;
 }
 
+/* UKRYJ NAPIS ŁADOWANIA */
+.latest-video-container .loading {
+  display: none !important;
+}
+
 /* DODATKOWE KOLORY TEKSTU */
 .yellow-text { color: #FFD700; }
 .green-text { color: #00FF00; }
-
-/* ANIMACJA ŁADOWANIA */
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-
-.loading {
-  animation: pulse 1.5s infinite;
-}
 
 /* RESPONSYWNOŚĆ */
 @media (max-width: 768px) {

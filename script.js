@@ -25,13 +25,15 @@ document.querySelectorAll('.button-with-popup').forEach(button => {
 });
 
 // --- ZOPTYMALIZOWANE ŁADOWANIE MINIATURKI ---
+let latestVideoUrl = '';
+
 async function loadLatestVideo() {
   const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ'; // @angelkacs
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
 
   const img = document.getElementById('latestThumbnail');
-  const btn = document.getElementById('watchButton');
+  const ytButton = document.getElementById('ytClickButton');
   const box = document.getElementById('latestBox');
   const loading = box.querySelector('.loading');
   const err = document.getElementById('videoError');
@@ -39,10 +41,7 @@ async function loadLatestVideo() {
   try {
     loading.style.display = 'block';
     
-    // Optymalizacja: Ładujemy dane w tle, nie blokując interfejsu
     const fetchPromise = fetch(proxy);
-    
-    // Dodajemy małe opóźnienie, aby pokazać animację ładowania (opcjonalnie)
     await new Promise(resolve => setTimeout(resolve, 500));
     
     const res = await fetchPromise;
@@ -61,7 +60,6 @@ async function loadLatestVideo() {
       const mediaGroup = entry.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'group')[0];
       const description = mediaGroup ? mediaGroup.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'description')[0].textContent.toLowerCase() : '';
       
-      // Sprawdź, czy to nie jest short (brak słów kluczowych związanych z shorts)
       if (!title.includes('#shorts') && 
           !title.includes('short') && 
           !description.includes('#shorts') && 
@@ -73,7 +71,6 @@ async function loadLatestVideo() {
 
     if (!videoEntry) throw new Error('Brak filmów (tylko shorty)');
 
-    // Bezpieczne pobranie yt:videoId (różne przeglądarki, przestrzeń nazw)
     let videoIdNode =
       videoEntry.querySelector('yt\\:videoId') ||
       videoEntry.getElementsByTagName('yt:videoId')[0] ||
@@ -81,35 +78,28 @@ async function loadLatestVideo() {
     if (!videoIdNode) throw new Error('Brak videoId');
 
     const videoId = videoIdNode.textContent.trim();
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    latestVideoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // Ustawiamy od razu URL przycisku
-    btn.href = videoUrl;
-    
     // Optymalizacja: Ładujemy najpierw mniejszą miniaturkę, potem większą
     const sd = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
     const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
     const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     
-    // Najpierw ładujemy mniejszą wersję dla szybszego ładowania
     img.src = hq;
     
     img.onload = function() {
-      // Gdy mniejsza miniaturka się załaduje, pokazujemy ją
       loading.style.display = 'none';
       img.classList.add('thumb-visible');
-      btn.classList.add('visible');
+      ytButton.classList.add('visible');
       
       // W tle ładujemy lepszą jakość
       const highResImg = new Image();
       highResImg.src = maxres;
       highResImg.onload = function() {
-        // Zamieniamy na lepszą jakość gdy już jest załadowana
         img.src = maxres;
       };
       
       highResImg.onerror = function() {
-        // Fallback jeśli maxres nie istnieje
         const fallbackImg = new Image();
         fallbackImg.src = sd;
         fallbackImg.onload = function() {
@@ -119,7 +109,6 @@ async function loadLatestVideo() {
     };
     
     img.onerror = function() {
-      // Fallback na hqdefault jeśli hq nie działa
       img.src = hq;
     };
 
@@ -130,6 +119,13 @@ async function loadLatestVideo() {
     err.textContent = 'Nie udało się wczytać filmu. Spróbuj odświeżyć.';
   }
 }
+
+// Obsługa kliknięcia w przycisk YouTube
+document.getElementById('ytClickButton').addEventListener('click', function() {
+  if (latestVideoUrl) {
+    window.open(latestVideoUrl, '_blank');
+  }
+});
 
 // Rozpocznij ładowanie gdy strona jest gotowa
 if (document.readyState === 'loading') {

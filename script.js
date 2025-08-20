@@ -24,7 +24,7 @@ document.querySelectorAll('.button-with-popup').forEach(button => {
   });
 });
 
-// --- AUTOMATYCZNE WYCZYTANIE NAJNOWSZEGO FILMU Z RSS Z FILTREM SHORTS ---
+// --- ZOPTYMALIZOWANE ŁADOWANIE MINIATURKI ---
 async function loadLatestVideo() {
   const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ'; // @angelkacs
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
@@ -38,7 +38,14 @@ async function loadLatestVideo() {
 
   try {
     loading.style.display = 'block';
-    const res = await fetch(proxy);
+    
+    // Optymalizacja: Ładujemy dane w tle, nie blokując interfejsu
+    const fetchPromise = fetch(proxy);
+    
+    // Dodajemy małe opóźnienie, aby pokazać animację ładowania (opcjonalnie)
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const res = await fetchPromise;
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const { contents } = await res.json();
 
@@ -76,20 +83,46 @@ async function loadLatestVideo() {
     const videoId = videoIdNode.textContent.trim();
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // Najpierw spróbuj maxres, jak nie ma – fallback na hqdefault
-    const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-    const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    // Ustawiamy od razu URL przycisku
+    btn.href = videoUrl;
     
-    img.onload = () => {
+    // Optymalizacja: Ładujemy najpierw mniejszą miniaturkę, potem większą
+    const sd = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+    const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    
+    // Najpierw ładujemy mniejszą wersję dla szybszego ładowania
+    img.src = hq;
+    
+    img.onload = function() {
+      // Gdy mniejsza miniaturka się załaduje, pokazujemy ją
       loading.style.display = 'none';
       img.classList.add('thumb-visible');
+      btn.classList.add('visible');
+      
+      // W tle ładujemy lepszą jakość
+      const highResImg = new Image();
+      highResImg.src = maxres;
+      highResImg.onload = function() {
+        // Zamieniamy na lepszą jakość gdy już jest załadowana
+        img.src = maxres;
+      };
+      
+      highResImg.onerror = function() {
+        // Fallback jeśli maxres nie istnieje
+        const fallbackImg = new Image();
+        fallbackImg.src = sd;
+        fallbackImg.onload = function() {
+          img.src = sd;
+        };
+      };
     };
-    img.onerror = () => {
-      img.src = hq; // fallback
+    
+    img.onerror = function() {
+      // Fallback na hqdefault jeśli hq nie działa
+      img.src = hq;
     };
 
-    img.src = maxres;
-    btn.href = videoUrl;
   } catch (e) {
     console.error(e);
     loading.style.display = 'none';
@@ -97,4 +130,10 @@ async function loadLatestVideo() {
     err.textContent = 'Nie udało się wczytać filmu. Spróbuj odświeżyć.';
   }
 }
-loadLatestVideo();
+
+// Rozpocznij ładowanie gdy strona jest gotowa
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadLatestVideo);
+} else {
+  loadLatestVideo();
+}

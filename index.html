@@ -8,10 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&family=Paytone+One&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- TŁO ZDJĘCIE BEZ PRZYCIEMNIENIA -->
-  <div class="image-background">
-    <img src="aster.png" alt="Tło" class="background-image">
+  <!-- TŁO WIDEO -->
+  <div class="video-background">
+    <iframe src="https://www.youtube.com/embed/G3CS73CRt4s?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+    <div class="freeze-overlay"></div>
   </div>
+  <div class="overlay-frame"></div>
 
   <div class="main-wrapper">
     <!-- PRZYCISKI -->
@@ -75,25 +77,15 @@
     <!-- NAJNOWSZY FILM – MINIATURKA + PRZYCISK -->
     <div class="latest-video-container" id="latestBox">
       <img id="latestThumbnail" alt="Miniaturka najnowszego filmu" />
-      <div id="ytClickButton" class="yt-click-button">
+      <a id="watchButton" class="play-button" href="#" target="_blank" rel="noopener">
         <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
-      </div>
+      </a>
       <div class="loading">Ładowanie najnowszego filmu…</div>
       <div class="error" id="videoError" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</div>
     </div>
 
-    <!-- NOWE PRZYCISKI STREAMINGOWE -->
-    <div class="stream-buttons-container">
-      <a href="#" class="stream-button twitch-btn" target="_blank" rel="noopener">
-        <span class="button-text">TWITCH</span>
-      </a>
-      
-      <h1 class="bottom-title">ANGELKACS</h1>
-      
-      <a href="#" class="stream-button kick-btn" target="_blank" rel="noopener">
-        <span class="button-text">KOPNIAK</span>
-      </a>
-    </div>
+    <!-- TYTUŁ -->
+    <h1 class="bottom-title">ANGELKACS</h1>
   </div>
 
   <script src="script.js"></script>

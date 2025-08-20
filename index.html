@@ -113,11 +113,12 @@
       });
     });
 
-    // --- AUTOMATYCZNE WYCZYTANIE NAJNOWSZEGO FILMU Z RSS ---
+    // --- AUTOMATYCZNE WYCZYTANIE NAJNOWSZEGO FILMU Z YOUTUBE API (Z FILTREM NA SHORTS) ---
     async function loadLatestVideo() {
       const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ'; // @angelkacs
-      const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-      const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
+      // Tutaj musisz dodać swój klucz API YouTube
+      const apiKey = 'TWÓJ_KLUCZ_API_YOUTUBE'; // Zastąp tym swoim kluczem API
+      const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=20&type=video`;
 
       const img = document.getElementById('latestThumbnail');
       const btn = document.getElementById('watchButton');
@@ -127,33 +128,30 @@
 
       try {
         loading.style.display = 'block';
-        const res = await fetch(proxy);
+        const res = await fetch(apiUrl);
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        const { contents } = await res.json();
+        const data = await res.json();
 
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(contents, 'application/xml');
-        const entry = xml.getElementsByTagName('entry')[0];
-        if (!entry) throw new Error('Brak entry');
+        // Szukamy pierwszego filmu, który nie jest shortem (sprawdzamy tytuł i opis)
+        const video = data.items.find(item => {
+          const title = item.snippet.title.toLowerCase();
+          const description = item.snippet.description.toLowerCase();
+          // Filtrujemy shorty - zazwyczaj mają "#shorts" w tytule lub opisie
+          return !title.includes('#short') && 
+                 !description.includes('#short') &&
+                 !title.includes('shorts') && 
+                 !description.includes('shorts');
+        });
 
-        // Bezpieczne pobranie yt:videoId (różne przeglądarki, przestrzeń nazw)
-        let videoIdNode =
-          entry.querySelector('yt\\:videoId') ||
-          entry.getElementsByTagName('yt:videoId')[0] ||
-          entry.getElementsByTagName('videoId')[0];
-        if (!videoIdNode) throw new Error('Brak videoId');
+        if (!video) throw new Error('Brak filmów (tylko shorty)');
 
-        const videoId = videoIdNode.textContent.trim();
+        const videoId = video.id.videoId;
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
 
         // Najpierw spróbuj maxres, jak nie ma – fallback na hqdefault
         const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
         const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         
-       
-        
-
         img.onload = () => {
           loading.style.display = 'none';
           img.classList.add('thumb-visible');
@@ -168,6 +166,7 @@
         console.error(e);
         loading.style.display = 'none';
         err.hidden = false;
+        err.textContent = 'Nie udało się wczytać filmu. Sprawdź klucz API.';
       }
     }
     loadLatestVideo();

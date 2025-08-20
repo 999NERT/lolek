@@ -75,10 +75,48 @@ html, body {
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
+/* === PANEL OPISU TERAZ POMIĘDZY PRZYCISKAMI A WIDEO === */
+.description-panel {
+  width: 70%;
+  max-width: 800px;
+  background: gray;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 10px 0 30px; /* odstępy od przycisków i wideo */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.panel-content {
+  font-family: 'Paytone One', sans-serif;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.large-text {
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.small-text {
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+/* === PRZYCISKI === */
 .button-with-popup {
   position: relative;
   text-align: center;
@@ -111,88 +149,28 @@ html, body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* === PANEL OPISU PRZENIESIONY NA DÓŁ === */
-.description-panel {
-  position: fixed;
-  bottom: 10%; /* zamiast top */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  max-width: 800px;
-  background: gray;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  pointer-events: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.panel-content {
-  font-family: 'Paytone One', sans-serif;
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.large-text {
-  font-size: 26px;
-  line-height: 1.3;
-}
-
-.small-text {
-  font-size: 20px;
-  line-height: 1.3;
-}
-
-/* === PRZYCISKI === */
-.logitech-btn a {
-  background: white;
-  color: black;
-}
+.logitech-btn a { background: white; color: black; }
 .logitech-tech { color: #00FFFF !important; }
 .logitech-btn a:hover { background: #00FFFF; }
 
-.pirateswap-btn a {
-  background: #1E1D22;
-  color: white;
-}
+.pirateswap-btn a { background: #1E1D22; color: white; }
 .pirateswap-swap { color: #DB6034 !important; }
 .pirateswap-btn a:hover { background: #DB6034; }
 
-.csgoskins-btn a {
-  background: #0D2345;
-  color: white;
-}
+.csgoskins-btn a { background: #0D2345; color: white; }
 .blue-o { color: #4fc3f7 !important; }
 .csgoskins-btn a:hover { background: #14A3C7; }
 
-.wkdzik-btn a {
-  background: black;
-  color: white;
-}
+.wkdzik-btn a { background: black; color: white; }
 .wkdzik-highlight { color: white !important; }
 .wkdzik-btn a:hover { background: white; color: black; }
 
-.betters-btn a {
-  background: #262D3A;
-  color: white;
-}
+.betters-btn a { background: #262D3A; color: white; }
 .betters-ters { color: #E50420 !important; }
 .betters-btn a:hover { background: #E50420; }
 
 /* === WIDEO I NAPIS === */
 .center-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 80%;
   max-width: 800px;
   z-index: 1;
@@ -215,10 +193,7 @@ html, body {
 }
 
 .bottom-title {
-  position: absolute;
-  bottom: 3%; /* niżej, bo panel jest nad nim */
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 30px;
   font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
   font-size: 3rem;
@@ -240,7 +215,7 @@ html, body {
   .description-panel {
     width: 90%;
     padding: 15px;
-    bottom: 15%;
+    margin: 15px 0 25px;
   }
 
   .panel-content, .large-text {
@@ -259,6 +234,5 @@ html, body {
 
   .bottom-title {
     font-size: 2.2rem;
-    bottom: 5%;
   }
 }

@@ -149,12 +149,13 @@ html, body { height: 100%; overflow: hidden; }
   background: linear-gradient(135deg, #ff5252 0%, #ff7b7b 50%, #ffffff 100%);
 }
 
-/* STYL DLA NAPISU Z OBRAMOWANIEM I CIENIOWANIEM */
+/* STYL DLA NAPISU Z OBRAMOWANIEM I CIENIOWANIEM - TAKA SAMA CZCIONKA JAK CSGOSKINS */
 .button-text-outlined {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 900; 
   font-size: 1.6rem;
   color: white;
+  text-transform: uppercase;
   text-shadow: 
     0 0 2px black,
     0 0 3px black,

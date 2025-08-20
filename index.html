@@ -113,12 +113,11 @@
       });
     });
 
-    // --- AUTOMATYCZNE WYCZYTANIE NAJNOWSZEGO FILMU Z YOUTUBE API (Z FILTREM NA SHORTS) ---
+    // --- AUTOMATYCZNE WYCZYTANIE NAJNOWSZEGO FILMU Z RSS Z FILTREM SHORTS ---
     async function loadLatestVideo() {
       const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ'; // @angelkacs
-      // Tutaj musisz dodać swój klucz API YouTube
-      const apiKey = 'TWÓJ_KLUCZ_API_YOUTUBE'; // Zastąp tym swoim kluczem API
-      const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=20&type=video`;
+      const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+      const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
 
       const img = document.getElementById('latestThumbnail');
       const btn = document.getElementById('watchButton');
@@ -128,24 +127,42 @@
 
       try {
         loading.style.display = 'block';
-        const res = await fetch(apiUrl);
+        const res = await fetch(proxy);
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
+        const { contents } = await res.json();
 
-        // Szukamy pierwszego filmu, który nie jest shortem (sprawdzamy tytuł i opis)
-        const video = data.items.find(item => {
-          const title = item.snippet.title.toLowerCase();
-          const description = item.snippet.description.toLowerCase();
-          // Filtrujemy shorty - zazwyczaj mają "#shorts" w tytule lub opisie
-          return !title.includes('#short') && 
-                 !description.includes('#short') &&
-                 !title.includes('shorts') && 
-                 !description.includes('shorts');
-        });
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(contents, 'application/xml');
+        const entries = xml.getElementsByTagName('entry');
+        
+        // Znajdź pierwszy film, który nie jest shortem
+        let videoEntry = null;
+        for (let i = 0; i < entries.length; i++) {
+          const entry = entries[i];
+          const title = entry.querySelector('title').textContent.toLowerCase();
+          const mediaGroup = entry.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'group')[0];
+          const description = mediaGroup ? mediaGroup.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'description')[0].textContent.toLowerCase() : '';
+          
+          // Sprawdź, czy to nie jest short (brak słów kluczowych związanych z shorts)
+          if (!title.includes('#shorts') && 
+              !title.includes('short') && 
+              !description.includes('#shorts') && 
+              !description.includes('short')) {
+            videoEntry = entry;
+            break;
+          }
+        }
 
-        if (!video) throw new Error('Brak filmów (tylko shorty)');
+        if (!videoEntry) throw new Error('Brak filmów (tylko shorty)');
 
-        const videoId = video.id.videoId;
+        // Bezpieczne pobranie yt:videoId (różne przeglądarki, przestrzeń nazw)
+        let videoIdNode =
+          videoEntry.querySelector('yt\\:videoId') ||
+          videoEntry.getElementsByTagName('yt:videoId')[0] ||
+          videoEntry.getElementsByTagName('videoId')[0];
+        if (!videoIdNode) throw new Error('Brak videoId');
+
+        const videoId = videoIdNode.textContent.trim();
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
         // Najpierw spróbuj maxres, jak nie ma – fallback na hqdefault
@@ -166,7 +183,7 @@
         console.error(e);
         loading.style.display = 'none';
         err.hidden = false;
-        err.textContent = 'Nie udało się wczytać filmu. Sprawdź klucz API.';
+        err.textContent = 'Nie udało się wczytać filmu. Spróbuj odświeżyć.';
       }
     }
     loadLatestVideo();

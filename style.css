@@ -168,25 +168,26 @@ html, body { height: 100%; overflow: hidden; }
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  padding: 15px 30px;
+  padding: 0;
   border-radius: 30px;
-  min-width: 140px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   transition: all 0.3s ease;
   background: none;
+  border: none;
+  overflow: hidden;
 }
 
 /* OBRAZKI PRZYCISKÓW STREAMINGOWYCH - POWIĘKSZONE */
 .stream-button-image {
-  width: 60px; /* Zwiększone z 50px */
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   transition: all 0.3s ease;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
 }
 
 .stream-button:hover .stream-button-image {
-  transform: scale(1.1);
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,1));
+  transform: scale(1.05);
 }
 
 /* PANEL LIVE */
@@ -250,30 +251,26 @@ html, body { height: 100%; overflow: hidden; }
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 0;
   border-radius: 20px;
-  min-width: 100px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   transition: all 0.3s ease;
   background: none;
+  border: none;
+  overflow: hidden;
 }
 
-/* OBRAZKI DODATKOWYCH PRZYCISKÓW - POWIĘKSZONE DLA FACEBOOKA */
+/* OBRAZKI DODATKOWYCH PRZYCISKÓW */
 .additional-button-image {
-  width: 40px;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   transition: all 0.3s ease;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
-}
-
-/* Specjalny styl dla przycisku Facebook */
-.facebook-btn .additional-button-image {
-  width: 45px; /* Większy rozmiar dla Facebooka */
 }
 
 .additional-button:hover .additional-button-image {
-  transform: scale(1.1);
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,1));
+  transform: scale(1.05);
 }
 
 /* TYTUŁ NA SAMYM DOLE */
@@ -317,12 +314,15 @@ html, body { height: 100%; overflow: hidden; }
   .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }
   .latest-video-container { width: 90%; }
   .yt-click-image { width: 40px; }
-  .stream-button-image { width: 50px; } /* Dostosowane do większego rozmiaru */
-  .additional-button-image { width: 35px; }
   
-  /* Specjalny styl dla przycisku Facebook na mniejszych ekranach */
-  .facebook-btn .additional-button-image {
-    width: 40px;
+  .stream-button {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .additional-button {
+    width: 50px;
+    height: 50px;
   }
   
   .stream-buttons-container {
@@ -330,21 +330,9 @@ html, body { height: 100%; overflow: hidden; }
     gap: 15px;
   }
   
-  .stream-button {
-    padding: 12px 25px;
-    height: 55px;
-    min-width: 130px;
-  }
-  
   .additional-buttons-container {
     gap: 12px;
     margin-top: 20px;
-  }
-  
-  .additional-button {
-    padding: 8px 16px;
-    height: 35px;
-    min-width: 90px;
   }
   
   .live-panel {
@@ -364,20 +352,18 @@ html, body { height: 100%; overflow: hidden; }
 
 @media (max-width: 480px) {
   .stream-button {
-    padding: 10px 20px;
-    height: 50px;
-    min-width: 120px;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .additional-button {
+    width: 45px;
+    height: 45px;
   }
   
   .additional-buttons-container {
     gap: 10px;
     margin-top: 15px;
-  }
-  
-  .additional-button {
-    padding: 6px 12px;
-    height: 32px;
-    min-width: 80px;
   }
   
   .live-panel {
@@ -395,19 +381,6 @@ html, body { height: 100%; overflow: hidden; }
   }
   
   .yt-click-image {
-    width: 35px;
-  }
-  
-  .stream-button-image {
-    width: 45px;
-  }
-  
-  .additional-button-image {
-    width: 30px;
-  }
-  
-  /* Specjalny styl dla przycisku Facebook na bardzo małych ekranach */
-  .facebook-btn .additional-button-image {
     width: 35px;
   }
   

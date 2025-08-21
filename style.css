@@ -179,6 +179,20 @@ html, body { height: 100%; overflow: hidden; }
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
+/* ZDJĘCIE TWITCH ZAMIAST PRZYCISKU */
+.twitch-image {
+  width: 140px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.twitch-btn:hover .twitch-image {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
 /* PRZYCISK DISCORD - SZARY */
 .discord-btn {
   background: #7289da;
@@ -186,16 +200,6 @@ html, body { height: 100%; overflow: hidden; }
 }
 .discord-btn:hover {
   background: #5a6fc2;
-  transform: scale(1.05);
-}
-
-/* PRZYCISK TWITCH */
-.twitch-btn {
-  background: #9146FF;
-  color: white;
-}
-.twitch-btn:hover {
-  background: #772ce8;
   transform: scale(1.05);
 }
 
@@ -255,7 +259,7 @@ html, body { height: 100%; overflow: hidden; }
   justify-content: center;
   align-items: center;
   gap: 15px;
-  margin-top: 25px; /* WIĘKSZY MARGINES NA GÓRZE */
+  margin-top: 25px;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -346,7 +350,7 @@ html, body { height: 100%; overflow: hidden; }
   text-align: center; 
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  margin: 30px 0 0 0; /* WIĘKSZY MARGINES NA GÓRZE */
+  margin: 30px 0 0 0;
   margin-top: auto;
   padding-bottom: 20px;
 }
@@ -392,6 +396,11 @@ html, body { height: 100%; overflow: hidden; }
     min-width: 130px;
   }
   
+  .twitch-image {
+    width: 130px;
+    height: 55px;
+  }
+  
   .additional-buttons-container {
     gap: 12px;
     margin-top: 20px;
@@ -425,6 +434,11 @@ html, body { height: 100%; overflow: hidden; }
     padding: 10px 20px;
     height: 50px;
     min-width: 120px;
+  }
+  
+  .twitch-image {
+    width: 120px;
+    height: 50px;
   }
   
   .additional-buttons-container {

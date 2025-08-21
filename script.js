@@ -99,9 +99,7 @@ async function checkStreamStatus() {
 
   async function checkTwitch() {
     try {
-      // Uproszczone sprawdzanie - w rzeczywistości wymaga API z autoryzacją
       console.log('Sprawdzanie Twitch...');
-      // Symulacja - zawsze offline dla przykładu
     } catch (error) {
       console.log('Twitch API error:', error);
     }

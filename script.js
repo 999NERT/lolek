@@ -97,31 +97,16 @@ async function checkStreamStatus() {
   const twitchPanel = document.getElementById('twitchLivePanel');
   const kickPanel = document.getElementById('kickLivePanel');
 
-  // Twitch API - wymaga Client-ID (to jest przykładowe podejście)
   async function checkTwitch() {
     try {
-      // To jest uproszczone - Twitch API wymaga autoryzacji
-      // W rzeczywistości potrzebowałbyś Client-ID i możliwe że OAuth
-      const response = await fetch('https://api.twitch.tv/helix/streams?user_login=angelkacs', {
-        headers: {
-          'Client-ID': 'twoj_client_id', // Wymaga prawdziwego Client-ID
-          'Authorization': 'Bearer twoj_token' // Wymaga tokena
-        }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.data && data.data.length > 0) {
-          twitchPanel.classList.add('live');
-          twitchPanel.querySelector('.live-text').textContent = 'LIVE';
-        }
-      }
+      // Uproszczone sprawdzanie - w rzeczywistości wymaga API z autoryzacją
+      console.log('Sprawdzanie Twitch...');
+      // Symulacja - zawsze offline dla przykładu
     } catch (error) {
       console.log('Twitch API error:', error);
     }
   }
 
-  // Kick.com API - sprawdzenie czy stream jest live
   async function checkKick() {
     try {
       const response = await fetch('https://kick.com/api/v2/channels/angelkacs');
@@ -137,13 +122,11 @@ async function checkStreamStatus() {
     }
   }
 
-  // Sprawdzaj co 60 sekund
   setInterval(async () => {
     await checkTwitch();
     await checkKick();
   }, 60000);
 
-  // Pierwsze sprawdzenie
   await checkTwitch();
   await checkKick();
 }

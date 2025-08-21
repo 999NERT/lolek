@@ -176,9 +176,9 @@ html, body { height: 100%; overflow: hidden; }
   background: none;
 }
 
-/* OBRAZKI PRZYCISKÓW STREAMINGOWYCH */
+/* OBRAZKI PRZYCISKÓW STREAMINGOWYCH - POWIĘKSZONE */
 .stream-button-image {
-  width: 50px;
+  width: 60px; /* Zwiększone z 50px */
   height: auto;
   transition: all 0.3s ease;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
@@ -258,12 +258,17 @@ html, body { height: 100%; overflow: hidden; }
   background: none;
 }
 
-/* OBRAZKI DODATKOWYCH PRZYCISKÓW */
+/* OBRAZKI DODATKOWYCH PRZYCISKÓW - POWIĘKSZONE DLA FACEBOOKA */
 .additional-button-image {
   width: 40px;
   height: auto;
   transition: all 0.3s ease;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
+}
+
+/* Specjalny styl dla przycisku Facebook */
+.facebook-btn .additional-button-image {
+  width: 45px; /* Większy rozmiar dla Facebooka */
 }
 
 .additional-button:hover .additional-button-image {
@@ -312,8 +317,13 @@ html, body { height: 100%; overflow: hidden; }
   .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }
   .latest-video-container { width: 90%; }
   .yt-click-image { width: 40px; }
-  .stream-button-image { width: 40px; }
+  .stream-button-image { width: 50px; } /* Dostosowane do większego rozmiaru */
   .additional-button-image { width: 35px; }
+  
+  /* Specjalny styl dla przycisku Facebook na mniejszych ekranach */
+  .facebook-btn .additional-button-image {
+    width: 40px;
+  }
   
   .stream-buttons-container {
     flex-direction: column;
@@ -389,11 +399,16 @@ html, body { height: 100%; overflow: hidden; }
   }
   
   .stream-button-image {
-    width: 35px;
+    width: 45px;
   }
   
   .additional-button-image {
     width: 30px;
+  }
+  
+  /* Specjalny styl dla przycisku Facebook na bardzo małych ekranach */
+  .facebook-btn .additional-button-image {
+    width: 35px;
   }
   
   .main-wrapper {

@@ -168,56 +168,25 @@ html, body { height: 100%; overflow: hidden; }
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 900;
-  font-size: 28px;
   padding: 15px 30px;
   border-radius: 30px;
   min-width: 140px;
   height: 60px;
   transition: all 0.3s ease;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  background: none;
 }
 
-/* ZDJĘCIE TWITCH ZAMIAST PRZYCISKU - ZMIENIONE NA TAKIE SAMO JAK YTCLICK */
-.twitch-image {
+/* OBRAZKI PRZYCISKÓW STREAMINGOWYCH */
+.stream-button-image {
   width: 50px;
   height: auto;
   transition: all 0.3s ease;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
 }
 
-.twitch-btn {
-  background: none;
-  padding: 0;
-  min-width: auto;
-  height: auto;
-}
-
-.twitch-btn:hover .twitch-image {
+.stream-button:hover .stream-button-image {
   transform: scale(1.1);
   filter: drop-shadow(0 4px 10px rgba(0,0,0,1));
-}
-
-/* PRZYCISK DISCORD - SZARY */
-.discord-btn {
-  background: #7289da;
-  color: white;
-}
-.discord-btn:hover {
-  background: #5a6fc2;
-  transform: scale(1.05);
-}
-
-/* PRZYCISK KICK */
-.kick-btn {
-  background: #53FC18;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-.kick-btn:hover {
-  background: #45d40f;
-  transform: scale(1.05);
 }
 
 /* PANEL LIVE */
@@ -259,7 +228,7 @@ html, body { height: 100%; overflow: hidden; }
   100% { opacity: 0.6; }
 }
 
-/* DODATKOWE PRZYCISKI POD STREAM BUTTONS - TERAZ NIŻEJ */
+/* DODATKOWE PRZYCISKI POD STREAM BUTTONS */
 .additional-buttons-container {
   display: flex;
   justify-content: center;
@@ -281,71 +250,25 @@ html, body { height: 100%; overflow: hidden; }
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 900;
-  font-size: 18px;
   padding: 10px 20px;
   border-radius: 20px;
   min-width: 100px;
   height: 40px;
   transition: all 0.3s ease;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  background: none;
 }
 
-/* PRZYCISK INSTAGRAM - KOLOR INSTAGRAM */
-.instagram-btn {
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  color: white;
-  border: 2px solid white;
-}
-.instagram-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(220, 39, 67, 0.6);
+/* OBRAZKI DODATKOWYCH PRZYCISKÓW */
+.additional-button-image {
+  width: 40px;
+  height: auto;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
 }
 
-/* PRZYCISK X - KOLOR X.COM */
-.x-btn {
-  background: #000000;
-  color: white;
-  border: 2px solid white;
-}
-.x-btn:hover {
-  background: #1da1f2;
-  transform: scale(1.05);
-}
-
-/* PRZYCISK YOUTUBE - KOLOR YOUTUBE */
-.youtube-btn {
-  background: #ff0000;
-  color: white;
-  border: 2px solid white;
-}
-.youtube-btn:hover {
-  background: #cc0000;
-  transform: scale(1.05);
-}
-
-/* PRZYCISK TIKTOK - KOLOR TIKTOK */
-.tiktok-btn {
-  background: #000000;
-  color: #ff0050;
-  border: 2px solid #ff0050;
-}
-.tiktok-btn:hover {
-  background: #ff0050;
-  color: white;
-  transform: scale(1.05);
-}
-
-/* PRZYCISK FACEBOOK - KOLOR FACEBOOK */
-.facebook-btn {
-  background: #1877f2;
-  color: white;
-  border: 2px solid white;
-}
-.facebook-btn:hover {
-  background: #166fe5;
-  transform: scale(1.05);
+.additional-button:hover .additional-button-image {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,1));
 }
 
 /* TYTUŁ NA SAMYM DOLE */
@@ -389,7 +312,8 @@ html, body { height: 100%; overflow: hidden; }
   .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }
   .latest-video-container { width: 90%; }
   .yt-click-image { width: 40px; }
-  .twitch-image { width: 40px; }
+  .stream-button-image { width: 40px; }
+  .additional-button-image { width: 35px; }
   
   .stream-buttons-container {
     flex-direction: column;
@@ -397,7 +321,6 @@ html, body { height: 100%; overflow: hidden; }
   }
   
   .stream-button {
-    font-size: 24px;
     padding: 12px 25px;
     height: 55px;
     min-width: 130px;
@@ -409,7 +332,6 @@ html, body { height: 100%; overflow: hidden; }
   }
   
   .additional-button {
-    font-size: 16px;
     padding: 8px 16px;
     height: 35px;
     min-width: 90px;
@@ -432,7 +354,6 @@ html, body { height: 100%; overflow: hidden; }
 
 @media (max-width: 480px) {
   .stream-button {
-    font-size: 22px;
     padding: 10px 20px;
     height: 50px;
     min-width: 120px;
@@ -444,7 +365,6 @@ html, body { height: 100%; overflow: hidden; }
   }
   
   .additional-button {
-    font-size: 14px;
     padding: 6px 12px;
     height: 32px;
     min-width: 80px;
@@ -468,8 +388,12 @@ html, body { height: 100%; overflow: hidden; }
     width: 35px;
   }
   
-  .twitch-image {
+  .stream-button-image {
     width: 35px;
+  }
+  
+  .additional-button-image {
+    width: 30px;
   }
   
   .main-wrapper {

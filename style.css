@@ -47,7 +47,7 @@ html, body { height: 100%; overflow: hidden; }
 .logitech-btn a { background: white; color: black; }
 .logitech-tech { 
   color: #00FFFF !important; 
-  text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF !important;
+  /* USUNIĘTO TEXT-SHADOW */
 }
 .logitech-btn a:hover { background: #00FFFF; }
 
@@ -61,8 +61,8 @@ html, body { height: 100%; overflow: hidden; }
 
 /* Nowe klasy kolorów dla CSGOSKINS */
 .green-text { color: #4CAF50 !important; }
-.yellow-text { color: #FFEB3B !important; }
-.purple-text { color: #9C27B0 !important; }
+.red-text { color: #ff3838 !important; }
+.purple-text { color: #a061ff !important; }
 
 .wkdzik-btn a { background: black; color: white; }
 .wkdzik-highlight { color: white !important; }

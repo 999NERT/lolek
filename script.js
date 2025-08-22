@@ -97,14 +97,59 @@ async function checkStreamStatus() {
   const twitchPanel = document.getElementById('twitchLivePanel');
   const kickPanel = document.getElementById('kickLivePanel');
 
+  // Funkcja do sprawdzania statusu na Twitch
   async function checkTwitch() {
     try {
-      console.log('Sprawdzanie Twitch...');
+      // Używamy Twitch API v5 z Client-ID (może wymagać własnego Client-ID)
+      const clientId = 'kimne78kx3ncx6brgo4mv6wki5h1ko'; // To jest publiczny Client-ID, może czasem nie działać
+      const response = await fetch(`https://api.twitch.tv/kraken/streams/angelkacs2`, {
+        headers: {
+          'Accept': 'application/vnd.twitchtv.v5+json',
+          'Client-ID': clientId
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.stream) {
+          twitchPanel.classList.add('live');
+          twitchPanel.querySelector('.live-text').textContent = 'LIVE';
+          console.log('Twitch: ONLINE');
+        } else {
+          twitchPanel.classList.remove('live');
+          twitchPanel.querySelector('.live-text').textContent = 'OFFLINE';
+          console.log('Twitch: OFFLINE');
+        }
+      }
     } catch (error) {
       console.log('Twitch API error:', error);
+      // Fallback - sprawdzenie przez unofficial API
+      checkTwitchUnofficial();
     }
   }
 
+  // Alternatywna metoda sprawdzania Twitch (nieoficjalne API)
+  async function checkTwitchUnofficial() {
+    try {
+      const response = await fetch(`https://twitch-proxy.freecodecamp.rocks/helix/streams?user_login=angelkacs2`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data && data.data.length > 0) {
+          twitchPanel.classList.add('live');
+          twitchPanel.querySelector('.live-text').textContent = 'LIVE';
+          console.log('Twitch (unofficial): ONLINE');
+        } else {
+          twitchPanel.classList.remove('live');
+          twitchPanel.querySelector('.live-text').textContent = 'OFFLINE';
+          console.log('Twitch (unofficial): OFFLINE');
+        }
+      }
+    } catch (error) {
+      console.log('Twitch unofficial API error:', error);
+    }
+  }
+
+  // Funkcja do sprawdzania statusu na Kick
   async function checkKick() {
     try {
       const response = await fetch('https://kick.com/api/v2/channels/angelkacs');
@@ -113,6 +158,11 @@ async function checkStreamStatus() {
         if (data.livestream && data.livestream.is_live) {
           kickPanel.classList.add('live');
           kickPanel.querySelector('.live-text').textContent = 'LIVE';
+          console.log('Kick: ONLINE');
+        } else {
+          kickPanel.classList.remove('live');
+          kickPanel.querySelector('.live-text').textContent = 'OFFLINE';
+          console.log('Kick: OFFLINE');
         }
       }
     } catch (error) {
@@ -120,11 +170,13 @@ async function checkStreamStatus() {
     }
   }
 
+  // Sprawdzamy status co 60 sekund
   setInterval(async () => {
     await checkTwitch();
     await checkKick();
   }, 60000);
 
+  // Pierwsze sprawdzenie przy załadowaniu strony
   await checkTwitch();
   await checkKick();
 }

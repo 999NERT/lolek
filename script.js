@@ -97,36 +97,23 @@ async function checkStreamStatus() {
   const twitchPanel = document.getElementById('twitchLivePanel');
   const kickPanel = document.getElementById('kickLivePanel');
 
-  // Funkcja do sprawdzania statusu na Twitch (poprzez CORS proxy)
+  // Funkcja do sprawdzania statusu na Twitch (poprzez zewnętrzne API)
   async function checkTwitch() {
     try {
-      // Używamy proxy do ominięcia CORS
-      const proxyUrl = 'https://api.allorigins.win/get?url=';
-      const targetUrl = encodeURIComponent('https://www.twitch.tv/angelkacs2');
+      const response = await fetch('https://decapi.me/twitch/uptime/angelkacs');
+      const data = await response.text();
       
-      const response = await fetch(proxyUrl + targetUrl);
-      if (response.ok) {
-        const data = await response.json();
-        const htmlContent = data.contents;
-        
-        // Sprawdzamy czy strona zawiera informację o live streamie
-        const isLive = htmlContent.includes('isLiveBroadcast') || 
-                       htmlContent.includes('"isLive":true') || 
-                       htmlContent.includes('live-indicator-container');
-        
-        if (isLive) {
-          twitchPanel.classList.add('live');
-          twitchPanel.querySelector('.live-text').textContent = 'LIVE';
-          console.log('Twitch: ONLINE (via proxy)');
-        } else {
-          twitchPanel.classList.remove('live');
-          twitchPanel.querySelector('.live-text').textContent = 'OFFLINE';
-          console.log('Twitch: OFFLINE (via proxy)');
-        }
+      if (data !== 'angelkacs is offline' && !data.includes('offline') && data !== 'error') {
+        twitchPanel.classList.add('live');
+        twitchPanel.querySelector('.live-text').textContent = 'LIVE';
+        console.log('Twitch: ONLINE');
+      } else {
+        twitchPanel.classList.remove('live');
+        twitchPanel.querySelector('.live-text').textContent = 'OFFLINE';
+        console.log('Twitch: OFFLINE');
       }
     } catch (error) {
       console.log('Twitch check error:', error);
-      // Fallback - ręczne ustawienie
       twitchPanel.classList.remove('live');
       twitchPanel.querySelector('.live-text').textContent = 'OFFLINE';
     }

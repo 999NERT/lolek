@@ -45,7 +45,10 @@ html, body { height: 100%; overflow: hidden; }
 
 /* BRAND KOLORY JAK U CIEBIE */
 .logitech-btn a { background: white; color: black; }
-.logitech-tech { color: #00FFFF !important; }
+.logitech-tech { 
+  color: #00FFFF !important; 
+  text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF !important;
+}
 .logitech-btn a:hover { background: #00FFFF; }
 
 .pirateswap-btn a { background: #1E1D22; color: white; }
@@ -55,6 +58,11 @@ html, body { height: 100%; overflow: hidden; }
 .csgoskins-btn a { background: #0D2345; color: white; }
 .blue-o { color: #4fc3f7 !important; }
 .csgoskins-btn a:hover { background: #14A3C7; }
+
+/* Nowe klasy kolorów dla CSGOSKINS */
+.green-text { color: #4CAF50 !important; }
+.yellow-text { color: #FFEB3B !important; }
+.purple-text { color: #9C27B0 !important; }
 
 .wkdzik-btn a { background: black; color: white; }
 .wkdzik-highlight { color: white !important; }

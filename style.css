@@ -9,6 +9,18 @@ html, body {
   overflow: hidden;
 }
 
+/* ================================
+   FONTY – ŁATWA EDYCJA
+   Wystarczy zmienić zmienne poniżej
+   ================================ */
+:root {
+  --font-main: 'Titillium Web', sans-serif;
+  --font-buttons: 'Titillium Web', sans-serif;
+  --font-titles: 'Paytone One', sans-serif;
+  --font-panels: 'Paytone One', sans-serif;
+  --font-socials: 'Titillium Web', sans-serif;
+}
+
 /* TŁO ZDJĘCIE */
 .image-background {
   position: fixed;
@@ -36,6 +48,7 @@ html, body {
   align-items: center;
   padding: 90px 20px 20px;
   color: white;
+  font-family: var(--font-main);
 }
 
 /* PRZYCISKI */
@@ -57,7 +70,7 @@ html, body {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-family: 'Titillium Web', sans-serif;
+  font-family: var(--font-buttons);
   font-weight: 900;
   font-size: 28px;
   padding: 14px 28px;
@@ -74,6 +87,7 @@ html, body {
 .popup-text {
   display: none;
   font-weight: 900;
+  font-family: var(--font-buttons);
 }
 
 /* BRAND KOLORY */
@@ -81,35 +95,22 @@ html, body {
   background: white;
   color: black;
 }
-.logitech-tech {
-  color: #00FFFF !important;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-.logitech-btn a:hover {
-  background: #00FFFF;
-}
+.logitech-tech { color: #00FFFF !important; }
+.logitech-btn a:hover { background: #00FFFF; }
 
 .pirateswap-btn a {
   background: #1E1D22;
   color: white;
 }
-.pirateswap-swap {
-  color: #DB6034 !important;
-}
-.pirateswap-btn a:hover {
-  background: #DB6034;
-}
+.pirateswap-swap { color: #DB6034 !important; }
+.pirateswap-btn a:hover { background: #DB6034; }
 
 .csgoskins-btn a {
   background: #0D2345;
   color: white;
 }
-.blue-o {
-  color: #4fc3f7 !important;
-}
-.csgoskins-btn a:hover {
-  background: #14A3C7;
-}
+.blue-o { color: #4fc3f7 !important; }
+.csgoskins-btn a:hover { background: #14A3C7; }
 /* Nowe klasy kolorów dla CSGOSKINS */
 .green-text { color: #4CAF50 !important; }
 .red-text { color: #ff3838 !important; }
@@ -121,9 +122,7 @@ html, body {
   background: black;
   color: white;
 }
-.wkdzik-highlight {
-  color: white !important;
-}
+.wkdzik-highlight { color: white !important; }
 .wkdzik-btn a:hover {
   background: white;
   color: black;
@@ -133,12 +132,8 @@ html, body {
   background: #262D3A;
   color: white;
 }
-.betters-ters {
-  color: #E50420 !important;
-}
-.betters-btn a:hover {
-  background: #E50420;
-}
+.betters-ters { color: #E50420 !important; }
+.betters-btn a:hover { background: #E50420; }
 
 /* PANEL OPISU */
 .description-panel {
@@ -157,7 +152,7 @@ html, body {
   justify-content: center;
 }
 .panel-content {
-  font-family: 'Paytone One', sans-serif;
+  font-family: var(--font-panels);
   font-weight: 900;
   text-align: center;
   text-transform: uppercase;
@@ -176,7 +171,7 @@ html, body {
 .logitech-btn .panel-content {
   background-color: #ffffff !important;
   color: black !important;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  font-family: var(--font-panels);
 }
 
 /* OKNO NAJNOWSZEGO FILMU */
@@ -198,7 +193,7 @@ html, body {
   opacity: 1 !important;
 }
 
-/* PRZYCISK Z OBRAZKIEM YTCLICK */
+/* PRZYCISK PLAY (YTCLICK) */
 .play-button {
   position: absolute;
   inset: 50% auto auto 50%;
@@ -254,8 +249,8 @@ html, body {
   background: none;
   border: none;
   overflow: hidden;
+  font-family: var(--font-socials);
 }
-/* OBRAZKI STREAMING */
 .stream-button-image {
   width: 95%;
   height: 95%;
@@ -282,7 +277,7 @@ html, body {
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
 }
 .live-text {
-  font-family: 'Titillium Web', sans-serif;
+  font-family: var(--font-socials);
   font-weight: 800;
   font-size: 14px;
   color: #ff4444;
@@ -326,6 +321,7 @@ html, body {
   background: none;
   border: none;
   overflow: hidden;
+  font-family: var(--font-socials);
 }
 .additional-button-image {
   width: 95%;
@@ -337,7 +333,7 @@ html, body {
 
 /* TYTUŁ NA DOLE */
 .bottom-title {
-  font-family: 'Titillium Web', sans-serif;
+  font-family: var(--font-titles);
   font-weight: 600;
   font-size: 2.8rem;
   text-align: center;
@@ -353,7 +349,7 @@ html, body {
   position: absolute;
   inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Titillium Web', sans-serif;
+  font-family: var(--font-main);
   font-weight: 800;
   background: rgba(0,0,0,0.6);
   padding: 8px 14px;
@@ -361,9 +357,7 @@ html, body {
   transition: opacity 0.5s ease;
   z-index: 4;
 }
-.latest-video-container .loading {
-  display: none !important;
-}
+.latest-video-container .loading { display: none !important; }
 
 /* RESPONSYWNOŚĆ */
 @media (max-width: 768px) {

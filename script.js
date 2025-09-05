@@ -1,4 +1,30 @@
-// Ładowanie najnowszego filmu YouTube
+// --- PANEL OPISU ---
+function showTextInPanel(html, isSmall) {
+  const panelContent = document.getElementById('panelContent');
+  panelContent.innerHTML = html;
+  panelContent.className = 'panel-content ' + (isSmall ? 'small-text' : 'large-text');
+  document.getElementById('descPanel').style.opacity = '1';
+}
+
+document.querySelectorAll('.button-with-popup').forEach(button => {
+  const popupText = button.querySelector('.popup-text');
+  const panelColor = button.getAttribute('data-panel-color');
+  const textColor = button.getAttribute('data-text-color');
+  const isSmall = button.classList.contains('csgoskins-btn');
+
+  button.addEventListener('mouseenter', () => {
+    const panel = document.getElementById('descPanel');
+    panel.style.backgroundColor = panelColor || 'rgba(0,0,0,0.6)';
+    document.getElementById('panelContent').style.color = textColor || 'white';
+    showTextInPanel(popupText.innerHTML, isSmall);
+  });
+
+  button.addEventListener('mouseleave', () => {
+    document.getElementById('descPanel').style.opacity = '0';
+  });
+});
+
+// --- ŁADOWANIE MINIATURKI YT ---
 async function loadLatestVideo() {
   const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ';
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
@@ -9,61 +35,64 @@ async function loadLatestVideo() {
 
   try {
     const res = await fetch(proxy);
-    if(!res.ok) throw new Error('HTTP ' + res.status);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const { contents } = await res.json();
     const parser = new DOMParser();
     const xml = parser.parseFromString(contents, 'application/xml');
     const entries = xml.getElementsByTagName('entry');
+
     let videoEntry = null;
-    for(let i=0;i<entries.length;i++){
+    for (let i=0;i<entries.length;i++){
       const entry = entries[i];
       const title = entry.querySelector('title').textContent.toLowerCase();
-      const desc = entry.getElementsByTagName('media:description')[0]?.textContent.toLowerCase()||'';
-      if(!title.includes('#shorts') && !title.includes('short') && !desc.includes('#shorts')){ videoEntry=entry; break; }
+      if(!title.includes('#shorts')) { videoEntry = entry; break; }
     }
+
     if(!videoEntry) throw new Error('Brak filmów (tylko shorty)');
     const videoIdNode = videoEntry.querySelector('yt\\:videoId') || videoEntry.getElementsByTagName('yt:videoId')[0];
-    if(!videoIdNode) throw new Error('Brak videoId');
     const videoId = videoIdNode.textContent.trim();
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
-    img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-    img.onload = ()=> btn.classList.add('visible');
-    img.onerror = ()=> img.src=`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  } catch(e) { console.error(e); err.hidden=false; }
+    const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    img.src = maxres;
+    img.onload = ()=>{ btn.classList.add('visible'); };
+    img.onerror = ()=>{ img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`; };
+  } catch(e) {
+    console.error(e);
+    err.hidden = false;
+  }
 }
 
-// Sprawdzanie streamów Twitch/Kick
+// --- SPRAWDZANIE STREAMÓW ---
 async function checkStreamStatus() {
   const twitchPanel = document.getElementById('twitchLivePanel');
   const kickPanel = document.getElementById('kickLivePanel');
 
-  async function checkTwitch() {
-    try {
-      const res = await fetch('https://decapi.me/twitch/uptime/angelkacs');
-      const data = await res.text();
-      if(data!=='angelkacs is offline' && !data.includes('offline') && data!=='error'){
-        twitchPanel.classList.add('live'); twitchPanel.querySelector('.live-text').textContent='LIVE';
-      } else { twitchPanel.classList.remove('live'); twitchPanel.querySelector('.live-text').textContent='OFFLINE'; }
-    } catch(e){ twitchPanel.classList.remove('live'); twitchPanel.querySelector('.live-text').textContent='OFFLINE'; }
-  }
+  try {
+    const twitchRes = await fetch('https://decapi.me/twitch/uptime/angelkacs');
+    const twitchData = await twitchRes.text();
+    if(twitchData.includes('offline')) {
+      twitchPanel.classList.remove('live'); twitchPanel.querySelector('.live-text').textContent='OFFLINE';
+    } else {
+      twitchPanel.classList.add('live'); twitchPanel.querySelector('.live-text').textContent='LIVE';
+    }
+  } catch(e){ console.log('Twitch error',e); }
 
-  async function checkKick() {
-    try{
-      const res = await fetch('https://kick.com/api/v2/channels/angelkacs');
-      if(res.ok){
-        const data = await res.json();
-        if(data.livestream && data.livestream.is_live){
-          kickPanel.classList.add('live'); kickPanel.querySelector('.live-text').textContent='LIVE';
-        } else { kickPanel.classList.remove('live'); kickPanel.querySelector('.live-text').textContent='OFFLINE'; }
+  try {
+    const kickRes = await fetch('https://kick.com/api/v2/channels/angelkacs');
+    if(kickRes.ok){
+      const data = await kickRes.json();
+      if(data.livestream && data.livestream.is_live){
+        kickPanel.classList.add('live'); kickPanel.querySelector('.live-text').textContent='LIVE';
+      } else {
+        kickPanel.classList.remove('live'); kickPanel.querySelector('.live-text').textContent='OFFLINE';
       }
-    } catch(e){ kickPanel.classList.remove('live'); kickPanel.querySelector('.live-text').textContent='OFFLINE'; }
-  }
-
-  await checkTwitch(); await checkKick();
-  setInterval(async()=>{ await checkTwitch(); await checkKick(); },60000);
+    }
+  } catch(e){ console.log('Kick error',e); }
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
+// --- URUCHOMIENIE ---
+document.addEventListener('DOMContentLoaded',()=>{
   loadLatestVideo();
   checkStreamStatus();
+  setInterval(checkStreamStatus,60000);
 });

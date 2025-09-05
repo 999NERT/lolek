@@ -19,31 +19,46 @@
   <!-- PRZYCISKI -->
   <div class="buttons-container">
 
-    <div class="button-with-popup logitech-btn">
+    <div class="button-with-popup logitech-btn" data-panel-color="#ffffff" data-text-color="black">
       <a href="#" target="_blank"><span class="button-text">LOGI<span class="logitech-tech">TECH</span></span></a>
-      <div class="popup-text logitech-panel">-5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span></div>
+      <div class="popup-text editable-text" data-text-id="logitech-text">
+        -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span>
+      </div>
     </div>
 
-    <div class="button-with-popup pirateswap-btn">
+    <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
       <a href="#" target="_blank"><span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span></a>
-      <div class="popup-text pirateswap-panel">CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ 35% WIĘCEJ</div>
+      <div class="popup-text editable-text" data-text-id="pirateswap-text">
+        CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ 35% WIĘCEJ
+      </div>
     </div>
 
-    <div class="button-with-popup csgoskins-btn">
+    <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
       <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank"><span class="button-text">CSG<span class="blue-o">O</span>SKINS</span></a>
-      <div class="popup-text csgoskins-panel">WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE</div>
+      <div class="popup-text editable-text csgoskins-popup" data-text-id="csgoskins-text">
+        WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE
+      </div>
     </div>
 
-    <div class="button-with-popup wkdzik-btn">
+    <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
       <a href="#" target="_blank"><span class="button-text">WKDZIK</span></a>
-      <div class="popup-text wkdzik-panel">CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA -5%</div>
+      <div class="popup-text editable-text" data-text-id="wkdzik-text">
+        CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA -5%
+      </div>
     </div>
 
-    <div class="button-with-popup betters-btn">
+    <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
       <a href="#" target="_blank"><span class="button-text">BET<span class="betters-ters">TERS</span></span></a>
-      <div class="popup-text betters-panel">ZAREJESTRUJ SIĘ I GRAJ, FREEBET: <span class="betters-ters">35 PLN</span></div>
+      <div class="popup-text editable-text" data-text-id="betters-text">
+        ZAREJESTRUJ SIĘ I GRAJ, FREEBET: <span class="betters-ters">35 PLN</span>
+      </div>
     </div>
 
+  </div>
+
+  <!-- PANEL OPISU -->
+  <div class="description-panel" id="descPanel">
+    <div class="panel-content" id="panelContent"></div>
   </div>
 
   <!-- NAJNOWSZY FILM -->
@@ -109,7 +124,6 @@
     </div>
   </div>
 
-  <!-- TYTUŁ -->
   <h1 class="bottom-title">#ANGELKACS</h1>
 
 </div>

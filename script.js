@@ -29,7 +29,6 @@ async function loadLatestVideo() {
   const channelId = 'UCb4KZzyxv9-PL_BcKOrpFyQ';
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
-
   const img = document.getElementById('latestThumbnail');
   const btn = document.getElementById('watchButton');
   const err = document.getElementById('videoError');
@@ -37,23 +36,20 @@ async function loadLatestVideo() {
   try {
     const res = await fetch(proxy);
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const { contents } = await res.json();
 
+    const { contents } = await res.json();
     const parser = new DOMParser();
     const xml = parser.parseFromString(contents, 'application/xml');
     const entries = xml.getElementsByTagName('entry');
-    
     let videoEntry = null;
+
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i];
       const title = entry.querySelector('title').textContent.toLowerCase();
       const mediaGroup = entry.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'group')[0];
       const description = mediaGroup ? mediaGroup.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'description')[0].textContent.toLowerCase() : '';
-      
-      if (!title.includes('#shorts') && 
-          !title.includes('short') && 
-          !description.includes('#shorts') && 
-          !description.includes('short')) {
+
+      if (!title.includes('#shorts') && !title.includes('short') && !description.includes('#shorts') && !description.includes('short')) {
         videoEntry = entry;
         break;
       }
@@ -61,25 +57,21 @@ async function loadLatestVideo() {
 
     if (!videoEntry) throw new Error('Brak filmów (tylko shorty)');
 
-    let videoIdNode =
-      videoEntry.querySelector('yt\\:videoId') ||
-      videoEntry.getElementsByTagName('yt:videoId')[0] ||
-      videoEntry.getElementsByTagName('videoId')[0];
+    let videoIdNode = videoEntry.querySelector('yt\\:videoId') || videoEntry.getElementsByTagName('yt:videoId')[0] || videoEntry.getElementsByTagName('videoId')[0];
     if (!videoIdNode) throw new Error('Brak videoId');
 
     const videoId = videoIdNode.textContent.trim();
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
     btn.href = videoUrl;
-    
+
     const maxres = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     img.src = maxres;
-    
+
     img.onload = function() {
       img.classList.add('thumb-visible');
       btn.classList.add('visible');
     };
-    
+
     img.onerror = function() {
       const hq = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.src = hq;
@@ -97,20 +89,16 @@ async function checkStreamStatus() {
   const twitchPanel = document.getElementById('twitchLivePanel');
   const kickPanel = document.getElementById('kickLivePanel');
 
-  // Funkcja do sprawdzania statusu na Twitch (poprzez zewnętrzne API)
   async function checkTwitch() {
     try {
       const response = await fetch('https://decapi.me/twitch/uptime/angelkacs');
       const data = await response.text();
-      
       if (data !== 'angelkacs is offline' && !data.includes('offline') && data !== 'error') {
         twitchPanel.classList.add('live');
         twitchPanel.querySelector('.live-text').textContent = 'LIVE';
-        console.log('Twitch: ONLINE');
       } else {
         twitchPanel.classList.remove('live');
         twitchPanel.querySelector('.live-text').textContent = 'OFFLINE';
-        console.log('Twitch: OFFLINE');
       }
     } catch (error) {
       console.log('Twitch check error:', error);
@@ -119,7 +107,6 @@ async function checkStreamStatus() {
     }
   }
 
-  // Funkcja do sprawdzania statusu na Kick
   async function checkKick() {
     try {
       const response = await fetch('https://kick.com/api/v2/channels/angelkacs');
@@ -128,11 +115,9 @@ async function checkStreamStatus() {
         if (data.livestream && data.livestream.is_live) {
           kickPanel.classList.add('live');
           kickPanel.querySelector('.live-text').textContent = 'LIVE';
-          console.log('Kick: ONLINE');
         } else {
           kickPanel.classList.remove('live');
           kickPanel.querySelector('.live-text').textContent = 'OFFLINE';
-          console.log('Kick: OFFLINE');
         }
       }
     } catch (error) {
@@ -140,18 +125,16 @@ async function checkStreamStatus() {
     }
   }
 
-  // Sprawdzamy status co 60 sekund
   setInterval(async () => {
     await checkTwitch();
     await checkKick();
   }, 60000);
 
-  // Pierwsze sprawdzenie przy załadowaniu strony
   await checkTwitch();
   await checkKick();
 }
 
-// --- URUCHOMIENIE WSZYSTKIEGO ---
+// --- START ---
 document.addEventListener('DOMContentLoaded', () => {
   loadLatestVideo();
   checkStreamStatus();

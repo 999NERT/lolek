@@ -13,31 +13,54 @@ html, body { height:100%; font-family:'Titillium Web', sans-serif; color:white; 
 .buttons-container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
 .button-with-popup { position:relative; text-align:center; }
 .button-with-popup a { display:inline-block; padding:14px 28px; border-radius:30px; min-width:160px; text-align:center; font-weight:900; font-size:28px; text-decoration:none; transition:all .3s ease; }
-.button-with-popup .popup-text { display:none; margin-top:8px; font-weight:700; background:rgba(0,0,0,0.7); padding:6px 12px; border-radius:10px; font-size:16px; max-width:220px; }
-.button-with-popup:hover .popup-text { display:block; }
 
-/* LOGITECH */
+/* PANEL OPISU (centralny) */
+.description-panel {
+  width:min(90%,900px);
+  height:80px;
+  margin:18px auto;
+  padding:14px 20px;
+  background:rgba(0,0,0,0.55);
+  border-radius:15px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+  opacity:0;
+  transition:opacity 0.25s ease;
+  pointer-events:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.panel-content {
+  font-family:'Paytone One', sans-serif;
+  font-weight:900;
+  text-align:center;
+  text-transform:uppercase;
+  width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+/* PRZYCISKI SPECYFICZNE */
 .logitech-btn a { background:white; color:black; }
 .logitech-btn a:hover { background:#00FFFF; }
 .logitech-tech { color:#00FFFF; }
 
-/* PIRATESWAP */
 .pirateswap-btn a { background:#1E1D22; color:white; }
 .pirateswap-btn a:hover { background:#DB6034; }
 .pirateswap-swap { color:#DB6034; }
 
-/* CSGOSKINS */
 .csgoskins-btn a { background:#0D2345; color:white; }
 .csgoskins-btn a:hover { background:#14A3C7; }
 .blue-o { color:#4fc3f7; }
 .green-text { color:#4CAF50; }
 
-/* WKDZIK */
 .wkdzik-btn a { background:black; color:white; }
 .wkdzik-btn a:hover { background:white; color:black; }
 .wkdzik-highlight { color:white; }
 
-/* BETTERS */
 .betters-btn a { background:#262D3A; color:white; }
 .betters-btn a:hover { background:#E50420; }
 .betters-ters { color:#E50420; }
@@ -61,7 +84,7 @@ html, body { height:100%; font-family:'Titillium Web', sans-serif; color:white; 
 .live-text { font-weight:800; font-size:14px; color:#ff4444; }
 .live-panel.live { background:rgba(255,68,68,0.3); border-color:#00ff00; box-shadow:0 0 10px rgba(0,255,0,0.4); }
 .live-panel.live .live-text { color:#00ff00; text-shadow:0 0 8px rgba(0,255,0,0.6); animation:pulseLive 1.5s infinite; }
-@keyframes pulseLive { 0%{opacity:0.6} 50%{opacity:1} 100%{opacity:0.6} }
+@keyframes pulseLive {0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
 
 /* SOCIAL MEDIA */
 .additional-buttons-container { display:flex; justify-content:center; gap:15px; margin-top:25px; flex-wrap:wrap; }
@@ -71,24 +94,3 @@ html, body { height:100%; font-family:'Titillium Web', sans-serif; color:white; 
 
 /* TYTUŁ */
 .bottom-title { font-family:'Titillium Web', sans-serif; font-weight:600; font-size:2.8rem; text-align:center; margin:30px 0; text-shadow:0 2px 4px rgba(0,0,0,0.8); }
-
-/* RESPONSYWNOŚĆ */
-@media(max-width:768px){
-  .buttons-container { flex-direction:column; gap:16px; }
-  .button-with-popup a { font-size:24px; padding:12px 24px; }
-  .button-with-popup .popup-text { font-size:14px; }
-  .stream-button { width:100px; height:100px; }
-  .additional-button { width:75px; height:75px; }
-  .live-panel { width:70px; height:25px; }
-  .live-text { font-size:12px; }
-  .bottom-title { font-size:2.2rem; }
-}
-@media(max-width:480px){
-  .stream-button { width:85px; height:85px; }
-  .additional-button { width:65px; height:65px; }
-  .live-panel { width:60px; height:22px; }
-  .live-text { font-size:11px; }
-  .bottom-title { font-size:1.8rem; }
-  .button-with-popup a { font-size:20px; padding:10px 20px; }
-  .button-with-popup .popup-text { font-size:13px; }
-}

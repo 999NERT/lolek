@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AngelkaCSS</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&family=Paytone+One&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- TŁO ZDJĘCIE -->
@@ -14,65 +14,74 @@
   </div>
 
   <div class="main-wrapper">
+
     <!-- PRZYCISKI -->
     <div class="buttons-container">
+
       <!-- LOGITECH -->
-      <div class="button-with-popup logitech-btn" data-panel-color="#ffffff" data-text-color="black">
+      <div class="button-with-popup logitech-btn">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">LOGI<span class="logitech-tech">TECH</span></span>
         </a>
-        <div class="popup-text editable-text" data-text-id="logitech-text">
+      </div>
+      <div class="description-panel logitech-panel">
+        <div class="panel-content">
           -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
         </div>
       </div>
 
       <!-- PIRATESWAP -->
-      <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
+      <div class="button-with-popup pirateswap-btn">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span>
         </a>
-        <div class="popup-text editable-text" data-text-id="pirateswap-text">
+      </div>
+      <div class="description-panel pirateswap-panel">
+        <div class="panel-content">
           CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
         </div>
       </div>
 
       <!-- CSGOSKINS -->
-      <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
+      <div class="button-with-popup csgoskins-btn">
         <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank" rel="noopener">
           <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
         </a>
-        <div class="popup-text editable-text csgoskins-popup" data-text-id="csgoskins-text">
-          WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM GDZIE DO WYGRANIA SĄ <span class="purple-text">3X SKIN</span> O WARTOŚCI <span class="red-text">100 PLN</span> DLA POJEDYNCZEJ OSOBY
+      </div>
+      <div class="description-panel csgoskins-panel">
+        <div class="panel-content">
+          WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM –
+          DO WYGRANIA <span class="purple-text">3X SKIN</span> O WARTOŚCI <span class="red-text">100 PLN</span>
         </div>
       </div>
 
       <!-- WKDZIK -->
-      <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
+      <div class="button-with-popup wkdzik-btn">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">WKDZIK</span>
         </a>
-        <div class="popup-text editable-text" data-text-id="wkdzik-text">
+      </div>
+      <div class="description-panel wkdzik-panel">
+        <div class="panel-content">
           CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
         </div>
       </div>
 
       <!-- BETTERS -->
-      <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
+      <div class="button-with-popup betters-btn">
         <a href="#" target="_blank" rel="noopener">
           <span class="button-text">BET<span class="betters-ters">TERS</span></span>
         </a>
-        <div class="popup-text editable-text" data-text-id="betters-text">
-          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. KLIKAJĄC TU OTRZYMASZ PODWYŻSZONY FREEBET <span class="betters-ters">35 PLN</span>
+      </div>
+      <div class="description-panel betters-panel">
+        <div class="panel-content">
+          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. OTRZYMASZ PODWYŻSZONY FREEBET <span class="betters-ters">35 PLN</span>
         </div>
       </div>
+
     </div>
 
-    <!-- PANEL OPISU -->
-    <div class="description-panel" id="descPanel">
-      <div class="panel-content" id="panelContent"></div>
-    </div>
-
-    <!-- NAJNOWSZY FILM -->
+    <!-- NAJNOWSZY FILM – MINIATURKA + PRZYCISK -->
     <div class="latest-video-container" id="latestBox">
       <img id="latestThumbnail" alt="Miniaturka najnowszego filmu" />
       <a id="watchButton" class="play-button" href="#" target="_blank" rel="noopener">
@@ -84,35 +93,40 @@
 
     <!-- STREAM BUTTONS -->
     <div class="stream-buttons-container">
+
+      <!-- TWITCH -->
       <div class="stream-button-wrapper">
         <a href="https://www.twitch.tv/angelkacs" class="stream-button twitch-btn" target="_blank" rel="noopener">
           <img src="1twitch.png" alt="Twitch" class="stream-button-image" />
         </a>
-        <div class="live-panel" id="twitchLivePanel">
+        <div class="live-panel twitch-panel">
           <span class="live-text">OFFLINE</span>
         </div>
       </div>
 
+      <!-- DISCORD -->
       <div class="stream-button-wrapper">
         <a href="#" class="stream-button discord-btn" target="_blank" rel="noopener">
           <img src="1discord.png" alt="Discord" class="stream-button-image" />
         </a>
-        <div class="live-panel" id="DiscordLive">
+        <div class="live-panel discord-panel">
           <span class="live-text">JOIN</span>
         </div>
       </div>
 
+      <!-- KICK -->
       <div class="stream-button-wrapper">
         <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank" rel="noopener">
           <img src="1KOPNIAK.png" alt="Kick" class="stream-button-image" />
         </a>
-        <div class="live-panel" id="kickLivePanel">
+        <div class="live-panel kick-panel">
           <span class="live-text">OFFLINE</span>
         </div>
       </div>
+
     </div>
 
-    <!-- DODATKOWE PRZYCISKI -->
+    <!-- DODATKOWE PRZYCISKI POD STREAM BUTTONS -->
     <div class="additional-buttons-container">
       <div class="additional-button-wrapper">
         <a href="#" class="additional-button instagram-btn" target="_blank" rel="noopener">
@@ -141,7 +155,7 @@
       </div>
     </div>
 
-    <!-- TYTUŁ -->
+    <!-- TYTUŁ NA SAMYM DOLE -->
     <h1 class="bottom-title">#ANGELKACS</h1>
   </div>
 

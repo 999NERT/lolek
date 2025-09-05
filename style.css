@@ -371,7 +371,7 @@ html, body {
   .description-panel { height: 70px; padding: 10px 14px; }
   .panel-content, .large-text { font-size: 18px; }
   .small-text { font-size: 16px; }
-  .button-with-popup a { font-size: 32px; padding: 12px 24px; height: 55px; }
+  .button-with-popup a { font-size: 24px; padding: 12px 24px; height: 55px; }
   .latest-video-container { width: 90%; }
   .yt-click-image { width: 40px; }
   .stream-button { width: 100px; height: 100px; }

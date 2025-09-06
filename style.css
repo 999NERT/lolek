@@ -45,8 +45,8 @@ body {
 
 /* Kolory przycisków */
 .logitech-btn a{background:white;color:black;}
-.logitech-btn a:hover{background:#00FFFF;}
-.logitech-highlight{color:#8e8e8e;font-weight:900;}
+.logitech-btn a:hover{background:#8e8e8e;}
+.logitech-highlight{color:#00FFFF;font-weight:900;}
 .logitech-tech{color:#00FFFF;}
 
 .pirateswap-btn a{background:#1E1D22;color:white;}

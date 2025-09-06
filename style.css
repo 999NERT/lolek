@@ -33,8 +33,6 @@ body {
   z-index:10;
   pointer-events:none;
 }
-
-/* STRZAŁKA DO PANELU */
 .description-panel::before{
   content:"";
   position:absolute;
@@ -45,7 +43,6 @@ body {
   border-style:solid;
   border-color:transparent transparent rgba(0,0,0,0.85) transparent;
 }
-
 .panel-content{
   font-family:'Paytone One',sans-serif;
   font-weight:900;

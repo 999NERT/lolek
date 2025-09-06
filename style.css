@@ -9,13 +9,21 @@ html, body {
     width: 100%;
     font-family: 'Titillium Web', sans-serif;
     color: white;
-    overflow: hidden; /* brak pasków przewijania */
+    overflow-x: hidden;
+    overflow-y: auto; /* pozwala scrollować w razie potrzeby */
+    background: #000; /* fallback */
 }
 
 /* TŁO */
-body {
-    background: url('aster.png') no-repeat center center fixed;
-    background-size: cover;
+.image-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* WRAPPER */
@@ -23,7 +31,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 150px 20px 20px 20px; /* pusta przestrzeń nad przyciskami */
+    padding: 150px 20px 20px 20px; /* przestrzeń nad przyciskami */
 }
 
 /* PRZYCISKI */
@@ -34,12 +42,10 @@ body {
     gap: 20px;
     margin-bottom: 10px;
 }
-
 .button-with-popup {
     position: relative;
     text-align: center;
 }
-
 .button-with-popup a {
     display: inline-block;
     padding: 14px 28px;
@@ -50,10 +56,8 @@ body {
     transition: all 0.3s ease;
     text-align: center;
 }
-
 .popup-text {
     display: none;
-    font-weight: 900;
 }
 
 /* PANEL OPISU */
@@ -69,7 +73,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .panel-content {
     font-family: 'Paytone One', sans-serif;
     font-weight: 900;
@@ -96,8 +99,6 @@ body {
 .csgoskins-btn a:hover { background: #14A3C7; }
 .blue-o { color: #4fc3f7; }
 .green-text { color: #4CAF50; }
-.red-text { color: #ff3838; }
-.purple-text { color: #a061ff; }
 
 .wkdzik-btn a { background: black; color: white; }
 .wkdzik-btn a:hover { background: white; color: black; }
@@ -118,13 +119,11 @@ body {
     border: 3px solid red;
     box-shadow: 0 0 15px rgba(255,0,0,0.6);
 }
-
 .latest-video-container img.video-thumb {
     width: 100%;
     border-radius: 10px;
     display: block;
 }
-
 .play-button {
     position: absolute;
     top: 50%;
@@ -133,9 +132,7 @@ body {
     opacity: 0;
     transition: all 0.3s ease;
 }
-
 .play-button.visible { opacity: 1; }
-
 .yt-click-image { width: 50px; }
 
 /* STREAM BUTTONS */
@@ -146,14 +143,12 @@ body {
     margin-top: 15px;
     flex-wrap: wrap;
 }
-
 .stream-button-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
-
 .stream-button {
     display: flex;
     justify-content: center;
@@ -162,14 +157,12 @@ body {
     height: 120px;
     transition: all 0.3s ease;
 }
-
 .stream-button-image {
     width: 95%;
     height: 95%;
     object-fit: contain;
     transition: all 0.3s ease;
 }
-
 .stream-button:hover .stream-button-image { transform: scale(1.05); }
 
 /* LIVE PANEL */
@@ -183,24 +176,20 @@ body {
     align-items: center;
     border: 2px solid #ff4444;
 }
-
 .live-panel.live {
     background: rgba(255,68,68,0.3);
     border-color: #00ff00;
     box-shadow: 0 0 10px rgba(0,255,0,0.4);
 }
-
 .live-text {
     font-weight: 800;
     font-size: 14px;
     color: #ff4444;
 }
-
 .live-panel.live .live-text {
     color: #00ff00;
     animation: pulseLive 1.5s infinite;
 }
-
 @keyframes pulseLive {
     0% { opacity: 0.6; }
     50% { opacity: 1; }
@@ -215,12 +204,10 @@ body {
     margin-top: 25px;
     flex-wrap: wrap;
 }
-
 .additional-button-wrapper {
     display: flex;
     align-items: center;
 }
-
 .additional-button {
     width: 90px;
     height: 90px;
@@ -228,14 +215,12 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .additional-button-image {
     width: 95%;
     height: 95%;
     object-fit: contain;
     transition: all 0.3s ease;
 }
-
 .additional-button:hover .additional-button-image { transform: scale(1.05); }
 
 /* TYTUŁ NA DOLE */
@@ -256,7 +241,6 @@ body {
     .stream-button { width: 100px; height: 100px; }
     .additional-button { width: 75px; height: 75px; }
 }
-
 @media (max-width: 480px) {
     .stream-button { width: 85px; height: 85px; }
     .additional-button { width: 65px; height: 65px; }

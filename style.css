@@ -13,7 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 150px 20px 20px 20px; /* przestrzeń nad przyciskami */
+    padding: 60px 20px 20px 20px; /* przestrzeń nad przyciskami */
     position: relative;
     z-index: 1;
 }
@@ -55,7 +55,6 @@ body {
 .latest-video-container img.video-thumb { width:100%; border-radius:10px; display:block; }
 .play-button { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); opacity:0; transition:all .3s ease; }
 .play-button.visible { opacity:1; }
-.yt-click-image { width:50px; }
 
 /* STREAM BUTTONS */
 .stream-buttons-container { display:flex; justify-content:center; gap:20px; margin-top:15px; flex-wrap:wrap; }

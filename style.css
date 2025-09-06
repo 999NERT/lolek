@@ -23,7 +23,7 @@ body {
   left:50%;
   transform:translateX(-50%);
   width:max-content;
-  max-width:400px;
+  max-width:500px;
   padding:12px 18px;
   background:rgba(26,26,26,1);
   border-radius:12px;
@@ -47,6 +47,7 @@ body {
 /* Kolory przycisków */
 .logitech-btn a{background:white;color:black;}
 .logitech-btn a:hover{background:#00FFFF;}
+.logitech-highlight{color:#00FFFF;font-weight:900;}
 .logitech-tech{color:#00FFFF;}
 
 .pirateswap-btn a{background:#1E1D22;color:white;}
@@ -58,15 +59,15 @@ body {
 .csgoskins-highlight{color:#14A3C7;font-weight:900;}
 .discord-text{color:#5764F2;font-weight:900;}
 .blue-o{color:#4fc3f7;}
-.green-text{color:#4CAF50;}
 
 .wkdzik-btn a{background:black;color:white;}
 .wkdzik-btn a:hover{background:white;color:black;}
-.wkdzik-highlight{color:white;}
+.wkdzik-highlight{color:white; font-weight:900;}
 
 .betters-btn a{background:#262D3A;color:white;}
 .betters-btn a:hover{background:#E50420;}
 .betters-ters{color:#E50420;}
+.betters-highlight{color:#E50420;font-weight:900;}
 
 /* MINIATURKA YT */
 .latest-video-container{position:relative;width:min(80%,800px);margin:20px auto;text-align:center;border-radius:12px;overflow:hidden;border:3px solid red;box-shadow:0 0 15px rgba(255,0,0,0.6);}

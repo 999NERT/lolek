@@ -14,7 +14,8 @@
   <!-- PRZYCISKI -->
   <div class="buttons-container">
 
-    <div class="button-with-popup logitech-btn" data-panel-color="#ffffff" data-text-color="black">
+    <!-- LOGITECH -->
+    <div class="button-with-popup logitech-btn">
       <a href="#"><span class="button-text">LOGI<span class="logitech-tech">TECH</span></span></a>
       <div class="description-panel">
         <div class="panel-content">
@@ -23,7 +24,8 @@
       </div>
     </div>
 
-    <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
+    <!-- PIRATESWAP -->
+    <div class="button-with-popup pirateswap-btn">
       <a href="#"><span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span></a>
       <div class="description-panel">
         <div class="panel-content">
@@ -32,16 +34,18 @@
       </div>
     </div>
 
-    <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
+    <!-- CSGOSKINS -->
+    <div class="button-with-popup csgoskins-btn">
       <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank"><span class="button-text">CSG<span class="blue-o">O</span>SKINS</span></a>
       <div class="description-panel">
         <div class="panel-content">
-          WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE
+          WPŁAĆ <span class="csgoskins-highlight">20 PLN</span> Z KODEM <span class="csgoskins-highlight">ANGELKACS</span> I WEŹ UDZIAŁ W KONKURSIE <span class="discord-text">DISCORDOWYM</span> GDZIE DO WYGRANIA SĄ 3X SKIN O WARTOŚCI 200 PLN DLA POJEDYNCZEJ OSOBY
         </div>
       </div>
     </div>
 
-    <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
+    <!-- WKDZIK -->
+    <div class="button-with-popup wkdzik-btn">
       <a href="#"><span class="button-text">WKDZIK</span></a>
       <div class="description-panel">
         <div class="panel-content">
@@ -50,11 +54,12 @@
       </div>
     </div>
 
-    <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
+    <!-- BETTERS -->
+    <div class="button-with-popup betters-btn">
       <a href="#"><span class="button-text">BET<span class="betters-ters">TERS</span></span></a>
       <div class="description-panel">
         <div class="panel-content">
-          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. WPISZ KOD: <span class="betters-ters">ANGELKA</span> ODBIERZ DARMOWY ZAKŁAD BEZ WPŁATY I BONUS 100% OD WPŁATY AZ DO...
+          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. WPISZ KOD: ANGELKA ODBIERZ DARMOWY ZAKŁAD BEZ WPŁATY I BONUS 100% OD WPŁATY AZ DO
         </div>
       </div>
     </div>
@@ -62,12 +67,11 @@
   </div>
 
   <!-- MINIATURKA NAJNOWSZEGO FILMU -->
-  <div class="latest-video-container" id="latestBox">
-    <img id="latestThumbnail" alt="Miniaturka najnowszego filmu" class="video-thumb"/>
-    <a id="watchButton" class="play-button" href="#" target="_blank">
+  <div class="latest-video-container">
+    <img src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb"/>
+    <a class="play-button" href="#" target="_blank">
       <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
     </a>
-    <div class="error" id="videoError" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</div>
   </div>
 
   <!-- STREAM BUTTONS -->
@@ -76,21 +80,21 @@
       <a href="https://www.twitch.tv/angelkacs" class="stream-button twitch-btn" target="_blank">
         <img src="1twitch.png" alt="Twitch" class="stream-button-image" />
       </a>
-      <div class="live-panel" id="twitchLivePanel"><span class="live-text">OFFLINE</span></div>
+      <div class="live-panel"><span class="live-text">OFFLINE</span></div>
     </div>
 
     <div class="stream-button-wrapper">
       <a href="#" class="stream-button discord-btn" target="_blank">
         <img src="1discord.png" alt="Discord" class="stream-button-image" />
       </a>
-      <div class="live-panel" id="DiscordLive"><span class="live-text">JOIN</span></div>
+      <div class="live-panel"><span class="live-text">JOIN</span></div>
     </div>
 
     <div class="stream-button-wrapper">
       <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank">
         <img src="1KOPNIAK.png" alt="Kick" class="stream-button-image" />
       </a>
-      <div class="live-panel" id="kickLivePanel"><span class="live-text">OFFLINE</span></div>
+      <div class="live-panel"><span class="live-text">OFFLINE</span></div>
     </div>
   </div>
 
@@ -126,6 +130,5 @@
   <h1 class="bottom-title">#ANGELKACS</h1>
 </div>
 
-<script src="script.js"></script>
 </body>
 </html>

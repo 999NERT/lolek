@@ -46,7 +46,7 @@ body {
 /* Kolory przycisków */
 .logitech-btn a{background:white;color:black;}
 .logitech-btn a:hover{background:#00FFFF;}
-.logitech-highlight{color:#007a7a;font-weight:900;}
+.logitech-highlight{color:#8e8e8e;font-weight:900;}
 .logitech-tech{color:#00FFFF;}
 
 .pirateswap-btn a{background:#1E1D22;color:white;}
@@ -54,7 +54,7 @@ body {
 .pirateswap-swap{color:#ff4300;}
 
 .csgoskins-btn a{background:#0D2345;color:white;}
-.csgoskins-btn a:hover{background:#14A3C7;}
+.csgoskins-btn a:hover{background:#0a6699;}
 .csgoskins-highlight{color:#14A3C7;font-weight:900;}
 .discord-text{color:#5764F2;font-weight:900;}
 .blue-o{color:#4fc3f7;}

@@ -1,23 +1,3 @@
-// PANEL OPISU
-document.querySelectorAll('.button-with-popup').forEach(button => {
-  const popupText = button.querySelector('.popup-text');
-  const panel = document.getElementById('descPanel');
-  const panelContent = document.getElementById('panelContent');
-  const panelColor = button.getAttribute('data-panel-color');
-  const textColor = button.getAttribute('data-text-color');
-
-  button.addEventListener('mouseenter',()=>{
-    panel.style.backgroundColor = panelColor;
-    panelContent.style.color = textColor;
-    panelContent.innerHTML = popupText.innerHTML;
-    panel.style.opacity = '1';
-  });
-
-  button.addEventListener('mouseleave',()=>{
-    panel.style.opacity = '0';
-  });
-});
-
 // MINIATURKA YT
 async function loadLatestVideo(){
   const channelId='UCb4KZzyxv9-PL_BcKOrpFyQ';
@@ -31,11 +11,7 @@ async function loadLatestVideo(){
     const xml=new DOMParser().parseFromString(contents,'application/xml');
     const entries=xml.getElementsByTagName('entry');
     let videoEntry=null;
-    for(let e of entries){
-      if(!e.getElementsByTagName('title')[0].textContent.toLowerCase().includes('short')){
-        videoEntry=e; break;
-      }
-    }
+    for(let e of entries){if(!e.getElementsByTagName('title')[0].textContent.toLowerCase().includes('short')){videoEntry=e;break;}}
     const videoIdNode=videoEntry.getElementsByTagName('yt:videoId')[0];
     const videoId=videoIdNode.textContent.trim();
     btn.href=`https://www.youtube.com/watch?v=${videoId}`;
@@ -52,26 +28,12 @@ async function checkStreamStatus(){
   try{
     const res=await fetch('https://decapi.me/twitch/uptime/angelkacs');
     const text=await res.text();
-    if(text.includes('offline')){
-      twitch.classList.remove('live');
-      twitch.querySelector('.live-text').textContent='OFFLINE';
-    } else {
-      twitch.classList.add('live');
-      twitch.querySelector('.live-text').textContent='LIVE';
-    }
+    if(text.includes('offline')){twitch.classList.remove('live');twitch.querySelector('.live-text').textContent='OFFLINE';}
+    else{twitch.classList.add('live');twitch.querySelector('.live-text').textContent='LIVE';}
   }catch(e){console.log(e);}
   try{
     const res=await fetch('https://kick.com/api/v2/channels/angelkacs');
-    if(res.ok){
-      const data=await res.json();
-      if(data.livestream?.is_live){
-        kick.classList.add('live');
-        kick.querySelector('.live-text').textContent='LIVE';
-      } else {
-        kick.classList.remove('live');
-        kick.querySelector('.live-text').textContent='OFFLINE';
-      }
-    }
+    if(res.ok){const data=await res.json();if(data.livestream?.is_live){kick.classList.add('live');kick.querySelector('.live-text').textContent='LIVE';}else{kick.classList.remove('live');kick.querySelector('.live-text').textContent='OFFLINE';}}
   }catch(e){console.log(e);}
 }
 

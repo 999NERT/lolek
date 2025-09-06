@@ -19,13 +19,13 @@ body {
 /* PANEL OPISU POD PRZYCISKIEM */
 .description-panel{
   position:absolute;
-  top:100%;
+  top:110%;
   left:50%;
   transform:translateX(-50%);
   width:max-content;
   max-width:400px;
   padding:12px 18px;
-  background:rgba(0,0,0,0.85);
+  background:rgba(26,26,26,1);
   border-radius:12px;
   box-shadow:0 4px 8px rgba(0,0,0,0.2);
   opacity:0;
@@ -33,22 +33,12 @@ body {
   z-index:10;
   pointer-events:none;
 }
-.description-panel::before{
-  content:"";
-  position:absolute;
-  top:-8px;
-  left:50%;
-  transform:translateX(-50%);
-  border-width:8px;
-  border-style:solid;
-  border-color:transparent transparent rgba(0,0,0,0.85) transparent;
-}
 .panel-content{
   font-family:'Paytone One',sans-serif;
   font-weight:900;
   text-align:center;
   text-transform:uppercase;
-  font-size:1rem;
+  font-size:1.1rem;
   color:white;
   word-wrap:break-word;
 }

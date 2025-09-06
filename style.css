@@ -3,7 +3,7 @@
 html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;background:#000;overflow-x:hidden;}
 
 /* TŁO */
-.image-background{position:fixed;inset:0;z-index:-1;}
+.image-background{position:fixed;inset:0;z-index:-1;overflow:hidden;}
 .background-image{width:100%;height:100%;object-fit:cover;}
 
 /* WRAPPER */
@@ -40,8 +40,8 @@ html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;backgro
 .betters-ters{color:#E50420;}
 
 /* MINIATURKA YT */
-.latest-video-container{position:relative;width:min(80%,800px);margin:20px auto;text-align:center;border-radius:12px;overflow:hidden;}
-.latest-video-container img{width:100%;border-radius:10px;display:block;}
+.latest-video-container{position:relative;width:min(80%,800px);margin:20px auto;text-align:center;border-radius:12px;overflow:hidden;border:3px solid red;box-shadow:0 0 15px rgba(255,0,0,0.6);}
+.latest-video-container img.video-thumb{width:100%;border-radius:10px;display:block;}
 .play-button{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;transition:all .3s ease;}
 .play-button.visible{opacity:1;}
 .yt-click-image{width:50px;}

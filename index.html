@@ -9,50 +9,66 @@
 </head>
 <body>
 
+  <!-- TŁO -->
+  <div class="image-background">
+    <img src="aster.png" alt="Tło" class="background-image">
+  </div>
+
   <div class="main-wrapper">
 
     <!-- PRZYCISKI -->
     <div class="buttons-container">
 
-      <div class="button-with-popup logitech-btn" data-panel-color="#ffffff" data-text-color="black">
+      <div class="button-with-popup logitech-btn">
         <a href="#"><span class="button-text">LOGI<span class="logitech-tech">TECH</span></span></a>
-        <div class="popup-text" data-text-id="logitech-text">
-          -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
+        <div class="description-panel">
+          <div class="panel-content">
+            -5% ZNIŻKI Z KODEM <span class="logitech-tech">"ANGELKACS"</span> NA CAŁY ASORTYMENT LOGITECH
+          </div>
         </div>
       </div>
 
-      <div class="button-with-popup pirateswap-btn" data-panel-color="#1E1D22" data-text-color="white">
+      <div class="button-with-popup pirateswap-btn">
         <a href="#"><span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span></a>
-        <div class="popup-text" data-text-id="pirateswap-text">
-          CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
+        <div class="description-panel">
+          <div class="panel-content">
+            CODE: <span class="pirateswap-swap">"ANGELKACS"</span> I ZGARNIJ AŻ <span class="pirateswap-swap">35%</span> WIĘCEJ DO DOŁADOWANIA
+          </div>
         </div>
       </div>
 
-      <div class="button-with-popup csgoskins-btn" data-panel-color="#0D2345" data-text-color="white">
-        <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank"><span class="button-text">CSG<span class="blue-o">O</span>SKINS</span></a>
-        <div class="popup-text" data-text-id="csgoskins-text">
-          WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE
+      <div class="button-with-popup csgoskins-btn">
+        <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank">
+          <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
+        </a>
+        <div class="description-panel">
+          <div class="panel-content">
+            WPŁAĆ 10 ZŁ Z KODEM <span class="green-text">"ANGELKACS"</span> I WEŹ UDZIAŁ W KONKURSIE
+          </div>
         </div>
       </div>
 
-      <div class="button-with-popup wkdzik-btn" data-panel-color="black" data-text-color="white">
+      <div class="button-with-popup wkdzik-btn">
         <a href="#"><span class="button-text">WKDZIK</span></a>
-        <div class="popup-text" data-text-id="wkdzik-text">
-          CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
+        <div class="description-panel">
+          <div class="panel-content">
+            CODE: <span class="wkdzik-highlight">"ANGELKA"</span> NA <span class="wkdzik-highlight">-5%</span>
+          </div>
         </div>
       </div>
 
-      <div class="button-with-popup betters-btn" data-panel-color="#262D3A" data-text-color="white">
+      <div class="button-with-popup betters-btn">
         <a href="#"><span class="button-text">BET<span class="betters-ters">TERS</span></span></a>
-        <div class="popup-text" data-text-id="betters-text">
-          ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. WPISZ KOD: <span class="betters-ters">"ANGELKA"</span> 
-          ODBIERZ DARMOWY ZAKŁAD BEZ WPŁATY I BONUS 100% OD WPŁATY AZ DO 500 PLN!
+        <div class="description-panel">
+          <div class="panel-content">
+            ZAREJESTRUJ SIĘ I GRAJ WSPIERAJĄC ANGELKĘ. WPISZ KOD: <span class="betters-ters">ANGELKA</span> ODBIERZ DARMOWY ZAKŁAD BEZ WPŁATY I BONUS 100% OD WPŁATY AZ DO
+          </div>
         </div>
       </div>
 
     </div>
 
-    <!-- MINIATURKA NAJNOWSZEGO FILMU -->
+    <!-- MINIATURKA YT -->
     <div class="latest-video-container" id="latestBox">
       <img id="latestThumbnail" alt="Miniaturka najnowszego filmu" class="video-thumb"/>
       <a id="watchButton" class="play-button" href="#" target="_blank">
@@ -115,11 +131,6 @@
     </div>
 
     <h1 class="bottom-title">#ANGELKACS</h1>
-  </div>
-
-  <!-- PANEL OPISU (stały overlay) -->
-  <div class="description-panel" id="descPanel">
-    <div class="panel-content" id="panelContent"></div>
   </div>
 
   <script src="script.js"></script>

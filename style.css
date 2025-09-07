@@ -66,4 +66,20 @@ body{background:url("aster.png") no-repeat center center fixed;background-size:c
 .stream-button:hover .stream-button-image{transform:scale(1.05);}
 .live-panel{width:80px;height:30px;background:rgba(0,0,0,1);border-radius:6px;display:flex;justify-content:center;align-items:center;border:2px solid #ff4444;}
 .live-text{font-weight:800;font-size:14px;color:#ff4444;}
-.live-panel.live{background:rgba(255,68,
+.live-panel.live{background:rgba(255,68,68,.3);border-color:#00ff00;box-shadow:0 0 10px rgba(0,255,0,.4);}
+.live-panel.live .live-text{color:#00ff00;animation:pulseLive 1.5s infinite;}
+@keyframes pulseLive{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6;}}
+
+/* SOCIAL */
+.additional-buttons-container{display:flex;justify-content:center;gap:15px;margin-top:25px;flex-wrap:wrap;}
+.additional-button{width:90px;height:90px;display:flex;justify-content:center;align-items:center;}
+.additional-button-image{width:95%;height:95%;object-fit:contain;}
+.additional-button:hover .additional-button-image{transform:scale(1.05);}
+
+/* FOOTER */
+.site-footer{text-align:center;margin-top:30px;padding:15px 10px;}
+.site-footer p{font-size:1.1rem;padding:5px 10px;border-radius:30px;background:rgba(0,0,0,.5);font-weight:400;text-shadow:2px 2px 6px rgba(0,0,0,1);}
+
+/* AGE BADGE */
+.age-badge,.age-badge-betters{position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:rgba(200,0,0,0.9);color:white;font-size:0.8rem;font-weight:900;padding:3px 8px;border-radius:6px;border:2px solid white;text-shadow:1px 1px 2px rgba(0,0,0,0.7);}
+.age-badge-betters{z-index:20;}

@@ -46,7 +46,6 @@ buttons.forEach(btn => {
   });
 });
 
-
 // === YT MINIATURKA ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";

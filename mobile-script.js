@@ -4,22 +4,26 @@ document.querySelectorAll('.button-with-popup a').forEach(btn => {
   const panel = btn.parentElement.querySelector('.description-panel');
 
   btn.addEventListener('click', e => {
-    if(!clickedOnce){
-      e.preventDefault();
-      panel.style.opacity = "1";
-      panel.style.pointerEvents = "auto";
-      clickedOnce = true;
+    // jeśli panel jest już widoczny -> pozwól na normalne przejście
+    if(clickedOnce) return;
 
-      // Panel znika po 10s
-      setTimeout(() => {
-        panel.style.opacity = "0";
-        panel.style.pointerEvents = "none";
-        clickedOnce = false; // reset po 10s
-      }, 10000);
-    } 
-    // jeśli kliknięto drugi raz w czasie <10s -> normalny link działa
+    // pierwszy kliknięcie – pokaz panel i zablokuj link
+    e.preventDefault();
+    clickedOnce = true;
+
+    // pokaż panel
+    panel.style.opacity = "1";
+    panel.style.pointerEvents = "auto";
+
+    // panel znika po 10s i resetuje kliknięcie
+    setTimeout(() => {
+      panel.style.opacity = "0";
+      panel.style.pointerEvents = "none";
+      clickedOnce = false;
+    }, 10000);
   });
 });
+
 
 // MINIATURKA YT
 async function loadLatestVideo() {

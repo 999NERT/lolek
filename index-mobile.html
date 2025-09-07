@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AngelkaCSS Mobile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&family=Paytone+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-mobile.css">
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- PANEL NAD MINIATURKĄ YT -->
+  <section class="panel-above-yt">
+    <div id="panelContainer">
+      <div class="description-panel logitech-panel">-5% NA CAŁY ASORTYMENT Z KODEM ANGELKACS</div>
+      <div class="description-panel pirateswap-panel">35% WIĘCEJ DO DOŁADOWANIA Z KODEM ANGELKACS</div>
+      <div class="description-panel csgoskins-panel">WPŁAĆ 20 PLN Z KODEM ANGELKACS I WEŹ UDZIAŁ W KONKURSIE DISCORDOWYM</div>
+      <div class="description-panel wkdzik-panel">-5% NA CAŁY ASORTYMENT WKDZIK Z KODEM ANGELKA</div>
+      <div class="description-panel betters-panel">WPISZ KOD ANGELKA I ODBIERZ DARMOWY ZAKŁAD 10 PLN I BONUS 100%</div>
+    </div>
+  </section>
+
+  <!-- MINIATURKA YT -->
+  <section class="latest-video-container">
+    <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb" />
+    <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
+      <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+    </a>
+    <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+  </section>
+
+  <!-- PRZYCISKI MOBILNE -->
+  <section class="buttons-container">
+    <button class="mobile-btn" data-panel="logitech-panel">LOGITECH</button>
+    <button class="mobile-btn" data-panel="pirateswap-panel">PIRATESWAP</button>
+    <button class="mobile-btn" data-panel="csgoskins-panel">CSGOSKINS</button>
+    <button class="mobile-btn" data-panel="wkdzik-panel">WKDZIK</button>
+    <button class="mobile-btn" data-panel="betters-panel">BETTERS</button>
+  </section>
+
+  <!-- STOPKA -->
+  <footer class="site-footer">
+    <p>©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script src="script-mobile.js"></script>
+</body>
+</html>

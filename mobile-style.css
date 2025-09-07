@@ -55,6 +55,10 @@ html, body{
   word-wrap: break-word;
 }
 
+.klikacz {
+font-size:0.8rem;
+color: white;
+|
 /* KOLORY PRZYCISKÓW */
 .logitech-btn a{background:white;color:black;}
 .logitech-highlight,.logitech-tech{color:#05B8FB;font-weight:900;}

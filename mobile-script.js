@@ -1,56 +1,48 @@
 const buttons = document.querySelectorAll('.mobile-button');
-let activePanel = null;
 let activeButton = null;
 let timeoutId = null;
 
 buttons.forEach(btn => {
   const panel = btn.parentElement.querySelector('.description-panel');
+  const panelText = panel.querySelector('.panel-text');
   const closeBtn = panel.querySelector('.close-panel');
   const originalText = btn.querySelector('.button-text').innerHTML;
 
-  closeBtn.addEventListener('click', e => {
+  // Zamykanie panelu przyciskiem X
+  closeBtn.addEventListener('click', e=>{
     e.stopPropagation();
-    hidePanel(btn, panel, originalText);
+    hidePanel(btn, originalText);
   });
 
-  btn.addEventListener('click', e => {
+  btn.addEventListener('click', e=>{
     e.preventDefault();
 
-    if(activeButton === btn && btn.dataset.url && btn.dataset.url !== "#"){
-      window.open(btn.dataset.url,"_blank");
-      return;
-    }
-
-    if(activePanel && activeButton !== btn){
-      hidePanel(activeButton, activePanel, activeButton.querySelector('.button-text').dataset.original || activeButton.querySelector('.button-text').innerHTML);
-    }
-
     if(activeButton === btn){
-      hidePanel(btn, panel, originalText);
+      hidePanel(btn, originalText);
       return;
     }
 
-    btn.querySelector('.button-text').dataset.original = originalText;
-    btn.querySelector('.button-text').innerHTML = panel.querySelector('.panel-content').innerHTML.replace('<span class="close-panel">X</span>','');
+    if(activeButton) hidePanel(activeButton, activeButton.dataset.original);
+
+    btn.dataset.original = originalText;
+    btn.querySelector('.button-text').innerHTML = panelText.innerHTML;
+
     panel.style.opacity = '1';
     panel.style.pointerEvents = 'auto';
     btn.classList.add('active');
-    activePanel = panel;
     activeButton = btn;
 
     if(timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      hidePanel(btn, panel, originalText);
-    }, 10000);
+    timeoutId = setTimeout(()=> hidePanel(btn, originalText), 10000);
   });
 });
 
-function hidePanel(btn, panel, originalText){
+function hidePanel(btn, text){
+  const panel = btn.parentElement.querySelector('.description-panel');
   panel.style.opacity = '0';
   panel.style.pointerEvents = 'none';
-  btn.querySelector('.button-text').innerHTML = originalText;
+  btn.querySelector('.button-text').innerHTML = text;
   btn.classList.remove('active');
-  activePanel = null;
   activeButton = null;
   if(timeoutId) clearTimeout(timeoutId);
 }

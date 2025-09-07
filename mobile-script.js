@@ -7,7 +7,6 @@ buttons.forEach(btn => {
   const panel = btn.parentElement.querySelector('.description-panel');
   const closeBtn = panel.querySelector('.close-panel');
 
-  // Zamykanie panelu przez X
   closeBtn.addEventListener('click', e => {
     e.stopPropagation();
     panel.style.opacity = '0';
@@ -21,13 +20,11 @@ buttons.forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
 
-    // Jeśli kliknięto ponownie ten sam przycisk -> przeniesienie
     if(activeButton === btn && btn.dataset.url && btn.dataset.url !== "#"){
       window.open(btn.dataset.url,"_blank");
       return;
     }
 
-    // Zamknij poprzedni panel
     if(activePanel){
       activePanel.style.opacity = '0';
       activePanel.style.pointerEvents = 'none';
@@ -35,7 +32,6 @@ buttons.forEach(btn => {
       if(timeoutId) clearTimeout(timeoutId);
     }
 
-    // Pokaż panel
     panel.style.opacity = '1';
     panel.style.pointerEvents = 'auto';
     btn.classList.add('active');

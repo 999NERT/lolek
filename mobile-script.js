@@ -8,7 +8,7 @@ buttons.forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
 
-    // Jeśli kliknięto już aktywny przycisk, wracamy do oryginału
+    // Jeśli kliknięto już aktywny przycisk, wracamy do oryginalnego tekstu
     if(activeButton === btn){
       btn.querySelector('.button-text').innerHTML = originalText;
       description.style.display = 'none';
@@ -26,22 +26,13 @@ buttons.forEach(btn => {
       activeButton.classList.remove('active');
     }
 
-    // Wyświetl opis dla klikniętego przycisku
+    // Wyświetl opis w miejscu przycisku
     btn.querySelector('.button-text').dataset.original = originalText;
     btn.querySelector('.button-text').innerHTML = description.innerHTML;
     description.style.display = 'block';
     btn.classList.add('active');
-    activeButton = btn;
 
-    // Jeśli przycisk ma URL, otwórz po drugim kliknięciu
-    if(btn.dataset.url && btn.dataset.url !== "#"){
-      if(btn.classList.contains('clickedOnce')){
-        window.open(btn.dataset.url,"_blank");
-        btn.classList.remove('clickedOnce');
-      } else {
-        btn.classList.add('clickedOnce');
-      }
-    }
+    activeButton = btn;
   });
 });
 

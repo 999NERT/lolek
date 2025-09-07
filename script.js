@@ -1,7 +1,7 @@
 // SCALE: dopasuj #scale-content do viewportu tak, by zachować proporcje (wygląd 1:1)
 (function() {
-  const baseW = 2560;
-  const baseH = 1440;
+  const baseW = 1920;
+  const baseH = 1080;
   const content = document.getElementById('scale-content');
 
   function applyScale() {

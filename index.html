@@ -68,11 +68,14 @@
 
   <!-- MINIATURKA NAJNOWSZEGO FILMU -->
   <div class="latest-video-container">
-    <img src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb"/>
-    <a class="play-button" href="#" target="_blank">
+    <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb"/>
+    <a id="watchButton" class="play-button" href="#" target="_blank">
       <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
     </a>
+    <p id="videoError" style="color:red; font-weight:bold; text-align:center;" hidden>
+    </p>
   </div>
+
 
   <!-- STREAM BUTTONS -->
   <div class="stream-buttons-container">

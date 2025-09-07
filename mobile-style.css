@@ -33,7 +33,7 @@ html, body{
   text-align:center;
 }
 .age-badge-mobile{
-  position:absolute;top:15px;left:50%;
+  position:absolute;top:15px;left:8%;
   transform:translateX(-50%);
   background:rgba(200,0,0,0.9);
   color:white;font-size:0.8rem;font-weight:900;

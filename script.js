@@ -1,6 +1,6 @@
 // MINIATURKA YT
 async function loadLatestVideo(){
-  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ"; // Twój kanał
+  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
   
   const img = document.getElementById("latestThumbnail");
@@ -39,7 +39,7 @@ async function loadLatestVideo(){
   }
 }
 
-// STREAM LIVE CHECK
+// STREAM LIVE
 async function checkStreamStatus(){
   const twitch = document.getElementById("twitchLivePanel");
   const kick = document.getElementById("kickLivePanel");

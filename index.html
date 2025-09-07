@@ -66,15 +66,14 @@
 
   </div>
 
-    <!-- MINIATURKA NAJNOWSZEGO FILMU -->
-    <div class="latest-video-container">
-      <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb" />
-      <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
-        <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
-      </a>
-      <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
-    </div>
-
+  <!-- MINIATURKA YT -->
+  <div class="latest-video-container">
+    <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb" />
+    <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
+      <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+    </a>
+    <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+  </div>
 
   <!-- STREAM BUTTONS -->
   <div class="stream-buttons-container">
@@ -82,7 +81,7 @@
       <a href="https://www.twitch.tv/angelkacs" class="stream-button twitch-btn" target="_blank">
         <img src="1twitch.png" alt="Twitch" class="stream-button-image" />
       </a>
-      <div class="live-panel"><span class="live-text">OFFLINE</span></div>
+      <div class="live-panel" id="twitchLivePanel"><span class="live-text">OFFLINE</span></div>
     </div>
 
     <div class="stream-button-wrapper">
@@ -96,7 +95,7 @@
       <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank">
         <img src="1KOPNIAK.png" alt="Kick" class="stream-button-image" />
       </a>
-      <div class="live-panel"><span class="live-text">OFFLINE</span></div>
+      <div class="live-panel" id="kickLivePanel"><span class="live-text">OFFLINE</span></div>
     </div>
   </div>
 
@@ -132,5 +131,6 @@
   <h1 class="bottom-title">#ANGELKACAS</h1>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>

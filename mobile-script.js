@@ -9,16 +9,23 @@ buttons.forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
 
+    const parent = btn.closest(".button-with-popup");
+    const badge = parent.querySelector(".age-badge-mobile");
+
     // klik drugi -> otwórz stronę
     if (activeButton === btn && btn.classList.contains('show-description')) {
       window.open(url, "_blank");
       return;
     }
 
-    // przywrócenie poprzedniego
+    // przywrócenie poprzedniego przycisku
     if (activeButton && activeButton !== btn) {
+      const prevParent = activeButton.closest(".button-with-popup");
+      const prevBadge = prevParent.querySelector(".age-badge-mobile");
+
       activeButton.querySelector('.button-text').innerHTML = activeButton.dataset.originalText;
       activeButton.classList.remove('show-description');
+      if (prevBadge) prevBadge.style.display = "block"; // pokaż badge z powrotem
       activeButton = null;
     }
 
@@ -27,10 +34,18 @@ buttons.forEach(btn => {
       btn.dataset.originalText = originalHTML;
       btn.querySelector('.button-text').innerHTML = description;
       btn.classList.add('show-description');
+      if (badge) badge.style.display = "none"; // ukryj badge +18
       activeButton = btn;
+    } else {
+      // jeśli kliknę ten sam przycisk ponownie, przywróć tekst + badge
+      btn.querySelector('.button-text').innerHTML = btn.dataset.originalText;
+      btn.classList.remove('show-description');
+      if (badge) badge.style.display = "block";
+      activeButton = null;
     }
   });
 });
+
 
 // === YT MINIATURKA ===
 async function loadLatestVideo() {

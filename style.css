@@ -83,7 +83,7 @@ body {
 .latest-video-container .video-thumb{width:100%;height:auto;display:block;object-fit:cover;}
 .play-button{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;transition:opacity .25s ease, transform .2s ease;z-index:60;}
 .play-button.visible{opacity:1;transform:translate(-50%,-50%) scale(1);}
-.yt-click-image{width:58px;height:auto;display:block;}
+.yt-click-image{width:158px;height:auto;display:block;}
 .video-error{color:#ff6b6b;font-weight:700;text-align:center;padding:10px 8px;}
 
 /* STREAM BUTTONS */

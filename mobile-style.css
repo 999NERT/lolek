@@ -1,23 +1,26 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html, body{
-  height:100%; width:100%;
+  height:100%;
   font-family:'Titillium Web',sans-serif;
   color:white;
   overflow-x:hidden;
+  width:100%;
+  min-width:100vw;
   background:url("aster.png") no-repeat center center fixed;
   background-size:cover;
 }
+
 .main-wrapper{
   display:flex;
   flex-direction:column;
   align-items:center;
-  padding:25px 10px;
   width:100%;
   min-height:100vh;
+  padding:25px 5px;
 }
 
-/* PRZYCISKI */
-.buttons-container{display:flex;flex-direction:column;gap:10px;width:95%;max-width:400px;margin-bottom:20px;}
+/* PRZYCISKI PARTNERSKIE */
+.buttons-container{display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px;margin-bottom:20px;}
 .button-with-popup{position:relative;text-align:center;}
 .button-with-popup a{
   display:block;
@@ -30,30 +33,31 @@ html, body{
   text-align:center;
 }
 .age-badge-mobile{
-  position:absolute;
-  top:-22px;
-  left:50%;
+  position:absolute;top:15px;left:50%;
   transform:translateX(-50%);
   background:rgba(200,0,0,0.9);
+  color:white;font-size:0.8rem;font-weight:900;
+  padding:3px 8px;border-radius:6px;border:2px solid white;
+  z-index:10;text-shadow:1px 1px 2px rgba(0,0,0,0.7);
+}
+
+/* Opisy przycisków z cieniowaniem */
+.button-with-popup a.show-description .button-text {
+  font-size: 1rem;
+  line-height: 1.4;
+  display:block;
+  padding:4px;
   color:white;
-  font-size:0.8rem;
-  font-weight:900;
-  padding:3px 8px;
-  border-radius:6px;
-  border:2px solid white;
-  z-index:10;
-  text-shadow:1px 1px 2px rgba(0,0,0,0.7);
+  text-shadow:
+    1px 1px 2px rgba(0,0,0,0.7),
+    2px 2px 4px rgba(0,0,0,0.6),
+    3px 3px 6px rgba(0,0,0,0.5);
+  word-wrap: break-word;
 }
 
-/* SHOW DESCRIPTION */
-.button-with-popup a.show-description .button-text{
-  font-size:1rem;
-  line-height:1.3;
-}
-
-/* KOLORY */
+/* KOLORY PRZYCISKÓW */
 .logitech-btn a{background:white;color:black;}
-.logitech-highlight,.logitech-tech{color:#00FFFF;font-weight:900;}
+.logitech-highlight,.logitech-tech{color:#05B8FB;font-weight:900;}
 .pirateswap-btn a{background:#1E1D22;color:white;}
 .pirateswap-swap{color:#ff4300;}
 .csgoskins-btn a{background:#0D2345;color:white;}

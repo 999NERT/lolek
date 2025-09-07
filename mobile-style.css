@@ -1,40 +1,17 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;overflow-x:hidden;background:url("aster.png") no-repeat center center fixed;background-size:cover;}
-.main-wrapper{display:flex;flex-direction:column;align-items:center;padding:30px 15px;}
-.buttons-container{display:flex;flex-direction:column;gap:10px;width:90%;max-width:400px;margin-bottom:20px;}
+.main-wrapper{display:flex;flex-direction:column;align-items:center;padding:20px;}
+.buttons-container{display:flex;flex-direction:column;gap:15px;width:90%;max-width:400px;margin-bottom:20px;}
 .button-with-popup{position:relative;text-align:center;}
-.button-with-popup a{display:block;padding:14px 28px;border-radius:30px;font-weight:900;font-size:28px;text-decoration:none;transition:all .3s ease;text-align:center;}
+.button-with-popup a{display:block;padding:14px 28px;border-radius:30px;font-weight:900;font-size:28px;text-decoration:none;transition:all .3s ease;text-align:center;background:#1E1D22;color:white;}
 .button-with-popup a.active{box-shadow:0 0 15px #00ffff;transform:scale(1.05);}
 .age-badge-mobile{position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:rgba(200,0,0,0.9);color:white;font-size:0.8rem;font-weight:900;padding:3px 8px;border-radius:6px;border:2px solid white;z-index:10;text-shadow:1px 1px 2px rgba(0,0,0,0.7);}
 
-/* PANEL OPISU W MIEJSCU PRZYCISKU */
-.description-panel{position:absolute;top:0;left:0;width:100%;padding:10px;background:rgba(26,26,26,0.95);border-radius:30px;box-shadow:0 4px 8px rgba(0,0,0,0.2);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:20;}
-.panel-content{text-align:center;text-transform:uppercase;font-size:0.9rem;color:white;position:relative;padding-bottom:20px;}
-.close-panel{position:absolute;bottom:4px;right:8px;font-weight:900;font-size:1rem;color:white;cursor:pointer;}
+.description-panel{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+.panel-text{font-size:0.9rem;color:white;text-align:center;padding:0 5px;}
 
-/* KOLORY PRZYCISKÓW */
-.logitech-btn a{background:white;color:black;}
-.logitech-btn a:hover{background:#8e8e8e;}
-.logitech-highlight,.logitech-tech{color:#00FFFF;font-weight:900;}
-
-.pirateswap-btn a{background:#1E1D22;color:white;}
-.pirateswap-btn a:hover{background:#952903;}
-.pirateswap-swap{color:#ff4300;}
-
-.csgoskins-btn a{background:#0D2345;color:white;}
-.csgoskins-btn a:hover{background:#0a6699;}
-.csgoskins-highlight{color:#14A3C7;font-weight:900;}
-.discord-text{color:#5764F2;font-weight:900;}
-.blue-o{color:#4fc3f7;}
-
-.wkdzik-btn a{background:black;color:white;}
-.wkdzik-btn a:hover{background:white;color:black;}
-.wkdzik-highlight{color:#d7b9ff;font-weight:900;}
-
-.betters-btn a{background:#262D3A;color:white;}
-.betters-btn a:hover{background:#68030f;}
-.betters-ters{color:#E50420;}
-.betters-highlight{color:#E50420;font-weight:900;}
+/* ZAMYKANIE PANELU */
+.close-panel{position:absolute;top:5px;right:8px;font-weight:900;font-size:1rem;color:white;cursor:pointer;}
 
 /* MINIATURKA YT */
 .latest-video-container{position:relative;width:90%;max-width:380px;margin:10px auto;text-align:center;border-radius:12px;overflow:hidden;border:3px solid rgba(255,0,0,0.9);background:#000;}
@@ -61,7 +38,3 @@ html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;overflo
 .additional-button{width:60px;height:60px;display:flex;justify-content:center;align-items:center;}
 .additional-button-image{width:95%;height:95%;object-fit:contain;}
 .additional-button:hover .additional-button-image{transform:scale(1.05);}
-
-/* STOPKA */
-.site-footer{text-align:center;margin-top:20px;padding:10px 5px;}
-.site-footer p{font-size:1rem;padding:5px 10px;border-radius:30px;background:rgba(0,0,0,.5);font-weight:400;text-shadow:2px 2px 6px rgba(0,0,0,1);}

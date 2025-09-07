@@ -9,33 +9,34 @@
 </head>
 <body>
 
-  <div class="main-wrapper">
+<div class="main-wrapper">
 
-    <!-- PRZYCISKI PARTNERSKIE -->
-    <section class="buttons-container">
-      <div class="button-with-popup logitech-btn">
-        <a href="#"><span class="button-text">LOGI<span class="logitech-tech">TECH</span></span></a>
-      </div>
-      <div class="button-with-popup pirateswap-btn">
-        <a href="#"><span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span></a>
-      </div>
-      <div class="button-with-popup csgoskins-btn">
-        <div class="age-badge">+18</div>
-        <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank">
-          <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
-        </a>
-      </div>
-      <div class="button-with-popup wkdzik-btn">
-        <a href="#"><span class="button-text">WKDZIK</span></a>
-      </div>
-      <div class="button-with-popup betters-btn">
-        <div class="age-badge-betters">+18</div>
-        <a href="#"><span class="button-text">BET<span class="betters-ters">TERS</span></span></a>
-      </div>
-    </section>
+  <!-- PRZYCISKI PARTNERSKIE -->
+  <section class="buttons-container">
+    <div class="button-with-popup logitech-btn" data-panel="logitech-panel">
+      <a href="#"><span class="button-text">LOGI<span class="logitech-tech">TECH</span></span></a>
+    </div>
+    <div class="button-with-popup pirateswap-btn" data-panel="pirateswap-panel">
+      <a href="#"><span class="button-text">PIRATE<span class="pirateswap-swap">SWAP</span></span></a>
+    </div>
+    <div class="button-with-popup csgoskins-btn" data-panel="csgoskins-panel">
+      <div class="age-badge">+18</div>
+      <a href="https://csgo-skins.com/?ref=ANGELKACS" target="_blank">
+        <span class="button-text">CSG<span class="blue-o">O</span>SKINS</span>
+      </a>
+    </div>
+    <div class="button-with-popup wkdzik-btn" data-panel="wkdzik-panel">
+      <a href="#"><span class="button-text">WKDZIK</span></a>
+    </div>
+    <div class="button-with-popup betters-btn" data-panel="betters-panel">
+      <div class="age-badge-betters">+18</div>
+      <a href="#"><span class="button-text">BET<span class="betters-ters">TERS</span></span></a>
+    </div>
+  </section>
 
-    <!-- PANELS ABOVE YT -->
-    <section class="all-panels-container">
+  <!-- PANEL WSPÓLNY NAD MINIATURKĄ YT -->
+  <section class="panel-above-yt">
+    <div id="panelContainer">
       <div class="description-panel logitech-panel">
         <div class="panel-content">
           <span class="logitech-highlight">-5%</span> NA CAŁY ASORTYMENT Z KODEM <span class="logitech-tech">ANGELKACS</span>
@@ -61,55 +62,56 @@
           WPISZ KOD: <span class="betters-highlight">ANGELKA</span> I ODBIERZ DARMOWY ZAKŁAD <span class="betters-highlight">10 PLN</span> BEZ WPŁATY I BONUS <span class="betters-highlight">100%</span> OD WPŁATY AŻ DO <span class="betters-highlight">160 PLN</span>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- NAJNOWSZY FILM YT -->
-    <section class="latest-video-container">
-      <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb" />
-      <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
-        <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+  <!-- MINIATURKA YT -->
+  <section class="latest-video-container">
+    <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb" />
+    <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
+      <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+    </a>
+    <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+  </section>
+
+  <!-- STREAM -->
+  <section class="stream-buttons-container">
+    <div class="stream-button-wrapper">
+      <a href="https://www.twitch.tv/angelkacs" class="stream-button twitch-btn" target="_blank">
+        <img src="1twitch.png" alt="Twitch" class="stream-button-image" />
       </a>
-      <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
-    </section>
+      <div class="live-panel" id="twitchLivePanel"><span class="live-text">OFFLINE</span></div>
+    </div>
+    <div class="stream-button-wrapper">
+      <a href="#" class="stream-button discord-btn" target="_blank">
+        <img src="1discord.png" alt="Discord" class="stream-button-image" />
+      </a>
+      <div class="live-panel"><span class="live-text">JOIN</span></div>
+    </div>
+    <div class="stream-button-wrapper">
+      <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank">
+        <img src="1KOPNIAK.png" alt="Kick" class="stream-button-image" />
+      </a>
+      <div class="live-panel" id="kickLivePanel"><span class="live-text">OFFLINE</span></div>
+    </div>
+  </section>
 
-    <!-- STREAM -->
-    <section class="stream-buttons-container">
-      <div class="stream-button-wrapper">
-        <a href="https://www.twitch.tv/angelkacs" class="stream-button twitch-btn" target="_blank">
-          <img src="1twitch.png" alt="Twitch" class="stream-button-image" />
-        </a>
-        <div class="live-panel" id="twitchLivePanel"><span class="live-text">OFFLINE</span></div>
-      </div>
-      <div class="stream-button-wrapper">
-        <a href="#" class="stream-button discord-btn" target="_blank">
-          <img src="1discord.png" alt="Discord" class="stream-button-image" />
-        </a>
-        <div class="live-panel"><span class="live-text">JOIN</span></div>
-      </div>
-      <div class="stream-button-wrapper">
-        <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank">
-          <img src="1KOPNIAK.png" alt="Kick" class="stream-button-image" />
-        </a>
-        <div class="live-panel" id="kickLivePanel"><span class="live-text">OFFLINE</span></div>
-      </div>
-    </section>
+  <!-- SOCIAL MEDIA -->
+  <section class="additional-buttons-container">
+    <div class="additional-button-wrapper"><a href="#" class="additional-button instagram-btn" target="_blank"><img src="1instagram.png" alt="Instagram" class="additional-button-image" /></a></div>
+    <div class="additional-button-wrapper"><a href="#" class="additional-button twitter-btn" target="_blank"><img src="1x.png" alt="Twitter" class="additional-button-image" /></a></div>
+    <div class="additional-button-wrapper"><a href="#" class="additional-button youtube-btn" target="_blank"><img src="ytclick.png" alt="YouTube" class="additional-button-image" /></a></div>
+    <div class="additional-button-wrapper"><a href="#" class="additional-button tiktok-btn" target="_blank"><img src="1tiktok.png" alt="TikTok" class="additional-button-image" /></a></div>
+    <div class="additional-button-wrapper"><a href="#" class="additional-button facebook-btn" target="_blank"><img src="1facebook.png" alt="Facebook" class="additional-button-image" /></a></div>
+  </section>
 
-    <!-- SOCIAL MEDIA -->
-    <section class="additional-buttons-container">
-      <div class="additional-button-wrapper"><a href="#" class="additional-button instagram-btn" target="_blank"><img src="1instagram.png" alt="Instagram" class="additional-button-image" /></a></div>
-      <div class="additional-button-wrapper"><a href="#" class="additional-button twitter-btn" target="_blank"><img src="1x.png" alt="Twitter" class="additional-button-image" /></a></div>
-      <div class="additional-button-wrapper"><a href="#" class="additional-button youtube-btn" target="_blank"><img src="ytclick.png" alt="YouTube" class="additional-button-image" /></a></div>
-      <div class="additional-button-wrapper"><a href="#" class="additional-button tiktok-btn" target="_blank"><img src="1tiktok.png" alt="TikTok" class="additional-button-image" /></a></div>
-      <div class="additional-button-wrapper"><a href="#" class="additional-button facebook-btn" target="_blank"><img src="1facebook.png" alt="Facebook" class="additional-button-image" /></a></div>
-    </section>
+  <!-- STOPKA -->
+  <footer class="site-footer">
+    <p>©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
+  </footer>
 
-    <!-- STOPKA -->
-    <footer class="site-footer">
-      <p>©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
-    </footer>
+</div>
 
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

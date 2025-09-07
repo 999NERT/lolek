@@ -1,13 +1,71 @@
-// OBSŁUGA POKAZYWANIA PANELI MOBILNYCH
-const mobileButtons = document.querySelectorAll(".mobile-btn");
-const panels = document.querySelectorAll(".description-panel");
+// PANEL + LINK CLICK LOGIC
+const buttons = document.querySelectorAll('.button-with-popup a');
+let activePanel = null;
+let activeButton = null;
+let timeoutId = null;
 
-mobileButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const target = btn.dataset.panel;
-    panels.forEach(p => p.classList.remove("show"));
-    const panelToShow = document.querySelector(`.description-panel.${target}`);
-    if(panelToShow) panelToShow.classList.add("show");
+buttons.forEach(btn => {
+  const panel = btn.parentElement.querySelector('.description-panel');
+
+  // dodaj przycisk "X" do panelu
+  let closeBtn = document.createElement('span');
+  closeBtn.textContent = '✕';
+  closeBtn.style.position = 'absolute';
+  closeBtn.style.bottom = '8px';
+  closeBtn.style.right = '12px';
+  closeBtn.style.cursor = 'pointer';
+  closeBtn.style.fontWeight = '900';
+  closeBtn.style.fontSize = '1.1rem';
+  closeBtn.style.color = 'white';
+  panel.appendChild(closeBtn);
+
+  closeBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    panel.style.opacity = '0';
+    panel.style.pointerEvents = 'none';
+    btn.classList.remove('active');
+    activePanel = null;
+    activeButton = null;
+    if(timeoutId) clearTimeout(timeoutId);
+  });
+
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+
+    // jeśli kliknięto już aktywny przycisk -> zamknij
+    if(activeButton === btn){
+      panel.style.opacity = '0';
+      panel.style.pointerEvents = 'none';
+      btn.classList.remove('active');
+      activePanel = null;
+      activeButton = null;
+      if(timeoutId) clearTimeout(timeoutId);
+      return;
+    }
+
+    // jeśli inny panel był otwarty -> zamknij go
+    if(activePanel){
+      activePanel.style.opacity = '0';
+      activePanel.style.pointerEvents = 'none';
+      activeButton.classList.remove('active');
+      if(timeoutId) clearTimeout(timeoutId);
+    }
+
+    // pokaż aktualny panel
+    panel.style.opacity = '1';
+    panel.style.pointerEvents = 'auto';
+    btn.classList.add('active');
+    activePanel = panel;
+    activeButton = btn;
+
+    // automatyczne zamknięcie po 10s
+    timeoutId = setTimeout(() => {
+      panel.style.opacity = '0';
+      panel.style.pointerEvents = 'none';
+      btn.classList.remove('active');
+      activePanel = null;
+      activeButton = null;
+    }, 10000);
   });
 });
 

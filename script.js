@@ -141,4 +141,3 @@ document.addEventListener("DOMContentLoaded", () => {
   checkStreamStatus();
   setInterval(checkStreamStatus, 60000);
 });
-

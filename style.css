@@ -172,3 +172,23 @@ body{
   text-shadow:1px 1px 2px rgba(0,0,0,0.7);
 }
 .age-badge-betters{z-index:20;}
+
+/* === RESPONSYWNOŚĆ === */
+@media (max-width: 768px){
+  .button-with-popup a{font-size:20px;padding:12px 20px;}
+  .panel-content{font-size:1rem;}
+  .stream-button{width:90px;height:90px;}
+  .stream-button-image{width:90%;height:90%;}
+  .additional-button{width:70px;height:70px;}
+  .additional-button-image{width:95%;height:95%;}
+  .yt-click-image{width:120px;}
+}
+
+@media (max-width: 480px){
+  .button-with-popup a{font-size:16px;padding:10px 16px;}
+  .panel-content{font-size:0.9rem;}
+  .stream-button{width:70px;height:70px;}
+  .stream-button-image{width:90%;height:90%;}
+  .additional-button{width:60px;height:60px;}
+  .yt-click-image{width:100px;}
+}

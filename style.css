@@ -17,7 +17,7 @@ body{
   height:100%;
 }
 
-/* === PRZYCISKI === */
+/* PRZYCISKI */
 .buttons-container{
   display:flex;
   flex-wrap:wrap;
@@ -47,7 +47,7 @@ body{
   left:50%;
   transform:translateX(-50%);
   width:max-content;
-  max-width:500px;
+  max-width:90vw; /* dostosowanie do szerokości telefonu */
   padding:12px 18px;
   background:rgba(26,26,26,1);
   border-radius:12px;
@@ -56,6 +56,7 @@ body{
   transition:opacity .25s ease;
   z-index:10;
   pointer-events:none;
+  word-wrap:break-word;
 }
 .button-with-popup:hover .description-panel{opacity:1;}
 .panel-content{
@@ -64,10 +65,9 @@ body{
   text-transform:uppercase;
   font-size:1.25rem;
   color:white;
-  word-wrap:break-word;
 }
 
-/* === KOLORY PRZYCISKÓW === */
+/* KOLORY PRZYCISKÓW */
 .logitech-btn a{background:white;color:black;}
 .logitech-btn a:hover{background:#8e8e8e;}
 .logitech-highlight,.logitech-tech{color:#00FFFF;font-weight:900;}
@@ -91,10 +91,11 @@ body{
 .betters-ters{color:#E50420;}
 .betters-highlight{color:#E50420;font-weight:900;}
 
-/* === YT MINIATURKA === */
+/* MINIATURKA YT */
 .latest-video-container{
   position:relative;
-  width:min(80%,900px);
+  width:100%;
+  max-width:900px;
   margin:16px auto;
   text-align:center;
   border-radius:12px;
@@ -103,7 +104,7 @@ body{
   box-shadow:0 0 18px rgba(255,0,0,0.35);
   background:#000;
 }
-.video-thumb{width:100%;display:block;object-fit:cover;}
+.video-thumb{width:100%; height:auto; display:block; object-fit:cover;}
 .play-button{
   position:absolute;
   top:50%;left:50%;
@@ -116,7 +117,7 @@ body{
 .yt-click-image{width:158px;height:auto;}
 .video-error{color:#ff6b6b;font-weight:700;text-align:center;padding:10px 8px;}
 
-/* === STREAM === */
+/* STREAM */
 .stream-buttons-container{
   display:flex;
   justify-content:center;
@@ -145,7 +146,7 @@ body{
 .live-panel.live .live-text{color:#00ff00;animation:pulseLive 1.5s infinite;}
 @keyframes pulseLive{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6;}}
 
-/* === SOCIAL === */
+/* SOCIAL */
 .additional-buttons-container{
   display:flex;justify-content:center;gap:15px;margin-top:25px;flex-wrap:wrap;
 }
@@ -153,7 +154,7 @@ body{
 .additional-button-image{width:95%;height:95%;object-fit:contain;}
 .additional-button:hover .additional-button-image{transform:scale(1.05);}
 
-/* === FOOTER === */
+/* FOOTER */
 .site-footer{text-align:center;margin-top:30px;padding:15px 10px;}
 .site-footer p{
   font-size:1.1rem;
@@ -164,7 +165,7 @@ body{
   text-shadow:2px 2px 6px rgba(0,0,0,1);
 }
 
-/* === AGE BADGE === */
+/* AGE BADGE */
 .age-badge,.age-badge-betters{
   position:absolute;top:-22px;left:50%;transform:translateX(-50%);
   background:rgba(200,0,0,0.9);color:white;font-size:0.8rem;
@@ -173,7 +174,7 @@ body{
 }
 .age-badge-betters{z-index:20;}
 
-/* === RESPONSYWNOŚĆ === */
+/* RESPONSYWNOŚĆ */
 @media (max-width: 768px){
   .button-with-popup a{font-size:20px;padding:12px 20px;}
   .panel-content{font-size:1rem;}

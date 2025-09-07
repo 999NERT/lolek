@@ -1,48 +1,42 @@
 const buttons = document.querySelectorAll('.mobile-button');
 let activeButton = null;
 
-buttons.forEach(btn => {
+function handleButtonClick(btn) {
   const originalHTML = btn.querySelector('.button-text').innerHTML;
   const description = btn.dataset.description;
   const url = btn.getAttribute('href');
+  const ageBadge = btn.closest('.button-with-popup').querySelector('.age-badge-mobile');
 
-  btn.addEventListener('click', e => {
+  // drugi klik -> otwórz link
+  if (activeButton === btn && btn.classList.contains('show-description')) {
+    window.open(url, "_blank");
+    return;
+  }
+
+  // przywrócenie poprzedniego
+  if (activeButton && activeButton !== btn) {
+    const badge = activeButton.closest('.button-with-popup').querySelector('.age-badge-mobile');
+    if(badge) badge.style.display = 'block';
+    activeButton.querySelector('.button-text').innerHTML = activeButton.dataset.originalText;
+    activeButton.classList.remove('show-description');
+    activeButton = null;
+  }
+
+  // pokazanie opisu
+  if (!btn.classList.contains('show-description')) {
+    btn.dataset.originalText = originalHTML;
+    btn.querySelector('.button-text').innerHTML = description;
+    btn.classList.add('show-description');
+    if(ageBadge && (btn.closest('.csgoskins-btn') || btn.closest('.betters-btn'))) ageBadge.style.display = 'none';
+    activeButton = btn;
+  }
+}
+
+// obsługa dotyku i kliknięcia
+buttons.forEach(btn => {
+  btn.addEventListener('pointerup', e => {
     e.preventDefault();
-
-    const parent = btn.closest(".button-with-popup");
-    const badge = parent.querySelector(".age-badge-mobile");
-
-    // klik drugi -> otwórz stronę
-    if (activeButton === btn && btn.classList.contains('show-description')) {
-      window.open(url, "_blank");
-      return;
-    }
-
-    // przywrócenie poprzedniego przycisku
-    if (activeButton && activeButton !== btn) {
-      const prevParent = activeButton.closest(".button-with-popup");
-      const prevBadge = prevParent.querySelector(".age-badge-mobile");
-
-      activeButton.querySelector('.button-text').innerHTML = activeButton.dataset.originalText;
-      activeButton.classList.remove('show-description');
-      if (prevBadge) prevBadge.style.display = "block"; // pokaż badge z powrotem
-      activeButton = null;
-    }
-
-    // pokazanie opisu
-    if (!btn.classList.contains('show-description')) {
-      btn.dataset.originalText = originalHTML;
-      btn.querySelector('.button-text').innerHTML = description;
-      btn.classList.add('show-description');
-      if (badge) badge.style.display = "none"; // ukryj badge +18
-      activeButton = btn;
-    } else {
-      // jeśli kliknę ten sam przycisk ponownie, przywróć tekst + badge
-      btn.querySelector('.button-text').innerHTML = btn.dataset.originalText;
-      btn.classList.remove('show-description');
-      if (badge) badge.style.display = "block";
-      activeButton = null;
-    }
+    handleButtonClick(btn);
   });
 });
 
@@ -73,4 +67,43 @@ async function loadLatestVideo() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadLatestVideo);
+// === STREAM LIVE STATUS ===
+async function checkStreamStatus() {
+  const twitch = document.getElementById("twitchLivePanel");
+  const kick = document.getElementById("kickLivePanel");
+
+  // Twitch
+  try {
+    const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
+    const text = await res.text();
+    if (text.includes("offline")) {
+      twitch.classList.remove("live");
+      twitch.querySelector(".live-text").textContent = "OFFLINE";
+    } else {
+      twitch.classList.add("live");
+      twitch.querySelector(".live-text").textContent = "LIVE";
+    }
+  } catch (e) { console.log("Twitch API error:", e); }
+
+  // Kick
+  try {
+    const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
+    if (res.ok) {
+      const data = await res.json();
+      if (data.livestream?.is_live) {
+        kick.classList.add("live");
+        kick.querySelector(".live-text").textContent = "LIVE";
+      } else {
+        kick.classList.remove("live");
+        kick.querySelector(".live-text").textContent = "OFFLINE";
+      }
+    }
+  } catch (e) { console.log("Kick API error:", e); }
+}
+
+// === START ===
+document.addEventListener("DOMContentLoaded", () => {
+  loadLatestVideo();
+  checkStreamStatus();
+  setInterval(checkStreamStatus, 60000);
+});

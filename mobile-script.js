@@ -1,3 +1,26 @@
+// PANEL + LINK CLICK LOGIC
+document.querySelectorAll('.button-with-popup a').forEach(btn => {
+  let clickedOnce = false;
+  const panel = btn.parentElement.querySelector('.description-panel');
+
+  btn.addEventListener('click', e => {
+    if(!clickedOnce){
+      e.preventDefault();
+      panel.style.opacity = "1";
+      panel.style.pointerEvents = "auto";
+      clickedOnce = true;
+
+      // Panel znika po 10s
+      setTimeout(() => {
+        panel.style.opacity = "0";
+        panel.style.pointerEvents = "none";
+        clickedOnce = false; // reset po 10s
+      }, 10000);
+    } 
+    // jeśli kliknięto drugi raz w czasie <10s -> normalny link działa
+  });
+});
+
 // MINIATURKA YT
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";

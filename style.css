@@ -83,7 +83,7 @@ body {
 .stream-button:hover .stream-button-image{transform:scale(1.05);}
 
 /* LIVE PANEL */
-.live-panel{width:80px;height:30px;background:rgba(0,0,0,.7);border-radius:6px;display:flex;justify-content:center;align-items:center;border:2px solid #ff4444;}
+.live-panel{width:80px;height:30px;background:rgba(0,0,0,1);border-radius:6px;display:flex;justify-content:center;align-items:center;border:2px solid #ff4444;}
 .live-panel.live{background:rgba(255,68,68,.3);border-color:#00ff00;box-shadow:0 0 10px rgba(0,255,0,.4);}
 .live-text{font-weight:800;font-size:14px;color:#ff4444;}
 .live-panel.live .live-text{color:#00ff00;animation:pulseLive 1.5s infinite;}

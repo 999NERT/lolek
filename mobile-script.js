@@ -1,46 +1,47 @@
 const buttons = document.querySelectorAll('.mobile-button');
 let activeButton = null;
-let timeoutId = null;
 
 buttons.forEach(btn => {
-  const buttonText = btn.querySelector('.button-text');
-  const descriptionText = btn.querySelector('.description-text').innerHTML;
-  const originalText = buttonText.innerHTML;
+  const description = btn.parentElement.querySelector('.description-text');
+  const originalText = btn.querySelector('.button-text').innerHTML;
 
   btn.addEventListener('click', e => {
     e.preventDefault();
 
-    // Jeśli kliknięto w aktywny przycisk -> przywróć oryginał
+    // Jeśli kliknięto już aktywny przycisk, wracamy do oryginału
     if(activeButton === btn){
-      buttonText.innerHTML = originalText;
+      btn.querySelector('.button-text').innerHTML = originalText;
+      description.style.display = 'none';
       btn.classList.remove('active');
       activeButton = null;
-      if(timeoutId) clearTimeout(timeoutId);
       return;
     }
 
-    // Ukryj poprzedni aktywny przycisk
+    // Jeśli inny przycisk był aktywny, przywróć jego tekst
     if(activeButton){
-      const prevButtonText = activeButton.querySelector('.button-text');
-      const prevOriginalText = prevButtonText.dataset.original || prevButtonText.innerHTML;
-      prevButtonText.innerHTML = prevOriginalText;
+      const prevDescription = activeButton.parentElement.querySelector('.description-text');
+      const prevText = activeButton.querySelector('.button-text').dataset.original || activeButton.querySelector('.button-text').innerHTML;
+      activeButton.querySelector('.button-text').innerHTML = prevText;
+      prevDescription.style.display = 'none';
       activeButton.classList.remove('active');
-      if(timeoutId) clearTimeout(timeoutId);
     }
 
-    // Zmień tekst przycisku na opis
-    buttonText.dataset.original = originalText;
-    buttonText.innerHTML = descriptionText;
+    // Wyświetl opis dla klikniętego przycisku
+    btn.querySelector('.button-text').dataset.original = originalText;
+    btn.querySelector('.button-text').innerHTML = description.innerHTML;
+    description.style.display = 'block';
     btn.classList.add('active');
     activeButton = btn;
 
-    // Automatycznie przywróć po 10s
-    if(timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      buttonText.innerHTML = originalText;
-      btn.classList.remove('active');
-      activeButton = null;
-    }, 10000);
+    // Jeśli przycisk ma URL, otwórz po drugim kliknięciu
+    if(btn.dataset.url && btn.dataset.url !== "#"){
+      if(btn.classList.contains('clickedOnce')){
+        window.open(btn.dataset.url,"_blank");
+        btn.classList.remove('clickedOnce');
+      } else {
+        btn.classList.add('clickedOnce');
+      }
+    }
   });
 });
 

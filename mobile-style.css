@@ -43,7 +43,7 @@ html, body{
 
 /* Opisy przycisków z cieniowaniem */
 .button-with-popup a.show-description .button-text {
-  font-size: 1rem;
+  font-size: 0.96rem;
   line-height: 1.4;
   display:block;
   padding:4px;

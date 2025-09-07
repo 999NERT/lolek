@@ -3,49 +3,46 @@ let activeButton = null;
 let timeoutId = null;
 
 buttons.forEach(btn => {
-  const panel = btn.parentElement.querySelector('.description-panel');
-  const panelText = panel.querySelector('.panel-text');
-  const closeBtn = panel.querySelector('.close-panel');
-  const originalText = btn.querySelector('.button-text').innerHTML;
+  const buttonText = btn.querySelector('.button-text');
+  const descriptionText = btn.querySelector('.description-text').innerHTML;
+  const originalText = buttonText.innerHTML;
 
-  // Zamykanie panelu przyciskiem X
-  closeBtn.addEventListener('click', e=>{
-    e.stopPropagation();
-    hidePanel(btn, originalText);
-  });
-
-  btn.addEventListener('click', e=>{
+  btn.addEventListener('click', e => {
     e.preventDefault();
 
+    // Jeśli kliknięto w aktywny przycisk -> przywróć oryginał
     if(activeButton === btn){
-      hidePanel(btn, originalText);
+      buttonText.innerHTML = originalText;
+      btn.classList.remove('active');
+      activeButton = null;
+      if(timeoutId) clearTimeout(timeoutId);
       return;
     }
 
-    if(activeButton) hidePanel(activeButton, activeButton.dataset.original);
+    // Ukryj poprzedni aktywny przycisk
+    if(activeButton){
+      const prevButtonText = activeButton.querySelector('.button-text');
+      const prevOriginalText = prevButtonText.dataset.original || prevButtonText.innerHTML;
+      prevButtonText.innerHTML = prevOriginalText;
+      activeButton.classList.remove('active');
+      if(timeoutId) clearTimeout(timeoutId);
+    }
 
-    btn.dataset.original = originalText;
-    btn.querySelector('.button-text').innerHTML = panelText.innerHTML;
-
-    panel.style.opacity = '1';
-    panel.style.pointerEvents = 'auto';
+    // Zmień tekst przycisku na opis
+    buttonText.dataset.original = originalText;
+    buttonText.innerHTML = descriptionText;
     btn.classList.add('active');
     activeButton = btn;
 
+    // Automatycznie przywróć po 10s
     if(timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(()=> hidePanel(btn, originalText), 10000);
+    timeoutId = setTimeout(() => {
+      buttonText.innerHTML = originalText;
+      btn.classList.remove('active');
+      activeButton = null;
+    }, 10000);
   });
 });
-
-function hidePanel(btn, text){
-  const panel = btn.parentElement.querySelector('.description-panel');
-  panel.style.opacity = '0';
-  panel.style.pointerEvents = 'none';
-  btn.querySelector('.button-text').innerHTML = text;
-  btn.classList.remove('active');
-  activeButton = null;
-  if(timeoutId) clearTimeout(timeoutId);
-}
 
 // === YT MINIATURKA ===
 async function loadLatestVideo() {

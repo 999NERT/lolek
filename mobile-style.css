@@ -64,4 +64,4 @@ html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;overflo
 
 /* STOPKA */
 .site-footer{text-align:center;margin-top:20px;padding:10px 5px;}
-.site-footer p{font-size:1rem;padding:5px 10px;border-radius:30px;background:rgba(0,0,0,.5);font-weight:400;text-shadow:2px 2px 6px rgba(0,0,0,1);}
+.site-footer p{font-size:1.1rem;padding:5px 16px;border-radius:30px;background:rgba(0,0,0,.5);font-weight:400;text-shadow:2px 2px 6px rgba(0,0,0,1);}

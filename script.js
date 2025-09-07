@@ -1,3 +1,19 @@
+// WYŚWIETLANIE PANELI Z ANIMACJĄ
+const buttons = document.querySelectorAll(".button-with-popup");
+const panels = document.querySelectorAll(".description-panel");
+
+buttons.forEach(btn => {
+  btn.addEventListener("mouseenter", () => {
+    const target = btn.dataset.panel;
+    panels.forEach(p => p.classList.remove("show"));
+    const panelToShow = document.querySelector(`#panelContainer .${target}`);
+    if(panelToShow) panelToShow.classList.add("show");
+  });
+  btn.addEventListener("mouseleave", () => {
+    panels.forEach(p => p.classList.remove("show"));
+  });
+});
+
 // === YT MINIATURKA ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";

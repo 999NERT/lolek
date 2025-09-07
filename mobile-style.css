@@ -7,6 +7,7 @@ html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;overflo
 .button-with-popup{position:relative;text-align:center;}
 .button-with-popup a{display:block;padding:10px 28px;border-radius:50px;font-weight:900;font-size:28px;text-decoration:none;transition:all .3s ease;text-align:center;}
 .age-badge-mobile{position:absolute;top:15px;left:11%;transform:translateX(-50%);background:rgba(200,0,0,0.9);color:white;font-size:0.8rem;font-weight:900;padding:3px 8px;border-radius:6px;border:2px solid white;z-index:10;text-shadow:1px 1px 2px rgba(0,0,0,0.7);}
+.age-badge-mobile.hidden{display:none;}
 
 /* STAN OPISU */
 .button-with-popup a.show-description .button-text {
@@ -18,25 +19,20 @@ html,body{height:100%;font-family:'Titillium Web',sans-serif;color:white;overflo
 
 /* KOLORY */
 .logitech-btn a{background:white;color:black;}
-/* .logitech-btn a:hover{background:#bfbfbf;} */
 .logitech-highlight,.logitech-tech{color:#05B8FB;font-weight:900;}
 
 .pirateswap-btn a{background:#1E1D22;color:white;}
-/* .pirateswap-btn a:hover{background:#952903;} */
 .pirateswap-swap{color:#ff4300;}
 
 .csgoskins-btn a{background:#0D2345;color:white;}
-/* .csgoskins-btn a:hover{background:#0a6699;} */
 .csgoskins-highlight{color:#14A3C7;font-weight:900;}
 .discord-text{color:#5764F2;font-weight:900;}
 .blue-o{color:#4fc3f7;}
 
 .wkdzik-btn a{background:black;color:white;}
-/* .wkdzik-btn a:hover{background:white;color:black;} */
 .wkdzik-highlight{color:#d7b9ff;font-weight:900;}
 
 .betters-btn a{background:#262D3A;color:white;}
-/* .betters-btn a:hover{background:#68030f;} */
 .betters-ters{color:#E50420;}
 .betters-highlight{color:#E50420;font-weight:900;}
 

@@ -19,28 +19,18 @@ async function loadLatestVideo() {
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
-    img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-    img.onerror = () => img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    // najpierw próbujemy pobrać maxres
+    const testImg = new Image();
+    testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    testImg.onload = () => { img.src = testImg.src; };
+    testImg.onerror = () => { img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`; };
 
   } catch (e) {
     console.error(e);
     err.hidden = false;
   }
 }
-
-const ytImage = new Image();
-ytImage.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-ytImage.onload = () => {
-  img.src = ytImage.src;  // dopiero teraz ustawiamy src w <img>
-  img.classList.add('visible');
-};
-ytImage.onerror = () => {
-  img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  img.classList.add('visible');
-};
-
-
 
 // === STREAM LIVE STATUS ===
 async function checkStreamStatus() {
@@ -94,13 +84,8 @@ tmobileModal.addEventListener('click', (e)=>{
   }
 });
 
-// === ANIMACJA FADE-IN MINIATURKI + BORDER + TŁO ===
+// === INIT ===
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    document.querySelector('.latest-video-container').classList.add('visible');
-    document.getElementById('watchButton').classList.add('visible');
-  }, 2000);
-
   loadLatestVideo();
   checkStreamStatus();
   setInterval(checkStreamStatus, 60000);

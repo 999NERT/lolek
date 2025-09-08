@@ -1,30 +1,27 @@
-/* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* === RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 html, body {
   height: 100%;
   font-family: 'Titillium Web', sans-serif;
   color: white;
   overflow-x: hidden;
-}
-body {
   background: url("aster.png") no-repeat center center fixed;
   background-size: cover;
 }
-.main-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px 20px;
-  min-height: 100%; /* ✅ zamiast height:100% – żeby treść się nie ucinała */
-}
+a { text-decoration: none; color: inherit; }
 
-/* BUTTONS */
+/* === PRZYCISKI PARTNERSKIE === */
 .buttons-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
   margin-bottom: 40px;
+  align-items: flex-start;
 }
 .button-with-popup {
   position: relative;
@@ -36,58 +33,73 @@ body {
   border-radius: 30px;
   font-weight: 900;
   font-size: 28px;
-  transition: all .3s ease;
   text-align: center;
+  transition: all 0.3s ease;
+}
+.age-badge, .age-badge-betters {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: black;
+  border: 3px solid red;
+  color: red;
+  font-weight: 900;
+  padding: 3px 6px;
+  font-size: 14px;
+  border-radius: 6px;
 }
 .description-panel {
   position: absolute;
   top: 110%;
   left: 50%;
   transform: translateX(-50%);
+  width: max-content;
   max-width: 500px;
   padding: 12px 18px;
-  background: rgba(26,26,26,0.95); /* ✅ delikatna przezroczystość */
+  background: rgba(26,26,26,1);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4); /* ✅ mocniejszy cień */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   opacity: 0;
-  transition: opacity .25s ease;
+  transition: opacity 0.25s ease;
   z-index: 10;
   pointer-events: none;
 }
-.button-with-popup:hover .description-panel {
-  opacity: 1;
-}
+.button-with-popup:hover .description-panel { opacity: 1; }
 .panel-content {
   font-family: 'Paytone One', sans-serif;
   text-align: center;
   text-transform: uppercase;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   color: white;
-  word-wrap: break-word;
 }
 
-/* COLORS */
+/* === KOLORY PRZYCISKÓW === */
 .logitech-btn a { background: white; color: black; }
 .logitech-btn a:hover { background: #8e8e8e; }
 .logitech-highlight, .logitech-tech { color: #00FFFF; font-weight: 900; }
+
 .pirateswap-btn a { background: #1E1D22; color: white; }
 .pirateswap-btn a:hover { background: #952903; }
 .pirateswap-swap { color: #ff4300; }
+
 .csgoskins-btn a { background: #0D2345; color: white; }
 .csgoskins-btn a:hover { background: #0a6699; }
 .csgoskins-highlight { color: #14A3C7; font-weight: 900; }
 .discord-text { color: #5764F2; font-weight: 900; }
 .blue-o { color: #4fc3f7; }
+
 .wkdzik-btn a { background: black; color: white; }
 .wkdzik-btn a:hover { background: white; color: #1b1b1b; }
 .wkdzik-highlight { color: #de74ff; font-weight: 900; }
+
 .betters-btn a { background: #262D3A; color: white; }
 .betters-btn a:hover { background: #68030f; }
 .betters-ters { color: #E50420; }
 .betters-highlight { color: #E50420; font-weight: 900; }
 
-/* YT VIDEO */
+/* === MINIATURKA YT === */
 .latest-video-container {
+  position: relative;
   width: min(80%, 900px);
   margin: 16px auto;
   text-align: center;
@@ -95,168 +107,103 @@ body {
 .video-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* proporcje 16:9 */
-  background: #000;
+  height: 0;
+  padding-bottom: 56.25%;
+  background: black;
   border: 8px solid red;
-  border-radius: 12px; /* ✅ zaokrąglenie */
-  overflow: hidden;   /* ✅ żeby obrazek nie wychodził */
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 .video-thumb {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .play-button {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 5;
+  z-index: 60;
   display: none;
 }
+.yt-click-image { width: 90px; height: auto; }
+
 .spinner {
   border: 6px solid rgba(255,255,255,0.2);
-  border-top: 6px solid #ff0000;
+  border-top: 6px solid red;
   border-radius: 50%;
-  width: 50px; height: 50px;
+  width: 50px;
+  height: 50px;
   animation: spin 1s linear infinite;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+
 .video-error {
   color: #ff6b6b;
   font-weight: 700;
   text-align: center;
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
+  background: black;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 2px solid red;
 }
 
-/* T-MOBILE + EVENT */
+/* === T-MOBILE + EVENT === */
 #tmobileWrapper {
-  position: fixed; /* ✅ zamiast absolute – zawsze widoczny */
-  bottom: 20px; left: 20px;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 100;
+  gap: 8px;
+  background: black;
+  border: 8px solid red;
+  border-radius: 12px;
+  padding: 10px;
+  z-index: 999;
+  cursor: grab;
 }
-.tmobile-btn, .live-text-event { cursor: grab; }
-.tmobile-btn {
-  width: 80px; height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.tmobile-image { width: 100%; height: 100%; object-fit: contain; }
+#tmobileWrapper:active { cursor: grabbing; }
+
 .live-text-event {
-  background: rgba(0,0,0,0.9);
-  border: 2px solid #a40154;
+  background: black;
   color: white;
   font-weight: 900;
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
-  margin-bottom: 5px;
+  border: 2px solid #a40154;
+  text-transform: uppercase;
+  font-size: 14px;
   user-select: none;
 }
 
-/* STREAM */
-.stream-buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-.stream-button-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-.stream-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 120px; height: 120px;
-  transition: transform .3s ease;
-}
-.stream-button-image {
-  width: 95%; height: 95%;
-  object-fit: contain;
-  transition: transform .3s ease;
-}
-.stream-button:hover .stream-button-image {
-  transform: scale(1.05);
-}
-.live-panel {
-  width: 80px; height: 30px;
-  background: #000;
-  border-radius: 6px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #ff4444;
-}
-.live-text { font-weight: 800; font-size: 14px; color: #ff4444; }
-.live-panel.live {
-  background: rgba(255,68,68,.3);
-  border-color: #00ff00;
-  box-shadow: 0 0 10px rgba(0,255,0,.4);
-}
-.live-panel.live .live-text {
-  color: #00ff00;
-  animation: pulseLive 1.5s infinite;
-}
-@keyframes pulseLive {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-
-/* SOCIAL */
-.additional-buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
-.additional-button {
-  width: 90px; height: 90px;
+.tmobile-btn {
+  width: 88px; /* 10% większe */
+  height: 88px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.additional-button-image {
-  width: 95%; height: 95%;
-  object-fit: contain;
-  transition: transform .3s ease;
-}
-.additional-button:hover .additional-button-image {
-  transform: scale(1.05);
-}
-
-/* FOOTER */
-.site-footer {
-  display: flex;
-  justify-content: space-between;
+.tmobile-image {
   width: 100%;
-  padding: 10px 20px;
-  margin-top: 30px;
-  flex-wrap: wrap; /* ✅ żeby na mobile się nie łamało */
+  height: 100%;
+  object-fit: contain;
 }
-.left-footer-text, .right-footer-text {
-  background: #000;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 30px;
-  font-weight: 400;
-  margin: 5px 0;
-}
-.left-footer-text a { color: #BF8EF8; text-decoration: none; }
 
-/* TMOBILE MODAL */
+/* === MODAL TMOBILE === */
 .tmobile-modal {
   display: flex;
   justify-content: center;
@@ -270,26 +217,22 @@ body {
   pointer-events: none;
   transition: opacity 0.4s ease;
 }
-.tmobile-modal.show {
-  opacity: 1;
-  pointer-events: auto;
-}
+.tmobile-modal.show { opacity: 1; pointer-events: auto; }
 .tmobile-modal-content {
   background: #890247;
   color: white;
   padding: 15px 30px;
-  max-width: 600px; width: 90%;
+  max-width: 600px;
+  width: 90%;
   border-radius: 12px;
   position: relative;
   text-align: center;
   transform: translateY(-30px);
   transition: transform 0.4s ease;
 }
-.tmobile-modal.show .tmobile-modal-content {
-  transform: translateY(0);
-}
+.tmobile-modal.show .tmobile-modal-content { transform: translateY(0); }
 .tmobile-modal-content p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
   margin-bottom: 12px;
@@ -312,7 +255,8 @@ body {
 .tmobile-register-btn:hover { background: #9d356a; }
 .tmobile-modal-content button {
   position: absolute;
-  bottom: -14px; right: -14px;
+  bottom: -14px;
+  right: -14px;
   background: #ff0082;
   color: white;
   border: none;
@@ -324,3 +268,75 @@ body {
   transition: all .2s ease;
 }
 .tmobile-modal-content button:hover { background: #9d356a; }
+
+/* === STREAM === */
+.stream-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+.stream-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.stream-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  transition: all 0.3s ease;
+}
+.stream-button-image {
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+}
+.stream-button:hover .stream-button-image { transform: scale(1.05); }
+.live-panel {
+  width: 80px;
+  height: 30px;
+  background: black;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid red;
+}
+.live-text { font-weight: 800; font-size: 14px; color: red; }
+
+/* === SOCIAL === */
+.additional-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+.additional-button { width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; }
+.additional-button-image { width: 95%; height: 95%; object-fit: contain; }
+.additional-button:hover .additional-button-image { transform: scale(1.05); }
+
+/* === STOPKA === */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+  margin-top: 30px;
+}
+.left-footer-text, .right-footer-text {
+  background: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-weight: 400;
+}
+.right-footer-text a {
+  color: #BF8EF8;
+  text-decoration: none;
+}

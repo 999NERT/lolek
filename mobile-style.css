@@ -118,7 +118,7 @@ html, body{
 .additional-button-image{width:95%;height:95%;object-fit:contain;}
 .additional-button:hover .additional-button-image{transform:scale(1.05);}
 
-/* STOPKA */
+/* STOPKA COPYRIGHT*/
 .site-footer{text-align:center;margin-top:20px;padding:10px 5px;}
 .site-footer p{font-size:1rem;padding:5px 10px;border-radius:30px;background:rgba(0,0,0,.5);font-weight:400;text-shadow:2px 2px 6px rgba(0,0,0,1);}
 
@@ -129,5 +129,25 @@ html, body{
   color:#ffd700;
   font-weight:700;
   text-shadow:1px 1px 4px rgba(0,0,0,0.9);
+}
+
+/* STOPKA KONTAKT*/
+.site-footer p {
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 30px;
+  background: rgba(0,0,0,.5);
+  font-weight: 400;
+  text-shadow: 2px 2px 6px rgba(0,0,0,1);
+  margin-bottom: 5px; /* żeby oba napisy się nie skleiły */
+}
+
+.site-footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.site-footer a:hover {
+  text-decoration: underline;
 }
 

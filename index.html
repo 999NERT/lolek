@@ -63,21 +63,9 @@
       </div>
     </section>
 
-    <!-- NAJNOWSZY FILM YT Z T-MOBILE -->
+    <!-- NAJNOWSZY FILM YT -->
     <section class="latest-video-container">
       <div class="video-wrapper">
-        <div class="tmobile-left-btn button-with-popup">
-          <div class="event-badge">EVENT</div>
-          <a href="https://t-mobile-esport.com/championship-2025" target="_blank">
-            <span class="button-text">T-<span class="tmobile-mobile">MOBILE</span></span>
-          </a>
-          <div class="description-panel">
-            <div class="panel-content">
-              Ruszyły zapisy do T-Esport Championship 2025 od T-Mobile! Prize pool: <span class="tmobile-highlight">100 000€</span>! Wystarczy mieć <span class="tmobile-highlight">16 lat</span>, by wziąć udział. Zapisy trwają do <span class="tmobile-highlight">18 lub 20 września</span> (zależnie od gry). Wielki LAN finał odbędzie się <span class="tmobile-highlight">15-16 listopada w Budapeszcie</span>!
-            </div>
-          </div>
-        </div>
-
         <img id="latestThumbnail" src="ytthumb.jpg" alt="Miniaturka najnowszego filmu" class="video-thumb" />
         <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
           <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
@@ -109,6 +97,26 @@
         <div class="live-panel" id="kickLivePanel"><span class="live-text">OFFLINE</span></div>
       </div>
     </section>
+
+    <!-- NOWY PRZYCISK TMOBILE W SWOJEJ SEKCI -->
+    <section class="custom-stream-section">
+      <div class="custom-button-wrapper tmobile-btn-wrapper" style="top:0; left:0;">
+        <a href="#" class="stream-button tmobile-btn">
+          <img src="TMOBILE.png" alt="T-Mobile" class="stream-button-image" />
+        </a>
+        <div class="live-panel"><span class="live-text">EVENT</span></div>
+      </div>
+    </section>
+
+    <!-- MODAL TMOBILE -->
+    <div id="tmobileModal" class="tmobile-modal">
+      <div class="tmobile-modal-content">
+        <p>
+          Ruszyły zapisy do T-Esport Championship 2025 od T-Mobile! Prize pool: <strong>100 000€</strong>! Wystarczy mieć 16 lat, by wziąć udział. Zapisy trwają do 18 lub 20 września (zależnie od gry). Wielki LAN finał odbędzie się 15-16 listopada w Budapeszcie!
+        </p>
+        <button id="tmobileModalClose">X</button>
+      </div>
+    </div>
 
     <!-- SOCIAL MEDIA -->
     <section class="additional-buttons-container">

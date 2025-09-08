@@ -1,13 +1,20 @@
-// === YT MINIATURKA Z SPINNEREM ===
+// === YT MINIATURKA ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
 
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
-  const placeholder = document.querySelector(".video-placeholder");
-  const spinner = document.querySelector(".spinner");
   const err = document.getElementById("videoError");
+  const spinner = document.getElementById("videoSpinner");
+  const placeholder = document.getElementById("videoPlaceholder");
+
+  // Pokaż placeholder i spinner
+  placeholder.style.display = "flex";
+  spinner.style.display = "block";
+  img.style.display = "none";
+  btn.style.display = "none";
+  err.hidden = true;
 
   try {
     const res = await fetch(proxy);
@@ -22,28 +29,27 @@ async function loadLatestVideo() {
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // Pobieranie miniaturki
+    // Załaduj miniaturkę
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-
     testImg.onload = () => {
       img.src = testImg.src;
-      img.hidden = false;
-      btn.hidden = false;
-      placeholder.style.display = "none"; // ukryj placeholder i spinner
+      img.style.display = "block";      // pokaż miniaturkę
+      btn.style.display = "block";      // pokaż przycisk YT
+      spinner.style.display = "none";   // ukryj spinner
+      // placeholder pozostaje, tło i border są nadal widoczne
     };
-
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      img.hidden = false;
-      btn.hidden = false;
-      placeholder.style.display = "none";
+      img.style.display = "block";
+      btn.style.display = "block";
+      spinner.style.display = "none";
     };
 
   } catch (e) {
     console.error(e);
-    spinner.style.display = "none";
     err.hidden = false;
+    spinner.style.display = "none";
   }
 }
 
@@ -52,22 +58,18 @@ async function checkStreamStatus() {
   const twitch = document.getElementById("twitchLivePanel");
   const kick = document.getElementById("kickLivePanel");
 
-  // Twitch
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
-    if (text.toLowerCase().includes("offline")) {
+    if (text.includes("offline")) {
       twitch.classList.remove("live");
       twitch.querySelector(".live-text").textContent = "OFFLINE";
     } else {
       twitch.classList.add("live");
       twitch.querySelector(".live-text").textContent = "LIVE";
     }
-  } catch (e) {
-    console.log("Twitch API error:", e);
-  }
+  } catch (e) { console.log("Twitch API error:", e); }
 
-  // Kick
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
     if (res.ok) {
@@ -80,9 +82,7 @@ async function checkStreamStatus() {
         kick.querySelector(".live-text").textContent = "OFFLINE";
       }
     }
-  } catch (e) {
-    console.log("Kick API error:", e);
-  }
+  } catch (e) { console.log("Kick API error:", e); }
 }
 
 // === TMOBILE MODAL ===
@@ -90,17 +90,17 @@ const tmobileBtn = document.querySelector('.tmobile-btn');
 const tmobileModal = document.getElementById('tmobileModal');
 const tmobileModalClose = document.getElementById('tmobileModalClose');
 
-tmobileBtn.addEventListener('click', (e) => {
+tmobileBtn.addEventListener('click', (e)=>{
   e.preventDefault();
   tmobileModal.classList.add('show');
 });
 
-tmobileModalClose.addEventListener('click', () => {
+tmobileModalClose.addEventListener('click', ()=>{
   tmobileModal.classList.remove('show');
 });
 
-tmobileModal.addEventListener('click', (e) => {
-  if (e.target === tmobileModal) {
+tmobileModal.addEventListener('click', (e)=>{
+  if(e.target === tmobileModal){
     tmobileModal.classList.remove('show');
   }
 });
@@ -109,5 +109,5 @@ tmobileModal.addEventListener('click', (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   loadLatestVideo();
   checkStreamStatus();
-  setInterval(checkStreamStatus, 60000); // aktualizacja co minutę
+  setInterval(checkStreamStatus, 60000);
 });

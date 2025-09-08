@@ -218,7 +218,7 @@ body{
   pointer-events:auto;
 }
 .tmobile-modal-content{
-  background:#5c002f;
+  background:#890247;
   color:white;
   padding: 15px 30px 1px 30px;
   max-width:600px;
@@ -233,10 +233,10 @@ body{
   transform:translateY(0);
 }
 .tmobile-modal-content p{
-  font-size:1.25rem;
+  font-size:1.3rem;
   text-transform:uppercase;
   text-shadow:2px 2px 4px rgba(0,0,0,0.8);
-  margin-bottom:15px;
+  margin-bottom:12px;
   line-height:1.5;
 }
 .tmobile-register-btn{
@@ -253,7 +253,7 @@ body{
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
    transition: all .2s ease;
 }
-.tmobile-register-btn:hover{background:#cc0000;}
+.tmobile-register-btn:hover{background:#9d356a;}
 .tmobile-modal-content button{
   position: absolute;
   bottom: -14px;

@@ -5,8 +5,6 @@ async function loadLatestVideo() {
 
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
-  const placeholder = document.querySelector(".video-placeholder");
-  const ytIcon = document.querySelector(".yt-click-image");
   const err = document.getElementById("videoError");
 
   try {
@@ -22,20 +20,18 @@ async function loadLatestVideo() {
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // załaduj maxres
+    // testowanie maxres
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     testImg.onload = () => {
       img.src = testImg.src;
       img.style.display = "block";
-      ytIcon.parentElement.style.display = "block";
-      placeholder.style.display = "none";
+      btn.style.display = "block";
     };
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.style.display = "block";
-      ytIcon.parentElement.style.display = "block";
-      placeholder.style.display = "none";
+      btn.style.display = "block";
     };
 
   } catch (e) {

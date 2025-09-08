@@ -92,3 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
   checkStreamStatus();
   setInterval(checkStreamStatus, 60000);
 });
+
+const ytImage = new Image();
+ytImage.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+ytImage.onload = () => {
+  img.src = ytImage.src;  // dopiero teraz ustawiamy src w <img>
+  img.classList.add('visible');
+};
+ytImage.onerror = () => {
+  img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  img.classList.add('visible');
+};
+

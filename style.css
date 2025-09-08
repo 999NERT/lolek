@@ -17,7 +17,7 @@ body{
   height:100%;
 }
 
-/* === PRZYCISKI === */
+/* === PRZYCISKI PARTNERSKIE === */
 .buttons-container{
   display:flex;
   flex-wrap:wrap;
@@ -39,8 +39,6 @@ body{
   transition:all .3s ease;
   text-align:center;
 }
-
-/* PANEL OPISU */
 .description-panel{
   position:absolute;
   top:110%;
@@ -67,116 +65,52 @@ body{
   word-wrap:break-word;
 }
 
-/* === KOLORY PRZYCISKÓW === */
+/* KOLORY PRZYCISKÓW */
 .logitech-btn a{background:white;color:black;}
 .logitech-btn a:hover{background:#8e8e8e;}
 .logitech-highlight,.logitech-tech{color:#00FFFF;font-weight:900;}
-
 .pirateswap-btn a{background:#1E1D22;color:white;}
 .pirateswap-btn a:hover{background:#952903;}
 .pirateswap-swap{color:#ff4300;}
-
 .csgoskins-btn a{background:#0D2345;color:white;}
 .csgoskins-btn a:hover{background:#0a6699;}
 .csgoskins-highlight{color:#14A3C7;font-weight:900;}
 .discord-text{color:#5764F2;font-weight:900;}
 .blue-o{color:#4fc3f7;}
-
 .wkdzik-btn a{background:black;color:white;}
 .wkdzik-btn a:hover{background:white;color:black;}
 .wkdzik-highlight{color:#1b1b1b;font-weight:900;}
-
 .betters-btn a{background:#262D3A;color:white;}
 .betters-btn a:hover{background:#68030f;}
 .betters-ters{color:#E50420;}
 .betters-highlight{color:#E50420;font-weight:900;}
 
-/* === MINIATURKA YT I T-MOBILE === */
+/* MINIATURKA YT */
 .latest-video-container{
-  position: relative;
-  width: 100%;
-  text-align: center;
-  margin: 16px 0;
-}
-.video-wrapper{
-  display: inline-block;
-  position: relative;
-  border:3px solid rgba(255,0,0,0.9);
+  position:relative;
+  width:min(80%,900px);
+  margin:16px auto;
+  text-align:center;
   border-radius:12px;
   overflow:hidden;
+  border:3px solid rgba(255,0,0,0.9);
   box-shadow:0 0 18px rgba(255,0,0,0.35);
   background:#000;
-  max-width:720px;
-  width:100%;
 }
-.video-thumb{
-  width:100%;
-  height:auto;
-  display:block;
-  object-fit:cover;
-}
+.video-thumb{width:100%;display:block;object-fit:cover;}
 .play-button{
   position:absolute;
-  top:50%;
-  left:50%;
+  top:50%;left:50%;
   transform:translate(-50%,-50%);
   opacity:0;
   transition:opacity .25s ease, transform .2s ease;
   z-index:60;
 }
-.play-button.visible{
-  opacity:1;
-  transform:translate(-50%,-50%) scale(1);
-}
-.yt-click-image{
-  width:158px;
-  height:auto;
-}
-.video-error{
-  color:#ff6b6b;
-  font-weight:700;
-  text-align:center;
-  padding:10px 8px;
-}
+.play-button.visible{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.yt-click-image{width:158px;height:auto;}
+.video-error{color:#ff6b6b;font-weight:700;text-align:center;padding:10px 8px;}
 
-/* T-MOBILE */
-.tmobile-left-btn{
-  position:absolute;
-  top:50%;
-  left:-180px;
-  transform:translateY(-50%);
-  text-align:center;
-  width:160px;
-}
-.tmobile-left-btn a{
-  background:#5c002f;
-  color:white;
-  padding:14px 28px;
-  border-radius:30px;
-  font-weight:900;
-  font-size:20px;
-  text-decoration:none;
-  display:inline-block;
-  transition:all .3s ease;
-}
-.tmobile-left-btn a:hover{background:#850064;}
-.tmobile-left-btn .tmobile-mobile{color:#e20074;font-weight:900;}
-.tmobile-left-btn .tmobile-highlight{color:#e20074;font-weight:900;}
-.tmobile-left-btn .event-badge{
-  display:inline-block;
-  margin-bottom:6px;
-  background: rgba(255,0,100,0.9);
-  color:white;
-  font-size:0.8rem;
-  font-weight:900;
-  padding:3px 8px;
-  border-radius:6px;
-  border:2px solid white;
-  text-shadow:1px 1px 2px rgba(0,0,0,0.7);
-  z-index:20;
-}
-
-/* === STREAM === */
+/* STREAM */
 .stream-buttons-container{
   display:flex;
   justify-content:center;
@@ -205,7 +139,7 @@ body{
 .live-panel.live .live-text{color:#00ff00;animation:pulseLive 1.5s infinite;}
 @keyframes pulseLive{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6;}}
 
-/* === SOCIAL === */
+/* SOCIAL */
 .additional-buttons-container{
   display:flex;justify-content:center;gap:15px;margin-top:25px;flex-wrap:wrap;
 }
@@ -213,7 +147,7 @@ body{
 .additional-button-image{width:95%;height:95%;object-fit:contain;}
 .additional-button:hover .additional-button-image{transform:scale(1.05);}
 
-/* === FOOTER === */
+/* FOOTER */
 .site-footer{text-align:center;margin-top:30px;padding:15px 10px;}
 .site-footer p{
   font-size:1.1rem;
@@ -224,7 +158,7 @@ body{
   text-shadow:2px 2px 6px rgba(0,0,0,1);
 }
 
-/* === AGE BADGE === */
+/* AGE BADGE */
 .age-badge,.age-badge-betters{
   position:absolute;top:-22px;left:50%;transform:translateX(-50%);
   background:rgba(200,0,0,0.9);color:white;font-size:0.8rem;
@@ -232,3 +166,88 @@ body{
   text-shadow:1px 1px 2px rgba(0,0,0,0.7);
 }
 .age-badge-betters{z-index:20;}
+
+/* --- NOWY PRZYCISK TMOBILE --- */
+.custom-stream-section{
+  position: relative;
+  width:100%;
+  margin:20px 0;
+}
+.tmobile-btn-wrapper{
+  display:inline-block;
+  position:absolute; /* swobodna pozycja */
+  top:0;
+  left:0;
+}
+.tmobile-btn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:120px;
+  height:120px;
+  transition:all .3s ease;
+  cursor:pointer;
+}
+.tmobile-btn .stream-button-image{
+  width:95%;
+  height:95%;
+  object-fit:contain;
+}
+.tmobile-btn:hover .stream-button-image{
+  transform:scale(1.05);
+}
+.tmobile-btn-wrapper .live-panel{
+  width:80px;
+  height:30px;
+  background:rgba(0,0,0,1);
+  border-radius:6px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border:2px solid #ff4444;
+  margin-top:10px;
+}
+.tmobile-btn-wrapper .live-text{
+  font-weight:800;
+  font-size:14px;
+  color:#ff4444;
+}
+
+/* --- MODAL TMOBILE --- */
+.tmobile-modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.tmobile-modal-content{
+  background:#5c002f;
+  color:white;
+  padding:30px;
+  max-width:600px;
+  width:90%;
+  border-radius:12px;
+  position:relative;
+  text-align:center;
+}
+.tmobile-modal-content button{
+  position:absolute;
+  bottom:15px;
+  right:15px;
+  background:#ff4444;
+  color:white;
+  border:none;
+  font-size:18px;
+  font-weight:900;
+  padding:5px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.tmobile-modal-content button:hover{
+  background:#cc0000;
+}

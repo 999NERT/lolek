@@ -1,17 +1,13 @@
-// === YT MINIATURKA ===
+// === YT MINIATURKA Z SPINNEREM ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
 
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
+  const placeholder = document.querySelector(".video-placeholder");
+  const spinner = document.querySelector(".spinner");
   const err = document.getElementById("videoError");
-  const videoContainer = document.querySelector(".latest-video-container");
-
-  // Dodaj spinner
-  const spinner = document.createElement("div");
-  spinner.classList.add("spinner");
-  videoContainer.appendChild(spinner);
 
   try {
     const res = await fetch(proxy);
@@ -26,23 +22,27 @@ async function loadLatestVideo() {
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // Ładuj miniaturkę
+    // Pobieranie miniaturki
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
     testImg.onload = () => {
       img.src = testImg.src;
-      spinner.remove();
-      btn.classList.add("visible");
+      img.hidden = false;
+      btn.hidden = false;
+      placeholder.style.display = "none"; // ukryj placeholder i spinner
     };
+
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      spinner.remove();
-      btn.classList.add("visible");
+      img.hidden = false;
+      btn.hidden = false;
+      placeholder.style.display = "none";
     };
 
   } catch (e) {
     console.error(e);
-    spinner.remove();
+    spinner.style.display = "none";
     err.hidden = false;
   }
 }
@@ -52,18 +52,22 @@ async function checkStreamStatus() {
   const twitch = document.getElementById("twitchLivePanel");
   const kick = document.getElementById("kickLivePanel");
 
+  // Twitch
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
-    if (text.includes("offline")) {
+    if (text.toLowerCase().includes("offline")) {
       twitch.classList.remove("live");
       twitch.querySelector(".live-text").textContent = "OFFLINE";
     } else {
       twitch.classList.add("live");
       twitch.querySelector(".live-text").textContent = "LIVE";
     }
-  } catch (e) { console.log("Twitch API error:", e); }
+  } catch (e) {
+    console.log("Twitch API error:", e);
+  }
 
+  // Kick
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
     if (res.ok) {
@@ -76,7 +80,9 @@ async function checkStreamStatus() {
         kick.querySelector(".live-text").textContent = "OFFLINE";
       }
     }
-  } catch (e) { console.log("Kick API error:", e); }
+  } catch (e) {
+    console.log("Kick API error:", e);
+  }
 }
 
 // === TMOBILE MODAL ===
@@ -84,17 +90,17 @@ const tmobileBtn = document.querySelector('.tmobile-btn');
 const tmobileModal = document.getElementById('tmobileModal');
 const tmobileModalClose = document.getElementById('tmobileModalClose');
 
-tmobileBtn.addEventListener('click', (e)=>{
+tmobileBtn.addEventListener('click', (e) => {
   e.preventDefault();
   tmobileModal.classList.add('show');
 });
 
-tmobileModalClose.addEventListener('click', ()=>{
+tmobileModalClose.addEventListener('click', () => {
   tmobileModal.classList.remove('show');
 });
 
-tmobileModal.addEventListener('click', (e)=>{
-  if(e.target === tmobileModal){
+tmobileModal.addEventListener('click', (e) => {
+  if (e.target === tmobileModal) {
     tmobileModal.classList.remove('show');
   }
 });
@@ -103,5 +109,5 @@ tmobileModal.addEventListener('click', (e)=>{
 document.addEventListener("DOMContentLoaded", () => {
   loadLatestVideo();
   checkStreamStatus();
-  setInterval(checkStreamStatus, 60000);
+  setInterval(checkStreamStatus, 60000); // aktualizacja co minutę
 });

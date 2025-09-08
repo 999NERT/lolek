@@ -8,7 +8,6 @@ async function loadLatestVideo() {
   const err = document.getElementById("videoError");
   const loader = document.querySelector(".yt-loader");
 
-  // Ukryj błąd na start
   if(err) err.style.display = "none";
   if(btn) btn.style.display = "none";
   if(img) img.style.display = "none";
@@ -26,11 +25,8 @@ async function loadLatestVideo() {
     let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
-    if(btn) {
-      btn.href = `https://www.youtube.com/watch?v=${videoId}`;
-    }
-
-    if(img) {
+    if(btn) btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+    if(img){
       img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       img.onload = () => {
         img.style.display = "block";
@@ -56,30 +52,54 @@ async function loadLatestVideo() {
 async function checkStreamStatus() {
   const twitch = document.getElementById("twitchLivePanel");
   const kick = document.getElementById("kickLivePanel");
+  const discord = document.querySelector(".discord-btn .live-text"); // zakładam, że jest tylko jeden Discord
 
+  // Twitch
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
-    if(twitch) {
-      twitch.querySelector(".live-text").textContent = text.toLowerCase().includes("offline") ? "OFFLINE" : "LIVE";
+    if(twitch){
+      const textEl = twitch.querySelector(".live-text");
+      if(text.toLowerCase().includes("offline")){
+        textEl.textContent = "OFFLINE";
+        textEl.classList.remove("live");
+      } else {
+        textEl.textContent = "LIVE";
+        textEl.classList.add("live");
+      }
     }
   } catch (e) { console.log("Błąd Twitch API:", e); }
 
+  // Kick
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
     if(res.ok){
       const data = await res.json();
       if(kick){
-        kick.querySelector(".live-text").textContent = data.livestream?.is_live ? "LIVE" : "OFFLINE";
+        const textEl = kick.querySelector(".live-text");
+        if(data.livestream?.is_live){
+          textEl.textContent = "LIVE";
+          textEl.classList.add("live");
+        } else {
+          textEl.textContent = "OFFLINE";
+          textEl.classList.remove("live");
+        }
       }
     }
   } catch(e){ console.log("Błąd Kick API:", e); }
+
+  // Discord
+  if(discord){
+    discord.textContent = "JOIN";
+    discord.classList.add("join"); // kolor można ustawić w CSS
+  }
 }
 
 // === T-MOBILE MODAL ===
 const tmobileBtn = document.getElementById('tmobileBtn');
 const tmobileModal = document.getElementById('tmobileModal');
 const tmobileModalClose = document.getElementById('tmobileModalClose');
+const eventText = document.querySelector(".live-text-event");
 
 if(tmobileBtn && tmobileModal){
   tmobileBtn.addEventListener('click', () => {
@@ -98,6 +118,18 @@ if(tmobileModal){
     if(e.target === tmobileModal){
       tmobileModal.classList.remove('show');
     }
+  });
+}
+
+// === T-MOBILE + EVENT ZOOM ===
+if(tmobileBtn && eventText){
+  tmobileBtn.addEventListener('mouseenter', () => {
+    tmobileBtn.style.transform = "scale(1.1)";
+    eventText.style.transform = "scale(1.1)";
+  });
+  tmobileBtn.addEventListener('mouseleave', () => {
+    tmobileBtn.style.transform = "scale(1)";
+    eventText.style.transform = "scale(1)";
   });
 }
 

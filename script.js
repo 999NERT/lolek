@@ -1,6 +1,6 @@
 // === YOUTUBE MINIATURKA ===
 async function loadLatestVideo() {
-  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ"; // Twój kanał
+  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ"; 
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
   
   const img = document.getElementById("latestThumbnail");
@@ -21,7 +21,6 @@ async function loadLatestVideo() {
 
     if (!entries.length) throw new Error("Brak filmów");
 
-    // pomiń SHORTS
     let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
@@ -52,7 +51,7 @@ async function loadLatestVideo() {
 async function checkStreamStatus() {
   const twitch = document.getElementById("twitchLivePanel");
   const kick = document.getElementById("kickLivePanel");
-  const discord = document.querySelector(".discord-btn .live-text"); // zakładam, że jest tylko jeden Discord
+  const discord = document.querySelector(".discord-btn .live-text");
 
   // Twitch
   try {
@@ -132,6 +131,30 @@ if(tmobileBtn && eventText){
     eventText.style.transform = "scale(1)";
   });
 }
+
+// === BLOKADA PRAWEGO PRZYCISKU I SKRÓTÓW ===
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  alert("Prawy przycisk myszy został zablokowany!");
+});
+
+document.addEventListener('keydown', function(e) {
+  // Ctrl+U
+  if(e.ctrlKey && e.key.toLowerCase() === 'u'){
+    e.preventDefault();
+    alert("Wyświetlanie źródła strony jest zablokowane!");
+  }
+  // F12
+  if(e.key === "F12"){
+    e.preventDefault();
+    alert("Otwieranie DevTools jest zablokowane!");
+  }
+  // Ctrl+Shift+I
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i'){
+    e.preventDefault();
+    alert("Otwieranie DevTools jest zablokowane!");
+  }
+});
 
 // === INIT ===
 document.addEventListener("DOMContentLoaded", () => {

@@ -1,2 +1,1 @@
-angelkacs.pl. A 213.186.33.5
-angelkacs.pl. MX ...
+angelkacs.pl

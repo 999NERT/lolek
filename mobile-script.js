@@ -6,32 +6,37 @@ buttons.forEach(btn => {
   const description = btn.dataset.description;
   const ageBadge = btn.closest('.button-with-popup').querySelector('.age-badge-mobile');
 
-  btn.addEventListener('click', e => {
-    e.preventDefault();
+btn.addEventListener('click', e => {
+  e.preventDefault();
 
-    if (activeButton === btn && btn.classList.contains('show-description')) {
-      window.open(btn.href, "_blank");
-      return;
-    }
+  const badge = btn.parentElement.querySelector('.age-badge-mobile, .event-badge-mobile');
 
-    if (activeButton && activeButton !== btn) {
-      activeButton.querySelector('.button-text').innerHTML = activeButton.dataset.originalText;
-      activeButton.classList.remove('show-description');
-      const badge = activeButton.closest('.button-with-popup').querySelector('.age-badge-mobile');
-      if(badge) badge.style.display = "block";
-      activeButton = null;
-    }
+  // klik drugi -> otwórz stronę
+  if (activeButton === btn && btn.classList.contains('show-description')) {
+    window.open(url, "_blank");
+    return;
+  }
 
-       // pokazanie opisu
-    if (!btn.classList.contains('show-description')) {
-      btn.dataset.originalText = originalHTML;
-      btn.querySelector('.button-text').innerHTML = `
+  // przywrócenie poprzedniego
+  if (activeButton && activeButton !== btn) {
+    const prevBadge = activeButton.parentElement.querySelector('.age-badge-mobile, .event-badge-mobile');
+    activeButton.querySelector('.button-text').innerHTML = activeButton.dataset.originalText;
+    activeButton.classList.remove('show-description');
+    if (prevBadge) prevBadge.style.display = "block"; // pokaz z powrotem
+    activeButton = null;
+  }
+
+  // pokazanie opisu
+  if (!btn.classList.contains('show-description')) {
+    btn.dataset.originalText = originalHTML;
+    btn.querySelector('.button-text').innerHTML = `
       ${description}
-      <br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>`;
-      btn.classList.add('show-description');
-      activeButton = btn;
-}
-  });
+      <br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>
+    `;
+    btn.classList.add('show-description');
+    if (badge) badge.style.display = "none"; // schowaj badge
+    activeButton = btn;
+  }
 });
 
 // === YT MINIATURKA ===

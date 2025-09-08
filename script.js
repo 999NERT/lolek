@@ -35,7 +35,6 @@ async function checkStreamStatus() {
   const twitch = document.getElementById("twitchLivePanel");
   const kick = document.getElementById("kickLivePanel");
 
-  // Twitch
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
@@ -48,7 +47,6 @@ async function checkStreamStatus() {
     }
   } catch (e) { console.log("Twitch API error:", e); }
 
-  // Kick
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
     if (res.ok) {
@@ -64,29 +62,29 @@ async function checkStreamStatus() {
   } catch (e) { console.log("Kick API error:", e); }
 }
 
-// === START ===
-document.addEventListener("DOMContentLoaded", () => {
-  loadLatestVideo();
-  checkStreamStatus();
-  setInterval(checkStreamStatus, 60000);
-});
-
-// --- TMOBILE MODAL ---
+// === TMOBILE MODAL ===
 const tmobileBtn = document.querySelector('.tmobile-btn');
 const tmobileModal = document.getElementById('tmobileModal');
 const tmobileModalClose = document.getElementById('tmobileModalClose');
 
 tmobileBtn.addEventListener('click', (e)=>{
   e.preventDefault();
-  tmobileModal.style.display = 'flex';
+  tmobileModal.classList.add('show');
 });
 
 tmobileModalClose.addEventListener('click', ()=>{
-  tmobileModal.style.display = 'none';
+  tmobileModal.classList.remove('show');
 });
 
 tmobileModal.addEventListener('click', (e)=>{
   if(e.target === tmobileModal){
-    tmobileModal.style.display = 'none';
+    tmobileModal.classList.remove('show');
   }
+});
+
+// === START ===
+document.addEventListener("DOMContentLoaded", () => {
+  loadLatestVideo();
+  checkStreamStatus();
+  setInterval(checkStreamStatus, 60000);
 });

@@ -209,7 +209,6 @@ html, body {
   border-radius: 12px;
   transition: transform .2s ease;
 }
-}
 .tmobile-btn:hover {
   transform: scale(1.1);
   cursor: pointer;

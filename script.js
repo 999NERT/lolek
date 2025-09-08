@@ -6,8 +6,16 @@ async function loadLatestVideo() {
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
-  const placeholder = document.getElementById("videoPlaceholder");
-  const spinner = document.getElementById("videoSpinner");
+
+  const placeholder = document.createElement("div");
+  placeholder.classList.add("video-placeholder");
+
+  const spinner = document.createElement("div");
+  spinner.classList.add("spinner");
+  placeholder.appendChild(spinner);
+
+  const wrapper = document.getElementById("videoWrapper");
+  wrapper.appendChild(placeholder);
 
   try {
     const res = await fetch(proxy);
@@ -26,20 +34,21 @@ async function loadLatestVideo() {
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     testImg.onload = () => {
       img.src = testImg.src;
-      img.hidden = false;
-      btn.hidden = false;
-      placeholder.style.display = 'none';
+      img.style.display = "block";
+      btn.style.display = "flex";
+      placeholder.remove(); // usuwamy spinner po załadowaniu
     };
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      img.hidden = false;
-      btn.hidden = false;
-      placeholder.style.display = 'none';
+      img.style.display = "block";
+      btn.style.display = "flex";
+      placeholder.remove();
     };
+
   } catch (e) {
     console.error(e);
     err.hidden = false;
-    placeholder.style.display = 'none';
+    err.style.zIndex = 20;
   }
 }
 

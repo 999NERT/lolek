@@ -110,6 +110,7 @@ html, body {
   padding: 3px 6px;
   font-size: 14px;
   border-radius: 6px;
+  z-index: 20; /* zwiększony z-index żeby zawsze była nad przyciskiem */
 }
 
 /* === MINIATURKA YT === */
@@ -218,9 +219,19 @@ html, body {
   height: 91%;
   object-fit: contain;
 }
+
+/* === EVENT === */
 .live-text-event {
   font-weight: 900;
   margin-bottom: 5px;
+  background: #000;          /* tło czarne */
+  border: 2px solid #00FF00; /* zielona obramówka */
+  border-radius: 6px;
+  padding: 4px 10px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* cieniowanie */
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 /* === STREAM BUTTONS === */

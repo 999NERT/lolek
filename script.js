@@ -1,53 +1,51 @@
-// === YOUTUBE MINIATURKA ===
+// === YOUTUBE MINIATURKA POPRAWKA ===
 async function loadLatestVideo() {
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
   const loader = document.querySelector(".yt-loader");
 
-  // pokaż loader
   loader.style.display = "flex";
   img.classList.add("hidden");
   btn.classList.add("hidden");
   err.classList.add("hidden");
 
   try {
-    const res = await fetch("https://www.youtube.com/feeds/videos.xml?channel_id=UCyo2K8w1W39QZ1zQK2XR2mQ");
-    const text = await res.text();
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(text, "text/xml");
-    const entries = xml.getElementsByTagName("entry");
+    // Używamy alternatywnego źródła RSS, które działa z CORS
+    const channelId = "UCyo2K8w1W39QZ1zQK2XR2mQ"; // Twój kanał
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyDUMMY_KEY&channelId=${channelId}&part=snippet&order=date&maxResults=1`);
+    const data = await res.json();
+    if (!data.items || data.items.length === 0) throw new Error("Brak wideo");
 
-    if (!entries.length) throw new Error("Brak wideo");
-
-    const videoEntry = entries[0];
-    const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
-
+    const videoId = data.items[0].id.videoId;
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
+    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     const testImg = new Image();
-    testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    testImg.src = thumbnailUrl;
 
     testImg.onload = () => {
-      img.src = testImg.src;
+      img.src = thumbnailUrl;
       img.classList.remove("hidden");
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
 
     testImg.onerror = () => {
-      img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      const fallback = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      img.src = fallback;
       img.classList.remove("hidden");
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
 
   } catch (e) {
-    console.error(e);
+    console.error("YT Error:", e);
     loader.style.display = "none";
     err.classList.remove("hidden");
   }
 }
+
 
 // === STREAM STATUS ===
 async function checkStreamStatus() {

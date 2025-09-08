@@ -22,13 +22,15 @@ buttons.forEach(btn => {
       activeButton = null;
     }
 
+       // pokazanie opisu
     if (!btn.classList.contains('show-description')) {
       btn.dataset.originalText = originalHTML;
-      btn.querySelector('.button-text').innerHTML = description;
+      btn.querySelector('.button-text').innerHTML = `
+      ${description}
+      <br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>`;
       btn.classList.add('show-description');
-      if(ageBadge) ageBadge.style.display = "none";
       activeButton = btn;
-    }
+}
   });
 });
 

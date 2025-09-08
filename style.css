@@ -91,26 +91,23 @@ body{
 .betters-ters{color:#E50420;}
 .betters-highlight{color:#E50420;font-weight:900;}
 
-/* === T-MOBILE OBOK MINIATURKI === */
+/* === MINIATURKA YT I T-MOBILE === */
 .latest-video-container{
-  display: flex;
-  align-items: flex-start; /* wyrównanie góra do przycisku */
-  justify-content: center;
-  gap: 20px;
-  width: min(90%, 900px);
-  margin: 16px auto;
-}
-.video-wrapper{
   position: relative;
-  flex-shrink: 0;
-  max-width: 720px;
   width: 100%;
   text-align: center;
+  margin: 16px 0;
+}
+.video-wrapper{
+  display: inline-block;
+  position: relative;
   border:3px solid rgba(255,0,0,0.9);
   border-radius:12px;
   overflow:hidden;
   box-shadow:0 0 18px rgba(255,0,0,0.35);
   background:#000;
+  max-width:720px;
+  width:100%;
 }
 .video-thumb{
   width:100%;
@@ -144,8 +141,12 @@ body{
 
 /* T-MOBILE */
 .tmobile-left-btn{
-  text-align: center;
-  flex-shrink: 0;
+  position:absolute;
+  top:50%;
+  left:-180px;
+  transform:translateY(-50%);
+  text-align:center;
+  width:160px;
 }
 .tmobile-left-btn a{
   background:#5c002f;
@@ -162,8 +163,8 @@ body{
 .tmobile-left-btn .tmobile-mobile{color:#e20074;font-weight:900;}
 .tmobile-left-btn .tmobile-highlight{color:#e20074;font-weight:900;}
 .tmobile-left-btn .event-badge{
-  display: inline-block;
-  margin-bottom: 6px;
+  display:inline-block;
+  margin-bottom:6px;
   background: rgba(255,0,100,0.9);
   color:white;
   font-size:0.8rem;

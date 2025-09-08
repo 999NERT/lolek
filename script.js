@@ -27,11 +27,13 @@ async function loadLatestVideo() {
     testImg.onload = () => {
       img.src = testImg.src;
       img.style.display = "block";
+      btn.style.display = "block"; // pokaż YT click po załadowaniu miniaturki
       loading.style.display = "none";
     };
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.style.display = "block";
+      btn.style.display = "block"; // pokaż YT click po załadowaniu miniaturki
       loading.style.display = "none";
     };
 

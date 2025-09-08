@@ -12,6 +12,7 @@ async function loadLatestVideo() {
     const { contents } = await res.json();
     const xml = new DOMParser().parseFromString(contents, "application/xml");
     const entries = xml.getElementsByTagName("entry");
+
     if (!entries.length) throw new Error("Brak filmów");
 
     let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
@@ -19,7 +20,9 @@ async function loadLatestVideo() {
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
     img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
     img.onerror = () => img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
   } catch (e) {
     console.error(e);
     err.hidden = false;
@@ -63,30 +66,29 @@ const tmobileBtn = document.querySelector('.tmobile-btn');
 const tmobileModal = document.getElementById('tmobileModal');
 const tmobileModalClose = document.getElementById('tmobileModalClose');
 
-tmobileBtn.addEventListener('click', e => {
+tmobileBtn.addEventListener('click', (e)=>{
   e.preventDefault();
   tmobileModal.classList.add('show');
 });
 
-tmobileModalClose.addEventListener('click', () => tmobileModal.classList.remove('show'));
-tmobileModal.addEventListener('click', e => { if (e.target === tmobileModal) tmobileModal.classList.remove('show'); });
+tmobileModalClose.addEventListener('click', ()=>{
+  tmobileModal.classList.remove('show');
+});
 
-// === START ===
+tmobileModal.addEventListener('click', (e)=>{
+  if(e.target === tmobileModal){
+    tmobileModal.classList.remove('show');
+  }
+});
+
+// === ANIMACJA FADE-IN MINIATURKI + BORDER + TŁO ===
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById('videoWrapper').classList.add('visible'); // pojawia się natychmiast
+  setTimeout(() => {
+    document.querySelector('.latest-video-container').classList.add('visible');
+    document.getElementById('watchButton').classList.add('visible');
+  }, 2000);
+
   loadLatestVideo();
   checkStreamStatus();
   setInterval(checkStreamStatus, 60000);
-});
-
-// === BLOKADA KLAWISZY I PRAWEGO PRZYCISKU (bez alertów) ===
-document.addEventListener('keydown', function(e){
-  if (e.key === 'F12' || 
-      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') || 
-      (e.ctrlKey && e.key.toLowerCase() === 'u')) {
-    e.preventDefault();
-  }
-});
-document.addEventListener('contextmenu', function(e){
-  e.preventDefault();
 });

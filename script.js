@@ -93,15 +93,3 @@ tmobileModal.addEventListener('click', (e)=>{
     tmobileModal.classList.remove('show');
   }
 });
-
-// === ANIMACJA FADE-IN MINIATURKI + BORDER + TŁO ===
-document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    document.querySelector('.latest-video-container').classList.add('visible');
-    document.getElementById('watchButton').classList.add('visible');
-  }, 2000);
-
-  loadLatestVideo();
-  checkStreamStatus();
-  setInterval(checkStreamStatus, 60000);
-});

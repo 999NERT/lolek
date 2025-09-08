@@ -108,7 +108,6 @@ body{
   height:100%;
   background:#000;
   border-radius:12px;
-  border:8px solid red;
   display:flex;
   justify-content:center;
   align-items:center;

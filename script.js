@@ -5,22 +5,26 @@ async function loadLatestVideo() {
   const err = document.getElementById("videoError");
   const loader = document.querySelector(".yt-loader");
 
+  // pokaż loader
+  loader.style.display = "flex";
+  img.classList.add("hidden");
+  btn.classList.add("hidden");
+  err.classList.add("hidden");
+
   try {
     const res = await fetch("https://www.youtube.com/feeds/videos.xml?channel_id=UCyo2K8w1W39QZ1zQK2XR2mQ");
     const text = await res.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
-
     const entries = xml.getElementsByTagName("entry");
-    if (!entries.length) throw new Error("Brak wideo w kanale");
+
+    if (!entries.length) throw new Error("Brak wideo");
 
     const videoEntry = entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-    btn.href = videoUrl;
+    btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // Tworzymy nowy obrazek do preload
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
@@ -37,6 +41,7 @@ async function loadLatestVideo() {
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
+
   } catch (e) {
     console.error(e);
     loader.style.display = "none";
@@ -52,13 +57,14 @@ async function checkStreamStatus() {
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
-    twitch.querySelector(".live-text").textContent = text.toLowerCase().includes("offline") ? "OFFLINE" : "LIVE";
-    if(text.toLowerCase().includes("offline")){
-      twitch.classList.remove("live");
+    if (text.includes("offline")) {
+      twitch.querySelector(".live-text").textContent = "OFFLINE";
     } else {
-      twitch.classList.add("live");
+      twitch.querySelector(".live-text").textContent = "LIVE";
     }
-  } catch (e) { console.log("Twitch API error:", e); }
+  } catch (e) {
+    console.log("Twitch API error:", e);
+  }
 
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
@@ -66,13 +72,13 @@ async function checkStreamStatus() {
       const data = await res.json();
       if (data.livestream?.is_live) {
         kick.querySelector(".live-text").textContent = "LIVE";
-        kick.classList.add("live");
       } else {
         kick.querySelector(".live-text").textContent = "OFFLINE";
-        kick.classList.remove("live");
       }
     }
-  } catch (e) { console.log("Kick API error:", e); }
+  } catch (e) {
+    console.log("Kick API error:", e);
+  }
 }
 
 // === T-MOBILE MODAL ===
@@ -95,14 +101,14 @@ tmobileModal.addEventListener('click', (e) => {
   }
 });
 
-// === DRAG & DROP T-MOBILE + EVENT ===
+// === DRAG & RESIZE T-MOBILE + EVENT ===
 let isDragging = false;
-let offsetX = 0, offsetY = 0;
+let offsetX, offsetY;
 
 tmobileWrapper.addEventListener('mousedown', (e) => {
   isDragging = true;
-  offsetX = e.clientX - tmobileWrapper.getBoundingClientRect().left;
-  offsetY = e.clientY - tmobileWrapper.getBoundingClientRect().top;
+  offsetX = e.clientX - tmobileWrapper.offsetLeft;
+  offsetY = e.clientY - tmobileWrapper.offsetTop;
   tmobileWrapper.style.cursor = 'grabbing';
 });
 
@@ -110,7 +116,6 @@ document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   tmobileWrapper.style.left = (e.clientX - offsetX) + 'px';
   tmobileWrapper.style.top = (e.clientY - offsetY) + 'px';
-  tmobileWrapper.style.bottom = 'auto';
 });
 
 document.addEventListener('mouseup', () => {
@@ -118,9 +123,17 @@ document.addEventListener('mouseup', () => {
   tmobileWrapper.style.cursor = 'grab';
 });
 
+// Powiększanie ikony T-MOBILE
+tmobileBtn.addEventListener('dblclick', () => {
+  const currentWidth = tmobileBtn.offsetWidth;
+  const currentHeight = tmobileBtn.offsetHeight;
+  tmobileBtn.style.width = currentWidth * 1.1 + 'px';
+  tmobileBtn.style.height = currentHeight * 1.1 + 'px';
+});
+
 // === INIT ===
 document.addEventListener("DOMContentLoaded", () => {
   loadLatestVideo();
   checkStreamStatus();
-  setInterval(checkStreamStatus, 60000); // odśwież status co 60s
+  setInterval(checkStreamStatus, 60000);
 });

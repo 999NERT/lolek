@@ -1,51 +1,43 @@
-// === YOUTUBE MINIATURKA POPRAWKA ===
+// === YOUTUBE MINIATURKA ===
 async function loadLatestVideo() {
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
   const loader = document.querySelector(".yt-loader");
 
-  loader.style.display = "flex";
-  img.classList.add("hidden");
-  btn.classList.add("hidden");
-  err.classList.add("hidden");
-
   try {
-    // Używamy alternatywnego źródła RSS, które działa z CORS
-    const channelId = "UCyo2K8w1W39QZ1zQK2XR2mQ"; // Twój kanał
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyDUMMY_KEY&channelId=${channelId}&part=snippet&order=date&maxResults=1`);
-    const data = await res.json();
-    if (!data.items || data.items.length === 0) throw new Error("Brak wideo");
+    const res = await fetch("https://www.youtube.com/feeds/videos.xml?channel_id=UCyo2K8w1W39QZ1zQK2XR2mQ");
+    const text = await res.text();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "text/xml");
+    const entries = xml.getElementsByTagName("entry");
+    const videoEntry = entries[0];
+    const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
-    const videoId = data.items[0].id.videoId;
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     const testImg = new Image();
-    testImg.src = thumbnailUrl;
+    testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
     testImg.onload = () => {
-      img.src = thumbnailUrl;
+      img.src = testImg.src;
       img.classList.remove("hidden");
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
 
     testImg.onerror = () => {
-      const fallback = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      img.src = fallback;
+      img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.classList.remove("hidden");
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
-
   } catch (e) {
-    console.error("YT Error:", e);
+    console.error(e);
     loader.style.display = "none";
     err.classList.remove("hidden");
   }
 }
-
 
 // === STREAM STATUS ===
 async function checkStreamStatus() {
@@ -57,8 +49,10 @@ async function checkStreamStatus() {
     const text = await res.text();
     if (text.includes("offline")) {
       twitch.querySelector(".live-text").textContent = "OFFLINE";
+      twitch.classList.remove("live");
     } else {
       twitch.querySelector(".live-text").textContent = "LIVE";
+      twitch.classList.add("live");
     }
   } catch (e) {
     console.log("Twitch API error:", e);
@@ -70,8 +64,10 @@ async function checkStreamStatus() {
       const data = await res.json();
       if (data.livestream?.is_live) {
         kick.querySelector(".live-text").textContent = "LIVE";
+        kick.classList.add("live");
       } else {
         kick.querySelector(".live-text").textContent = "OFFLINE";
+        kick.classList.remove("live");
       }
     }
   } catch (e) {
@@ -99,7 +95,7 @@ tmobileModal.addEventListener('click', (e) => {
   }
 });
 
-// === DRAG & RESIZE T-MOBILE + EVENT ===
+// === DRAG & DROP T-MOBILE + EVENT ===
 let isDragging = false;
 let offsetX, offsetY;
 
@@ -119,14 +115,6 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
   isDragging = false;
   tmobileWrapper.style.cursor = 'grab';
-});
-
-// Powiększanie ikony T-MOBILE
-tmobileBtn.addEventListener('dblclick', () => {
-  const currentWidth = tmobileBtn.offsetWidth;
-  const currentHeight = tmobileBtn.offsetHeight;
-  tmobileBtn.style.width = currentWidth * 1.1 + 'px';
-  tmobileBtn.style.height = currentHeight * 1.1 + 'px';
 });
 
 // === INIT ===

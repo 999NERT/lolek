@@ -38,19 +38,18 @@
   </section>
 
   <!-- NAJNOWSZY FILM YT -->
-  <section class="latest-video-container">
-    <div class="video-wrapper">
-      <!-- Placeholder -->
-      <div class="video-placeholder">
-        <div class="spinner"></div>
-      </div>
-      <img id="latestThumbnail" class="video-thumb" alt="" hidden>
-      <a id="watchButton" href="#" target="_blank" class="play-button" hidden>
-        <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image">
-      </a>
-      <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+<section class="latest-video-container">
+  <div class="video-wrapper" id="videoWrapper">
+    <div class="video-placeholder" id="videoPlaceholder">
+      <div class="spinner" id="videoSpinner"></div>
     </div>
-  </section>
+    <img id="latestThumbnail" alt="" class="video-thumb" />
+    <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
+      <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+    </a>
+    <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+  </div>
+</section>
 
   <!-- STREAM -->
   <section class="stream-buttons-container">

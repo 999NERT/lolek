@@ -91,63 +91,20 @@ body{
 .betters-ters{color:#E50420;}
 .betters-highlight{color:#E50420;font-weight:900;}
 
-/* === T-MOBILE === */
-.tmobile-left-btn{
-  position:absolute;
-  top:50%;
-  left:-160px;
-  transform:translateY(-50%);
-  z-index:50;
-  text-align:center;
-}
-.tmobile-left-btn a{
-  background:#5c002f;
-  color:white;
-  padding:14px 28px;
-  border-radius:30px;
-  font-weight:900;
-  font-size:20px;
-  text-decoration:none;
-  display:inline-block;
-  transition:all .3s ease;
-}
-.tmobile-left-btn a:hover{background:#850064;}
-.tmobile-left-btn .tmobile-mobile{color:#e20074;font-weight:900;}
-.tmobile-left-btn .tmobile-highlight{color:#e20074;font-weight:900;}
-.tmobile-left-btn .event-badge{
-  position:absolute;
-  top:-22px;
-  left:50%;
-  transform:translateX(-50%);
-  background: rgba(255,0,100,0.9);
-  color:white;
-  font-size:0.8rem;
-  font-weight:900;
-  padding:3px 8px;
-  border-radius:6px;
-  border:2px solid white;
-  text-shadow:1px 1px 2px rgba(0,0,0,0.7);
-  z-index:20;
-}
-
-/* === YT MINIATURKA === */
+/* === T-MOBILE OBOK MINIATURKI === */
 .latest-video-container{
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px; /* odległość między przyciskiem a miniaturką */
+  gap: 20px;
   width: min(90%, 900px);
   margin: 16px auto;
   position: relative;
 }
-
-/* Kontener miniaturki, aby play button działał absolutnie */
 .video-wrapper{
   position: relative;
   flex-shrink: 0;
 }
-
-/* Przycisk obok miniaturki */
 .tmobile-left-btn{
   text-align: center;
   flex-shrink: 0;
@@ -167,7 +124,6 @@ body{
 .tmobile-left-btn .tmobile-mobile{color:#e20074;font-weight:900;}
 .tmobile-left-btn .tmobile-highlight{color:#e20074;font-weight:900;}
 .tmobile-left-btn .event-badge{
-  position: relative; /* teraz w naturalnym flow */
   display: inline-block;
   margin-bottom: 6px;
   background: rgba(255,0,100,0.9);
@@ -181,6 +137,7 @@ body{
   z-index:20;
 }
 
+/* MINIATURKA YT */
 .video-thumb{width:100%;display:block;object-fit:cover;}
 .play-button{
   position:absolute;

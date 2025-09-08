@@ -1,69 +1,48 @@
-// mobile-script.js (POPRAWIONY — obsługa 1x = opis, 2x = przejście, działa na mobile)
 const buttons = document.querySelectorAll('.mobile-button');
 let activeButton = null;
 
-const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
 buttons.forEach(btn => {
   const textSpan = btn.querySelector('.button-text');
-  const originalHTML = textSpan ? textSpan.innerHTML : '';
-  const description = btn.dataset.description || '';
-  const url = btn.getAttribute('href') || '#';
-  const wrapper = btn.closest('.button-with-popup');
-  const badge = wrapper ? wrapper.querySelector('.age-badge-mobile') : null;
+  const originalHTML = textSpan.innerHTML;
+  const description = btn.dataset.description;
+  const url = btn.getAttribute('href'); // <-- MUSI być pobrane tutaj!
+  const badge = btn.closest('.button-with-popup').querySelector('.age-badge-mobile, .event-badge-mobile');
 
-  function showDescription() {
-    btn.dataset.originalText = originalHTML;
-    textSpan.innerHTML = `${description}<br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>`;
-    btn.classList.add('show-description');
-    if (badge) badge.style.display = 'none';
-    activeButton = btn;
-  }
-
-  function hideDescriptionFor(someBtn) {
-    const txt = someBtn.dataset.originalText || originalHTML;
-    const span = someBtn.querySelector('.button-text');
-    if (span) span.innerHTML = txt;
-    someBtn.classList.remove('show-description');
-    const b = someBtn.closest('.button-with-popup')?.querySelector('.age-badge-mobile');
-    if (b) b.style.display = 'block';
-  }
-
-  // pointerup lepszy dla dotyku (działa też na desktop)
-  btn.addEventListener('pointerup', (e) => {
-    // nie blokujemy przytrzymania/drag — tylko zwykły tap
+  btn.addEventListener('click', e => {
     e.preventDefault();
 
-    // Jeśli to ten sam przycisk i już pokazuje opis -> drugi klik = przejście
+    // Drugi klik -> przejście
     if (activeButton === btn && btn.classList.contains('show-description')) {
-      if (url && url !== '#') {
-        if (isMobile) {
-          // na mobile zmieniamy lokalizację (nie popup)
-          window.location.href = url;
-        } else {
-          // desktop: otwieramy nową kartę
-          window.open(url, '_blank');
-        }
-      }
+      window.location.href = url; // działa na mobile
       return;
     }
 
-    // Jeśli inny był aktywny -> ukryj go i przywróć jego badge
+    // Inny przycisk był aktywny -> przywróć
     if (activeButton && activeButton !== btn) {
-      hideDescriptionFor(activeButton);
+      const prevSpan = activeButton.querySelector('.button-text');
+      prevSpan.innerHTML = activeButton.dataset.originalText;
+      activeButton.classList.remove('show-description');
+
+      const prevBadge = activeButton.closest('.button-with-popup').querySelector('.age-badge-mobile, .event-badge-mobile');
+      if (prevBadge) prevBadge.style.display = 'block';
+
       activeButton = null;
     }
 
-    // Jeśli przycisk nie pokazuje opisu -> pokaż opis (i ukryj badge)
+    // Pierwszy klik -> opis
     if (!btn.classList.contains('show-description')) {
-      showDescription();
-    } else {
-      // Jeśli z jakiegoś powodu już pokazuje opis (ale nie był active) -> ukryj
-      hideDescriptionFor(btn);
-      if (activeButton === btn) activeButton = null;
+      btn.dataset.originalText = originalHTML;
+      textSpan.innerHTML = `
+        ${description}
+        <br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>
+      `;
+      btn.classList.add('show-description');
+      if (badge) badge.style.display = 'none';
+      activeButton = btn;
     }
   });
-}); // koniec forEach
+});
+
 
 // === YT MINIATURKA ===
 async function loadLatestVideo() {

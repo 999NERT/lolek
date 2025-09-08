@@ -135,7 +135,6 @@ if(tmobileBtn && eventText){
 // === BLOKADA PRAWEGO PRZYCISKU I SKRÓTÓW ===
 document.addEventListener('contextmenu', function(e) {
   e.preventDefault();
-  alert("Prawy przycisk myszy został zablokowany!");
 });
 
 document.addEventListener('keydown', function(e) {

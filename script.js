@@ -12,11 +12,15 @@ async function loadLatestVideo() {
     const xml = parser.parseFromString(text, "text/xml");
 
     const entries = xml.getElementsByTagName("entry");
+    if (!entries.length) throw new Error("Brak wideo w kanale");
+
     const videoEntry = entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-    btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+    btn.href = videoUrl;
 
+    // Tworzymy nowy obrazek do preload
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
@@ -48,14 +52,13 @@ async function checkStreamStatus() {
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
-    if (text.includes("offline")) {
-      twitch.querySelector(".live-text").textContent = "OFFLINE";
+    twitch.querySelector(".live-text").textContent = text.toLowerCase().includes("offline") ? "OFFLINE" : "LIVE";
+    if(text.toLowerCase().includes("offline")){
+      twitch.classList.remove("live");
     } else {
-      twitch.querySelector(".live-text").textContent = "LIVE";
+      twitch.classList.add("live");
     }
-  } catch (e) {
-    console.log("Twitch API error:", e);
-  }
+  } catch (e) { console.log("Twitch API error:", e); }
 
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
@@ -63,13 +66,13 @@ async function checkStreamStatus() {
       const data = await res.json();
       if (data.livestream?.is_live) {
         kick.querySelector(".live-text").textContent = "LIVE";
+        kick.classList.add("live");
       } else {
         kick.querySelector(".live-text").textContent = "OFFLINE";
+        kick.classList.remove("live");
       }
     }
-  } catch (e) {
-    console.log("Kick API error:", e);
-  }
+  } catch (e) { console.log("Kick API error:", e); }
 }
 
 // === T-MOBILE MODAL ===
@@ -94,12 +97,12 @@ tmobileModal.addEventListener('click', (e) => {
 
 // === DRAG & DROP T-MOBILE + EVENT ===
 let isDragging = false;
-let offsetX, offsetY;
+let offsetX = 0, offsetY = 0;
 
 tmobileWrapper.addEventListener('mousedown', (e) => {
   isDragging = true;
-  offsetX = e.clientX - tmobileWrapper.offsetLeft;
-  offsetY = e.clientY - tmobileWrapper.offsetTop;
+  offsetX = e.clientX - tmobileWrapper.getBoundingClientRect().left;
+  offsetY = e.clientY - tmobileWrapper.getBoundingClientRect().top;
   tmobileWrapper.style.cursor = 'grabbing';
 });
 
@@ -107,6 +110,7 @@ document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   tmobileWrapper.style.left = (e.clientX - offsetX) + 'px';
   tmobileWrapper.style.top = (e.clientY - offsetY) + 'px';
+  tmobileWrapper.style.bottom = 'auto';
 });
 
 document.addEventListener('mouseup', () => {
@@ -118,5 +122,5 @@ document.addEventListener('mouseup', () => {
 document.addEventListener("DOMContentLoaded", () => {
   loadLatestVideo();
   checkStreamStatus();
-  setInterval(checkStreamStatus, 60000);
+  setInterval(checkStreamStatus, 60000); // odśwież status co 60s
 });

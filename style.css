@@ -277,10 +277,19 @@ html, body {
   align-items: center;
   border: 2px solid #ff4444;
 }
+
+/* === LIVE / OFFLINE / JOIN === */
 .live-text {
   font-weight: 800;
   font-size: 14px;
-  color: #ff4444;
+  color: #ff4444; /* domyślny OFFLINE */
+  transition: color 0.2s ease;
+}
+.live-text.live {
+  color: #00FF00; /* kolor LIVE */
+}
+.live-text.join {
+  color: #1DA1F2; /* kolor JOIN */
 }
 
 /* === SOCIAL BUTTONS === */

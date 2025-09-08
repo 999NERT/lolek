@@ -1,4 +1,4 @@
-// === YT MINIATURKA Z SPINNEREM ===
+// === YT MINIATURKA ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
@@ -6,16 +6,8 @@ async function loadLatestVideo() {
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
-
-  const placeholder = document.createElement("div");
-  placeholder.classList.add("video-placeholder");
-
-  const spinner = document.createElement("div");
-  spinner.classList.add("spinner");
-  placeholder.appendChild(spinner);
-
-  const wrapper = document.getElementById("videoWrapper");
-  wrapper.appendChild(placeholder);
+  const spinner = document.getElementById("ytSpinner");
+  const placeholder = document.querySelector(".video-placeholder");
 
   try {
     const res = await fetch(proxy);
@@ -35,20 +27,20 @@ async function loadLatestVideo() {
     testImg.onload = () => {
       img.src = testImg.src;
       img.style.display = "block";
-      btn.style.display = "flex";
-      placeholder.remove(); // usuwamy spinner po załadowaniu
+      btn.style.display = "block";
+      placeholder.style.display = "none";
     };
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.style.display = "block";
-      btn.style.display = "flex";
-      placeholder.remove();
+      btn.style.display = "block";
+      placeholder.style.display = "none";
     };
 
   } catch (e) {
     console.error(e);
     err.hidden = false;
-    err.style.zIndex = 20;
+    placeholder.style.display = "none";
   }
 }
 
@@ -103,6 +95,26 @@ tmobileModal.addEventListener('click', (e)=>{
     tmobileModal.classList.remove('show');
   }
 });
+
+// === DRAG T-MOBILE + EVENT ===
+const tmobileWrapper = document.getElementById("tmobileWrapper");
+let isDragging = false;
+let offset = {x:0, y:0};
+
+tmobileWrapper.addEventListener("mousedown", (e)=>{
+  isDragging = true;
+  offset.x = e.clientX - tmobileWrapper.getBoundingClientRect().left;
+  offset.y = e.clientY - tmobileWrapper.getBoundingClientRect().top;
+});
+
+document.addEventListener("mousemove", (e)=>{
+  if(isDragging){
+    tmobileWrapper.style.left = `${e.clientX - offset.x}px`;
+    tmobileWrapper.style.top = `${e.clientY - offset.y}px`;
+  }
+});
+
+document.addEventListener("mouseup", ()=>{isDragging=false;});
 
 // === INIT ===
 document.addEventListener("DOMContentLoaded", () => {

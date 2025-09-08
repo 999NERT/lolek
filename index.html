@@ -40,12 +40,21 @@
   <!-- NAJNOWSZY FILM YT -->
   <section class="latest-video-container">
     <div class="video-wrapper" id="videoWrapper">
-      <div id="videoLoading" class="video-loading">ŁADOWANIE...</div>
-      <img id="latestThumbnail" alt="Miniaturka YT" class="video-thumb" hidden />
+      <div class="video-placeholder"></div>
+      <img id="latestThumbnail" alt="" class="video-thumb" />
       <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
         <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
       </a>
+
       <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+
+      <!-- T-MOBILE -->
+      <div class="tmobile-btn-wrapper">
+        <div class="tmobile-event-text">EVENT</div>
+        <a href="#" class="tmobile-btn">
+          <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
+        </a>
+      </div>
     </div>
   </section>
 
@@ -96,14 +105,6 @@
     <p>©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
   </footer>
 
-</div>
-
-<!-- T-MOBILE BUTTON W PRAWYM DOLNYM ROGU -->
-<div class="tmobile-btn-wrapper">
-  <div class="live-text-event">EVENT</div>
-  <a href="#" class="tmobile-btn">
-    <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
-  </a>
 </div>
 
 <script src="script.js"></script>

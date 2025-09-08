@@ -78,8 +78,8 @@ body{
 .discord-text{color:#5764F2;font-weight:900;}
 .blue-o{color:#4fc3f7;}
 .wkdzik-btn a{background:black;color:white;}
-.wkdzik-btn a:hover{background:white;color:black;}
-.wkdzik-highlight{color:#1b1b1b;font-weight:900;}
+.wkdzik-btn a:hover{background:white;color:#1b1b1b;}
+.wkdzik-highlight{color:#de74ff;font-weight:900;}
 .betters-btn a{background:#262D3A;color:white;}
 .betters-btn a:hover{background:#68030f;}
 .betters-ters{color:#E50420;}

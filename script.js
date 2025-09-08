@@ -70,3 +70,23 @@ document.addEventListener("DOMContentLoaded", () => {
   checkStreamStatus();
   setInterval(checkStreamStatus, 60000);
 });
+
+// --- TMOBILE MODAL ---
+const tmobileBtn = document.querySelector('.tmobile-btn');
+const tmobileModal = document.getElementById('tmobileModal');
+const tmobileModalClose = document.getElementById('tmobileModalClose');
+
+tmobileBtn.addEventListener('click', (e)=>{
+  e.preventDefault();
+  tmobileModal.style.display = 'flex';
+});
+
+tmobileModalClose.addEventListener('click', ()=>{
+  tmobileModal.style.display = 'none';
+});
+
+tmobileModal.addEventListener('click', (e)=>{
+  if(e.target === tmobileModal){
+    tmobileModal.style.display = 'none';
+  }
+});

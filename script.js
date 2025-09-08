@@ -3,7 +3,9 @@ async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
 
-  const img = document.getElementById("latestThumbnail");
+  const placeholder = document.getElementById("ytPlaceholder");
+  const img = document.createElement("img");
+  img.className = "video-thumb";
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
 
@@ -20,20 +22,21 @@ async function loadLatestVideo() {
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    // testowanie maxres
+    // Load thumbnail
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     testImg.onload = () => {
       img.src = testImg.src;
       img.style.display = "block";
+      placeholder.appendChild(img);
       btn.style.display = "block";
     };
     testImg.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       img.style.display = "block";
+      placeholder.appendChild(img);
       btn.style.display = "block";
     };
-
   } catch (e) {
     console.error(e);
     err.hidden = false;
@@ -82,14 +85,9 @@ tmobileBtn.addEventListener('click', (e)=>{
   tmobileModal.classList.add('show');
 });
 
-tmobileModalClose.addEventListener('click', ()=>{
-  tmobileModal.classList.remove('show');
-});
-
+tmobileModalClose.addEventListener('click', ()=>{ tmobileModal.classList.remove('show'); });
 tmobileModal.addEventListener('click', (e)=>{
-  if(e.target === tmobileModal){
-    tmobileModal.classList.remove('show');
-  }
+  if(e.target === tmobileModal) tmobileModal.classList.remove('show');
 });
 
 // === INIT ===

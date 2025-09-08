@@ -10,8 +10,7 @@ async function loadLatestVideo() {
     const text = await res.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
-    const entries = xml.getElementsByTagName("entry");
-    const videoEntry = entries[0];
+    const videoEntry = xml.getElementsByTagName("entry")[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
     btn.href = `https://www.youtube.com/watch?v=${videoId}`;
@@ -32,12 +31,17 @@ async function loadLatestVideo() {
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
+
   } catch (e) {
     console.error(e);
     loader.style.display = "none";
     err.classList.remove("hidden");
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadLatestVideo();
+});
 
 // === STREAM STATUS ===
 async function checkStreamStatus() {

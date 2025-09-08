@@ -39,10 +39,14 @@
 
   <!-- NAJNOWSZY FILM YT -->
   <section class="latest-video-container">
-    <div class="video-wrapper" id="videoWrapper">
-      <img id="latestThumbnail" alt="" class="video-thumb" />
-      <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
-        <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+    <div class="video-wrapper">
+      <!-- Placeholder -->
+      <div class="video-placeholder">
+        <div class="spinner"></div>
+      </div>
+      <img id="latestThumbnail" class="video-thumb" alt="" hidden>
+      <a id="watchButton" href="#" target="_blank" class="play-button" hidden>
+        <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image">
       </a>
       <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
     </div>
@@ -56,14 +60,12 @@
       </a>
       <div class="live-panel" id="twitchLivePanel"><span class="live-text">OFFLINE</span></div>
     </div>
-
     <div class="stream-button-wrapper">
       <a href="#" class="stream-button discord-btn" target="_blank">
         <img src="1discord.png" alt="Discord" class="stream-button-image" />
       </a>
       <div class="live-panel"><span class="live-text">JOIN</span></div>
     </div>
-
     <div class="stream-button-wrapper">
       <a href="https://kick.com/angelkacs" class="stream-button kick-btn" target="_blank">
         <img src="1KOPNIAK.png" alt="Kick" class="stream-button-image" />
@@ -72,20 +74,20 @@
     </div>
   </section>
 
+  <!-- T-MOBILE -->
+  <div class="tmobile-btn-wrapper">
+    <div class="live-text-event">EVENT</div>
+    <a href="#" class="tmobile-btn">
+      <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image">
+    </a>
+  </div>
+
   <!-- MODAL TMOBILE -->
   <div id="tmobileModal" class="tmobile-modal">
     <div class="tmobile-modal-content">
       <p>Ruszyły zapisy do T-Esport Championship 2025 od T-Mobile! Prize pool: <strong>100 000€</strong>! Wystarczy mieć 16 lat, by wziąć udział. Zapisy trwają do 18 lub 20 września (zależnie od gry). Wielki LAN finał odbędzie się 15-16 listopada w Budapeszcie!</p>
       <a href="https://tesports.gg/pl" target="_blank" class="tmobile-register-btn">REJESTRACJA</a>
       <button id="tmobileModalClose">X</button>
-    </div>
-  </div>
-
-  <!-- T-MOBILE FIXED -->
-  <div class="tmobile-btn-wrapper">
-    <div class="live-text-event">EVENT</div>
-    <div class="tmobile-btn">
-      <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
     </div>
   </div>
 
@@ -100,8 +102,8 @@
 
   <!-- STOPKA -->
   <footer class="site-footer">
-    <p>©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
-    <p class="biznes">Współpraca/biznes: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
+    <p class="footer-left">Współpraca/biznes: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
+    <p class="footer-right">©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
   </footer>
 
 </div>

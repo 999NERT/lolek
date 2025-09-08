@@ -1,11 +1,15 @@
 // === YOUTUBE MINIATURKA ===
 async function loadLatestVideo() {
-  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ"; // Twój channel ID
+  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ"; // Twój kanał
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
-  const loader = document.querySelector(".yt-loader");
+  const loader = document.querySelector(".spinner");
+
+  // Ukryj error na starcie
+  err.style.display = "none";
+  btn.style.display = "none";
 
   try {
     const res = await fetch(proxy);
@@ -14,32 +18,29 @@ async function loadLatestVideo() {
     const entries = xml.getElementsByTagName("entry");
     if (!entries.length) throw new Error("Brak filmów");
 
-    // Pomijamy shorty
     let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
+    btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
-    if (btn) btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+    img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-    const testImg = new Image();
-    testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-
-    testImg.onload = () => {
-      img.src = testImg.src;
-      img.classList.remove("hidden");
-      btn.classList.remove("hidden");
+    img.onload = () => {
+      img.style.display = "block";
+      btn.style.display = "block";
       loader.style.display = "none";
+      err.style.display = "none";
     };
 
-    testImg.onerror = () => {
+    img.onerror = () => {
       img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      img.classList.remove("hidden");
-      btn.classList.remove("hidden");
+      img.style.display = "block";
+      btn.style.display = "block";
       loader.style.display = "none";
     };
   } catch (e) {
     console.error(e);
-    if (err) err.classList.remove("hidden");
-    if (loader) loader.style.display = "none";
+    loader.style.display = "none";
+    err.style.display = "block";
   }
 }
 
@@ -55,11 +56,8 @@ async function checkStreamStatus() {
       twitch.querySelector(".live-text").textContent = "OFFLINE";
     } else {
       twitch.querySelector(".live-text").textContent = "LIVE";
-      twitch.classList.add("live");
     }
-  } catch (e) {
-    console.log("Twitch API error:", e);
-  }
+  } catch (e) { console.log("Twitch API error:", e); }
 
   try {
     const res = await fetch("https://kick.com/api/v2/channels/angelkacs");
@@ -67,14 +65,11 @@ async function checkStreamStatus() {
       const data = await res.json();
       if (data.livestream?.is_live) {
         kick.querySelector(".live-text").textContent = "LIVE";
-        kick.classList.add("live");
       } else {
         kick.querySelector(".live-text").textContent = "OFFLINE";
       }
     }
-  } catch (e) {
-    console.log("Kick API error:", e);
-  }
+  } catch (e) { console.log("Kick API error:", e); }
 }
 
 // === T-MOBILE MODAL ===
@@ -100,5 +95,5 @@ tmobileModal.addEventListener('click', (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   loadLatestVideo();
   checkStreamStatus();
-  setInterval(checkStreamStatus, 60000); // co minutę sprawdzanie statusu
+  setInterval(checkStreamStatus, 60000);
 });

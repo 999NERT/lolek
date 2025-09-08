@@ -40,24 +40,20 @@
   <!-- NAJNOWSZY FILM YT -->
   <section class="latest-video-container">
     <div class="video-wrapper" id="videoWrapper">
-      <div class="video-placeholder" id="videoPlaceholder">
-        <div class="spinner" id="videoSpinner"></div>
-      </div>
-      <img id="latestThumbnail" alt="" class="video-thumb" hidden/>
-      <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film" hidden>
+      <img id="latestThumbnail" alt="" class="video-thumb" style="display:none;" />
+      <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film" style="display:none;">
         <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
       </a>
       <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
+      <!-- T-MOBILE -->
+      <div class="tmobile-btn-wrapper" id="tmobileWrapper">
+        <div class="live-text-event">EVENT</div>
+        <a href="#" class="tmobile-btn">
+          <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
+        </a>
+      </div>
     </div>
   </section>
-
-  <!-- T-MOBILE + EVENT -->
-  <div class="tmobile-event-wrapper">
-    <div class="live-text-event">EVENT</div>
-    <a href="#" class="tmobile-btn">
-      <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
-    </a>
-  </div>
 
   <!-- STREAM -->
   <section class="stream-buttons-container">
@@ -103,8 +99,8 @@
 
   <!-- STOPKA -->
   <footer class="site-footer">
-    <p>©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
-    <p>Współpraca/biznes: <a href="mailto:angelka@stormmedia.gg" class="email-part">angelka@stormmedia.gg</a></p>
+    <p class="left-footer-text">Współpraca/biznes: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
+    <p class="right-footer-text">©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</p>
   </footer>
 
 </div>

@@ -40,15 +40,25 @@
   <!-- NAJNOWSZY FILM YT -->
   <section class="latest-video-container">
     <div class="video-wrapper" id="videoWrapper">
-      <div class="video-placeholder"></div>
-      <img id="latestThumbnail" alt="" class="video-thumb" />
-      <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
-        <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
-      </a>
+      <!-- okno miniaturki z tłem czarnym i czerwonym borderem -->
+      <div class="thumbnail-placeholder">
+        <img id="latestThumbnail" alt="" class="video-thumb" />
+        <a id="watchButton" class="play-button" href="#" target="_blank" aria-label="Oglądaj najnowszy film">
+          <img src="ytclick.png" alt="Oglądaj teraz" class="yt-click-image" />
+        </a>
+      </div>
 
       <p id="videoError" class="video-error" hidden>Nie udało się wczytać miniaturki. Spróbuj odświeżyć.</p>
     </div>
   </section>
+
+  <!-- T-MOBILE -->
+  <div class="tmobile-btn-wrapper">
+    <div class="live-text-event">EVENT</div>
+    <a href="#" class="tmobile-btn">
+      <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
+    </a>
+  </div>
 
   <!-- STREAM -->
   <section class="stream-buttons-container">
@@ -74,14 +84,6 @@
     </div>
   </section>
 
-  <!-- T-MOBILE W LEWYM DOLNYM ROGU -->
-  <div class="tmobile-btn-wrapper">
-    <div class="tmobile-event-text">EVENT</div>
-    <a href="#" class="tmobile-btn">
-      <img src="TMOBILE.png" alt="T-Mobile" class="tmobile-image" />
-    </a>
-  </div>
-
   <!-- MODAL TMOBILE -->
   <div id="tmobileModal" class="tmobile-modal">
     <div class="tmobile-modal-content">
@@ -91,7 +93,7 @@
     </div>
   </div>
 
-  <!-- SOCIAL -->
+  <!-- SOCIAL MEDIA -->
   <section class="additional-buttons-container">
     <div class="additional-button-wrapper"><a href="#" class="additional-button instagram-btn" target="_blank"><img src="1instagram.png" alt="Instagram" class="additional-button-image" /></a></div>
     <div class="additional-button-wrapper"><a href="#" class="additional-button twitter-btn" target="_blank"><img src="1x.png" alt="Twitter" class="additional-button-image" /></a></div>
@@ -102,8 +104,12 @@
 
   <!-- STOPKA -->
   <footer class="site-footer">
-    <div class="footer-left">Współpraca/biznes: <span class="footer-email">angelka@stormmedia.gg</span></div>
-    <div class="footer-right">©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.</div>
+    <div class="footer-left">
+      Współpraca/biznes: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a>
+    </div>
+    <div class="footer-right">
+      ©2025 999NERT. Wszelkie prawa zastrzeżone - All rights reserved.
+    </div>
   </footer>
 
 </div>

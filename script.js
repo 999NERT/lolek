@@ -1,19 +1,24 @@
 // === YOUTUBE MINIATURKA ===
 async function loadLatestVideo() {
+  const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ"; // Twój channel ID
+  const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
   const err = document.getElementById("videoError");
   const loader = document.querySelector(".yt-loader");
 
   try {
-    const res = await fetch("https://www.youtube.com/feeds/videos.xml?channel_id=UCyo2K8w1W39QZ1zQK2XR2mQ");
-    const text = await res.text();
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(text, "text/xml");
-    const videoEntry = xml.getElementsByTagName("entry")[0];
+    const res = await fetch(proxy);
+    const { contents } = await res.json();
+    const xml = new DOMParser().parseFromString(contents, "application/xml");
+    const entries = xml.getElementsByTagName("entry");
+    if (!entries.length) throw new Error("Brak filmów");
+
+    // Pomijamy shorty
+    let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
-    btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+    if (btn) btn.href = `https://www.youtube.com/watch?v=${videoId}`;
 
     const testImg = new Image();
     testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
@@ -31,17 +36,12 @@ async function loadLatestVideo() {
       btn.classList.remove("hidden");
       loader.style.display = "none";
     };
-
   } catch (e) {
     console.error(e);
-    loader.style.display = "none";
-    err.classList.remove("hidden");
+    if (err) err.classList.remove("hidden");
+    if (loader) loader.style.display = "none";
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadLatestVideo();
-});
 
 // === STREAM STATUS ===
 async function checkStreamStatus() {
@@ -51,9 +51,8 @@ async function checkStreamStatus() {
   try {
     const res = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const text = await res.text();
-    if (text.includes("offline")) {
+    if (text.toLowerCase().includes("offline")) {
       twitch.querySelector(".live-text").textContent = "OFFLINE";
-      twitch.classList.remove("live");
     } else {
       twitch.querySelector(".live-text").textContent = "LIVE";
       twitch.classList.add("live");
@@ -71,7 +70,6 @@ async function checkStreamStatus() {
         kick.classList.add("live");
       } else {
         kick.querySelector(".live-text").textContent = "OFFLINE";
-        kick.classList.remove("live");
       }
     }
   } catch (e) {
@@ -80,7 +78,6 @@ async function checkStreamStatus() {
 }
 
 // === T-MOBILE MODAL ===
-const tmobileWrapper = document.getElementById('tmobileWrapper');
 const tmobileBtn = document.getElementById('tmobileBtn');
 const tmobileModal = document.getElementById('tmobileModal');
 const tmobileModalClose = document.getElementById('tmobileModalClose');
@@ -99,31 +96,9 @@ tmobileModal.addEventListener('click', (e) => {
   }
 });
 
-// === DRAG & DROP T-MOBILE + EVENT ===
-let isDragging = false;
-let offsetX, offsetY;
-
-tmobileWrapper.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  offsetX = e.clientX - tmobileWrapper.offsetLeft;
-  offsetY = e.clientY - tmobileWrapper.offsetTop;
-  tmobileWrapper.style.cursor = 'grabbing';
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  tmobileWrapper.style.left = (e.clientX - offsetX) + 'px';
-  tmobileWrapper.style.top = (e.clientY - offsetY) + 'px';
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  tmobileWrapper.style.cursor = 'grab';
-});
-
 // === INIT ===
 document.addEventListener("DOMContentLoaded", () => {
   loadLatestVideo();
   checkStreamStatus();
-  setInterval(checkStreamStatus, 60000);
+  setInterval(checkStreamStatus, 60000); // co minutę sprawdzanie statusu
 });

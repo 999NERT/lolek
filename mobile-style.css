@@ -107,7 +107,7 @@ html, body{
 .stream-button-image{width:95%;height:95%;object-fit:contain;}
 .stream-button:hover .stream-button-image{transform:scale(1.05);}
 .live-panel{width:60px;height:25px;background:#000;border-radius:6px;display:flex;justify-content:center;align-items:center;border:2px solid #ff4444;}
-.live-panel.live{background:rgba(255,68,68,.3);border-color:#00ff00;box-shadow:0 0 10px rgba(0,255,0,.4);}
+.live-panel.live{background:rgba(0,0,0,1);border-color:#00ff00;box-shadow:0 0 10px rgba(0,255,0,.4);}
 .live-text{font-size:12px;font-weight:800;color:#ff4444;}
 .live-panel.live .live-text{color:#00ff00;animation:pulseLive 1.5s infinite;}
 @keyframes pulseLive{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6;}}

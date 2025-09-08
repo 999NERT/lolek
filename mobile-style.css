@@ -131,7 +131,25 @@ html, body{
   text-shadow:1px 1px 4px rgba(0,0,0,0.9);
 }
 
-/* STOPKA COPYRIGHT*/
-.site-footer1{text-align:center;margin-top:20px;padding:10px 5px;}
-.site-footer1 p{font-size:1rem;padding:5px 10px;border-radius:30px;background:rgba(0,0,0,1);font-weight:400;text-shadow:2px 2px 6px rgba(0,0,0,1);}
+/* STOPKA COPYRIGHT */
+.site-footer1 {
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px 5px;
+}
 
+.site-footer1 p {
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 1);
+  font-weight: 400;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
+  margin-bottom: 5px; /* odstęp między napisami */
+}
+
+.site-footer1 a {
+  color: #BF8EF8;        /* kolor maila */
+  text-decoration: none; /* brak podkreślenia */
+  font-weight: 600;
+}

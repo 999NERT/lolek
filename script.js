@@ -82,9 +82,28 @@ tmobileModal.addEventListener('click', (e)=>{
   }
 });
 
-// === START ===
+// === ANIMACJA FADE-IN MINIATURKI ===
 document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    document.getElementById('videoWrapper').classList.add('visible');
+  }, 2000);
+
   loadLatestVideo();
   checkStreamStatus();
   setInterval(checkStreamStatus, 60000);
+});
+
+// === BLOKADA KLAWISZY I PRAWY PRZYCISK ===
+document.addEventListener('keydown', function(e){
+  if (e.key === 'F12' || 
+      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') || 
+      (e.ctrlKey && e.key.toLowerCase() === 'u')) {
+    e.preventDefault();
+    alert("Nie można używać tych skrótów na tej stronie!");
+  }
+});
+
+document.addEventListener('contextmenu', function(e){
+  e.preventDefault();
+  alert("Kliknięcie prawym przyciskiem myszy jest zablokowane!");
 });

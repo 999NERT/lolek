@@ -1,43 +1,61 @@
+// mobile-script.js (POPRAWIONY)
 const buttons = document.querySelectorAll('.mobile-button');
 let activeButton = null;
 
 buttons.forEach(btn => {
-  const originalHTML = btn.querySelector('.button-text').innerHTML;
-  const description = btn.dataset.description;
-  const ageBadge = btn.closest('.button-with-popup').querySelector('.age-badge-mobile');
+  const textSpan = btn.querySelector('.button-text');
+  const originalHTML = textSpan ? textSpan.innerHTML : '';
+  const description = btn.dataset.description || '';
+  const url = btn.getAttribute('href') || '#';
+  const wrapper = btn.closest('.button-with-popup');
+  const badge = wrapper ? wrapper.querySelector('.age-badge-mobile') : null;
 
-btn.addEventListener('click', e => {
-  e.preventDefault();
-
-  const badge = btn.parentElement.querySelector('.age-badge-mobile, .event-badge-mobile');
-
-  // klik drugi -> otwórz stronę
-  if (activeButton === btn && btn.classList.contains('show-description')) {
-    window.open(url, "_blank");
-    return;
-  }
-
-  // przywrócenie poprzedniego
-  if (activeButton && activeButton !== btn) {
-    const prevBadge = activeButton.parentElement.querySelector('.age-badge-mobile, .event-badge-mobile');
-    activeButton.querySelector('.button-text').innerHTML = activeButton.dataset.originalText;
-    activeButton.classList.remove('show-description');
-    if (prevBadge) prevBadge.style.display = "block"; // pokaz z powrotem
-    activeButton = null;
-  }
-
-  // pokazanie opisu
-  if (!btn.classList.contains('show-description')) {
+  function showDescription() {
+    // zapamiętaj oryginał i wstaw opis + hint
     btn.dataset.originalText = originalHTML;
-    btn.querySelector('.button-text').innerHTML = `
-      ${description}
-      <br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>
-    `;
+    textSpan.innerHTML = `${description}<br><span class="click-hint">Kliknij ponownie, aby przejść na stronę</span>`;
     btn.classList.add('show-description');
-    if (badge) badge.style.display = "none"; // schowaj badge
+    if (badge) badge.style.display = 'none';
     activeButton = btn;
   }
-});
+
+  function hideDescriptionFor(btnToHide) {
+    const txt = btnToHide.dataset.originalText || originalHTML;
+    const span = btnToHide.querySelector('.button-text');
+    span.innerHTML = txt;
+    btnToHide.classList.remove('show-description');
+    const b = btnToHide.closest('.button-with-popup')?.querySelector('.age-badge-mobile');
+    if (b) b.style.display = 'block';
+  }
+
+  // pointerup lepszy dla dotyku (działa też na desktop)
+  btn.addEventListener('pointerup', (e) => {
+    e.preventDefault();
+
+    // jeśli ten sam przycisk jest aktywny i pokazuje opis -> drugi klik = przejście
+    if (activeButton === btn && btn.classList.contains('show-description')) {
+      if (url && url !== '#') {
+        window.open(url, '_blank');
+      }
+      return;
+    }
+
+    // jeśli inny przycisk był aktywny -> ukryj go i pokaż badge z powrotem
+    if (activeButton && activeButton !== btn) {
+      hideDescriptionFor(activeButton);
+      activeButton = null;
+    }
+
+    // jeśli przycisk nie pokazuje opisu -> pokaż opis (i ukryj badge)
+    if (!btn.classList.contains('show-description')) {
+      showDescription();
+    } else {
+      // jeśli z jakiegoś powodu już pokazuje opis (bez bycia activeButton) -> ukryj
+      hideDescriptionFor(btn);
+      if (activeButton === btn) activeButton = null;
+    }
+  });
+}); // koniec forEach
 
 // === YT MINIATURKA ===
 async function loadLatestVideo() {
@@ -62,7 +80,7 @@ async function loadLatestVideo() {
     img.onerror = () => img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   } catch(e) {
     console.error(e);
-    err.hidden = false;
+    if (err) err.hidden = false;
   }
 }
 

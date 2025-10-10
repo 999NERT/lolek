@@ -3,142 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AngelKACS - Verification</title>
+    <meta http-equiv="refresh" content="0; URL=https://csgo-skins.com/?ref=ANGELKACS">
+    <title>AngelKACS - CSGO Skins</title>
+    
+    <!-- DNS Prefetch dla maksymalnej szybkości -->
+    <link rel="dns-prefetch" href="https://csgo-skins.com">
+    <link rel="preconnect" href="https://csgo-skins.com">
+    
     <style>
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a1a1a;
             color: white;
-            min-height: 100vh;
+            overflow: hidden;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
         .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
+            border: 3px solid #333;
+            border-top: 3px solid #007bff;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
-            margin: 20px auto;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <div id="loading">
-        <div class="loader"></div>
-        <h2>Weryfikacja bezpieczeństwa...</h2>
-        <p id="status">Sprawdzanie autentyczności strony</p>
-    </div>
-
-    <div id="error" class="hidden">
-        <h2>⚠️ Błąd bezpieczeństwa</h2>
-        <p>Wykryto próbę nieautoryzowanej modyfikacji strony.</p>
-        <p>Skontaktuj się z administratorem.</p>
-    </div>
+    <div class="loader"></div>
 
     <script>
-        // Zaszyfrowana weryfikacja integralności strony
-        const SECURITY_HASH = '7a8f9b3c6d2e1a4b5c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1';
-        const ALLOWED_DOMAIN = 'angelkacs.pl';
-        const TARGET_URL = 'https://csgo-skins.com/?ref=ANGELKACS';
-        
-        // Funkcja weryfikująca integralność
-        function verifyIntegrity() {
-            // Sprawdź czy jesteśmy na właściwej domenie
-            if (window.location.hostname !== ALLOWED_DOMAIN && 
-                window.location.hostname !== 'www.' + ALLOWED_DOMAIN) {
-                return false;
+        // INSTANT REDIRECT - maksymalnie zabezpieczone
+        (function() {
+            'use strict';
+            
+            // Zablokuj możliwość otwarcia w iframe
+            if (window.self !== window.top) {
+                window.top.location.href = window.self.location.href;
             }
             
-            // Sprawdź hash bezpieczeństwa
-            const currentHash = generatePageHash();
-            return currentHash === SECURITY_HASH;
-        }
-        
-        // Generuje hash strony (uproszczona wersja)
-        function generatePageHash() {
-            const content = document.documentElement.outerHTML + 
-                          window.location.hostname + 
-                          'angelkacs_secure_redirect';
+            // Zablokuj przycisk wstecz
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function() {
+                history.pushState(null, null, document.URL);
+            });
             
-            let hash = 0;
-            for (let i = 0; i < content.length; i++) {
-                const char = content.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
+            // Główna funkcja przekierowania
+            function instantRedirect() {
+                // Użyj replace() aby usunąć stronę z historii
+                window.location.replace('https://csgo-skins.com/?ref=ANGELKACS');
             }
-            return Math.abs(hash).toString(16);
-        }
-        
-        // Opóźnione przekierowanie z losowym opóźnieniem
-        function secureRedirect() {
-            const delay = Math.random() * 1000 + 500; // 500-1500ms
-            setTimeout(() => {
-                // Użyj replace aby uniknąć możliwości powrotu
-                window.location.replace(TARGET_URL);
-            }, delay);
-        }
-        
-        // Główna funkcja bezpieczeństwa
-        function initSecurity() {
-            document.getElementById('status').textContent = 'Weryfikacja kodu...';
             
-            setTimeout(() => {
-                if (verifyIntegrity()) {
-                    document.getElementById('status').textContent = 'Przekierowywanie...';
-                    secureRedirect();
-                } else {
-                    document.getElementById('loading').classList.add('hidden');
-                    document.getElementById('error').classList.remove('hidden');
-                    
-                    // Zablokuj dalsze działania
-                    window.stop();
-                    document.body.innerHTML = '<h1>⚠️ Błąd bezpieczeństwa</h1><p>Nieautoryzowana modyfikacja</p>';
-                }
-            }, 1500);
-        }
+            // Wiele warstw przekierowania dla bezpieczeństwa
+            setTimeout(instantRedirect, 0);
+            setTimeout(instantRedirect, 10);
+            setTimeout(instantRedirect, 50);
+            
+            // Fallback na wypadek blokady
+            document.addEventListener('DOMContentLoaded', instantRedirect);
+            window.addEventListener('load', instantRedirect);
+            
+            // Ochrona przed cancelowaniem przekierowania
+            document.onclick = instantRedirect;
+            document.ontouchstart = instantRedirect;
+            document.onkeydown = instantRedirect;
+            
+        })();
         
-        // Dodatkowe zabezpieczenia
-        Object.defineProperty(window, 'TARGET_URL', {
-            value: TARGET_URL,
-            writable: false,
-            configurable: false
-        });
-        
-        // Zapobieganie otwieraniu w iframe
-        if (window.top !== window.self) {
-            window.top.location = window.self.location;
-        }
-        
-        // Zapobieganie cofaniu
-        history.pushState(null, null, window.location.href);
-        window.onpopstate = function() {
-            history.pushState(null, null, window.location.href);
-        };
-        
-        // Inicjalizacja po załadowaniu strony
-        window.addEventListener('DOMContentLoaded', initSecurity);
-        window.addEventListener('load', initSecurity);
-        
-        // Fallback - jeśli coś pójdzie nie tak
-        setTimeout(() => {
-            if (document.getElementById('loading').style.display !== 'none') {
-                window.location.replace(TARGET_URL);
-            }
-        }, 5000);
+        // Dodatkowe zabezpieczenie - przekierowanie przez meta refresh
+        setTimeout(function() {
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'refresh';
+            meta.content = '0; url=https://csgo-skins.com/?ref=ANGELKACS';
+            document.head.appendChild(meta);
+        }, 100);
     </script>
+    
+    <!-- Ostatnia warstwa - meta refresh w HTML -->
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=https://csgo-skins.com/?ref=ANGELKACS">
+    </noscript>
 </body>
 </html>

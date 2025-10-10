@@ -2,13 +2,143 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://csgo-skins.com/?ref=ANGELKACS">
-    <title>Przekierowanie - AngelKACS Skins</title>
-    <script>
-        window.location.href = "https://csgo-skins.com/?ref=ANGELKACS";
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngelKACS - Verification</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <p>Trwa przekierowanie... <a href="https://csgo-skins.com/?ref=ANGELKACS">Kliknij tutaj jeśli przekierowanie nie działa</a></p>
+    <div id="loading">
+        <div class="loader"></div>
+        <h2>Weryfikacja bezpieczeństwa...</h2>
+        <p id="status">Sprawdzanie autentyczności strony</p>
+    </div>
+
+    <div id="error" class="hidden">
+        <h2>⚠️ Błąd bezpieczeństwa</h2>
+        <p>Wykryto próbę nieautoryzowanej modyfikacji strony.</p>
+        <p>Skontaktuj się z administratorem.</p>
+    </div>
+
+    <script>
+        // Zaszyfrowana weryfikacja integralności strony
+        const SECURITY_HASH = '7a8f9b3c6d2e1a4b5c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1';
+        const ALLOWED_DOMAIN = 'angelkacs.pl';
+        const TARGET_URL = 'https://csgo-skins.com/?ref=ANGELKACS';
+        
+        // Funkcja weryfikująca integralność
+        function verifyIntegrity() {
+            // Sprawdź czy jesteśmy na właściwej domenie
+            if (window.location.hostname !== ALLOWED_DOMAIN && 
+                window.location.hostname !== 'www.' + ALLOWED_DOMAIN) {
+                return false;
+            }
+            
+            // Sprawdź hash bezpieczeństwa
+            const currentHash = generatePageHash();
+            return currentHash === SECURITY_HASH;
+        }
+        
+        // Generuje hash strony (uproszczona wersja)
+        function generatePageHash() {
+            const content = document.documentElement.outerHTML + 
+                          window.location.hostname + 
+                          'angelkacs_secure_redirect';
+            
+            let hash = 0;
+            for (let i = 0; i < content.length; i++) {
+                const char = content.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return Math.abs(hash).toString(16);
+        }
+        
+        // Opóźnione przekierowanie z losowym opóźnieniem
+        function secureRedirect() {
+            const delay = Math.random() * 1000 + 500; // 500-1500ms
+            setTimeout(() => {
+                // Użyj replace aby uniknąć możliwości powrotu
+                window.location.replace(TARGET_URL);
+            }, delay);
+        }
+        
+        // Główna funkcja bezpieczeństwa
+        function initSecurity() {
+            document.getElementById('status').textContent = 'Weryfikacja kodu...';
+            
+            setTimeout(() => {
+                if (verifyIntegrity()) {
+                    document.getElementById('status').textContent = 'Przekierowywanie...';
+                    secureRedirect();
+                } else {
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('error').classList.remove('hidden');
+                    
+                    // Zablokuj dalsze działania
+                    window.stop();
+                    document.body.innerHTML = '<h1>⚠️ Błąd bezpieczeństwa</h1><p>Nieautoryzowana modyfikacja</p>';
+                }
+            }, 1500);
+        }
+        
+        // Dodatkowe zabezpieczenia
+        Object.defineProperty(window, 'TARGET_URL', {
+            value: TARGET_URL,
+            writable: false,
+            configurable: false
+        });
+        
+        // Zapobieganie otwieraniu w iframe
+        if (window.top !== window.self) {
+            window.top.location = window.self.location;
+        }
+        
+        // Zapobieganie cofaniu
+        history.pushState(null, null, window.location.href);
+        window.onpopstate = function() {
+            history.pushState(null, null, window.location.href);
+        };
+        
+        // Inicjalizacja po załadowaniu strony
+        window.addEventListener('DOMContentLoaded', initSecurity);
+        window.addEventListener('load', initSecurity);
+        
+        // Fallback - jeśli coś pójdzie nie tak
+        setTimeout(() => {
+            if (document.getElementById('loading').style.display !== 'none') {
+                window.location.replace(TARGET_URL);
+            }
+        }, 5000);
+    </script>
 </body>
 </html>

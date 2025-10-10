@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANGELKACS SETTINGS - CONFIG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../1style.css">
+    <link rel="icon" type="image/png" href="../angelka.png">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Player Profile -->
+        <section class="profile-section">
+            <div class="container">
+                <div class="profile-card">
+                    <div class="profile-main">
+                        <div class="profile-info">
+                            <div class="profile-header">
+                                <div class="player-name-container">
+                                    <div class="faceit-plugins">
+                                        <h3 class="plugins-title">FACEIT PLUGINS</h3>
+                                        <div class="plugins-buttons">
+                                            <a href="https://chromewebstore.google.com/detail/faceit-mappio/kaeamgghipbhkjgibgglnmmnobdakapa" class="profile-btn mappio-btn" target="_blank">
+                                                MAPPIO
+                                            </a>
+                                            <a href="https://chromewebstore.google.com/detail/faceit-lobby-king-extensi/ofgabojnfopmlfkfdclajlkgfmomijoc" class="profile-btn lobby-king-btn" target="_blank">
+                                                LOBBY KING
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="player-meta">
+                                <div class="meta-item">
+                                    <a href="https://steamcommunity.com/id/102701/" class="profile-btn steam-btn meta-btn" target="_blank">
+                                        STEAM
+                                    </a>
+                                    <div class="meta-text">
+                                        <span class="meta-value">14.000+</span>
+                                        <span class="meta-label">Hours</span>
+                                    </div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-text">
+                                        <span class="meta-value">Level 10</span>
+                                        <span class="meta-label">Faceit</span>
+                                    </div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-text">
+                                        <span class="meta-value">Poland</span>
+                                        <span class="meta-label">Country</span>
+                                    </div>
+                                    <a href="https://www.faceit.com/pl/players/Angelka-" class="profile-btn faceit-btn meta-btn" target="_blank">
+                                        FACEIT
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <section class="navigation-section">
+            <div class="container">
+                <div class="nav-buttons">
+                    <a href="../game/" class="nav-btn game-nav-btn">GAME</a>
+                    <a href="../video/" class="nav-btn video-nav-btn">VIDEO</a>
+                    <a href="../gear/" class="nav-btn gear-nav-btn">GEAR</a>
+                    <a href="../binds/" class="nav-btn binds-nav-btn">BINDS</a>
+                    <a href="../config/" class="nav-btn config-nav-btn active">CONFIG</a>
+                </div>
+                <div class="home-btn-container">
+                    <a href="https://www.angelkacs.pl" class="home-btn">HOME</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Full Config Section -->
+        <section id="config-section" class="settings-section active-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>FULL CONFIG</h2>
+                </div>
+                
+                <div class="config-content">
+                    <div class="config-card autoexec-card">
+                        <div class="card-header autoexec-header">
+                            <h3>AUTOEXEC.CFG</h3>
+                            <button class="copy-autoexec-btn" title="Copy entire config to clipboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                Copy Config
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <div class="code-editor">
+                                <pre class="code-content"><code class="autoexec-code">
+echo "A man can be destroyed, but not defeated."
+
+sensitivity 1.5
+
+rate "786432"
+fps_max "0"
+cl_allow_animated_avatars "0"
+cl_sniper_auto_rezoom "1"
+cl_crosshair_recoil "0"
+cl_hud_color "9"
+r_show_build_info  0
+cl_grenadecrosshairdelay_smoke 0 
+cl_grenadecrosshairdelay_explosive 0 
+cl_grenadecrosshairdelay_flash 0 
+cl_grenadecrosshairdelay_fire 0 
+cl_grenadecrosshairdelay_decoy 0
+cl_grenadecrosshair_decoy 0
+cl_grenadecrosshair_flash 0
+cl_grenadecrosshair_fire 0
+cl_grenadecrosshair_smoke 0 
+cl_grenadecrosshair_explosive 0
+cl_grenadecrosshair_keepusercrosshair 0 
+
+
+viewmodel_presetpos 0
+viewmodel_fov 66
+viewmodel_offset_x 1.000000
+viewmodel_offset_y 1.000000
+viewmodel_offset_z -1.500000
+
+hud_scaling 0.9
+cl_hud_color 9
+cl_radar_always_centered false
+cl_radar_icon_scale_min	0.400000
+cl_radar_rotate	true
+cl_radar_scale 0.475000
+cl_radar_scale_alternate 1.000000
+cl_radar_square_with_scoreboard	true
+
+
+bind "SPACE" "+JUMP"
+bind "M" "noclip"
+
+
+bind "C" "slot3; slot7"
+bind "Z" "slot3; slot10"
+bind "4" "slot3; slot6"
+bind "X" "slot3; slot8" 
+bind "0" "slot3; slot9" 
+bind "T" "toggle cl_crosshairsize 1000 1"
+
+r_fullscreen_gamma 2
+
+
+joystick 0
+
+
+voice_always_sample_mic	false
+voice_modenable	true
+voice_threshold	-30.000000
+
+echo "FIRE IN THE HOLE"
+echo "BE THE BEST YOU CAN"
+echo "NEW DAY NEW OPPORTUNITIES"
+echo "BE CONFIDENT 🙂"
+                                </code></pre>
+                            </div>
+                            
+                            <div class="download-config-section">
+                                <div class="download-content">
+                                    <p class="config-path"><strong>Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cfg</strong></p>
+                                    <a href="autoexec.cfg" class="download-btn" download>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="download-icon">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                                        </svg>
+                                        CONFIG DOWNLOAD
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 ANGELKACS. All rights reserved.</p>
+                    <p>Contact: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../1script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1426 @@
+/* === CRITICAL CSS - Above the fold === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Titillium Web', sans-serif;
+    color: #ffffff;
+    background: url("aster.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+body {
+    min-height: 100vh;
+    background: rgba(8, 8, 8, 0.92);
+    overflow-x: hidden;
+}
+
+/* === LAYOUT === */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === PROFILE SECTION === */
+.profile-section {
+    padding: 2rem 0 1rem;
+}
+
+.profile-card {
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-main {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-info {
+    width: 100%;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.player-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.player-name {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0;
+}
+
+.faceit-plugins {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: #000000;
+    border: 1px solid #ff5500;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.plugins-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ff5500;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.plugins-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.player-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+}
+
+.meta-item {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.meta-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.meta-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.meta-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.meta-btn {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    min-width: 60px !important;
+}
+
+/* Profile Buttons */
+.profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    min-width: 80px;
+}
+
+.steam-btn {
+    background: rgba(26, 71, 125, 0.8);
+    color: #ffffff;
+    border-color: #1a477d;
+}
+
+.steam-btn:hover {
+    background: rgba(26, 71, 125, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 71, 125, 0.4);
+}
+
+.faceit-btn {
+    background: rgba(255, 105, 0, 0.8);
+    color: #ffffff;
+    border-color: #ff6900;
+}
+
+.faceit-btn:hover {
+    background: rgba(255, 105, 0, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 0, 0.4);
+}
+
+.mappio-btn {
+    background: rgba(138, 43, 226, 0.8);
+    color: #ffffff;
+    border-color: #8a2be2;
+}
+
+.mappio-btn:hover {
+    background: rgba(138, 43, 226, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
+}
+
+.lobby-king-btn {
+    background: rgba(255, 215, 0, 0.8);
+    color: #000000;
+    border-color: #ffd700;
+}
+
+.lobby-king-btn:hover {
+    background: rgba(255, 215, 0, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+/* === NAVIGATION BUTTONS === */
+.navigation-section {
+    padding: 1rem 0 1.5rem;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto 1.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    border: 1px solid #333;
+    color: #ffffff;
+    padding: 1.2rem 1.8rem;
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+}
+
+.nav-btn.active {
+    transform: translateY(-2px);
+}
+
+/* Game Button - Blue */
+.game-nav-btn {
+    background: rgba(68, 205, 255, 0.15);
+    border-color: #44cdff !important;
+}
+
+.game-nav-btn:hover {
+    background: rgba(68, 205, 255, 0.25);
+    border-color: #44cdff !important;
+}
+
+.game-nav-btn.active {
+    background: rgba(68, 205, 255, 0.3);
+    border-color: #44cdff !important;
+    box-shadow: 0 4px 15px rgba(68, 205, 255, 0.3);
+}
+
+/* Video Button - Green */
+.video-nav-btn {
+    background: rgba(0, 255, 67, 0.15);
+    border-color: #00ff43 !important;
+}
+
+.video-nav-btn:hover {
+    background: rgba(0, 255, 67, 0.25);
+    border-color: #00ff43 !important;
+}
+
+.video-nav-btn.active {
+    background: rgba(0, 255, 67, 0.3);
+    border-color: #00ff43 !important;
+    box-shadow: 0 4px 15px rgba(0, 255, 67, 0.3);
+}
+
+/* Gear Button - Orange */
+.gear-nav-btn {
+    background: rgba(255, 159, 87, 0.15);
+    border-color: #ff9f57 !important;
+}
+
+.gear-nav-btn:hover {
+    background: rgba(255, 159, 87, 0.25);
+    border-color: #ff9f57 !important;
+}
+
+.gear-nav-btn.active {
+    background: rgba(255, 159, 87, 0.3);
+    border-color: #ff9f57 !important;
+    box-shadow: 0 4px 15px rgba(255, 159, 87, 0.3);
+}
+
+/* Binds Button - Yellow */
+.binds-nav-btn {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: #ffd700 !important;
+}
+
+.binds-nav-btn:hover {
+    background: rgba(255, 215, 0, 0.25);
+    border-color: #ffd700 !important;
+}
+
+.binds-nav-btn.active {
+    background: rgba(255, 215, 0, 0.3);
+    border-color: #ffd700 !important;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Config Button - Red */
+.config-nav-btn {
+    background: rgba(255, 87, 87, 0.15);
+    border-color: #ff5757 !important;
+}
+
+.config-nav-btn:hover {
+    background: rgba(255, 87, 87, 0.25);
+    border-color: #ff5757 !important;
+}
+
+.config-nav-btn.active {
+    background: rgba(255, 87, 87, 0.3);
+    border-color: #ff5757 !important;
+    box-shadow: 0 4px 15px rgba(255, 87, 87, 0.3);
+}
+
+.home-btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #333;
+}
+
+.home-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
+}
+
+/* === SECTIONS COMMON === */
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #AEA6FD;
+    border-radius: 2px;
+}
+
+.launch-options-container-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.launch-options-label {
+    color: #AEA6FD;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.launch-options-mini {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(174, 166, 253, 0.1);
+    border: 1px solid rgba(174, 166, 253, 0.3);
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    flex-shrink: 0;
+}
+
+.launch-options-mini-text {
+    color: #AEA6FD;
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-family: monospace;
+}
+
+.mini-copy-btn {
+    background: rgba(174, 166, 253, 0.2);
+    border: 1px solid #AEA6FD;
+    color: #AEA6FD;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.mini-copy-btn:hover {
+    background: rgba(174, 166, 253, 0.3);
+    transform: scale(1.05);
+}
+
+.mini-copy-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.settings-section {
+    display: none;
+}
+
+.settings-section.active-section {
+    display: block;
+}
+
+.gear-section {
+    padding: 2rem 0;
+}
+
+/* === EQUAL COLUMNS GRID LAYOUT === */
+.equal-columns-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.equal-card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    align-self: start;
+}
+
+/* === VIDEO SETTINGS NEW LAYOUT === */
+.video-columns-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(450px, 1fr));
+    gap: 2rem;
+    align-items: start;
+}
+
+.video-column {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.video-settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.video-setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 45px;
+}
+
+.video-setting:last-child {
+    border-bottom: none;
+}
+
+.video-setting-name {
+    color: #aaa;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.video-setting-value {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    background: none;
+    padding: 0;
+    text-align: right;
+    white-space: normal;
+    word-break: break-word;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    max-width: 200px;
+    line-height: 1.3;
+}
+
+/* Spacing for video settings */
+.spacing-setting {
+    min-height: 30px;
+    border-bottom: none !important;
+    margin: 0.5rem 0;
+}
+
+/* === BINDS SECTION === */
+.binds-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.binds-card {
+    width: 100%;
+}
+
+.binds-header {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1)) !important;
+    border-bottom: 2px solid #ffd700 !important;
+    text-align: center;
+}
+
+.binds-header h3 {
+    color: #ffd700 !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    margin: 0;
+}
+
+/* New Binds Table Layout */
+.binds-table {
+    width: 100%;
+}
+
+.binds-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.binds-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    margin-bottom: 1rem;
+}
+
+.binds-column-header {
+    color: #ffd700;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex: 1;
+    text-align: center;
+}
+
+.bind-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bind-item:last-child {
+    border-bottom: none;
+}
+
+.bind-key {
+    color: #AEA6FD;
+    font-weight: 700;
+    font-size: 1rem;
+    background: rgba(174, 166, 253, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid rgba(174, 166, 253, 0.3);
+    flex: 1;
+    text-align: center;
+    margin: 0 0.5rem;
+}
+
+.bind-action {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex: 1;
+    text-align: center;
+    margin: 0 0.5rem;
+}
+
+.binds-commands-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.binds-commands-text {
+    color: #ffd700;
+    font-weight: 700;
+    font-size: 0.9rem;
+    word-break: break-all;
+    font-family: monospace;
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* === FULL CONFIG SECTION === */
+.config-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.autoexec-card {
+    width: 100%;
+}
+
+.autoexec-header {
+    background: linear-gradient(135deg, rgba(255, 87, 87, 0.2), rgba(255, 87, 87, 0.1)) !important;
+    border-bottom: 2px solid #ff5757 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem !important;
+}
+
+.autoexec-header h3 {
+    color: #ff5757 !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    margin: 0;
+}
+
+.copy-autoexec-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 87, 87, 0.2);
+    border: 1px solid #ff5757;
+    color: #ff5757;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.copy-autoexec-btn:hover {
+    background: rgba(255, 87, 87, 0.3);
+    transform: scale(1.05);
+}
+
+.copy-autoexec-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.code-editor {
+    background: rgba(25, 25, 25, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.code-content {
+    margin: 0;
+    padding: 2rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ffffff;
+    background: rgba(15, 15, 15, 0.95);
+    max-height: 600px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.autoexec-code {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.download-config-section {
+    text-align: center;
+    padding: 2.5rem;
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
+}
+
+.config-path {
+    color: #AEA6FD;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(174, 166, 253, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(174, 166, 253, 0.3);
+}
+
+/* === VIDEO SETTINGS HEADER STYLES === */
+.video-cs2-header {
+    background: linear-gradient(135deg, rgba(68, 205, 255, 0.2), rgba(68, 205, 255, 0.1)) !important;
+    border-bottom: 2px solid #44cdff !important;
+    text-align: center;
+}
+
+.video-cs2-header h3 {
+    color: #44cdff !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    text-align: center;
+    width: 100%;
+}
+
+.nvidia-settings-header {
+    background: linear-gradient(135deg, rgba(0, 255, 67, 0.2), rgba(0, 255, 67, 0.1)) !important;
+    border-bottom: 2px solid #00ff43 !important;
+    text-align: center;
+}
+
+.nvidia-settings-header h3 {
+    color: #00ff43 !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    text-align: center;
+    width: 100%;
+}
+
+.monitor-settings-header {
+    background: linear-gradient(135deg, rgba(255, 159, 87, 0.2), rgba(255, 159, 87, 0.1)) !important;
+    border-bottom: 2px solid #ff9f57 !important;
+    text-align: center;
+}
+
+.monitor-settings-header h3 {
+    color: #ff9f57 !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    text-align: center;
+    width: 100%;
+}
+
+/* Enhanced card headers for video section */
+.video-column .card-header {
+    padding: 1.5rem 1.5rem !important;
+}
+
+.video-column .card-header h3 {
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px;
+}
+
+/* === GEAR CATEGORIES === */
+.gear-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.gear-category {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.setup-header {
+    background: linear-gradient(135deg, rgba(174, 166, 253, 0.2), rgba(174, 166, 253, 0.1)) !important;
+    border-bottom: 2px solid #AEA6FD !important;
+    text-align: center;
+}
+
+.setup-header h3 {
+    color: #AEA6FD !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    text-align: center;
+    width: 100%;
+}
+
+.pc-header {
+    background: linear-gradient(135deg, rgba(255, 87, 87, 0.2), rgba(255, 87, 87, 0.1)) !important;
+    border-bottom: 2px solid #ff5757 !important;
+    text-align: center;
+}
+
+.pc-header h3 {
+    color: #ff5757 !important;
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    text-align: center;
+    width: 100%;
+}
+
+.gear-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.gear-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 45px;
+}
+
+.gear-item:last-child {
+    border-bottom: none;
+}
+
+.gear-item-name {
+    color: #aaa;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.gear-item-value {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    background: none;
+    padding: 0;
+    text-align: right;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* === GAME CONFIGURATION HEADER STYLES === */
+#game-section .card-header {
+    text-align: center;
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-bottom: 2px solid #AEA6FD !important;
+}
+
+#game-section .card-header h3 {
+    color: #ffffff !important;
+    font-size: 1.3rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    width: 100%;
+}
+
+/* === CONFIG CARDS === */
+.config-card {
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+}
+
+.config-card:hover {
+    border-color: #444;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    background: rgba(30, 30, 30, 0.95);
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+}
+
+.card-content {
+    padding: 1.5rem;
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === SETTINGS ROW LAYOUT (NOW 2-COLUMN GRID) === */
+.settings-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    align-content: start;
+}
+
+.setting-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 50px;
+    height: 50px;
+}
+
+.setting-group:last-child {
+    border-bottom: none;
+}
+
+.empty-setting {
+    border-bottom: none !important;
+    min-height: 30px;
+    height: 30px;
+}
+
+.setting-name {
+    color: #aaa;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    white-space: nowrap;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.setting-value {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    background: none;
+    border-left: none;
+    min-height: auto;
+    padding: 0;
+    text-align: right;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* === WHITE COMMANDS STYLES === */
+.white-commands {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-top: 1.2rem;
+    flex: 1;
+}
+
+.white-commands .commands-text {
+    color: #333 !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem;
+    word-break: break-all;
+    font-family: monospace;
+    flex: 1;
+    line-height: 1.4;
+}
+
+.white-copy-btn {
+    background: rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #666 !important;
+    color: #333 !important;
+    padding: 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.white-copy-btn:hover {
+    background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* === LAUNCH OPTIONS CARD === */
+.launch-card {
+    grid-column: 1 / -1;
+}
+
+.launch-options-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(174, 166, 253, 0.1);
+    border: 1px solid rgba(174, 166, 253, 0.3);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    flex: 1;
+}
+
+.launch-options-text {
+    color: #AEA6FD;
+    font-weight: 700;
+    font-size: 1rem;
+    word-break: break-all;
+    font-family: monospace;
+    flex: 1;
+    line-height: 1.4;
+}
+
+.copy-btn {
+    background: rgba(174, 166, 253, 0.2);
+    border: 1px solid #AEA6FD;
+    color: #AEA6FD;
+    padding: 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.copy-btn:hover {
+    background: rgba(174, 166, 253, 0.3);
+    transform: scale(1.05);
+}
+
+.copy-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(174, 166, 253, 0.2);
+    color: #AEA6FD;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid #AEA6FD;
+    transition: all 0.2s ease;
+}
+
+.download-btn:hover {
+    background: rgba(174, 166, 253, 0.3);
+    transform: translateY(-3px);
+}
+
+.download-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* === FOOTER === */
+.footer {
+    background: rgba(12, 12, 12, 0.98);
+    border-top: 1px solid #2a2a2a;
+    margin-top: auto;
+    padding: 2rem 0;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-content p {
+    color: #888;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.footer-content a {
+    color: #AEA6FD;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+/* === PERFORMANCE OPTIMIZATIONS === */
+.config-card,
+.gear-card,
+.profile-card,
+.download-card {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1400px) {
+    .video-columns-grid {
+        grid-template-columns: repeat(2, minmax(400px, 1fr));
+    }
+    
+    .gear-categories-grid {
+        grid-template-columns: repeat(2, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 1200px) {
+    .video-columns-grid {
+        grid-template-columns: repeat(2, minmax(350px, 1fr));
+    }
+    
+    .nav-buttons {
+        max-width: 800px;
+    }
+    
+    .section-title-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    .profile-section {
+        padding: 1.5rem 0 0.8rem;
+    }
+    
+    .profile-card {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+    
+    .player-name-container {
+        gap: 1rem;
+    }
+    
+    .player-name {
+        font-size: 2rem;
+    }
+    
+    .plugins-title {
+        font-size: 1.2rem;
+    }
+    
+    .plugins-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .player-meta {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .meta-item {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .nav-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .nav-btn {
+        padding: 1rem 1.8rem;
+        min-width: 100%;
+    }
+    
+    .equal-columns-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .video-columns-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gear-categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .settings-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .setting-group {
+        min-height: 45px;
+        height: auto;
+        padding: 0.7rem 0;
+    }
+    
+    .video-setting {
+        min-height: 40px;
+        padding: 0.6rem 0;
+    }
+    
+    .video-setting-name {
+        font-size: 0.9rem;
+    }
+    
+    .video-setting-value {
+        font-size: 0.95rem;
+        max-width: 150px;
+    }
+    
+    .gear-item {
+        min-height: 40px;
+        padding: 0.6rem 0;
+    }
+    
+    .gear-item-name {
+        font-size: 0.9rem;
+    }
+    
+    .gear-item-value {
+        font-size: 0.95rem;
+    }
+    
+    .autoexec-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .code-content {
+        font-size: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .bind-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .bind-action {
+        align-self: flex-start;
+    }
+    
+    .binds-header-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .binds-column-header {
+        font-size: 1rem;
+    }
+    
+    .home-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-card {
+        padding: 1.2rem;
+    }
+    
+    .player-name {
+        font-size: 1.8rem;
+    }
+    
+    .plugins-title {
+        font-size: 1.1rem;
+    }
+    
+    .profile-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        min-width: 70px;
+    }
+    
+    .home-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .card-content {
+        padding: 0.8rem 1.2rem;
+    }
+    
+    .download-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .setting-name {
+        font-size: 1rem;
+    }
+    
+    .setting-value {
+        font-size: 1.1rem;
+    }
+    
+    .video-setting {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+        min-height: auto;
+        padding: 0.8rem 0;
+    }
+    
+    .video-setting-value {
+        align-self: flex-start;
+        max-width: 100%;
+    }
+    
+    .gear-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+        min-height: auto;
+        padding: 0.8rem 0;
+    }
+    
+    .gear-item-value {
+        align-self: flex-start;
+    }
+    
+    .code-content {
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+    
+    .config-path {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+    }
+    
+    .binds-commands-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .binds-commands-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* === ENHANCED GRID FOR LARGER SCREENS === */
+@media (min-width: 1200px) {
+    .equal-columns-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* === PRINT STYLES === */
+@media print {
+    .config-card,
+    .gear-card,
+    .profile-card,
+    .download-card {
+        background: white;
+        color: black;
+        border: 1px solid #ccc;
+    }
+}

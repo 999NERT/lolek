@@ -8,13 +8,18 @@ async function loadLatestVideo() {
   const err = document.getElementById("videoError");
   const loader = document.querySelector(".yt-loader");
 
+  // Reset stanu
   if(err) err.style.display = "none";
   if(btn) btn.style.display = "none";
   if(img) img.style.display = "none";
-  if(loader) loader.style.display = "flex";
+  if(loader) {
+    loader.style.display = "flex";
+  }
 
   try {
     const res = await fetch(proxy);
+    if (!res.ok) throw new Error("Błąd sieci");
+    
     const data = await res.json();
     const xml = new DOMParser().parseFromString(data.contents, "application/xml");
     const entries = xml.getElementsByTagName("entry");
@@ -24,18 +29,20 @@ async function loadLatestVideo() {
     let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
     const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
-    if(btn) btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+    if(btn) {
+      btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+      btn.style.display = "block";
+    }
+    
     if(img){
       img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       img.onload = () => {
         img.style.display = "block";
-        if(btn) btn.style.display = "block";
         if(loader) loader.style.display = "none";
       };
       img.onerror = () => {
         img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         img.style.display = "block";
-        if(btn) btn.style.display = "block";
         if(loader) loader.style.display = "none";
       };
     }
@@ -90,7 +97,7 @@ async function checkStreamStatus() {
   // Discord
   if(discord){
     discord.textContent = "JOIN";
-    discord.classList.add("join"); // kolor można ustawić w CSS
+    discord.classList.add("join");
   }
 }
 

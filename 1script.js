@@ -246,4 +246,15 @@
         }
     });
     
+        // Setup autoexec download functionality
+    function setupAutoexecDownload() {
+        const downloadBtn = document.querySelector('.download-btn[download]');
+        if (downloadBtn) {
+            // Ensure the download works properly
+            downloadBtn.addEventListener('click', function(e) {
+                // Let the browser handle the download naturally
+                console.log('Downloading autoexec.cfg');
+            });
+        }
+    }
 })();

@@ -24,8 +24,10 @@
         
         // Setup mini launch options copy
         setupMiniLaunchCopy();
+        
+        // Setup autoexec download functionality
+        setupAutoexecDownload();
     }
-    
     // Usunięta funkcja setupNavigation() ponieważ nawigacja działa przez linki
     
     function setupCopyButtons() {

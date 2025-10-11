@@ -6,9 +6,9 @@
 }
 
 :root {
-    --kick-purple: #53fc18;
-    --kick-purple-dark: #40c113;
-    --kick-purple-light: #79fd4e;
+    --kick-green: #53fc18;
+    --kick-green-dark: #40c113;
+    --kick-green-light: #79fd4e;
     --background-dark: #0e0e10;
     --background-card: #18181b;
     --background-hover: #1f1f23;
@@ -29,6 +29,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     font-size: 14px;
+    overflow-x: hidden;
 }
 
 .container {
@@ -51,9 +52,9 @@ header {
 }
 
 .logo h1 {
-    color: var(--kick-purple);
-    font-size: 28px;
-    font-weight: 700;
+    color: var(--kick-green);
+    font-size: 32px;
+    font-weight: 800;
     letter-spacing: -0.5px;
 }
 
@@ -91,11 +92,16 @@ header {
     font-weight: 500;
 }
 
-.channel-info {
+.participants-stats {
     background-color: var(--background-hover);
     padding: 6px 12px;
     border-radius: 6px;
-    font-weight: 500;
+    font-size: 14px;
+}
+
+#live-participants {
+    color: var(--kick-green);
+    font-weight: 700;
 }
 
 .main-content {
@@ -178,16 +184,14 @@ input, select {
 
 input:focus, select:focus {
     outline: none;
-    border-color: var(--kick-purple);
+    border-color: var(--kick-green);
 }
 
-.input-with-button {
-    display: flex;
-    gap: 10px;
-}
-
-.input-with-button input {
-    flex: 1;
+.input-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
 }
 
 .checkbox-group {
@@ -201,34 +205,45 @@ input:focus, select:focus {
 }
 
 button {
-    background-color: var(--kick-purple);
-    color: white;
+    background-color: var(--kick-green);
+    color: #000;
     border: none;
     padding: 10px 16px;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    transition: all 0.2s;
     white-space: nowrap;
 }
 
 button:hover:not(:disabled) {
-    background-color: var(--kick-purple-dark);
+    background-color: var(--kick-green-dark);
+    transform: translateY(-1px);
 }
 
 button:disabled {
     background-color: var(--border-color);
+    color: var(--text-secondary);
     cursor: not-allowed;
+    transform: none;
 }
 
 .primary-btn {
-    background-color: var(--kick-purple);
-    font-weight: 600;
+    background-color: var(--kick-green);
+    font-weight: 700;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .primary-btn.large {
-    padding: 12px 20px;
+    padding: 14px 20px;
     font-size: 16px;
+}
+
+.secondary-btn {
+    background-color: var(--background-hover);
+    color: var(--text-primary);
+    width: 100%;
 }
 
 .panel-header {
@@ -247,12 +262,32 @@ button:disabled {
 .participants-count span:first-child, .winners-count span:first-child {
     font-size: 24px;
     font-weight: 700;
-    color: var(--kick-purple);
+    color: var(--kick-green);
 }
 
 .count-label {
     font-size: 12px;
     color: var(--text-secondary);
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-btn {
+    background-color: var(--background-hover);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.filter-btn.active {
+    background-color: var(--kick-green);
+    color: #000;
 }
 
 .participants-list, .winners-list {
@@ -264,6 +299,16 @@ button:disabled {
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
     max-height: 400px;
+    min-height: 200px;
+}
+
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-secondary);
+    text-align: center;
 }
 
 .participant-item, .winner-item {
@@ -274,16 +319,21 @@ button:disabled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 .participant-item:hover {
     background-color: #26262c;
+    transform: translateX(2px);
+}
+
+.participant-item.new {
+    animation: highlightNew 1s ease;
 }
 
 .winner-item {
     background-color: rgba(83, 252, 24, 0.1);
-    border-left: 3px solid var(--kick-purple);
+    border-left: 3px solid var(--kick-green);
 }
 
 .user-badge {
@@ -317,6 +367,21 @@ button:disabled {
     margin-top: 25px;
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
+}
+
+@keyframes highlightNew {
+    0% { background-color: rgba(83, 252, 24, 0.3); }
+    100% { background-color: var(--background-hover); }
+}
+
+@keyframes highlightWinner {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.winner-item.highlight {
+    animation: highlightWinner 0.5s ease-in-out 3;
 }
 
 @media (max-width: 1024px) {
@@ -359,4 +424,25 @@ button:disabled {
 .participants-list::-webkit-scrollbar-thumb:hover,
 .winners-list::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--kick-green);
+    color: #000;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    font-weight: 600;
+    max-width: 400px;
+    transition: opacity 0.5s;
+}
+
+.notification.error {
+    background-color: var(--danger);
+    color: white;
 }

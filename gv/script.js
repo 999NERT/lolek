@@ -1,9 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Elementy DOM
-    const channelInput = document.getElementById('channel-input');
-    const connectBtn = document.getElementById('connect-btn');
-    const connectionStatus = document.getElementById('connection-status');
-    const channelName = document.getElementById('channel-name');
     const keywordInput = document.getElementById('keyword-input');
     const winnersCountInput = document.getElementById('winners-count');
     const subscribersOnlyCheckbox = document.getElementById('subscribers-only');
@@ -11,142 +7,95 @@ document.addEventListener('DOMContentLoaded', function() {
     const winnerConfirmationCheckbox = document.getElementById('winner-confirmation');
     const confirmationTimeInput = document.getElementById('confirmation-time');
     const confirmationTimeContainer = document.getElementById('confirmation-time-container');
-    const animationTypeSelect = document.getElementById('animation-type');
     const announceWinnerCheckbox = document.getElementById('announce-winner');
     const preventDuplicatesCheckbox = document.getElementById('prevent-duplicates');
     const startGiveawayBtn = document.getElementById('start-giveaway');
+    const stopGiveawayBtn = document.getElementById('stop-giveaway');
+    const resetBtn = document.getElementById('reset-btn');
     const participantsList = document.getElementById('participants-list');
     const participantsCount = document.getElementById('participants-count');
     const winnersList = document.getElementById('winners-list');
     const winnersCount = document.getElementById('winners-count');
     const rollBtn = document.getElementById('roll-btn');
+    const connectionStatus = document.getElementById('connection-status');
+    const liveParticipants = document.getElementById('live-participants');
+    const filterBtns = document.querySelectorAll('.filter-btn');
 
     // Stan aplikacji
-    let isConnected = false;
-    let currentChannel = '';
     let participants = [];
     let winners = [];
     let giveawayActive = false;
-    let keyword = '';
+    let keyword = '!slot';
     let chatConnection = null;
-
-    // Przykładowi użytkownicy z różnymi rolami
-    const sampleUsers = [
-        { username: 'EnhatUkalo', role: 'user', isSubscriber: false },
-        { username: 'izmirl_all', role: 'user', isSubscriber: true },
-        { username: 'Mirac0909', role: 'user', isSubscriber: false },
-        { username: 'T0RE770', role: 'user', isSubscriber: true },
-        { username: 'Vaquer71', role: 'mod', isSubscriber: true },
-        { username: 'BetulKarakus', role: 'user', isSubscriber: false },
-        { username: 'mmaras', role: 'vip', isSubscriber: true },
-        { username: '00theoo22', role: 'user', isSubscriber: false },
-        { username: '01Cagri', role: 'user', isSubscriber: true },
-        { username: '05utku', role: 'user', isSubscriber: false },
-        { username: '06nazim06', role: 'user', isSubscriber: true },
-        { username: '12kingof1', role: 'user', isSubscriber: false },
-        { username: '1eren0', role: 'user', isSubscriber: true },
-        { username: '1kn1fe', role: 'user', isSubscriber: false },
-        { username: '1profbey', role: 'broadcaster', isSubscriber: true },
-        { username: '1rpa11', role: 'user', isSubscriber: false },
-        { username: '1tronmercy', role: 'user', isSubscriber: true },
-        { username: '2080s', role: 'user', isSubscriber: false },
-        { username: '24elpatron24', role: 'user', isSubscriber: true },
-        { username: '27cnwr27', role: 'user', isSubscriber: false },
-        { username: '34Yusuf341', role: 'user', isSubscriber: true },
-        { username: '4averalpha', role: 'user', isSubscriber: false },
-        { username: 'RyzeNfp', role: 'user', isSubscriber: false },
-        { username: 'samiellucifer', role: 'user', isSubscriber: true },
-        { username: 'burakvurafl8', role: 'user', isSubscriber: false },
-        { username: 'BleachNic', role: 'user', isSubscriber: true },
-        { username: 'gkhanx10', role: 'user', isSubscriber: false },
-        { username: 'itygoi', role: 'user', isSubscriber: true },
-        { username: 'furkanrityaki', role: 'user', isSubscriber: false },
-        { username: 'lesthli', role: 'user', isSubscriber: true },
-        { username: 'burakzv026', role: 'user', isSubscriber: false },
-        { username: 'GANGSTER00', role: 'user', isSubscriber: true },
-        { username: 'zorbaking58', role: 'user', isSubscriber: false },
-        { username: 'mirackazmacı', role: 'user', isSubscriber: true },
-        { username: 'phirtekmek', role: 'user', isSubscriber: false }
-    ];
+    let currentFilter = 'all';
 
     // Obsługa checkboxa potwierdzenia zwycięzcy
     winnerConfirmationCheckbox.addEventListener('change', function() {
         confirmationTimeContainer.style.display = this.checked ? 'block' : 'none';
     });
 
-    // Funkcja do łączenia z kanałem
-    connectBtn.addEventListener('click', function() {
-        const channel = channelInput.value.trim();
-        if (!channel) {
-            alert('Proszę wprowadzić nazwę kanału');
-            return;
-        }
-
-        if (isConnected) {
-            // Rozłącz
-            disconnectFromChannel();
-        } else {
-            // Połącz
-            connectToChannel(channel);
-        }
+    // Filtrowanie uczestników
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            updateParticipantsList();
+        });
     });
-
-    // Funkcja łączenia z kanałem
-    function connectToChannel(channel) {
-        // W rzeczywistości tutaj byłoby połączenie z WebSocket Kick.com
-        // Na potrzeby demonstracji symulujemy połączenie
-        
-        isConnected = true;
-        currentChannel = channel;
-        
-        // Aktualizacja interfejsu
-        connectionStatus.classList.add('connected');
-        connectionStatus.querySelector('.status-text').textContent = 'Połączony';
-        channelName.textContent = channel;
-        connectBtn.textContent = 'Rozłącz';
-        startGiveawayBtn.disabled = false;
-        
-        // Symulacja odbierania wiadomości z czatu
-        simulateChatConnection();
-        
-        console.log(`Połączono z kanałem: ${channel}`);
-    }
-
-    // Funkcja rozłączania z kanałem
-    function disconnectFromChannel() {
-        isConnected = false;
-        
-        // Aktualizacja interfejsu
-        connectionStatus.classList.remove('connected');
-        connectionStatus.querySelector('.status-text').textContent = 'Rozłączony';
-        connectBtn.textContent = 'Połącz';
-        startGiveawayBtn.disabled = true;
-        rollBtn.disabled = true;
-        
-        // Resetowanie danych
-        participants = [];
-        winners = [];
-        updateParticipantsList();
-        updateWinnersList();
-        giveawayActive = false;
-        
-        console.log('Rozłączono z kanałem');
-    }
 
     // Funkcja do rozpoczęcia giveaway
     startGiveawayBtn.addEventListener('click', function() {
-        if (!isConnected) return;
-
         keyword = keywordInput.value.trim();
+        if (!keyword) {
+            showNotification('Proszę wprowadzić słowo kluczowe!', true);
+            return;
+        }
+
         giveawayActive = true;
         participants = [];
         updateParticipantsList();
         rollBtn.disabled = false;
+        startGiveawayBtn.disabled = true;
+        stopGiveawayBtn.disabled = false;
 
-        // Dodaj przykładowych uczestników
-        addParticipantsFromChat();
+        // Rozpocznij połączenie z czatem
+        connectToChat();
         
-        console.log('Giveaway rozpoczęty' + (keyword ? ` z słowem kluczowym: ${keyword}` : ''));
+        showNotification(`Losowanie rozpoczęte! Słowo kluczowe: ${keyword}`);
+        console.log('Losowanie rozpoczęte z słowem kluczowym: ' + keyword);
+    });
+
+    // Funkcja do zatrzymania giveaway
+    stopGiveawayBtn.addEventListener('click', function() {
+        giveawayActive = false;
+        startGiveawayBtn.disabled = false;
+        stopGiveawayBtn.disabled = true;
+        
+        // Zatrzymaj połączenie z czatem
+        disconnectFromChat();
+        
+        showNotification('Losowanie zatrzymane');
+        console.log('Losowanie zatrzymane');
+    });
+
+    // Funkcja resetowania
+    resetBtn.addEventListener('click', function() {
+        if (confirm('Czy na pewno chcesz zresetować losowanie? Wszyscy uczestnicy i zwycięzcy zostaną usunięci.')) {
+            participants = [];
+            winners = [];
+            updateParticipantsList();
+            updateWinnersList();
+            rollBtn.disabled = true;
+            startGiveawayBtn.disabled = false;
+            stopGiveawayBtn.disabled = true;
+            giveawayActive = false;
+            
+            disconnectFromChat();
+            
+            showNotification('Losowanie zresetowane');
+            console.log('Losowanie zresetowane');
+        }
     });
 
     // Funkcja do losowania zwycięzców
@@ -180,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (eligibleParticipants.length === 0) {
-            alert('Brak kwalifikujących się uczestników!');
+            showNotification('Brak kwalifikujących się uczestników!', true);
             return;
         }
 
@@ -209,6 +158,11 @@ document.addEventListener('DOMContentLoaded', function() {
         updateWinnersList();
         giveawayActive = false;
         rollBtn.disabled = true;
+        stopGiveawayBtn.disabled = true;
+        startGiveawayBtn.disabled = false;
+        
+        // Zatrzymaj połączenie z czatem
+        disconnectFromChat();
         
         // Jeśli opcja jest włączona, ogłoś zwycięzcę
         if (announceWinnerCheckbox.checked) {
@@ -222,20 +176,33 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateParticipantsList() {
         participantsList.innerHTML = '';
         participantsCount.textContent = participants.length;
+        liveParticipants.textContent = participants.length;
 
         if (participants.length === 0) {
             const emptyMessage = document.createElement('div');
-            emptyMessage.className = 'participant-item';
-            emptyMessage.textContent = 'Brak uczestników';
-            emptyMessage.style.justifyContent = 'center';
-            emptyMessage.style.color = 'var(--text-secondary)';
+            emptyMessage.className = 'empty-state';
+            emptyMessage.innerHTML = '<p>Rozpocznij losowanie, aby zobaczyć uczestników</p>';
             participantsList.appendChild(emptyMessage);
             return;
         }
 
-        participants.forEach(participant => {
+        // Filtruj uczestników
+        let filteredParticipants = [...participants];
+        if (currentFilter === 'sub') {
+            filteredParticipants = filteredParticipants.filter(p => p.isSubscriber);
+        } else if (currentFilter === 'vip') {
+            filteredParticipants = filteredParticipants.filter(p => p.role === 'vip');
+        } else if (currentFilter === 'mod') {
+            filteredParticipants = filteredParticipants.filter(p => p.role === 'mod');
+        }
+
+        filteredParticipants.forEach(participant => {
             const participantItem = document.createElement('div');
             participantItem.className = 'participant-item';
+            if (participant.isNew) {
+                participantItem.classList.add('new');
+                participant.isNew = false; // Reset flag after animation
+            }
             
             const usernameSpan = document.createElement('span');
             usernameSpan.textContent = participant.username;
@@ -269,10 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (winners.length === 0) {
             const emptyMessage = document.createElement('div');
-            emptyMessage.className = 'winner-item';
-            emptyMessage.textContent = 'Brak zwycięzców';
-            emptyMessage.style.justifyContent = 'center';
-            emptyMessage.style.color = 'var(--text-secondary)';
+            emptyMessage.className = 'empty-state';
+            emptyMessage.innerHTML = '<p>Brak zwycięzców</p>';
             winnersList.appendChild(emptyMessage);
             return;
         }
@@ -304,27 +269,24 @@ document.addEventListener('DOMContentLoaded', function() {
             winnerItem.appendChild(badgesSpan);
             winnersList.appendChild(winnerItem);
         });
-    }
 
-    // Funkcja do dodawania uczestników na podstawie czatu
-    function addParticipantsFromChat() {
-        // W rzeczywistości tutaj uczestnicy byliby dodawani na podstawie wiadomości z czatu
-        // Na potrzeby demonstracji używamy przykładowych użytkowników
-        
-        sampleUsers.forEach(user => {
-            if (!participants.some(p => p.username === user.username)) {
-                participants.push(user);
-            }
+        // Animacja zwycięzców
+        const winnerItems = winnersList.querySelectorAll('.winner-item');
+        winnerItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('highlight');
+                setTimeout(() => {
+                    item.classList.remove('highlight');
+                }, 1500);
+            }, index * 200);
         });
-        
-        updateParticipantsList();
     }
 
     // Funkcja do ogłaszania zwycięzców
     function announceWinners() {
         if (winners.length === 0) return;
         
-        let announcement = 'Zwycięzcy giveaway: ';
+        let announcement = '🎉 Zwycięzcy losowania: ';
         winners.forEach((winner, index) => {
             announcement += winner.username;
             if (index < winners.length - 1) {
@@ -332,47 +294,144 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // W rzeczywistości tutaj byłoby wysłanie wiadomości na czat
-        console.log('Ogłaszanie zwycięzców: ' + announcement);
-        alert(announcement);
+        showNotification(announcement);
     }
 
-    // Symulacja połączenia z czatem
-    function simulateChatConnection() {
-        // W rzeczywistości tutaj byłoby prawdziwe połączenie WebSocket z Kick.com
-        console.log('Symulowanie połączenia z czatem...');
+    // Funkcja do pokazywania powiadomień
+    function showNotification(message, isError = false) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${isError ? 'error' : ''}`;
+        notification.textContent = message;
         
-        // Symulacja dodawania uczestników co kilka sekund
-        let addedUsers = 0;
-        const addUserInterval = setInterval(() => {
-            if (!isConnected) {
-                clearInterval(addUserInterval);
-                return;
-            }
-            
-            if (addedUsers < sampleUsers.length) {
-                const user = sampleUsers[addedUsers];
-                
-                // Jeśli giveaway jest aktywny, dodaj użytkownika do uczestników
-                if (giveawayActive) {
-                    // Sprawdź, czy użytkownik spełnia warunki (słowo kluczowe itp.)
-                    if (!keyword || Math.random() > 0.5) { // Symulacja użycia słowa kluczowego
-                        if (!participants.some(p => p.username === user.username)) {
-                            participants.push(user);
-                            updateParticipantsList();
-                        }
-                    }
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
                 }
-                
-                addedUsers++;
-            } else {
-                clearInterval(addUserInterval);
-            }
-        }, 1000);
+            }, 500);
+        }, 5000);
     }
 
-    // Automatyczne połączenie z kanałem angelkacs po załadowaniu strony
-    window.addEventListener('load', function() {
-        connectToChannel('angelkacs');
+    // Funkcja do łączenia z czatem Kick.com
+    function connectToChat() {
+        // Aktualizacja statusu połączenia
+        connectionStatus.classList.add('connected');
+        connectionStatus.querySelector('.status-text').textContent = 'Połączono z czatem';
+        
+        // Symulacja połączenia z czatem Kick.com
+        // W rzeczywistości tutaj byłoby prawdziwe połączenie WebSocket z Kick API
+        console.log('Łączenie z czatem kick.com/angelkacs...');
+        
+        // Symulacja odbierania wiadomości z czatu
+        simulateChatMessages();
+    }
+
+    // Funkcja do rozłączania z czatem
+    function disconnectFromChat() {
+        connectionStatus.classList.remove('connected');
+        connectionStatus.querySelector('.status-text').textContent = 'Rozłączony';
+        
+        // Zatrzymanie symulacji czatu
+        if (chatConnection) {
+            clearInterval(chatConnection);
+            chatConnection = null;
+        }
+        
+        console.log('Rozłączono z czatem');
+    }
+
+    // Symulacja odbierania wiadomości z czatu
+    function simulateChatMessages() {
+        // W rzeczywistości tutaj byłoby prawdziwe połączenie WebSocket
+        // Na potrzeby demonstracji symulujemy otrzymywanie wiadomości
+        
+        chatConnection = setInterval(() => {
+            if (!giveawayActive) return;
+            
+            // Symulacja otrzymania wiadomości z czatu
+            const simulatedUsers = [
+                { username: 'EnhatUkalo', role: 'user', isSubscriber: false },
+                { username: 'izmirl_all', role: 'user', isSubscriber: true },
+                { username: 'Mirac0909', role: 'user', isSubscriber: false },
+                { username: 'T0RE770', role: 'user', isSubscriber: true },
+                { username: 'Vaquer71', role: 'mod', isSubscriber: true },
+                { username: 'BetulKarakus', role: 'user', isSubscriber: false },
+                { username: 'mmaras', role: 'vip', isSubscriber: true },
+                { username: '00theoo22', role: 'user', isSubscriber: false },
+                { username: '01Cagri', role: 'user', isSubscriber: true },
+                { username: '05utku', role: 'user', isSubscriber: false },
+                { username: '06nazim06', role: 'user', isSubscriber: true },
+                { username: '12kingof1', role: 'user', isSubscriber: false },
+                { username: '1eren0', role: 'user', isSubscriber: true },
+                { username: '1kn1fe', role: 'user', isSubscriber: false },
+                { username: '1profbey', role: 'broadcaster', isSubscriber: true },
+                { username: '1rpa11', role: 'user', isSubscriber: false },
+                { username: '1tronmercy', role: 'user', isSubscriber: true },
+                { username: '2080s', role: 'user', isSubscriber: false },
+                { username: '24elpatron24', role: 'user', isSubscriber: true },
+                { username: '27cnwr27', role: 'user', isSubscriber: false },
+                { username: '34Yusuf341', role: 'user', isSubscriber: true },
+                { username: '4averalpha', role: 'user', isSubscriber: false }
+            ];
+            
+            const randomUser = simulatedUsers[Math.floor(Math.random() * simulatedUsers.length)];
+            const randomMessage = Math.random() > 0.7 ? keyword : `jakas_inna_wiadomosc_${Math.random()}`;
+            
+            // Sprawdzamy, czy wiadomość zawiera słowo kluczowe
+            if (randomMessage.includes(keyword)) {
+                // Sprawdzamy, czy użytkownik już jest na liście
+                if (!participants.some(p => p.username === randomUser.username)) {
+                    randomUser.isNew = true; // Flaga dla animacji
+                    participants.push(randomUser);
+                    updateParticipantsList();
+                    
+                    console.log(`Dodano uczestnika: ${randomUser.username} (${randomUser.role})`);
+                }
+            }
+        }, 2000); // Nowa wiadomość co 2 sekundy
+    }
+
+    // Zabezpieczenie przed otwarciem konsoli (podstawowe)
+    window.addEventListener('keydown', function(e) {
+        // F12
+        if (e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
+        // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+            e.preventDefault();
+            return false;
+        }
+        // Ctrl+Shift+J
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+            e.preventDefault();
+            return false;
+        }
+        // Ctrl+U
+        if (e.ctrlKey && e.keyCode === 85) {
+            e.preventDefault();
+            return false;
+        }
     });
+
+    // Zabezpieczenie przed kliknięciem prawym przyciskiem myszy
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // Zabezpieczenie przed opuszczeniem strony
+    window.addEventListener('beforeunload', function(e) {
+        if (giveawayActive) {
+            e.preventDefault();
+            e.returnValue = 'Czy na pewno chcesz opuścić stronę? Trwające losowanie zostanie przerwane.';
+        }
+    });
+
+    console.log('Strona LOSOWANIE dla kanału angelkacs została załadowana');
+    console.log('Aby rozpocząć, wprowadź słowo kluczowe i kliknij "Rozpocznij Losowanie"');
 });

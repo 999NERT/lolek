@@ -3,47 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kickaway - Giveaway Tool</title>
+    <title>LOSOWANIE</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <div class="logo">
-                <h1>Kickaway</h1>
-                <span class="subtitle">Giveaway Tool</span>
+                <h1>LOSOWANIE</h1>
+                <span class="subtitle">kick.com/angelkacs</span>
             </div>
             <div class="status-bar">
                 <div class="status-indicator" id="connection-status">
                     <span class="status-dot"></span>
                     <span class="status-text">Rozłączony</span>
                 </div>
-                <div class="channel-info">
-                    <span id="channel-name">angelkacs</span>
+                <div class="participants-stats">
+                    <span id="live-participants">0</span> uczestników na żywo
                 </div>
             </div>
         </header>
 
         <div class="main-content">
             <div class="settings-panel">
-                <h2>Ustawienia Giveaway</h2>
+                <h2>Ustawienia Losowania</h2>
                 
                 <div class="form-section">
-                    <h3>Połączenie z kanałem</h3>
+                    <h3>Parametry losowania</h3>
                     <div class="form-group">
-                        <label for="channel-input">Kanał Kick:</label>
-                        <div class="input-with-button">
-                            <input type="text" id="channel-input" value="angelkacs" placeholder="np. angelkacs">
-                            <button id="connect-btn">Połącz</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>Parametry giveaway</h3>
-                    <div class="form-group">
-                        <label for="keyword-input">Słowo kluczowe (opcjonalne):</label>
-                        <input type="text" id="keyword-input" placeholder="np. iraffle">
+                        <label for="keyword-input">Słowo kluczowe:</label>
+                        <input type="text" id="keyword-input" value="!slot" placeholder="np. !slot">
+                        <small class="input-hint">Użytkownicy muszą wpisać to słowo na czacie, aby wziąć udział</small>
                     </div>
                     
                     <div class="form-row">
@@ -75,27 +65,20 @@
                 
                 <div class="form-section">
                     <h3>Opcje dodatkowe</h3>
-                    <div class="form-group">
-                        <label for="animation-type">Animacja giveaway:</label>
-                        <select id="animation-type">
-                            <option value="wheel">Koło fortuny</option>
-                            <option value="list">Lista</option>
-                            <option value="cards">Karty</option>
-                        </select>
-                    </div>
                     
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="announce-winner">
+                        <input type="checkbox" id="announce-winner" checked>
                         <label for="announce-winner">Ogłoś zwycięzcę</label>
                     </div>
                     
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="prevent-duplicates">
+                        <input type="checkbox" id="prevent-duplicates" checked>
                         <label for="prevent-duplicates">Zapobiegaj ponownemu wygrywaniu</label>
                     </div>
                 </div>
                 
-                <button id="start-giveaway" class="primary-btn" disabled>Rozpocznij Giveaway</button>
+                <button id="start-giveaway" class="primary-btn">Rozpocznij Losowanie</button>
+                <button id="stop-giveaway" class="secondary-btn" disabled>Zatrzymaj Losowanie</button>
             </div>
 
             <div class="participants-panel">
@@ -107,8 +90,17 @@
                     </div>
                 </div>
                 
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Wszyscy</button>
+                    <button class="filter-btn" data-filter="sub">Subskrybenci</button>
+                    <button class="filter-btn" data-filter="vip">VIP</button>
+                    <button class="filter-btn" data-filter="mod">Moderatorzy</button>
+                </div>
+                
                 <div class="participants-list" id="participants-list">
-                    <!-- Lista uczestników będzie się tutaj wyświetlać -->
+                    <div class="empty-state">
+                        <p>Rozpocznij losowanie, aby zobaczyć uczestników</p>
+                    </div>
                 </div>
                 
                 <div class="winners-section">
@@ -121,10 +113,13 @@
                     </div>
                     
                     <div class="winners-list" id="winners-list">
-                        <!-- Lista zwycięzców będzie się tutaj wyświetlać -->
+                        <div class="empty-state">
+                            <p>Brak zwycięzców</p>
+                        </div>
                     </div>
                     
                     <button id="roll-btn" class="primary-btn large" disabled>Losuj Zwycięzcę</button>
+                    <button id="reset-btn" class="secondary-btn">Resetuj Losowanie</button>
                 </div>
             </div>
         </div>

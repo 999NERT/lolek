@@ -9,79 +9,123 @@
 <body>
     <div class="container">
         <header>
-            <h1>Kickaway Giveaway Tool</h1>
+            <div class="logo">
+                <h1>Kickaway</h1>
+                <span class="subtitle">Giveaway Tool</span>
+            </div>
             <div class="status-bar">
-                <span id="connection-status">Rozłączony</span>
-                <span id="channel-name"></span>
+                <div class="status-indicator" id="connection-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Rozłączony</span>
+                </div>
+                <div class="channel-info">
+                    <span id="channel-name">angelkacs</span>
+                </div>
             </div>
         </header>
 
         <div class="main-content">
             <div class="settings-panel">
-                <h2>Ustawienia</h2>
-                <div class="form-group">
-                    <label for="channel-input">Kanał Kick:</label>
-                    <input type="text" id="channel-input" placeholder="np. angelkacs">
-                    <button id="connect-btn">Połącz</button>
+                <h2>Ustawienia Giveaway</h2>
+                
+                <div class="form-section">
+                    <h3>Połączenie z kanałem</h3>
+                    <div class="form-group">
+                        <label for="channel-input">Kanał Kick:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="channel-input" value="angelkacs" placeholder="np. angelkacs">
+                            <button id="connect-btn">Połącz</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="keyword-input">Słowo kluczowe (opcjonalne):</label>
-                    <input type="text" id="keyword-input" placeholder="np. iraffle">
+                
+                <div class="form-section">
+                    <h3>Parametry giveaway</h3>
+                    <div class="form-group">
+                        <label for="keyword-input">Słowo kluczowe (opcjonalne):</label>
+                        <input type="text" id="keyword-input" placeholder="np. iraffle">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half-width">
+                            <label for="winners-count">Liczba zwycięzców:</label>
+                            <input type="number" id="winners-count" value="1" min="1">
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="subscriber-multiplier">Mnożnik subskrybentów:</label>
+                            <input type="number" id="subscriber-multiplier" value="1" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="subscribers-only">
+                        <label for="subscribers-only">Tylko subskrybenci</label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="winner-confirmation">
+                        <label for="winner-confirmation">Potwierdzenie zwycięzcy</label>
+                    </div>
+                    
+                    <div class="form-group" id="confirmation-time-container" style="display: none;">
+                        <label for="confirmation-time">Czas potwierdzenia (sekundy):</label>
+                        <input type="number" id="confirmation-time" value="30" min="1">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="winners-count">Liczba zwycięzców:</label>
-                    <input type="number" id="winners-count" value="1" min="1">
+                
+                <div class="form-section">
+                    <h3>Opcje dodatkowe</h3>
+                    <div class="form-group">
+                        <label for="animation-type">Animacja giveaway:</label>
+                        <select id="animation-type">
+                            <option value="wheel">Koło fortuny</option>
+                            <option value="list">Lista</option>
+                            <option value="cards">Karty</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="announce-winner">
+                        <label for="announce-winner">Ogłoś zwycięzcę</label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="prevent-duplicates">
+                        <label for="prevent-duplicates">Zapobiegaj ponownemu wygrywaniu</label>
+                    </div>
                 </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="subscribers-only">
-                    <label for="subscribers-only">Tylko subskrybenci</label>
-                </div>
-                <div class="form-group">
-                    <label for="subscriber-multiplier">Mnożnik subskrybentów:</label>
-                    <input type="number" id="subscriber-multiplier" value="1" min="1">
-                </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="winner-confirmation">
-                    <label for="winner-confirmation">Potwierdzenie zwycięzcy (dla jednego zwycięzcy)</label>
-                </div>
-                <div class="form-group">
-                    <label for="confirmation-time">Czas potwierdzenia (sekundy):</label>
-                    <input type="number" id="confirmation-time" value="30" min="1">
-                </div>
-                <div class="form-group">
-                    <label for="animation-type">Animacja giveaway:</label>
-                    <select id="animation-type">
-                        <option value="wheel">Koło fortuny</option>
-                        <option value="list">Lista</option>
-                        <option value="cards">Karty</option>
-                    </select>
-                </div>
-                <button id="start-giveaway" disabled>Rozpocznij Giveaway</button>
+                
+                <button id="start-giveaway" class="primary-btn" disabled>Rozpocznij Giveaway</button>
             </div>
 
             <div class="participants-panel">
-                <h2>Uczestnicy (<span id="participants-count">0</span>)</h2>
+                <div class="panel-header">
+                    <h2>Uczestnicy</h2>
+                    <div class="participants-count">
+                        <span id="participants-count">0</span>
+                        <span class="count-label">uczestników</span>
+                    </div>
+                </div>
+                
                 <div class="participants-list" id="participants-list">
                     <!-- Lista uczestników będzie się tutaj wyświetlać -->
                 </div>
+                
                 <div class="winners-section">
-                    <h3>Zwycięzcy (<span id="winners-count">0</span>)</h3>
+                    <div class="panel-header">
+                        <h3>Zwycięzcy</h3>
+                        <div class="winners-count">
+                            <span id="winners-count">0</span>
+                            <span class="count-label">zwycięzców</span>
+                        </div>
+                    </div>
+                    
                     <div class="winners-list" id="winners-list">
                         <!-- Lista zwycięzców będzie się tutaj wyświetlać -->
                     </div>
-                    <button id="roll-btn" disabled>Losuj</button>
+                    
+                    <button id="roll-btn" class="primary-btn large" disabled>Losuj Zwycięzcę</button>
                 </div>
-            </div>
-        </div>
-
-        <div class="chat-panel">
-            <h2>Czat</h2>
-            <div class="chat-container" id="chat-container">
-                <!-- Wiadomości czatu będą się tutaj wyświetlać -->
-            </div>
-            <div class="chat-input-container">
-                <input type="text" id="chat-input" placeholder="Wyślij wiadomość" disabled>
-                <button id="send-btn" disabled>Wyślij</button>
             </div>
         </div>
     </div>

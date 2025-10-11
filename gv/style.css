@@ -2,13 +2,33 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --kick-purple: #53fc18;
+    --kick-purple-dark: #40c113;
+    --kick-purple-light: #79fd4e;
+    --background-dark: #0e0e10;
+    --background-card: #18181b;
+    --background-hover: #1f1f23;
+    --text-primary: #efeff1;
+    --text-secondary: #adadb8;
+    --border-color: #3a3a3d;
+    --success: #00c030;
+    --danger: #e91916;
+    --warning: #ffd400;
+    --broadcaster: #e91916;
+    --vip: #ff69b4;
+    --mod: #00c030;
+    --subscriber: #53fc18;
 }
 
 body {
-    background-color: #0e0e10;
-    color: #efeff1;
+    background-color: var(--background-dark);
+    color: var(--text-primary);
     line-height: 1.6;
+    font-size: 14px;
 }
 
 .container {
@@ -21,34 +41,61 @@ body {
 }
 
 header {
-    background-color: #18181b;
-    padding: 15px 20px;
-    border-radius: 8px;
+    background-color: var(--background-card);
+    padding: 15px 25px;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #9147ff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    color: #9147ff;
-    font-size: 24px;
+.logo h1 {
+    color: var(--kick-purple);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-left: 8px;
 }
 
 .status-bar {
     display: flex;
-    gap: 15px;
+    gap: 20px;
+    align-items: center;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--danger);
+}
+
+.status-indicator.connected .status-dot {
+    background-color: var(--success);
+}
+
+.status-text {
     font-size: 14px;
+    font-weight: 500;
 }
 
-#connection-status {
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: #ff4d4d;
-}
-
-#connection-status.connected {
-    background-color: #4CAF50;
+.channel-info {
+    background-color: var(--background-hover);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
 }
 
 .main-content {
@@ -57,10 +104,10 @@ h1 {
 }
 
 .settings-panel, .participants-panel {
-    background-color: #18181b;
-    padding: 20px;
-    border-radius: 8px;
-    flex: 1;
+    background-color: var(--background-card);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .settings-panel {
@@ -68,34 +115,79 @@ h1 {
 }
 
 .participants-panel {
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 h2 {
-    color: #9147ff;
-    margin-bottom: 15px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
     font-size: 20px;
+    font-weight: 600;
+}
+
+h3 {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .form-group {
     margin-bottom: 15px;
 }
 
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.half-width {
+    flex: 1;
+}
+
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     font-weight: 500;
+    color: var(--text-primary);
 }
 
 input, select {
     width: 100%;
-    padding: 8px 12px;
-    background-color: #0e0e10;
-    border: 1px solid #3a3a3d;
-    border-radius: 4px;
-    color: #efeff1;
+    padding: 10px 12px;
+    background-color: var(--background-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
     font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--kick-purple);
+}
+
+.input-with-button {
+    display: flex;
+    gap: 10px;
+}
+
+.input-with-button input {
+    flex: 1;
 }
 
 .checkbox-group {
@@ -109,43 +201,80 @@ input, select {
 }
 
 button {
-    background-color: #9147ff;
+    background-color: var(--kick-purple);
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
 button:hover:not(:disabled) {
-    background-color: #772ce8;
+    background-color: var(--kick-purple-dark);
 }
 
 button:disabled {
-    background-color: #3a3a3d;
+    background-color: var(--border-color);
     cursor: not-allowed;
 }
 
-.participants-list, .winners-list {
-    background-color: #0e0e10;
-    border-radius: 4px;
-    padding: 10px;
-    height: 300px;
-    overflow-y: auto;
-    margin-bottom: 15px;
-    border: 1px solid #3a3a3d;
+.primary-btn {
+    background-color: var(--kick-purple);
+    font-weight: 600;
 }
 
-.participant-item, .winner-item {
-    padding: 8px 10px;
-    margin-bottom: 5px;
-    background-color: #1f1f23;
-    border-radius: 4px;
+.primary-btn.large {
+    padding: 12px 20px;
+    font-size: 16px;
+}
+
+.panel-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
+}
+
+.participants-count, .winners-count {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.participants-count span:first-child, .winners-count span:first-child {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--kick-purple);
+}
+
+.count-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.participants-list, .winners-list {
+    background-color: var(--background-dark);
+    border-radius: 8px;
+    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    max-height: 400px;
+}
+
+.participant-item, .winner-item {
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background-color: var(--background-hover);
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
 }
 
 .participant-item:hover {
@@ -153,86 +282,41 @@ button:disabled {
 }
 
 .winner-item {
-    background-color: #2a2a2e;
-    border-left: 3px solid #9147ff;
+    background-color: rgba(83, 252, 24, 0.1);
+    border-left: 3px solid var(--kick-purple);
 }
 
 .user-badge {
     display: inline-block;
-    padding: 2px 6px;
+    padding: 3px 8px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
     margin-left: 5px;
+    text-transform: uppercase;
 }
 
 .badge-broadcaster {
-    background-color: #e91916;
+    background-color: var(--broadcaster);
 }
 
 .badge-vip {
-    background-color: #ff69b4;
-}
-
-.badge-staff {
-    background-color: #00b3ff;
+    background-color: var(--vip);
 }
 
 .badge-mod {
-    background-color: #00c030;
+    background-color: var(--mod);
 }
 
 .badge-subscriber {
-    background-color: #9147ff;
+    background-color: var(--subscriber);
+    color: #000;
 }
 
 .winners-section {
-    margin-top: auto;
-}
-
-#roll-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-}
-
-.chat-panel {
-    background-color: #18181b;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.chat-container {
-    height: 300px;
-    overflow-y: auto;
-    background-color: #0e0e10;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #3a3a3d;
-}
-
-.chat-message {
-    padding: 8px 0;
-    border-bottom: 1px solid #2a2a2e;
-}
-
-.chat-message:last-child {
-    border-bottom: none;
-}
-
-.message-user {
-    font-weight: bold;
-    color: #9147ff;
-}
-
-.chat-input-container {
-    display: flex;
-    gap: 10px;
-}
-
-#chat-input {
-    flex: 1;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
 }
 
 @media (max-width: 1024px) {
@@ -243,4 +327,36 @@ button:disabled {
     .settings-panel {
         flex: 1;
     }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .half-width {
+        width: 100%;
+    }
+}
+
+/* Custom scrollbar */
+.participants-list::-webkit-scrollbar,
+.winners-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.participants-list::-webkit-scrollbar-track,
+.winners-list::-webkit-scrollbar-track {
+    background: var(--background-dark);
+    border-radius: 3px;
+}
+
+.participants-list::-webkit-scrollbar-thumb,
+.winners-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.participants-list::-webkit-scrollbar-thumb:hover,
+.winners-list::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
 }

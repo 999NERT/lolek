@@ -10,27 +10,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const subscriberMultiplierInput = document.getElementById('subscriber-multiplier');
     const winnerConfirmationCheckbox = document.getElementById('winner-confirmation');
     const confirmationTimeInput = document.getElementById('confirmation-time');
+    const confirmationTimeContainer = document.getElementById('confirmation-time-container');
     const animationTypeSelect = document.getElementById('animation-type');
+    const announceWinnerCheckbox = document.getElementById('announce-winner');
+    const preventDuplicatesCheckbox = document.getElementById('prevent-duplicates');
     const startGiveawayBtn = document.getElementById('start-giveaway');
     const participantsList = document.getElementById('participants-list');
     const participantsCount = document.getElementById('participants-count');
     const winnersList = document.getElementById('winners-list');
     const winnersCount = document.getElementById('winners-count');
     const rollBtn = document.getElementById('roll-btn');
-    const chatContainer = document.getElementById('chat-container');
-    const chatInput = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('send-btn');
 
     // Stan aplikacji
     let isConnected = false;
     let currentChannel = '';
     let participants = [];
     let winners = [];
-    let chatMessages = [];
     let giveawayActive = false;
     let keyword = '';
+    let chatConnection = null;
 
-    // Symulowane dane użytkowników (w prawdziwej aplikacji pobierane z API)
+    // Przykładowi użytkownicy z różnymi rolami
     const sampleUsers = [
         { username: 'EnhatUkalo', role: 'user', isSubscriber: false },
         { username: 'izmirl_all', role: 'user', isSubscriber: true },
@@ -53,27 +53,26 @@ document.addEventListener('DOMContentLoaded', function() {
         { username: '24elpatron24', role: 'user', isSubscriber: true },
         { username: '27cnwr27', role: 'user', isSubscriber: false },
         { username: '34Yusuf341', role: 'user', isSubscriber: true },
-        { username: '4averalpha', role: 'user', isSubscriber: false }
+        { username: '4averalpha', role: 'user', isSubscriber: false },
+        { username: 'RyzeNfp', role: 'user', isSubscriber: false },
+        { username: 'samiellucifer', role: 'user', isSubscriber: true },
+        { username: 'burakvurafl8', role: 'user', isSubscriber: false },
+        { username: 'BleachNic', role: 'user', isSubscriber: true },
+        { username: 'gkhanx10', role: 'user', isSubscriber: false },
+        { username: 'itygoi', role: 'user', isSubscriber: true },
+        { username: 'furkanrityaki', role: 'user', isSubscriber: false },
+        { username: 'lesthli', role: 'user', isSubscriber: true },
+        { username: 'burakzv026', role: 'user', isSubscriber: false },
+        { username: 'GANGSTER00', role: 'user', isSubscriber: true },
+        { username: 'zorbaking58', role: 'user', isSubscriber: false },
+        { username: 'mirackazmacı', role: 'user', isSubscriber: true },
+        { username: 'phirtekmek', role: 'user', isSubscriber: false }
     ];
 
-    // Symulowane wiadomości czatu
-    const sampleMessages = [
-        { username: 'RyzeNfp', message: 'Iuptime' },
-        { username: 'Moobot', message: 'Yaym 3h 44m Açık' },
-        { username: 'samiellucifer', message: 'iraffle' },
-        { username: 'burakvurafl8', message: 'iraffle' },
-        { username: 'BleachNic', message: 'iraffle' },
-        { username: 'gkhanx10', message: 'iraffle' },
-        { username: 'itygoi', message: 'iraffle' },
-        { username: 'furkanrityaki', message: 'iraffle' },
-        { username: 'samiellucifer', message: 'iraffle' },
-        { username: 'lesthli', message: 'iraffle' },
-        { username: 'burakzv026', message: 'iraffle' },
-        { username: 'GANGSTER00', message: 'iraffle' },
-        { username: 'zorbaking58', message: 'iraffle' },
-        { username: 'mirackazmacı', message: 'iraffle' },
-        { username: 'phirtekmek', message: 'iraffle' }
-    ];
+    // Obsługa checkboxa potwierdzenia zwycięzcy
+    winnerConfirmationCheckbox.addEventListener('change', function() {
+        confirmationTimeContainer.style.display = this.checked ? 'block' : 'none';
+    });
 
     // Funkcja do łączenia z kanałem
     connectBtn.addEventListener('click', function() {
@@ -85,38 +84,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isConnected) {
             // Rozłącz
-            isConnected = false;
-            connectionStatus.textContent = 'Rozłączony';
-            connectionStatus.classList.remove('connected');
-            channelName.textContent = '';
-            connectBtn.textContent = 'Połącz';
-            startGiveawayBtn.disabled = true;
-            rollBtn.disabled = true;
-            chatInput.disabled = true;
-            sendBtn.disabled = true;
-            participants = [];
-            winners = [];
-            updateParticipantsList();
-            updateWinnersList();
-            chatMessages = [];
-            updateChat();
-            giveawayActive = false;
+            disconnectFromChannel();
         } else {
-            // Połącz (symulacja)
-            isConnected = true;
-            connectionStatus.textContent = 'Połączony';
-            connectionStatus.classList.add('connected');
-            channelName.textContent = channel;
-            connectBtn.textContent = 'Rozłącz';
-            startGiveawayBtn.disabled = false;
-            chatInput.disabled = false;
-            sendBtn.disabled = false;
-            currentChannel = channel;
-
-            // Symulacja otrzymywania wiadomości czatu
-            simulateChatMessages();
+            // Połącz
+            connectToChannel(channel);
         }
     });
+
+    // Funkcja łączenia z kanałem
+    function connectToChannel(channel) {
+        // W rzeczywistości tutaj byłoby połączenie z WebSocket Kick.com
+        // Na potrzeby demonstracji symulujemy połączenie
+        
+        isConnected = true;
+        currentChannel = channel;
+        
+        // Aktualizacja interfejsu
+        connectionStatus.classList.add('connected');
+        connectionStatus.querySelector('.status-text').textContent = 'Połączony';
+        channelName.textContent = channel;
+        connectBtn.textContent = 'Rozłącz';
+        startGiveawayBtn.disabled = false;
+        
+        // Symulacja odbierania wiadomości z czatu
+        simulateChatConnection();
+        
+        console.log(`Połączono z kanałem: ${channel}`);
+    }
+
+    // Funkcja rozłączania z kanałem
+    function disconnectFromChannel() {
+        isConnected = false;
+        
+        // Aktualizacja interfejsu
+        connectionStatus.classList.remove('connected');
+        connectionStatus.querySelector('.status-text').textContent = 'Rozłączony';
+        connectBtn.textContent = 'Połącz';
+        startGiveawayBtn.disabled = true;
+        rollBtn.disabled = true;
+        
+        // Resetowanie danych
+        participants = [];
+        winners = [];
+        updateParticipantsList();
+        updateWinnersList();
+        giveawayActive = false;
+        
+        console.log('Rozłączono z kanałem');
+    }
 
     // Funkcja do rozpoczęcia giveaway
     startGiveawayBtn.addEventListener('click', function() {
@@ -128,8 +143,10 @@ document.addEventListener('DOMContentLoaded', function() {
         updateParticipantsList();
         rollBtn.disabled = false;
 
-        // Dodaj przykładowych uczestników na podstawie wiadomości czatu
+        // Dodaj przykładowych uczestników
         addParticipantsFromChat();
+        
+        console.log('Giveaway rozpoczęty' + (keyword ? ` z słowem kluczowym: ${keyword}` : ''));
     });
 
     // Funkcja do losowania zwycięzców
@@ -139,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const winnersCount = parseInt(winnersCountInput.value);
         const onlySubscribers = subscribersOnlyCheckbox.checked;
         const subscriberMultiplier = parseInt(subscriberMultiplierInput.value);
+        const preventDuplicates = preventDuplicatesCheckbox.checked;
 
         // Filtruj uczestników
         let eligibleParticipants = [...participants];
@@ -168,28 +186,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Losowanie
         winners = [];
-        for (let i = 0; i < winnersCount && eligibleParticipants.length > 0; i++) {
-            const randomIndex = Math.floor(Math.random() * eligibleParticipants.length);
-            const winner = eligibleParticipants[randomIndex];
+        const tempParticipants = [...eligibleParticipants];
+        
+        for (let i = 0; i < winnersCount && tempParticipants.length > 0; i++) {
+            const randomIndex = Math.floor(Math.random() * tempParticipants.length);
+            const winner = tempParticipants[randomIndex];
             
-            // Sprawdź, czy użytkownik już wygrał
-            if (!winners.some(w => w.username === winner.username)) {
-                winners.push(winner);
+            // Sprawdź, czy użytkownik już wygrał (jeśli opcja jest włączona)
+            if (preventDuplicates && winners.some(w => w.username === winner.username)) {
+                i--; // Spróbuj ponownie
+                continue;
             }
             
-            // Usuń wszystkich wpisy tego użytkownika
-            eligibleParticipants = eligibleParticipants.filter(p => p.username !== winner.username);
+            winners.push(winner);
+            
+            // Jeśli zapobiegamy duplikatom, usuń wszystkich wpisy tego użytkownika
+            if (preventDuplicates) {
+                tempParticipants.splice(randomIndex, 1);
+            }
         }
 
         updateWinnersList();
         giveawayActive = false;
         rollBtn.disabled = true;
+        
+        // Jeśli opcja jest włączona, ogłoś zwycięzcę
+        if (announceWinnerCheckbox.checked) {
+            announceWinners();
+        }
+        
+        console.log('Wylosowano zwycięzców:', winners.map(w => w.username));
     });
 
     // Funkcja do aktualizacji listy uczestników
     function updateParticipantsList() {
         participantsList.innerHTML = '';
         participantsCount.textContent = participants.length;
+
+        if (participants.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'participant-item';
+            emptyMessage.textContent = 'Brak uczestników';
+            emptyMessage.style.justifyContent = 'center';
+            emptyMessage.style.color = 'var(--text-secondary)';
+            participantsList.appendChild(emptyMessage);
+            return;
+        }
 
         participants.forEach(participant => {
             const participantItem = document.createElement('div');
@@ -225,6 +267,16 @@ document.addEventListener('DOMContentLoaded', function() {
         winnersList.innerHTML = '';
         winnersCount.textContent = winners.length;
 
+        if (winners.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'winner-item';
+            emptyMessage.textContent = 'Brak zwycięzców';
+            emptyMessage.style.justifyContent = 'center';
+            emptyMessage.style.color = 'var(--text-secondary)';
+            winnersList.appendChild(emptyMessage);
+            return;
+        }
+
         winners.forEach(winner => {
             const winnerItem = document.createElement('div');
             winnerItem.className = 'winner-item';
@@ -254,107 +306,73 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Funkcja do aktualizacji czatu
-    function updateChat() {
-        chatContainer.innerHTML = '';
-        
-        chatMessages.forEach(msg => {
-            const messageElement = document.createElement('div');
-            messageElement.className = 'chat-message';
-            
-            const userSpan = document.createElement('span');
-            userSpan.className = 'message-user';
-            userSpan.textContent = msg.username + ': ';
-            
-            const messageSpan = document.createElement('span');
-            messageSpan.textContent = msg.message;
-            
-            messageElement.appendChild(userSpan);
-            messageElement.appendChild(messageSpan);
-            chatContainer.appendChild(messageElement);
-        });
-        
-        // Przewiń na dół
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-
     // Funkcja do dodawania uczestników na podstawie czatu
     function addParticipantsFromChat() {
-        if (!keyword) {
-            // Jeśli nie ma słowa kluczowego, dodaj wszystkich użytkowników z czatu
-            sampleUsers.forEach(user => {
-                if (!participants.some(p => p.username === user.username)) {
-                    participants.push(user);
-                }
-            });
-        } else {
-            // Dodaj tylko użytkowników, którzy użyli słowa kluczowego
-            const keywordUsers = sampleMessages
-                .filter(msg => msg.message.toLowerCase().includes(keyword.toLowerCase()))
-                .map(msg => msg.username);
-            
-            const uniqueUsers = [...new Set(keywordUsers)];
-            
-            uniqueUsers.forEach(username => {
-                const user = sampleUsers.find(u => u.username === username);
-                if (user && !participants.some(p => p.username === username)) {
-                    participants.push(user);
-                }
-            });
-        }
+        // W rzeczywistości tutaj uczestnicy byliby dodawani na podstawie wiadomości z czatu
+        // Na potrzeby demonstracji używamy przykładowych użytkowników
+        
+        sampleUsers.forEach(user => {
+            if (!participants.some(p => p.username === user.username)) {
+                participants.push(user);
+            }
+        });
         
         updateParticipantsList();
     }
 
-    // Symulacja otrzymywania wiadomości czatu
-    function simulateChatMessages() {
-        chatMessages = [...sampleMessages];
-        updateChat();
+    // Funkcja do ogłaszania zwycięzców
+    function announceWinners() {
+        if (winners.length === 0) return;
         
-        // Symulacja nowych wiadomości co kilka sekund
-        setInterval(() => {
-            if (isConnected && Math.random() > 0.7) {
-                const randomUser = sampleUsers[Math.floor(Math.random() * sampleUsers.length)];
-                const randomMessage = keyword && Math.random() > 0.5 ? 
-                    keyword : 
-                    `Wiadomość testowa ${Math.floor(Math.random() * 100)}`;
-                
-                chatMessages.push({
-                    username: randomUser.username,
-                    message: randomMessage
-                });
-                
-                updateChat();
-                
-                // Jeśli giveaway jest aktywny i wiadomość zawiera słowo kluczowe, dodaj użytkownika
-                if (giveawayActive && keyword && randomMessage.toLowerCase().includes(keyword.toLowerCase())) {
-                    if (!participants.some(p => p.username === randomUser.username)) {
-                        participants.push(randomUser);
-                        updateParticipantsList();
-                    }
-                }
+        let announcement = 'Zwycięzcy giveaway: ';
+        winners.forEach((winner, index) => {
+            announcement += winner.username;
+            if (index < winners.length - 1) {
+                announcement += ', ';
             }
-        }, 3000);
-    }
-
-    // Obsługa wysyłania wiadomości czatu
-    sendBtn.addEventListener('click', function() {
-        const message = chatInput.value.trim();
-        if (!message) return;
-        
-        // W prawdziwej aplikacji tutaj byłoby wysyłanie wiadomości do czatu
-        chatMessages.push({
-            username: 'Ty',
-            message: message
         });
         
-        updateChat();
-        chatInput.value = '';
-    });
+        // W rzeczywistości tutaj byłoby wysłanie wiadomości na czat
+        console.log('Ogłaszanie zwycięzców: ' + announcement);
+        alert(announcement);
+    }
 
-    chatInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendBtn.click();
-        }
+    // Symulacja połączenia z czatem
+    function simulateChatConnection() {
+        // W rzeczywistości tutaj byłoby prawdziwe połączenie WebSocket z Kick.com
+        console.log('Symulowanie połączenia z czatem...');
+        
+        // Symulacja dodawania uczestników co kilka sekund
+        let addedUsers = 0;
+        const addUserInterval = setInterval(() => {
+            if (!isConnected) {
+                clearInterval(addUserInterval);
+                return;
+            }
+            
+            if (addedUsers < sampleUsers.length) {
+                const user = sampleUsers[addedUsers];
+                
+                // Jeśli giveaway jest aktywny, dodaj użytkownika do uczestników
+                if (giveawayActive) {
+                    // Sprawdź, czy użytkownik spełnia warunki (słowo kluczowe itp.)
+                    if (!keyword || Math.random() > 0.5) { // Symulacja użycia słowa kluczowego
+                        if (!participants.some(p => p.username === user.username)) {
+                            participants.push(user);
+                            updateParticipantsList();
+                        }
+                    }
+                }
+                
+                addedUsers++;
+            } else {
+                clearInterval(addUserInterval);
+            }
+        }, 1000);
+    }
+
+    // Automatyczne połączenie z kanałem angelkacs po załadowaniu strony
+    window.addEventListener('load', function() {
+        connectToChannel('angelkacs');
     });
 });

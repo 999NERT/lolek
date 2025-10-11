@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0e0e10;
+    color: #efeff1;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+header {
+    background-color: #18181b;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #9147ff;
+}
+
+h1 {
+    color: #9147ff;
+    font-size: 24px;
+}
+
+.status-bar {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+}
+
+#connection-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #ff4d4d;
+}
+
+#connection-status.connected {
+    background-color: #4CAF50;
+}
+
+.main-content {
+    display: flex;
+    gap: 20px;
+}
+
+.settings-panel, .participants-panel {
+    background-color: #18181b;
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.settings-panel {
+    flex: 0 0 400px;
+}
+
+.participants-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    color: #9147ff;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #0e0e10;
+    border: 1px solid #3a3a3d;
+    border-radius: 4px;
+    color: #efeff1;
+    font-size: 14px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+button {
+    background-color: #9147ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #772ce8;
+}
+
+button:disabled {
+    background-color: #3a3a3d;
+    cursor: not-allowed;
+}
+
+.participants-list, .winners-list {
+    background-color: #0e0e10;
+    border-radius: 4px;
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    border: 1px solid #3a3a3d;
+}
+
+.participant-item, .winner-item {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    background-color: #1f1f23;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.participant-item:hover {
+    background-color: #26262c;
+}
+
+.winner-item {
+    background-color: #2a2a2e;
+    border-left: 3px solid #9147ff;
+}
+
+.user-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.badge-broadcaster {
+    background-color: #e91916;
+}
+
+.badge-vip {
+    background-color: #ff69b4;
+}
+
+.badge-staff {
+    background-color: #00b3ff;
+}
+
+.badge-mod {
+    background-color: #00c030;
+}
+
+.badge-subscriber {
+    background-color: #9147ff;
+}
+
+.winners-section {
+    margin-top: auto;
+}
+
+#roll-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.chat-panel {
+    background-color: #18181b;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.chat-container {
+    height: 300px;
+    overflow-y: auto;
+    background-color: #0e0e10;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #3a3a3d;
+}
+
+.chat-message {
+    padding: 8px 0;
+    border-bottom: 1px solid #2a2a2e;
+}
+
+.chat-message:last-child {
+    border-bottom: none;
+}
+
+.message-user {
+    font-weight: bold;
+    color: #9147ff;
+}
+
+.chat-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    flex: 1;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .settings-panel {
+        flex: 1;
+    }
+}

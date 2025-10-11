@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let keyword = '!slot';
     let chatConnection = null;
     let currentFilter = 'all';
+    let ws = null;
 
     // Obsługa checkboxa potwierdzenia zwycięzcy
     winnerConfirmationCheckbox.addEventListener('change', function() {
@@ -295,6 +296,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         showNotification(announcement);
+        
+        // W rzeczywistej implementacji, tutaj możesz wysłać wiadomość na czat
+        // np. poprzez WebSocket do Kick API
     }
 
     // Funkcja do pokazywania powiadomień
@@ -319,14 +323,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function connectToChat() {
         // Aktualizacja statusu połączenia
         connectionStatus.classList.add('connected');
-        connectionStatus.querySelector('.status-text').textContent = 'Połączono z czatem';
+        connectionStatus.querySelector('.status-text').textContent = 'Łączenie z czatem...';
         
-        // Symulacja połączenia z czatem Kick.com
-        // W rzeczywistości tutaj byłoby prawdziwe połączenie WebSocket z Kick API
-        console.log('Łączenie z czatem kick.com/angelkacs...');
+        // Rzeczywiste połączenie z czatem Kick.com
+        // Uwaga: Kick.com nie udostępnia publicznego API WebSocket dla czatu
+        // Wymagane jest użycie nieoficjalnych metod lub proxy
         
-        // Symulacja odbierania wiadomości z czatu
-        simulateChatMessages();
+        try {
+            // Próba połączenia z czatem poprzez embed iframe lub inne metody
+            setupChatConnection();
+        } catch (error) {
+            console.error('Błąd podczas łączenia z czatem:', error);
+            showNotification('Nie udało się połączyć z czatem. Upewnij się, że strona jest otwarta na kick.com/angelkacs', true);
+            connectionStatus.querySelector('.status-text').textContent = 'Błąd połączenia';
+            connectionStatus.classList.remove('connected');
+        }
     }
 
     // Funkcja do rozłączania z czatem
@@ -334,64 +345,196 @@ document.addEventListener('DOMContentLoaded', function() {
         connectionStatus.classList.remove('connected');
         connectionStatus.querySelector('.status-text').textContent = 'Rozłączony';
         
-        // Zatrzymanie symulacji czatu
-        if (chatConnection) {
-            clearInterval(chatConnection);
-            chatConnection = null;
+        // Zamknięcie połączenia WebSocket jeśli istnieje
+        if (ws) {
+            ws.close();
+            ws = null;
         }
         
         console.log('Rozłączono z czatem');
     }
 
-    // Symulacja odbierania wiadomości z czatu
-    function simulateChatMessages() {
-        // W rzeczywistości tutaj byłoby prawdziwe połączenie WebSocket
-        // Na potrzeby demonstracji symulujemy otrzymywanie wiadomości
+    // Funkcja do konfiguracji połączenia z czatem
+    function setupChatConnection() {
+        // Uwaga: Kick.com nie udostępnia publicznego API WebSocket
+        // Ta implementacja wymaga dostępu do czatu poprzez embed iframe lub proxy
         
-        chatConnection = setInterval(() => {
-            if (!giveawayActive) return;
-            
-            // Symulacja otrzymania wiadomości z czatu
-            const simulatedUsers = [
-                { username: 'EnhatUkalo', role: 'user', isSubscriber: false },
-                { username: 'izmirl_all', role: 'user', isSubscriber: true },
-                { username: 'Mirac0909', role: 'user', isSubscriber: false },
-                { username: 'T0RE770', role: 'user', isSubscriber: true },
-                { username: 'Vaquer71', role: 'mod', isSubscriber: true },
-                { username: 'BetulKarakus', role: 'user', isSubscriber: false },
-                { username: 'mmaras', role: 'vip', isSubscriber: true },
-                { username: '00theoo22', role: 'user', isSubscriber: false },
-                { username: '01Cagri', role: 'user', isSubscriber: true },
-                { username: '05utku', role: 'user', isSubscriber: false },
-                { username: '06nazim06', role: 'user', isSubscriber: true },
-                { username: '12kingof1', role: 'user', isSubscriber: false },
-                { username: '1eren0', role: 'user', isSubscriber: true },
-                { username: '1kn1fe', role: 'user', isSubscriber: false },
-                { username: '1profbey', role: 'broadcaster', isSubscriber: true },
-                { username: '1rpa11', role: 'user', isSubscriber: false },
-                { username: '1tronmercy', role: 'user', isSubscriber: true },
-                { username: '2080s', role: 'user', isSubscriber: false },
-                { username: '24elpatron24', role: 'user', isSubscriber: true },
-                { username: '27cnwr27', role: 'user', isSubscriber: false },
-                { username: '34Yusuf341', role: 'user', isSubscriber: true },
-                { username: '4averalpha', role: 'user', isSubscriber: false }
-            ];
-            
-            const randomUser = simulatedUsers[Math.floor(Math.random() * simulatedUsers.length)];
-            const randomMessage = Math.random() > 0.7 ? keyword : `jakas_inna_wiadomosc_${Math.random()}`;
-            
-            // Sprawdzamy, czy wiadomość zawiera słowo kluczowe
-            if (randomMessage.includes(keyword)) {
-                // Sprawdzamy, czy użytkownik już jest na liście
-                if (!participants.some(p => p.username === randomUser.username)) {
-                    randomUser.isNew = true; // Flaga dla animacji
-                    participants.push(randomUser);
-                    updateParticipantsList();
-                    
-                    console.log(`Dodano uczestnika: ${randomUser.username} (${randomUser.role})`);
+        // Alternatywne podejście: użycie Kick API przez proxy CORS
+        setupKickAPI();
+    }
+
+    // Funkcja do konfiguracji połączenia z Kick API
+    function setupKickAPI() {
+        // Pobieranie danych czatu z Kick API
+        // Uwaga: Wymaga to proxy CORS ze względu na politykę samego Kick.com
+        
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Przykładowy proxy CORS
+        const apiUrl = 'https://kick.com/api/v2/channels/angelkacs/chat';
+        
+        fetch(proxyUrl + apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Błąd pobierania danych czatu');
                 }
-            }
-        }, 2000); // Nowa wiadomość co 2 sekundy
+                return response.json();
+            })
+            .then(data => {
+                console.log('Dane czatu:', data);
+                connectionStatus.querySelector('.status-text').textContent = 'Połączono z czatem';
+                
+                // Tutaj przetwarzamy dane czatu i dodajemy uczestników
+                // Uwaga: Struktura danych może się różnić
+                processChatData(data);
+            })
+            .catch(error => {
+                console.error('Błąd podczas pobierania danych czatu:', error);
+                showNotification('Nie udało się pobrać danych czatu. Spróbuj ponownie później.', true);
+                connectionStatus.querySelector('.status-text').textContent = 'Błąd połączenia';
+                connectionStatus.classList.remove('connected');
+                
+                // Fallback: użycie metody embed iframe
+                setupChatEmbed();
+            });
+    }
+
+    // Funkcja do przetwarzania danych czatu
+    function processChatData(chatData) {
+        // Przetwarzanie danych czatu i dodawanie uczestników
+        // Uwaga: Ta funkcja wymaga znajomości struktury danych Kick API
+        
+        if (chatData && chatData.messages) {
+            chatData.messages.forEach(message => {
+                if (message.content && message.content.includes(keyword)) {
+                    addParticipantFromMessage(message);
+                }
+            });
+        }
+        
+        // Subskrypcja do nowych wiadomości (jeśli API to umożliwia)
+        subscribeToNewMessages();
+    }
+
+    // Funkcja do dodawania uczestnika na podstawie wiadomości
+    function addParticipantFromMessage(message) {
+        const user = {
+            username: message.sender?.username || 'Unknown',
+            role: determineUserRole(message.sender),
+            isSubscriber: message.sender?.is_subscriber || false,
+            isNew: true
+        };
+        
+        // Sprawdzamy, czy użytkownik już jest na liście
+        if (!participants.some(p => p.username === user.username)) {
+            participants.push(user);
+            updateParticipantsList();
+            
+            console.log(`Dodano uczestnika: ${user.username} (${user.role})`);
+        }
+    }
+
+    // Funkcja do określania roli użytkownika
+    function determineUserRole(sender) {
+        if (!sender) return 'user';
+        
+        if (sender.is_broadcaster) return 'broadcaster';
+        if (sender.is_moderator) return 'mod';
+        if (sender.is_vip) return 'vip';
+        
+        return 'user';
+    }
+
+    // Funkcja do subskrypcji nowych wiadomości
+    function subscribeToNewMessages() {
+        // Tutaj implementacja subskrypcji do nowych wiadomości czatu
+        // Wymaga to WebSocket lub długiego polling z Kick API
+        
+        // Przykładowa implementacja z WebSocket
+        setupWebSocketConnection();
+    }
+
+    // Funkcja do konfiguracji połączenia WebSocket
+    function setupWebSocketConnection() {
+        // Uwaga: Kick.com nie udostępnia publicznego WebSocket
+        // Ta implementacja wymaga reverse engineering lub użycia nieoficjalnych metod
+        
+        try {
+            // Przykładowy URL WebSocket (może wymagać aktualizacji)
+            const wsUrl = 'wss://ws-us2.pusher.com/app/eb1d5f283081a78b932c?protocol=7&client=js&version=7.4.0&flash=false';
+            
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = function() {
+                console.log('Połączono z WebSocket Kick.com');
+                connectionStatus.querySelector('.status-text').textContent = 'Połączono z czatem';
+                
+                // Subskrypcja do kanału czatu
+                const subscribeMessage = {
+                    event: 'pusher:subscribe',
+                    data: {
+                        auth: '',
+                        channel: 'chatrooms.4131.v2' // Przykładowy ID chatroomu
+                    }
+                };
+                ws.send(JSON.stringify(subscribeMessage));
+            };
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.event === 'App\\Events\\ChatMessageEvent') {
+                    const messageData = JSON.parse(data.data);
+                    processChatMessage(messageData);
+                }
+            };
+            
+            ws.onerror = function(error) {
+                console.error('Błąd połączenia WebSocket:', error);
+                showNotification('Błąd połączenia z czatem', true);
+            };
+            
+            ws.onclose = function() {
+                console.log('Połączenie WebSocket zamknięte');
+                if (giveawayActive) {
+                    // Próba ponownego połączenia
+                    setTimeout(setupWebSocketConnection, 5000);
+                }
+            };
+            
+        } catch (error) {
+            console.error('Błąd podczas konfiguracji WebSocket:', error);
+            showNotification('Nie udało się połączyć z czatem w czasie rzeczywistym', true);
+        }
+    }
+
+    // Funkcja do przetwarzania wiadomości czatu
+    function processChatMessage(messageData) {
+        if (!giveawayActive) return;
+        
+        const message = messageData.content;
+        const sender = messageData.sender;
+        
+        // Sprawdzamy, czy wiadomość zawiera słowo kluczowe
+        if (message && message.toLowerCase().includes(keyword.toLowerCase())) {
+            addParticipantFromMessage({
+                content: message,
+                sender: sender
+            });
+        }
+    }
+
+    // Alternatywna metoda: użycie embed iframe do odczytu czatu
+    function setupChatEmbed() {
+        // Tworzenie iframe z czatem
+        const chatIframe = document.createElement('iframe');
+        chatIframe.src = 'https://kick.com/popout/angelkacs/chat';
+        chatIframe.style.display = 'none';
+        document.body.appendChild(chatIframe);
+        
+        // Uwaga: Ta metoda ma ograniczenia ze względu na politykę CORS
+        // Nie pozwala na bezpośredni dostęp do danych czatu z innej domeny
+        
+        console.log('Utworzono iframe z czatem (ograniczenia CORS)');
+        showNotification('Uwaga: Pełna integracja z czatem wymaga hostowania strony na kick.com lub użycia proxy', true);
     }
 
     // Zabezpieczenie przed otwarciem konsoli (podstawowe)

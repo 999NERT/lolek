@@ -25,12 +25,12 @@ html, body {
 
 /* === TŁO WSPÓLNE DLA PRZYCISKÓW === */
 .buttons-background {
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(15, 15, 15, 0.9);
   border-radius: 25px;
   padding: 50px 40px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   max-width: 650px;
   width: 100%;
 }
@@ -44,13 +44,13 @@ html, body {
   width: 100%;
 }
 
-.button-with-popout {
+.button-wrapper {
   position: relative;
   text-align: center;
   width: 100%;
 }
 
-.button-with-popout a {
+.button-wrapper a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,11 +70,11 @@ html, body {
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.button-with-popout a:hover {
+.button-wrapper a:hover {
   transform: translateY(-6px) scale(1.03);
   box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(255, 255, 255, 0.1),
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(255, 255, 255, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
@@ -88,82 +88,90 @@ html, body {
 
 /* === KOLORY PRZYCISKÓW === */
 
-/* DONATE [PL] - Flaga Polski (biało-czerwona) */
+/* DONATE [PL] - Kolory Tipply.pl */
 .donate-btn a {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 50%, #DC143C 50%, #DC143C 100%);
-  color: white;
+  background: linear-gradient(135deg, #4A6FFF 0%, #6B8CFF 50%, #4A6FFF 100%);
+  color: #FFFFFF;
   border: 3px solid #000;
   position: relative;
 }
 
 .donate-btn a:hover {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FFFFFF 50%, #DC143C 50%, #8B0000 100%);
-  color: #000;
+  background: linear-gradient(135deg, #3A5FEF 0%, #5B7CEF 50%, #3A5FEF 100%);
+  color: #FFFFFF;
   border: 3px solid #000;
   box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(220, 20, 60, 0.3),
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(74, 111, 255, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-/* DONATE [EU] - Flaga Europy (niebieska z gwiazdkami) */
+/* DONATE [EU] - Kolory StreamElements */
 .donate-eu-btn a {
-  background: linear-gradient(135deg, #003399 0%, #0033CC 100%);
-  color: #FFD700;
+  background: linear-gradient(135deg, #0F1B33 0%, #1A2B4A 100%);
+  color: #00D8FF;
   border: 3px solid #000;
   position: relative;
 }
 
 .donate-eu-btn a::before {
-  content: "★";
+  content: "✦";
   position: absolute;
-  color: #FFD700;
+  color: #00D8FF;
   font-size: 20px;
-  opacity: 0.6;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.donate-eu-btn a::before {
+  opacity: 0.7;
+  text-shadow: 0 0 8px rgba(0, 216, 255, 0.5);
   top: 15px;
   left: 30px;
 }
 
 .donate-eu-btn a::after {
-  content: "★";
+  content: "✦";
   position: absolute;
-  color: #FFD700;
+  color: #00D8FF;
   font-size: 16px;
-  opacity: 0.6;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+  text-shadow: 0 0 8px rgba(0, 216, 255, 0.5);
   bottom: 20px;
   right: 35px;
 }
 
 .donate-eu-btn a:hover {
-  background: linear-gradient(135deg, #002266 0%, #003399 100%);
-  color: #FFD700;
+  background: linear-gradient(135deg, #1A2B4A 0%, #0F1B33 100%);
+  color: #00F2FF;
   border: 3px solid #000;
   box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(255, 215, 0, 0.3),
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(0, 216, 255, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* SKINY - CS2 - Kolory Steam */
+/* SKINY - CS2 - Kolory Steam Community */
 .skins-btn a {
-  background: linear-gradient(135deg, #1b2838 0%, #2a475e 100%);
-  color: #c7d5e0;
+  background: linear-gradient(135deg, #1B2838 0%, #2A475E 100%);
+  color: #C7D5E0;
   border: 3px solid #000;
   position: relative;
 }
 
+.skins-btn a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #66C0F4, transparent);
+  opacity: 0.6;
+}
+
 .skins-btn a:hover {
-  background: linear-gradient(135deg, #2a475e 0%, #1b2838 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, #2A475E 0%, #1B2838 100%);
+  color: #FFFFFF;
   border: 3px solid #000;
   box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(66, 151, 213, 0.3),
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(102, 192, 244, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -179,14 +187,14 @@ html, body {
   }
 }
 
-.button-with-popout {
+.button-wrapper {
   animation: fadeInUp 0.6s ease forwards;
   opacity: 0;
 }
 
-.button-with-popout:nth-child(1) { animation-delay: 0.1s; }
-.button-with-popout:nth-child(2) { animation-delay: 0.2s; }
-.button-with-popout:nth-child(3) { animation-delay: 0.3s; }
+.button-wrapper:nth-child(1) { animation-delay: 0.1s; }
+.button-wrapper:nth-child(2) { animation-delay: 0.2s; }
+.button-wrapper:nth-child(3) { animation-delay: 0.3s; }
 
 /* === RESPONSYWNOŚĆ === */
 @media (max-width: 768px) {
@@ -199,7 +207,7 @@ html, body {
     gap: 25px;
   }
   
-  .button-with-popout a {
+  .button-wrapper a {
     padding: 22px 35px;
     font-size: 28px;
     min-height: 80px;
@@ -231,7 +239,7 @@ html, body {
     gap: 20px;
   }
   
-  .button-with-popout a {
+  .button-wrapper a {
     padding: 18px 25px;
     font-size: 24px;
     min-height: 70px;
@@ -240,12 +248,16 @@ html, body {
   
   .donate-eu-btn a::before,
   .donate-eu-btn a::after {
-    display: none; /* Ukrywamy gwiazdki na bardzo małych ekranach */
+    display: none;
+  }
+  
+  .skins-btn a::before {
+    height: 1px;
   }
 }
 
 @media (max-width: 360px) {
-  .button-with-popout a {
+  .button-wrapper a {
     padding: 15px 20px;
     font-size: 22px;
     min-height: 65px;

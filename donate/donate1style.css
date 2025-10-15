@@ -91,7 +91,7 @@ html, body {
 /* DONATE [PL] - Flaga Polski (biało-czerwona) */
 .donate-btn a {
   background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 50%, #DC143C 50%, #DC143C 100%);
-  color: #000;
+  color: white;
   border: 3px solid #000;
   position: relative;
 }

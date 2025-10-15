@@ -98,10 +98,10 @@ html, body {
 .betters-ters { color:#E50420; }
 .betters-highlight { color:#E50420; font-weight:900; }
 
-.donate-btn a { background:#262D3A; color:white; }
-.donate-btn a:hover { background:#68030f; }
-.donate-ters { color:#E50420; }
-.donate-highlight { color:#E50420; font-weight:900; }
+.donate-btn a { background:#141619; color:white; }
+.donate-btn a:hover { background:#081611; }
+.donate-f { color:#05DF72; }
+.donate-r { color:#07E864; font-weight:900; }
 
 /* NOWE PRZYCISKI */
 .fcoins-btn a { background:#141619; color:white; }
@@ -109,8 +109,6 @@ html, body {
 .fcoins-f { color:#05DF72; }
 .fcoins-monet, .fcoins-angelkacs { color:#07E864; font-weight:900; }
 
-.soon-btn a { background:#000000; color:white; }
-.soon-btn a:hover { background:#808080; }
 
 /* === +18 BADGE === */
 .age-badge, .age-badge-betters {

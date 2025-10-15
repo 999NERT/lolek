@@ -9,7 +9,7 @@ html, body {
   font-family: 'Titillium Web', sans-serif;
   color: white;
   overflow-x: hidden;
-  background: url("aster.png") no-repeat center center fixed;
+  background: url("../aster.png") no-repeat center center fixed;
   background-size: cover;
 }
 .main-wrapper {

@@ -26,8 +26,30 @@ async function loadLatestVideo() {
 
     if (!entries.length) throw new Error("Brak filmów");
 
-    let videoEntry = [...entries].find(e => !e.getElementsByTagName("title")[0].textContent.toLowerCase().includes("short")) || entries[0];
-    const videoId = videoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
+    // Szukamy pierwszego publicznego filmu (nie-shorta)
+    let publicVideoEntry = null;
+    
+    for (let entry of entries) {
+      const title = entry.getElementsByTagName("title")[0].textContent.toLowerCase();
+      const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent.trim();
+      
+      // Sprawdzamy czy to nie short
+      if (!title.includes("short")) {
+        // Sprawdzamy czy film jest publiczny poprzez próbę załadowania miniatury
+        const isPublic = await checkIfVideoIsPublic(videoId);
+        
+        if (isPublic) {
+          publicVideoEntry = entry;
+          break;
+        }
+      }
+    }
+
+    if (!publicVideoEntry) {
+      throw new Error("Brak publicznych filmów");
+    }
+
+    const videoId = publicVideoEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
 
     if(btn) {
       btn.href = `https://www.youtube.com/watch?v=${videoId}`;
@@ -50,10 +72,40 @@ async function loadLatestVideo() {
   } catch (e) {
     console.error("Błąd wczytywania YT:", e);
     if(loader) loader.style.display = "none";
-    if(err) err.style.display = "block";
+    if(err) {
+      err.textContent = e.message || "Nie udało się załadować filmu";
+      err.style.display = "block";
+    }
   }
 }
 
+// Funkcja sprawdzająca czy film jest publiczny
+async function checkIfVideoIsPublic(videoId) {
+  return new Promise((resolve) => {
+    const testImg = new Image();
+    let fallbackAttempted = false;
+    
+    testImg.onload = () => resolve(true);
+    testImg.onerror = () => {
+      if (!fallbackAttempted) {
+        // Spróbuj hqdefault jako fallback
+        fallbackAttempted = true;
+        testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      } else {
+        // Oba URL'e nie działają - film prawdopodobnie niepubliczny
+        resolve(false);
+      }
+    };
+    
+    // Zacznij od maxresdefault
+    testImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    
+    // Timeout na wypadek bardzo wolnego ładowania
+    setTimeout(() => resolve(false), 5000);
+  });
+}
+
+// Pozostała część kodu bez zmian...
 // === STREAM STATUS ===
 async function checkStreamStatus() {
   const twitch = document.getElementById("twitchLivePanel");

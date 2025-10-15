@@ -98,7 +98,7 @@ html, body {
 .betters-ters { color:#E50420; }
 .betters-highlight { color:#E50420; font-weight:900; }
 
-.donate-btn a { background:#BF8EF8; color:black; }
+.donate-btn a { background:rgba(149, 100, 255, 0.53); color:white; }
 .donate-btn a:hover { background:#EC407A; }
 .donate-f { color:#F8BBD0; }
 .donate-r { color:#07E864; font-weight:900; }

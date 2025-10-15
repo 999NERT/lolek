@@ -104,7 +104,7 @@ html, body {
 .donate-r { color:#07E864; font-weight:900; }
 
 /* NOWE PRZYCISKI */
-.fcoins-btn a { background:#141619; color:white; }
+.fcoins-btn a { background:#141619; color:black; }
 .fcoins-btn a:hover { background:#081611; }
 .fcoins-f { color:#05DF72; }
 .fcoins-monet, .fcoins-angelkacs { color:#07E864; font-weight:900; }

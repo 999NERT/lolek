@@ -98,6 +98,11 @@ html, body {
 .betters-ters { color:#E50420; }
 .betters-highlight { color:#E50420; font-weight:900; }
 
+.DONATE-btn a { background:#262D3A; color:white; }
+.DONATE-btn a:hover { background:#68030f; }
+.DONATE-ters { color:#E50420; }
+.DONATE-highlight { color:#E50420; font-weight:900; }
+
 /* NOWE PRZYCISKI */
 .fcoins-btn a { background:#141619; color:white; }
 .fcoins-btn a:hover { background:#081611; }

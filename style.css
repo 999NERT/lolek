@@ -104,6 +104,38 @@ html, body {
 .fcoins-f { color:#05DF72; }
 .fcoins-monet, .fcoins-angelkacs { color:#07E864; font-weight:900; }
 
+/* === NOWY PRZYCISK SKIN.PLACE === */
+.skinplace-btn a { 
+  background: #1a1a1a; 
+  color: white; 
+}
+.skinplace-btn a:hover { 
+  background: #FF6B00; 
+}
+.skinplace-place { 
+  color: #FF6B00; 
+}
+
+/* NOWA ODZNAKA NEW */
+.new-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: #000;
+  border: 3px solid #FF6B00;
+  color: #FF6B00;
+  font-weight: 900;
+  padding: 3px 6px;
+  font-size: 14px;
+  border-radius: 6px;
+  z-index: 20;
+}
+
+.skinplace-highlight { 
+  color: #FF6B00; 
+  font-weight: 900; 
+}
+
 /* === +18 BADGE === */
 .age-badge, .age-badge-betters {
   position: absolute;

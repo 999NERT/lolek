@@ -93,10 +93,10 @@ html, body {
 .wkdzik-btn a:hover { background:white; color:#1b1b1b; }
 .wkdzik-highlight { color:#de74ff; font-weight:900; }
 
-.betters-btn a { background:#262D3A; color:white; }
-.betters-btn a:hover { background:#68030f; }
-.betters-ters { color:#E50420; }
-.betters-highlight { color:#E50420; font-weight:900; }
+.skinplace-btn a { background:#262D3A; color:white; }
+.skinplace-btn a:hover { background:#68030f; }
+.skinplace-ters { color:#E50420; }
+.skinplace-highlight { color:#E50420; font-weight:900; }
 
 .donate-btn a { background:rgba(149, 100, 255, 0.53); color:white; }
 .donate-btn a:hover { background:#EC407A; }
@@ -108,6 +108,11 @@ html, body {
 .fcoins-btn a:hover { background:#081611; }
 .fcoins-f { color:#05DF72; }
 .fcoins-monet, .fcoins-angelkacs { color:#07E864; font-weight:900; }
+
+.skinplace-btn a { background:#141619; color:white; }
+.skinplace-btn a:hover { background:#081611; }
+.skinplace-f { color:#05DF72; }
+.skinplace-k { color:#07E864; font-weight:900; }
 
 
 /* === +18 BADGE === */

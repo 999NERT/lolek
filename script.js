@@ -1,4 +1,4 @@
-// === YOUTUBE MINIATURKA - NOWA WERSJA ===
+// === YOUTUBE MINIATURKA ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
@@ -18,7 +18,7 @@ async function loadLatestVideo() {
   if (loader) loader.style.display = "flex";
 
   try {
-    console.log("Pobieranie danych z YouTube...");
+    console.log("🔄 Pobieranie danych z YouTube RSS...");
     const res = await fetch(proxy);
     if (!res.ok) throw new Error("Błąd połączenia z serwerem");
     
@@ -28,53 +28,63 @@ async function loadLatestVideo() {
 
     if (!entries.length) throw new Error("Brak filmów na kanale");
 
-    // Pobieramy najnowszy film (pierwszy w RSS)
-    const latestEntry = entries[0];
-    const videoId = latestEntry.getElementsByTagName("yt:videoId")[0].textContent.trim();
-    const title = latestEntry.getElementsByTagName("title")[0].textContent;
-    
-    console.log("Znaleziono film:", title, "ID:", videoId);
-
-    // Sprawdzamy czy to nie short (po tytule)
-    if (title.toLowerCase().includes("#short") || title.toLowerCase().includes("short")) {
-      throw new Error("Najnowszy film to Short - nie można wyświetlić");
-    }
-
-    // Sprawdzamy czy film jest publiczny
-    console.log("Sprawdzanie dostępności filmu...");
-    const isPublic = await checkVideoAvailability(videoId);
-    
-    if (!isPublic) {
-      throw new Error("Film nie jest publiczny lub został usunięty");
-    }
-
-    // Ustawiamy miniaturę i link
-    if (btn) {
-      btn.href = `https://www.youtube.com/watch?v=${videoId}`;
-      btn.style.display = "block";
-    }
-    
-    if (img) {
-      // Najpierw próbujemy maxresdefault
-      img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    // Przetwarzamy wszystkie filmy w kolejności (najnowszy pierwszy)
+    for (let i = 0; i < entries.length; i++) {
+      const entry = entries[i];
+      const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent.trim();
+      const title = entry.getElementsByTagName("title")[0].textContent;
       
-      img.onload = function() {
-        console.log("Miniaturka załadowana pomyślnie");
-        img.style.display = "block";
-        if (loader) loader.style.display = "none";
-      };
+      console.log(`📹 Sprawdzam film: "${title}" (ID: ${videoId})`);
+
+      // Sprawdzamy czy to nie short
+      if (title.toLowerCase().includes("#short") || title.toLowerCase().includes("shorts")) {
+        console.log("⏭️ Pomijam short");
+        continue;
+      }
+
+      // Sprawdzamy czy film jest publiczny
+      console.log("🔍 Sprawdzam dostępność filmu...");
+      const isPublic = await checkVideoAvailability(videoId);
       
-      img.onerror = function() {
-        console.log("Fallback do hqdefault...");
-        // Fallback na hqdefault jeśli maxresdefault nie istnieje
-        img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-        img.style.display = "block";
-        if (loader) loader.style.display = "none";
-      };
+      if (isPublic) {
+        console.log("✅ Film publiczny - ustawiam miniaturę");
+        
+        // Ustawiamy miniaturę i link
+        if (btn) {
+          btn.href = `https://www.youtube.com/watch?v=${videoId}`;
+          btn.style.display = "block";
+        }
+        
+        if (img) {
+          // Najpierw próbujemy maxresdefault
+          img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+          
+          img.onload = function() {
+            console.log("🖼️ Miniaturka załadowana pomyślnie (maxresdefault)");
+            img.style.display = "block";
+            if (loader) loader.style.display = "none";
+          };
+          
+          img.onerror = function() {
+            console.log("🔄 Fallback do hqdefault...");
+            // Fallback na hqdefault jeśli maxresdefault nie istnieje
+            img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            img.style.display = "block";
+            if (loader) loader.style.display = "none";
+          };
+        }
+        
+        return; // Znaleźliśmy film - przerywamy funkcję
+      } else {
+        console.log("❌ Film niepubliczny - szukam dalej");
+      }
     }
+
+    // Jeśli dotarliśmy tutaj, nie znaleziono żadnego publicznego filmu
+    throw new Error("Nie znaleziono publicznych filmów");
 
   } catch (error) {
-    console.error("Błąd ładowania filmu:", error);
+    console.error("🚨 Błąd ładowania filmu:", error);
     if (loader) loader.style.display = "none";
     if (err) {
       err.textContent = error.message;
@@ -83,46 +93,41 @@ async function loadLatestVideo() {
   }
 }
 
-// Prostsza i bardziej niezawodna funkcja sprawdzająca dostępność
+// Funkcja sprawdzająca dostępność filmu
 async function checkVideoAvailability(videoId) {
   return new Promise((resolve) => {
     const testImg = new Image();
-    let checked = false;
-
-    const finishCheck = (result) => {
-      if (!checked) {
-        checked = true;
-        resolve(result);
-      }
+    
+    testImg.onload = function() {
+      console.log("✅ Film jest publiczny");
+      resolve(true);
     };
-
-    // Timeout po 4 sekundach
-    const timeout = setTimeout(() => finishCheck(false), 4000);
-
-    testImg.onload = () => {
-      clearTimeout(timeout);
-      finishCheck(true);
+    
+    testImg.onerror = function() {
+      console.log("❌ Film nie jest publiczny lub nie istnieje");
+      resolve(false);
     };
-
-    testImg.onerror = () => {
-      clearTimeout(timeout);
-      finishCheck(false);
-    };
-
-    // Sprawdzamy przez hqdefault - najbardziej niezawodne
+    
+    // Używamy hqdefault jako sprawdzenie - najbardziej niezawodne
     testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    
+    // Timeout na wypadek braku odpowiedzi
+    setTimeout(() => {
+      console.log("⏰ Timeout - film niedostępny");
+      resolve(false);
+    }, 5000);
   });
 }
 
 // === STATUS STREAMÓW ===
 async function checkStreamStatus() {
-  console.log("Sprawdzanie statusu streamów...");
+  console.log("🔍 Sprawdzanie statusu streamów...");
   
   const twitchPanel = document.getElementById("twitchLivePanel");
   const kickPanel = document.getElementById("kickLivePanel");
   const discordBtn = document.querySelector(".discord-btn .live-text");
 
-  // Twitch - przez prosty API
+  // Twitch
   try {
     const twitchRes = await fetch("https://decapi.me/twitch/uptime/angelkacs");
     const uptime = await twitchRes.text();
@@ -132,16 +137,18 @@ async function checkStreamStatus() {
       if (uptime && !uptime.toLowerCase().includes("offline") && !uptime.includes("error")) {
         textEl.textContent = "LIVE";
         textEl.classList.add("live");
+        console.log("🎮 Twitch: LIVE");
       } else {
         textEl.textContent = "OFFLINE";
         textEl.classList.remove("live");
+        console.log("🎮 Twitch: OFFLINE");
       }
     }
   } catch (error) {
-    console.error("Błąd Twitch API:", error);
+    console.error("❌ Błąd Twitch API:", error);
   }
 
-  // Kick - bezpośrednie API
+  // Kick
   try {
     const kickRes = await fetch("https://kick.com/api/v2/channels/angelkacs");
     if (kickRes.ok) {
@@ -151,20 +158,23 @@ async function checkStreamStatus() {
         if (kickData.livestream && kickData.livestream.is_live) {
           textEl.textContent = "LIVE";
           textEl.classList.add("live");
+          console.log("🥊 Kick: LIVE");
         } else {
           textEl.textContent = "OFFLINE";
           textEl.classList.remove("live");
+          console.log("🥊 Kick: OFFLINE");
         }
       }
     }
   } catch (error) {
-    console.error("Błąd Kick API:", error);
+    console.error("❌ Błąd Kick API:", error);
   }
 
-  // Discord - zawsze JOIN
+  // Discord
   if (discordBtn) {
     discordBtn.textContent = "JOIN";
     discordBtn.classList.add("join");
+    console.log("💬 Discord: JOIN");
   }
 }
 
@@ -179,7 +189,8 @@ function initTmobileModal() {
   if (tmobileBtn && tmobileModal) {
     tmobileBtn.addEventListener('click', () => {
       tmobileModal.classList.add('show');
-      document.body.style.overflow = 'hidden'; // Blokada scrolla
+      document.body.style.overflow = 'hidden';
+      console.log("📱 Otwieram modal T-Mobile");
     });
   }
 
@@ -187,7 +198,8 @@ function initTmobileModal() {
   if (tmobileModalClose && tmobileModal) {
     tmobileModalClose.addEventListener('click', () => {
       tmobileModal.classList.remove('show');
-      document.body.style.overflow = ''; // Odblokowanie scrolla
+      document.body.style.overflow = '';
+      console.log("📱 Zamykam modal T-Mobile");
     });
   }
 
@@ -197,6 +209,7 @@ function initTmobileModal() {
       if (e.target === tmobileModal) {
         tmobileModal.classList.remove('show');
         document.body.style.overflow = '';
+        console.log("📱 Zamykam modal T-Mobile (klik w tło)");
       }
     });
   }
@@ -216,7 +229,7 @@ function initTmobileModal() {
   }
 }
 
-// === BLOKADA INSPEKCJI STRONY ===
+// === BLOKADA INSPEKCJI STRONY (PODSTAWOWA) ===
 function initPageProtection() {
   // Blokada prawego przycisku myszy
   document.addEventListener('contextmenu', function(e) {
@@ -226,60 +239,30 @@ function initPageProtection() {
 
   // Blokada skrótów klawiszowych
   document.addEventListener('keydown', function(e) {
-    // Ctrl+U / Ctrl+Shift+U
+    // Ctrl+U
     if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
       e.preventDefault();
-      showProtectionAlert("Wyświetlanie źródła strony jest zablokowane!");
+      console.log("🚫 Próba wyświetlenia źródła strony zablokowana");
     }
     
     // F12
     if (e.key === 'F12') {
       e.preventDefault();
-      showProtectionAlert("Narzędzia deweloperskie są zablokowane!");
+      console.log("🚫 Próba otwarcia DevTools zablokowana");
     }
     
     // Ctrl+Shift+I / Ctrl+Shift+C
     if ((e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I')) || 
         (e.ctrlKey && e.shiftKey && e.key === 'C')) {
       e.preventDefault();
-      showProtectionAlert("Narzędzia deweloperskie są zablokowane!");
+      console.log("🚫 Próba otwarcia DevTools zablokowana");
     }
-    
-    // Ctrl+Shift+J
-    if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-      e.preventDefault();
-      showProtectionAlert("Konsola jest zablokowana!");
-    }
-}
-
-// Funkcja pokazująca alert ochronny
-function showProtectionAlert(message) {
-  const alertBox = document.createElement('div');
-  alertBox.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #ff4444;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
-    z-index: 10000;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  `;
-  alertBox.textContent = message;
-  document.body.appendChild(alertBox);
-  
-  setTimeout(() => {
-    if (alertBox.parentNode) {
-      alertBox.parentNode.removeChild(alertBox);
-    }
-  }, 3000);
+  });
 }
 
 // === INICJALIZACJA ===
 document.addEventListener("DOMContentLoaded", function() {
-  console.log("Inicjalizacja strony...");
+  console.log("🚀 Inicjalizacja strony...");
   
   // Ładujemy najnowszy film
   loadLatestVideo();
@@ -296,18 +279,14 @@ document.addEventListener("DOMContentLoaded", function() {
   // Automatyczne odświeżanie statusu streamów co 60 sekund
   setInterval(checkStreamStatus, 60000);
   
-  // Możliwość ręcznego odświeżenia miniaturki
-  const refreshBtn = document.getElementById('refreshVideo');
-  if (refreshBtn) {
-    refreshBtn.addEventListener('click', loadLatestVideo);
-  }
+  console.log("✅ Inicjalizacja zakończona");
 });
 
 // === OBSŁUGA BŁĘDÓW GLOBALNYCH ===
 window.addEventListener('error', function(e) {
-  console.error('Globalny błąd:', e.error);
+  console.error('🚨 Globalny błąd:', e.error);
 });
 
 window.addEventListener('unhandledrejection', function(e) {
-  console.error('Nieobsłużony Promise:', e.reason);
+  console.error('🚨 Nieobsłużony Promise:', e.reason);
 });

@@ -250,21 +250,6 @@ function initPageProtection() {
       e.preventDefault();
       showProtectionAlert("Konsola jest zablokowana!");
     }
-  });
-
-  // Dodatkowa ochrona przed otwarciem DevTools
-  let devToolsOpened = false;
-  
-  setInterval(() => {
-    const widthThreshold = window.outerWidth - window.innerWidth > 100;
-    const heightThreshold = window.outerHeight - window.innerHeight > 100;
-    
-    if ((widthThreshold || heightThreshold) && !devToolsOpened) {
-      devToolsOpened = true;
-      showProtectionAlert("Wykryto narzędzia deweloperskie!");
-      document.body.innerHTML = '<h1 style="text-align:center;margin-top:50px;">Dostęp zablokowany</h1>';
-    }
-  }, 1000);
 }
 
 // Funkcja pokazująca alert ochronny

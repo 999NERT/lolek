@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Przekierowanie dla Instagrama i aplikacji mobilnych
+RewriteCond %{HTTP_USER_AGENT} "instagram" [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ".*Mobile.*" [NC]
+RewriteRule ^$ https://www.youtube.com/@angelkacs [R=302,L]
+
+# Cache control dla statycznych zasobów
+<FilesMatch "\.(html|css|js)$">
+    Header set Cache-Control "max-age=3600, public"
+</FilesMatch>

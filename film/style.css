@@ -1,4 +1,3 @@
-/* Reset i ukrycie wszystkich elementów */
 * {
     margin: 0;
     padding: 0;
@@ -6,22 +5,58 @@
 }
 
 body {
-    background: #000000;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: white;
 }
 
-/* Ukryj wszystko - strona ma być całkowicie pusta */
-body * {
-    display: none !important;
+.loading-container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Zapewnij, że nic się nie wyświetli */
-html, body {
-    visibility: hidden;
-    opacity: 0;
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 16px;
+    color: #ffffff;
+    opacity: 0.8;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .loading-container {
+        padding: 30px 20px;
+    }
+    
+    .loader {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .loading-text {
+        font-size: 14px;
+    }
 }

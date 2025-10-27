@@ -1,168 +1,202 @@
 // ===== KONFIGURACJA =====
-const CHANNEL_ID = "UCb4KZzyxv9-PL_BcKOrpFyQ";
-const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`)}`;
-const FALLBACK_URL = "https://www.youtube.com/@angelkacs";
+const CONFIG = {
+    CHANNEL_ID: "UCb4KZzyxv9-PL_BcKOrpFyQ",
+    PROXY_URL: `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=UCb4KZzyxv9-PL_BcKOrpFyQ`)}`,
+    FALLBACK_URL: "https://www.youtube.com/@angelkacs",
+    TIMEOUT: 5000
+};
 
 // ===== FUNKCJE POMOCNICZE =====
 
-// Funkcja wykrywająca platformę
+/**
+ * Wykrywa platformę użytkownika
+ */
 function detectPlatform() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    
+    const ua = navigator.userAgent;
     return {
-        isInstagram: /Instagram/i.test(userAgent),
-        isFacebook: /FBAN|FBAV/i.test(userAgent),
-        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent),
-        isIOS: /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream,
-        isAndroid: /Android/.test(userAgent),
-        userAgent: userAgent
+        isInstagram: /Instagram/i.test(ua),
+        isFacebook: /FBAN|FBAV/i.test(ua),
+        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua),
+        isIOS: /iPad|iPhone|iPod/.test(ua),
+        isAndroid: /Android/.test(ua)
     };
 }
 
-// Funkcja sprawdzająca dostępność filmu
+/**
+ * Sprawdza czy film jest dostępny
+ */
 function checkVideoAvailability(videoId) {
     return new Promise((resolve) => {
-        const testImg = new Image();
-        
-        testImg.onload = function() {
-            resolve(true);
-        };
-        
-        testImg.onerror = function() {
-            resolve(false);
-        };
-        
-        testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-        
-        // Timeout na wypadek braku odpowiedzi
-        setTimeout(() => {
-            resolve(false);
-        }, 2000);
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        setTimeout(() => resolve(false), 2000);
     });
 }
 
-// Pobieranie najnowszego filmu
+/**
+ * Pobiera najnowszy film z kanału
+ */
 async function getLatestVideo() {
     try {
-        const response = await fetch(PROXY_URL);
-        if (!response.ok) throw new Error("Błąd połączenia z serwerem");
+        console.log('🔍 Pobieranie listy filmów...');
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT);
+        
+        const response = await fetch(CONFIG.PROXY_URL, { 
+            signal: controller.signal 
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         
         const data = await response.json();
         const xml = new DOMParser().parseFromString(data.contents, "application/xml");
         const entries = xml.getElementsByTagName("entry");
 
-        if (!entries.length) throw new Error("Brak filmów na kanale");
+        if (entries.length === 0) {
+            throw new Error("Brak filmów na kanale");
+        }
 
-        // Szukamy najnowszego publicznego filmu (pomijając shorty)
-        for (let i = 0; i < entries.length; i++) {
+        console.log(`📹 Znaleziono ${entries.length} filmów, szukam najnowszego...`);
+
+        // Szukamy najnowszego filmu (pomijając shorty)
+        for (let i = 0; i < Math.min(entries.length, 10); i++) {
             const entry = entries[i];
-            const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent.trim();
-            const title = entry.getElementsByTagName("title")[0].textContent;
+            const videoId = entry.getElementsByTagName("yt:videoId")[0]?.textContent?.trim();
+            const title = entry.getElementsByTagName("title")[0]?.textContent;
             
+            if (!videoId || !title) continue;
+
             // Pomijamy shorty
             if (title.toLowerCase().includes("#short") || title.toLowerCase().includes("shorts")) {
+                console.log(`⏭️ Pomijam short: ${title}`);
                 continue;
             }
 
-            // Sprawdzamy czy film jest publiczny
-            const isPublic = await checkVideoAvailability(videoId);
+            console.log(`🔍 Sprawdzam film: ${title}`);
             
-            if (isPublic) {
+            // Sprawdzamy dostępność
+            const isAvailable = await checkVideoAvailability(videoId);
+            
+            if (isAvailable) {
+                console.log(`✅ Znaleziono film: ${videoId}`);
                 return videoId;
             }
+            
+            console.log(`❌ Film niedostępny: ${videoId}`);
         }
 
-        throw new Error("Nie znaleziono publicznych filmów");
+        throw new Error("Nie znaleziono dostępnych filmów");
 
     } catch (error) {
-        console.error("Błąd podczas pobierania filmu:", error);
+        if (error.name === 'AbortError') {
+            throw new Error("Timeout podczas pobierania filmów");
+        }
         throw error;
     }
 }
 
-// Funkcja tworząca URL do otwarcia w aplikacji YouTube
-function getYouTubeAppUrl(videoId) {
-    const platform = detectPlatform();
-    
-    if (platform.isIOS) {
-        // Dla iOS - custom URL scheme
-        return `vnd.youtube://watch?v=${videoId}`;
-    } else if (platform.isAndroid) {
-        // Dla Android - intent URL
-        return `intent://youtube.com/watch?v=${videoId}#Intent;package=com.google.android.youtube;scheme=https;end`;
-    } else {
-        // Dla desktop i innych - zwykły link
-        return `https://www.youtube.com/watch?v=${videoId}`;
-    }
-}
-
-// Funkcja otwierająca aplikację YouTube
-function openYouTubeApp(videoId) {
-    const appUrl = getYouTubeAppUrl(videoId);
-    const webUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    
-    // Próbujemy otworzyć aplikację
-    window.location.href = appUrl;
-    
-    // Jeśli po 1 sekundzie nadal jesteśmy na stronie, otwieramy w przeglądarce
-    setTimeout(() => {
-        if (!document.hidden) {
-            window.location.href = webUrl;
+/**
+ * Tworzy URL do przekierowania w zależności od platformy
+ */
+function createRedirectUrl(videoId, platform) {
+    if (platform.isInstagram || platform.isFacebook) {
+        // Dla Instagrama/Facebooka używamy openinyoutu.be
+        return `https://openinyoutu.be/watch?v=${videoId}`;
+    } else if (platform.isMobile) {
+        // Dla mobilnych bezpośrednio do aplikacji YouTube
+        if (platform.isIOS) {
+            return `vnd.youtube://watch?v=${videoId}`;
+        } else if (platform.isAndroid) {
+            return `intent://youtube.com/watch?v=${videoId}#Intent;package=com.google.android.youtube;scheme=https;end`;
         }
-    }, 1000);
+    }
+    
+    // Dla desktop - zwykły link YouTube
+    return `https://www.youtube.com/watch?v=${videoId}`;
 }
 
-// Natychmiastowe przekierowanie
-async function instantRedirect() {
+/**
+ * Wykonuje natychmiastowe przekierowanie
+ */
+async function performInstantRedirect() {
     try {
         const platform = detectPlatform();
-        const videoId = await getLatestVideo();
+        console.log('📱 Platforma:', platform);
         
-        // Jeśli użytkownik jest na Instagramie lub Facebooku, używamy linktw.in
-        if (platform.isInstagram || platform.isFacebook) {
-            const linktwUrl = `https://linktw.in/${videoId}`;
-            window.location.replace(linktwUrl);
-        } 
-        // Jeśli to urządzenie mobilne (ale nie Instagram/Facebook), otwieramy aplikację
-        else if (platform.isMobile) {
-            openYouTubeApp(videoId);
-        } 
-        // Dla desktop - zwykły link
-        else {
-            window.location.replace(`https://www.youtube.com/watch?v=${videoId}`);
-        }
+        const videoId = await getLatestVideo();
+        const redirectUrl = createRedirectUrl(videoId, platform);
+        
+        console.log('🚀 Przekierowuję do:', redirectUrl);
+        
+        // Natychmiastowe przekierowanie
+        window.location.replace(redirectUrl);
         
     } catch (error) {
-        // W przypadku błędu przekieruj na kanał
+        console.error('❌ Błąd przekierowania:', error);
+        
         const platform = detectPlatform();
+        let fallbackUrl = CONFIG.FALLBACK_URL;
+        
         if (platform.isInstagram || platform.isFacebook) {
-            window.location.replace("https://linktw.in/@angelkacs");
-        } else {
-            window.location.replace(FALLBACK_URL);
+            fallbackUrl = "https://openinyoutu.be/@angelkacs";
         }
+        
+        console.log('🔄 Używam fallback URL:', fallbackUrl);
+        window.location.replace(fallbackUrl);
     }
+}
+
+/**
+ * Dodatkowe zabezpieczenie - timeout
+ */
+function setupSafetyTimeout() {
+    setTimeout(() => {
+        // Jeśli nadal jesteśmy na tej stronie po 3 sekundach
+        if (window.location.href.includes('angelkacs.pl/film')) {
+            console.log('⏰ Safety timeout - wymuszam przekierowanie');
+            const platform = detectPlatform();
+            const fallbackUrl = platform.isInstagram || platform.isFacebook 
+                ? "https://openinyoutu.be/@angelkacs" 
+                : CONFIG.FALLBACK_URL;
+            window.location.replace(fallbackUrl);
+        }
+    }, 3000);
 }
 
 // ===== INICJALIZACJA =====
 
-// Rozpocznij natychmiast po załadowaniu DOM
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', instantRedirect);
-} else {
-    instantRedirect();
+/**
+ * Główna funkcja inicjalizująca
+ */
+function initializeApp() {
+    console.log('🎬 Rozpoczynam instant redirect...');
+    
+    // Rozpocznij natychmiastowe przekierowanie
+    performInstantRedirect();
+    
+    // Ustaw zabezpieczenie na timeout
+    setupSafetyTimeout();
 }
 
-// Dodatkowe zabezpieczenie - jeśli strona się załadowała, a przekierowanie nie zadziałało
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        // Sprawdź czy jesteśmy jeszcze na tej stronie
-        if (window.location.href.indexOf('angelkacs.pl/film') !== -1) {
-            const platform = detectPlatform();
-            if (platform.isInstagram || platform.isFacebook) {
-                window.location.replace("https://linktw.in/@angelkacs");
-            } else {
-                window.location.replace(FALLBACK_URL);
-            }
-        }
-    }, 3000);
+// Start aplikacji gdy DOM jest gotowy
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}
+
+// Global error handling
+window.addEventListener('error', (e) => {
+    console.error('🚨 Global error:', e.error);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    console.error('🚨 Unhandled promise rejection:', e.reason);
 });

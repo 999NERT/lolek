@@ -1,14 +1,27 @@
-/* CSS - Minimalny styl dla czarnego tła */
-body {
+/* Reset i ukrycie wszystkich elementów */
+* {
     margin: 0;
     padding: 0;
-    background: #000;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
+    box-sizing: border-box;
 }
 
-/* Ukrycie wszystkiego - strona jest pusta */
-* {
-    display: none;
+body {
+    background: #000000;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* Ukryj wszystko - strona ma być całkowicie pusta */
+body * {
+    display: none !important;
+}
+
+/* Zapewnij, że nic się nie wyświetli */
+html, body {
+    visibility: hidden;
+    opacity: 0;
 }

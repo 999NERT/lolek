@@ -2,28 +2,22 @@
 const CONFIG = {
     CHANNEL_ID: "UCb4KZzyxv9-PL_BcKOrpFyQ",
     PROXY_URL: `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=UCb4KZzyxv9-PL_BcKOrpFyQ`)}`,
-    FALLBACK_URL: "https://www.youtube.com/@angelkacs",
+    FALLBACK_URL: "https://openyoutu.be/@angelkacs",
     TIMEOUT: 5000
 };
 
 // ===== FUNKCJE POMOCNICZE =====
 
 /**
- * Wykrywa platformę użytkownika
+ * Wykrywa czy użytkownik pochodzi z Instagrama
  */
-function detectPlatform() {
+function isFromInstagram() {
     const ua = navigator.userAgent;
-    return {
-        isInstagram: /Instagram/i.test(ua),
-        isFacebook: /FBAN|FBAV/i.test(ua),
-        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua),
-        isIOS: /iPad|iPhone|iPod/.test(ua),
-        isAndroid: /Android/.test(ua)
-    };
+    return /Instagram/i.test(ua);
 }
 
 /**
- * Sprawdza czy film jest dostępny
+ * Sprawdza dostępność filmu poprzez testowanie miniaturki
  */
 function checkVideoAvailability(videoId) {
     return new Promise((resolve) => {
@@ -36,23 +30,23 @@ function checkVideoAvailability(videoId) {
 }
 
 /**
- * Pobiera najnowszy film z kanału
+ * Pobiera najnowszy film z kanału YouTube
  */
 async function getLatestVideo() {
     try {
-        console.log('🔍 Pobieranie listy filmów...');
+        console.log('📡 Pobieranie listy filmów z kanału...');
         
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT);
         
-        const response = await fetch(CONFIG.PROXY_URL, { 
-            signal: controller.signal 
+        const response = await fetch(CONFIG.PROXY_URL, {
+            signal: controller.signal
         });
         
         clearTimeout(timeoutId);
         
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Błąd HTTP: ${response.status}`);
         }
         
         const data = await response.json();
@@ -63,29 +57,35 @@ async function getLatestVideo() {
             throw new Error("Brak filmów na kanale");
         }
 
-        console.log(`📹 Znaleziono ${entries.length} filmów, szukam najnowszego...`);
+        console.log(`🎬 Znaleziono ${entries.length} filmów, szukam najnowszego...`);
 
-        // Szukamy najnowszego filmu (pomijając shorty)
+        // Przeszukujemy filmy w kolejności (najnowszy pierwszy)
         for (let i = 0; i < Math.min(entries.length, 10); i++) {
             const entry = entries[i];
             const videoId = entry.getElementsByTagName("yt:videoId")[0]?.textContent?.trim();
             const title = entry.getElementsByTagName("title")[0]?.textContent;
             
-            if (!videoId || !title) continue;
-
-            // Pomijamy shorty
-            if (title.toLowerCase().includes("#short") || title.toLowerCase().includes("shorts")) {
-                console.log(`⏭️ Pomijam short: ${title}`);
+            if (!videoId || !title) {
                 continue;
             }
 
-            console.log(`🔍 Sprawdzam film: ${title}`);
+            // Pomijamy shorty
+            const isShort = title.toLowerCase().includes("#short") || 
+                           title.toLowerCase().includes("shorts") ||
+                           title.toLowerCase().includes("#shorts");
             
-            // Sprawdzamy dostępność
+            if (isShort) {
+                console.log(`⏭️ Pomijam short: "${title}"`);
+                continue;
+            }
+
+            console.log(`🔍 Sprawdzam film: "${title}" (${videoId})`);
+            
+            // Sprawdzamy dostępność filmu
             const isAvailable = await checkVideoAvailability(videoId);
             
             if (isAvailable) {
-                console.log(`✅ Znaleziono film: ${videoId}`);
+                console.log(`✅ Znaleziono dostępny film: ${videoId}`);
                 return videoId;
             }
             
@@ -98,105 +98,92 @@ async function getLatestVideo() {
         if (error.name === 'AbortError') {
             throw new Error("Timeout podczas pobierania filmów");
         }
+        console.error('🚨 Błąd pobierania filmu:', error);
         throw error;
     }
 }
 
 /**
- * Tworzy URL do przekierowania w zależności od platformy
+ * Tworzy finalny URL do przekierowania
  */
-function createRedirectUrl(videoId, platform) {
-    if (platform.isInstagram || platform.isFacebook) {
-        // Dla Instagrama/Facebooka używamy openinyoutu.be
-        return `https://openinyoutu.be/watch?v=${videoId}`;
-    } else if (platform.isMobile) {
-        // Dla mobilnych bezpośrednio do aplikacji YouTube
-        if (platform.isIOS) {
-            return `vnd.youtube://watch?v=${videoId}`;
-        } else if (platform.isAndroid) {
-            return `intent://youtube.com/watch?v=${videoId}#Intent;package=com.google.android.youtube;scheme=https;end`;
-        }
-    }
-    
-    // Dla desktop - zwykły link YouTube
-    return `https://www.youtube.com/watch?v=${videoId}`;
+function createFinalUrl(videoId) {
+    // Zawsze używamy openyoutu.be dla bezpośredniego otwarcia aplikacji
+    return `https://openyoutu.be/${videoId}`;
 }
 
 /**
- * Wykonuje natychmiastowe przekierowanie
+ * Wykonuje główne przekierowanie
  */
-async function performInstantRedirect() {
+async function performRedirect() {
     try {
-        const platform = detectPlatform();
-        console.log('📱 Platforma:', platform);
-        
         const videoId = await getLatestVideo();
-        const redirectUrl = createRedirectUrl(videoId, platform);
+        const finalUrl = createFinalUrl(videoId);
         
-        console.log('🚀 Przekierowuję do:', redirectUrl);
+        console.log(`🚀 Przekierowuję na: ${finalUrl}`);
+        
+        // Aktualizujemy tekst ładowania
+        const loadingText = document.querySelector('.loading-text');
+        if (loadingText) {
+            loadingText.textContent = 'Przekierowywanie...';
+        }
         
         // Natychmiastowe przekierowanie
-        window.location.replace(redirectUrl);
+        window.location.href = finalUrl;
         
     } catch (error) {
-        console.error('❌ Błąd przekierowania:', error);
+        console.error('❌ Błąd podczas przekierowania:', error);
         
-        const platform = detectPlatform();
-        let fallbackUrl = CONFIG.FALLBACK_URL;
-        
-        if (platform.isInstagram || platform.isFacebook) {
-            fallbackUrl = "https://openinyoutu.be/@angelkacs";
+        // Fallback na kanał
+        const loadingText = document.querySelector('.loading-text');
+        if (loadingText) {
+            loadingText.textContent = 'Problem z pobraniem filmu. Przekierowuję na kanał...';
         }
         
-        console.log('🔄 Używam fallback URL:', fallbackUrl);
-        window.location.replace(fallbackUrl);
+        setTimeout(() => {
+            window.location.href = CONFIG.FALLBACK_URL;
+        }, 1000);
     }
 }
 
 /**
- * Dodatkowe zabezpieczenie - timeout
+ * Ustawia zabezpieczenie timeout
  */
-function setupSafetyTimeout() {
+function setupSafetyNet() {
     setTimeout(() => {
-        // Jeśli nadal jesteśmy na tej stronie po 3 sekundach
         if (window.location.href.includes('angelkacs.pl/film')) {
-            console.log('⏰ Safety timeout - wymuszam przekierowanie');
-            const platform = detectPlatform();
-            const fallbackUrl = platform.isInstagram || platform.isFacebook 
-                ? "https://openinyoutu.be/@angelkacs" 
-                : CONFIG.FALLBACK_URL;
-            window.location.replace(fallbackUrl);
+            console.log('⏰ Safety net - wymuszam przekierowanie na kanał');
+            window.location.href = CONFIG.FALLBACK_URL;
         }
-    }, 3000);
+    }, 8000);
 }
 
 // ===== INICJALIZACJA =====
 
 /**
- * Główna funkcja inicjalizująca
+ * Główna funkcja startowa
  */
-function initializeApp() {
-    console.log('🎬 Rozpoczynam instant redirect...');
+function init() {
+    console.log('🎬 Inicjalizacja przekierowania...');
     
-    // Rozpocznij natychmiastowe przekierowanie
-    performInstantRedirect();
+    // Rozpocznij proces przekierowania
+    performRedirect();
     
-    // Ustaw zabezpieczenie na timeout
-    setupSafetyTimeout();
+    // Ustaw zabezpieczenie
+    setupSafetyNet();
 }
 
-// Start aplikacji gdy DOM jest gotowy
+// Start gdy DOM jest gotowy
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    document.addEventListener('DOMContentLoaded', init);
 } else {
-    initializeApp();
+    init();
 }
 
-// Global error handling
+// Obsługa błędów globalnych
 window.addEventListener('error', (e) => {
-    console.error('🚨 Global error:', e.error);
+    console.error('🚨 Globalny błąd:', e.error);
 });
 
 window.addEventListener('unhandledrejection', (e) => {
-    console.error('🚨 Unhandled promise rejection:', e.reason);
+    console.error('🚨 Nieobsłużony Promise:', e.reason);
 });

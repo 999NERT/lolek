@@ -1,12 +1,9 @@
-// Konfiguracja
+// ===== KONFIGURACJA =====
 const CHANNEL_ID = "UCb4KZzyxv9-PL_BcKOrpFyQ";
 const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`)}`;
 const FALLBACK_URL = "https://www.youtube.com/@angelkacs";
 
-// Elementy DOM
-const loadingText = document.querySelector('.loading-text');
-const fallbackText = document.querySelector('.fallback-text');
-const fallbackLink = document.getElementById('fallbackLink');
+// ===== FUNKCJE POMOCNICZE =====
 
 // Funkcja wykrywająca platformę
 function detectPlatform() {
@@ -20,34 +17,30 @@ function detectPlatform() {
 }
 
 // Funkcja sprawdzająca dostępność filmu
-async function checkVideoAvailability(videoId) {
+function checkVideoAvailability(videoId) {
     return new Promise((resolve) => {
         const testImg = new Image();
         
         testImg.onload = function() {
-            console.log("✅ Film jest publiczny");
             resolve(true);
         };
         
         testImg.onerror = function() {
-            console.log("❌ Film nie jest publiczny lub nie istnieje");
             resolve(false);
         };
         
         testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         
+        // Timeout na wypadek braku odpowiedzi
         setTimeout(() => {
             resolve(false);
-        }, 3000);
+        }, 2000);
     });
 }
 
 // Pobieranie najnowszego filmu
 async function getLatestVideo() {
     try {
-        console.log("🔄 Pobieranie danych z YouTube RSS...");
-        loadingText.textContent = "Szukam najnowszego filmu...";
-        
         const response = await fetch(PROXY_URL);
         if (!response.ok) throw new Error("Błąd połączenia z serwerem");
         
@@ -63,100 +56,57 @@ async function getLatestVideo() {
             const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent.trim();
             const title = entry.getElementsByTagName("title")[0].textContent;
             
-            console.log(`📹 Sprawdzam film: "${title}"`);
-
             // Pomijamy shorty
             if (title.toLowerCase().includes("#short") || title.toLowerCase().includes("shorts")) {
-                console.log("⏭️ Pomijam short");
                 continue;
             }
 
             // Sprawdzamy czy film jest publiczny
-            loadingText.textContent = "Sprawdzam dostępność filmu...";
             const isPublic = await checkVideoAvailability(videoId);
             
             if (isPublic) {
-                console.log("✅ Znaleziono publiczny film:", videoId);
                 return videoId;
             }
-            
-            console.log("❌ Film niepubliczny - szukam dalej");
         }
 
         throw new Error("Nie znaleziono publicznych filmów");
 
     } catch (error) {
-        console.error("🚨 Błąd podczas pobierania filmu:", error);
+        console.error("Błąd podczas pobierania filmu:", error);
         throw error;
     }
 }
 
-// Funkcja przekierowująca
-async function redirectToLatestVideo() {
-    const platform = detectPlatform();
-    
+// Natychmiastowe przekierowanie
+async function instantRedirect() {
     try {
-        // Pobierz najnowszy film
         const videoId = await getLatestVideo();
         const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
         
-        // Ustaw fallback link
-        if (fallbackLink) {
-            fallbackLink.href = youtubeUrl;
-        }
-        
-        console.log("🎯 Przekierowuję do:", youtubeUrl);
-        loadingText.textContent = "Przekierowywanie do YouTube...";
-        
-        // Natychmiastowe przekierowanie
-        window.location.href = youtubeUrl;
-        
-        // Fallback - jeśli przekierowanie nie zadziała w ciągu 2 sekund
-        setTimeout(() => {
-            if (!window.location.href.includes('youtube.com/watch')) {
-                console.log("🔄 Fallback - ręczne przekierowanie");
-                window.location.href = youtubeUrl;
-            }
-        }, 2000);
+        // Natychmiastowe przekierowanie (replace nie dodaje do historii)
+        window.location.replace(youtubeUrl);
         
     } catch (error) {
-        console.error("🚨 Błąd przekierowania:", error);
-        
-        // Przekieruj na kanał jako fallback
-        loadingText.textContent = "Problem z pobraniem filmu. Przekierowuję na kanał...";
-        
-        if (fallbackLink) {
-            fallbackLink.href = FALLBACK_URL;
-            fallbackText.style.display = 'block';
-        }
-        
-        setTimeout(() => {
-            window.location.href = FALLBACK_URL;
-        }, 3000);
+        // W przypadku błędu przekieruj na kanał
+        window.location.replace(FALLBACK_URL);
     }
 }
 
-// Inicjalizacja
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Inicjalizacja przekierowania...');
-    
-    // Rozpocznij przekierowanie
-    redirectToLatestVideo();
-    
-    // Obsługa kliknięcia w fallback link
-    if (fallbackLink) {
-        fallbackLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = this.href;
-        });
-    }
-});
+// ===== INICJALIZACJA =====
 
-// Obsługa błędów globalnych
-window.addEventListener('error', function(e) {
-    console.error('🚨 Globalny błąd:', e.error);
-});
+// Rozpocznij natychmiast po załadowaniu DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', instantRedirect);
+} else {
+    instantRedirect();
+}
 
-window.addEventListener('unhandledrejection', function(e) {
-    console.error('🚨 Nieobsłużony Promise:', e.reason);
+// Dodatkowe zabezpieczenie - jeśli strona się załadowała, a przekierowanie nie zadziałało
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        // Sprawdź czy jesteśmy jeszcze na tej stronie
+        if (window.location.href.indexOf('angelkacs.pl/film') !== -1) {
+            window.location.replace(FALLBACK_URL);
+        }
+    }, 3000);
 });

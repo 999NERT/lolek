@@ -83,22 +83,52 @@
         }
 
         .giveaway-info {
-            background: linear-gradient(135deg, #ff6b6b, #ffa726);
-            padding: 15px;
-            border-radius: 10px;
+            background: rgba(30, 30, 40, 0.8);
+            padding: 20px;
+            border-radius: 12px;
             margin: 20px 0;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            border: 1px solid rgba(145, 71, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .giveaway-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #4ecdc4, #ffd166);
         }
 
         .giveaway-info h2 {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #fff;
+            font-size: 1.8rem;
         }
 
         .giveaway-info h2 svg {
             margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .giveaway-description {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            background: linear-gradient(135deg, #9147ff, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 8px;
         }
 
         .giveaway-types {
@@ -109,22 +139,58 @@
         }
 
         .giveaway-type {
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             margin: 5px;
             flex-grow: 1;
             text-align: center;
-            max-width: 200px;
+            max-width: 250px;
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .giveaway-type:hover {
+            transform: translateY(-5px);
+        }
+
+        .giveaway-type::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            z-index: -1;
         }
 
         .giveaway-type.normal {
-            background: linear-gradient(135deg, #4ecdc4, #00bcd4);
-            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+            background: rgba(78, 205, 196, 0.15);
+            border: 1px solid rgba(78, 205, 196, 0.4);
+        }
+
+        .giveaway-type.normal::before {
+            background: linear-gradient(135deg, #4ecdc4, #06d6a0);
         }
 
         .giveaway-type.sub {
+            background: rgba(145, 71, 255, 0.15);
+            border: 1px solid rgba(145, 71, 255, 0.4);
+        }
+
+        .giveaway-type.sub::before {
             background: linear-gradient(135deg, #9147ff, #5c16c5);
-            box-shadow: 0 4px 10px rgba(145, 71, 255, 0.3);
+        }
+
+        .giveaway-type h3 {
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .giveaway-type p {
+            color: var(--gray);
+            font-size: 0.95rem;
         }
 
         .schedule {
@@ -263,6 +329,10 @@
                 max-width: 100%;
                 width: 100%;
             }
+            
+            .giveaway-description {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -286,16 +356,20 @@
                     </svg>
                     LOSOWANIA CO GODZINĘ
                 </h2>
-                <p>Co godzinę, przez cały stream, losujemy nagrody! Dla wszystkich widzów oraz dodatkowe, ekskluzywne nagrody dla subskrybentów!</p>
+                
+                <div class="giveaway-description">
+                    🎁 CO GODZINĘ LOSUJEMY NAGRODY! 🎁<br>
+                    Dla wszystkich widzów oraz dodatkowe, ekskluzywne nagrody dla subskrybentów!
+                </div>
                 
                 <div class="giveaway-types">
                     <div class="giveaway-type normal">
-                        <h3>Dla wszystkich</h3>
-                        <p>Nagrody dla każdego widza</p>
+                        <h3>Dla wszystkich widzów</h3>
+                        <p>Każdy może wygrać, niezależnie od subskrypcji!</p>
                     </div>
                     <div class="giveaway-type sub">
                         <h3>Dla subskrybentów</h3>
-                        <p>Ekskluzywne nagrody dla subów</p>
+                        <p>Ekskluzywne nagrody tylko dla subów!</p>
                     </div>
                 </div>
             </div>

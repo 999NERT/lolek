@@ -76,10 +76,43 @@
             color: transparent;
         }
 
-        .date {
-            font-size: 1.4rem;
-            color: var(--gray);
-            margin-bottom: 10px;
+        .date-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .date-box {
+            background: linear-gradient(135deg, #9147ff, #5c16c5);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 4px 15px rgba(145, 71, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .time-box {
+            background: linear-gradient(135deg, #4ecdc4, #06d6a0);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-box svg, .time-box svg {
+            flex-shrink: 0;
         }
 
         .giveaway-info {
@@ -343,6 +376,15 @@
                 font-size: 2rem;
             }
             
+            .date-container {
+                flex-direction: column;
+            }
+            
+            .date-box, .time-box {
+                width: 100%;
+                justify-content: center;
+            }
+            
             .giveaway-types {
                 flex-direction: column;
                 align-items: center;
@@ -363,7 +405,21 @@
     <div class="container">
         <header>
             <h1>HARMONOGRAM STREAMU</h1>
-            <div class="date">02.11.2025 | 12:00 - 24:00</div>
+            
+            <div class="date-container">
+                <div class="date-box">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/>
+                    </svg>
+                    02.11.2025
+                </div>
+                <div class="time-box">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    12:00 - 24:00
+                </div>
+            </div>
             
             <a href="https://twitch.tv/angelkacs" class="twitch-btn" target="_blank">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -385,7 +441,7 @@
                 </div>
                 
                 <div class="giveaway-description">
-                    Dla wszystkich widzów oraz dodatkowe, ekskluzywne nagrody dla subskrybentów!
+                    Dla wszystkich widzów oraz dla subskrybentów!
                 </div>
                 
                 <div class="giveaway-types">

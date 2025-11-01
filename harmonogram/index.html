@@ -83,11 +83,11 @@
         }
 
         .giveaway-info {
-            background: linear-gradient(135deg, var(--primary), #5c16c5);
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
             padding: 15px;
             border-radius: 10px;
             margin: 20px 0;
-            box-shadow: 0 4px 15px rgba(145, 71, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
 
         .giveaway-info h2 {
@@ -109,13 +109,22 @@
         }
 
         .giveaway-type {
-            background-color: rgba(255, 255, 255, 0.1);
             padding: 10px 15px;
             border-radius: 8px;
             margin: 5px;
             flex-grow: 1;
             text-align: center;
             max-width: 200px;
+        }
+
+        .giveaway-type.normal {
+            background: linear-gradient(135deg, #4ecdc4, #00bcd4);
+            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .giveaway-type.sub {
+            background: linear-gradient(135deg, #9147ff, #5c16c5);
+            box-shadow: 0 4px 10px rgba(145, 71, 255, 0.3);
         }
 
         .schedule {
@@ -140,6 +149,13 @@
             transform: translateY(20px);
         }
 
+        .time-slot.active {
+            border-left-width: 8px;
+            box-shadow: 0 0 20px rgba(145, 71, 255, 0.5);
+            background-color: rgba(145, 71, 255, 0.1);
+            transform: scale(1.02);
+        }
+
         .time-slot:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
@@ -162,12 +178,6 @@
             font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 10px;
-        }
-
-        .game-description {
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-top: 10px;
         }
 
         /* Różne kolory dla każdej gry */
@@ -276,14 +286,14 @@
                     </svg>
                     LOSOWANIA CO GODZINĘ
                 </h2>
-                <p>Podczas streamu co godzinę odbywają się losowania nagród!</p>
+                <p>Co godzinę, przez cały stream, losujemy nagrody! Dla wszystkich widzów oraz dodatkowe, ekskluzywne nagrody dla subskrybentów!</p>
                 
                 <div class="giveaway-types">
-                    <div class="giveaway-type">
+                    <div class="giveaway-type normal">
                         <h3>Dla wszystkich</h3>
                         <p>Nagrody dla każdego widza</p>
                     </div>
-                    <div class="giveaway-type">
+                    <div class="giveaway-type sub">
                         <h3>Dla subskrybentów</h3>
                         <p>Ekskluzywne nagrody dla subów</p>
                     </div>
@@ -301,7 +311,6 @@
                         12:00 - 13:00
                     </div>
                     <div class="activity">ROZMOWY</div>
-                    <div class="game-description">Rozmowy z widzami, planowanie streamu</div>
                 </div>
                 
                 <div class="time-slot">
@@ -312,7 +321,6 @@
                         13:00 - 15:00
                     </div>
                     <div class="activity">FACEITY</div>
-                    <div class="game-description">Rozgrywki na platformie Faceit</div>
                 </div>
                 
                 <div class="time-slot">
@@ -323,7 +331,6 @@
                         15:00 - 16:00
                     </div>
                     <div class="activity">CHOWANY</div>
-                    <div class="game-description">Zabawa w chowanego w różnych grach</div>
                 </div>
                 
                 <div class="time-slot">
@@ -334,7 +341,6 @@
                         16:00 - 18:00
                     </div>
                     <div class="activity">BF6</div>
-                    <div class="game-description">Battlefield 6 - intensywne rozgrywki</div>
                 </div>
                 
                 <div class="time-slot">
@@ -345,7 +351,6 @@
                         18:00 - 21:00
                     </div>
                     <div class="activity">MIXY I 1V1 Z WIDZAMI</div>
-                    <div class="game-description">Różne gry i pojedynki z widzami</div>
                 </div>
                 
                 <div class="time-slot">
@@ -356,7 +361,6 @@
                         21:00 - 22:00
                     </div>
                     <div class="activity">PUMMEL</div>
-                    <div class="game-description">Pummiel Party - zabawne minigry</div>
                 </div>
                 
                 <div class="time-slot">
@@ -367,7 +371,6 @@
                         22:00 - 23:00
                     </div>
                     <div class="activity">GRID 2</div>
-                    <div class="game-description">Wyścigi w grze Grid 2</div>
                 </div>
                 
                 <div class="time-slot">
@@ -378,7 +381,6 @@
                         23:00 - 24:00
                     </div>
                     <div class="activity">HORROR</div>
-                    <div class="game-description">Gry horror na zakończenie streamu</div>
                 </div>
             </div>
         </main>
@@ -399,7 +401,45 @@
                     slot.style.transform = 'translateY(0)';
                 }, index * 150);
             });
+            
+            // Funkcja do sprawdzania aktualnej aktywności
+            checkActiveGame();
+            
+            // Sprawdzaj co minutę
+            setInterval(checkActiveGame, 60000);
         });
+        
+        function checkActiveGame() {
+            const now = new Date();
+            // Sprawdzamy, czy dzisiaj to 02.11.2025
+            const streamDate = new Date('2025-11-02');
+            const isStreamDay = now.toDateString() === streamDate.toDateString();
+            
+            if (!isStreamDay) {
+                return; // Nie jest to dzień streamu, więc nic nie robimy
+            }
+            
+            const currentTime = now.getHours() * 60 + now.getMinutes(); // czas w minutach od północy
+            
+            const timeSlots = document.querySelectorAll('.time-slot');
+            timeSlots.forEach(slot => {
+                const timeText = slot.querySelector('.time').textContent.trim();
+                // timeText ma format: "12:00 - 13:00"
+                const [start, end] = timeText.split(' - ');
+                const [startHour, startMinute] = start.split(':').map(Number);
+                const [endHour, endMinute] = end.split(':').map(Number);
+                
+                const startTime = startHour * 60 + startMinute;
+                const endTime = endHour * 60 + endMinute;
+                
+                // Sprawdzamy, czy aktualny czas mieści się w przedziale
+                if (currentTime >= startTime && currentTime < endTime) {
+                    slot.classList.add('active');
+                } else {
+                    slot.classList.remove('active');
+                }
+            });
+        }
     </script>
 </body>
 </html>

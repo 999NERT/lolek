@@ -83,12 +83,12 @@
         }
 
         .giveaway-info {
-            background: rgba(30, 30, 40, 0.8);
-            padding: 20px;
+            background: rgba(25, 25, 35, 0.95);
+            padding: 25px;
             border-radius: 12px;
             margin: 20px 0;
-            border: 1px solid rgba(145, 71, 255, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(145, 71, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -110,6 +110,7 @@
             justify-content: center;
             color: #fff;
             font-size: 1.8rem;
+            text-align: center;
         }
 
         .giveaway-info h2 svg {
@@ -117,18 +118,26 @@
             color: var(--primary);
         }
 
+        .giveaway-main-text {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            line-height: 1.5;
+            color: #ffd166;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 209, 102, 0.1);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+
         .giveaway-description {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 1.2rem;
             line-height: 1.5;
-            background: linear-gradient(135deg, #9147ff, #4ecdc4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 600;
+            color: var(--light);
             padding: 10px;
-            border-radius: 8px;
         }
 
         .giveaway-types {
@@ -136,18 +145,22 @@
             justify-content: space-around;
             margin-top: 15px;
             flex-wrap: wrap;
+            gap: 15px;
         }
 
         .giveaway-type {
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
-            margin: 5px;
             flex-grow: 1;
             text-align: center;
-            max-width: 250px;
+            max-width: 280px;
             transition: transform 0.3s;
             position: relative;
             overflow: hidden;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .giveaway-type:hover {
@@ -167,7 +180,7 @@
 
         .giveaway-type.normal {
             background: rgba(78, 205, 196, 0.15);
-            border: 1px solid rgba(78, 205, 196, 0.4);
+            border: 1px solid rgba(78, 205, 196, 0.5);
         }
 
         .giveaway-type.normal::before {
@@ -176,7 +189,7 @@
 
         .giveaway-type.sub {
             background: rgba(145, 71, 255, 0.15);
-            border: 1px solid rgba(145, 71, 255, 0.4);
+            border: 1px solid rgba(145, 71, 255, 0.5);
         }
 
         .giveaway-type.sub::before {
@@ -184,13 +197,23 @@
         }
 
         .giveaway-type h3 {
-            margin-bottom: 8px;
-            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .giveaway-type.normal h3 {
+            color: #4ecdc4;
+        }
+
+        .giveaway-type.sub h3 {
+            color: #bf94ff;
         }
 
         .giveaway-type p {
-            color: var(--gray);
-            font-size: 0.95rem;
+            color: var(--light);
+            font-size: 1rem;
+            line-height: 1.4;
         }
 
         .schedule {
@@ -330,8 +353,8 @@
                 width: 100%;
             }
             
-            .giveaway-description {
-                font-size: 1.1rem;
+            .giveaway-main-text {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -357,8 +380,11 @@
                     LOSOWANIA CO GODZINĘ
                 </h2>
                 
+                <div class="giveaway-main-text">
+                    🎁 CO GODZINĘ LOSUJEMY NAGRODY! 🎁
+                </div>
+                
                 <div class="giveaway-description">
-                    🎁 CO GODZINĘ LOSUJEMY NAGRODY! 🎁<br>
                     Dla wszystkich widzów oraz dodatkowe, ekskluzywne nagrody dla subskrybentów!
                 </div>
                 

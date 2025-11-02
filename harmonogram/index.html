@@ -25,10 +25,11 @@
             background-color: var(--dark);
             color: var(--light);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(145, 71, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(145, 71, 255, 0.1) 0%, transparent 20%);
+                radial-gradient(circle at 10% 20%, rgba(145, 71, 255, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(78, 205, 196, 0.15) 0%, transparent 25%),
+                linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         }
 
         .container {
@@ -38,8 +39,8 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
             position: relative;
         }
 
@@ -48,11 +49,11 @@
             align-items: center;
             background-color: var(--primary);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 15px;
+            margin-top: 10px;
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(145, 71, 255, 0.3);
         }
@@ -64,51 +65,52 @@
         }
 
         .twitch-btn svg {
-            margin-right: 10px;
+            margin-right: 8px;
         }
 
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
             background: linear-gradient(90deg, var(--primary), #bf94ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .date-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            margin: 15px 0;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .date-box {
             background: linear-gradient(135deg, #9147ff, #5c16c5);
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 10px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: white;
             box-shadow: 0 4px 15px rgba(145, 71, 255, 0.4);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .time-box {
             background: linear-gradient(135deg, #4ecdc4, #06d6a0);
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 10px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: white;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .date-box svg, .time-box svg {
@@ -117,9 +119,9 @@
 
         .giveaway-info {
             background: rgba(25, 25, 35, 0.95);
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 1px solid rgba(145, 71, 255, 0.4);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             position: relative;
@@ -137,60 +139,72 @@
         }
 
         .giveaway-info h2 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             text-align: center;
         }
 
         .giveaway-info h2 svg {
-            margin-right: 10px;
+            margin-right: 8px;
             color: var(--primary);
         }
 
         .giveaway-main-text {
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.4rem;
-            line-height: 1.5;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            line-height: 1.4;
             color: #ffd166;
             font-weight: 700;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             background: rgba(255, 209, 102, 0.1);
             border: 1px solid rgba(255, 209, 102, 0.3);
         }
 
-        .giveaway-description {
+        .wheel-info {
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.2rem;
-            line-height: 1.5;
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(239, 71, 111, 0.1);
+            border: 1px solid rgba(239, 71, 111, 0.3);
+        }
+
+        .wheel-info h3 {
+            color: #ef476f;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .wheel-info p {
             color: var(--light);
-            padding: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .giveaway-types {
             display: flex;
             justify-content: space-around;
-            margin-top: 15px;
+            margin-top: 12px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
         }
 
         .giveaway-type {
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             flex-grow: 1;
             text-align: center;
-            max-width: 280px;
+            max-width: 250px;
             transition: transform 0.3s;
             position: relative;
             overflow: hidden;
-            min-height: 140px;
+            min-height: 120px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -230,8 +244,8 @@
         }
 
         .giveaway-type h3 {
-            margin-bottom: 12px;
-            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
             font-weight: 700;
         }
 
@@ -245,21 +259,21 @@
 
         .giveaway-type p {
             color: var(--light);
-            font-size: 1rem;
-            line-height: 1.4;
+            font-size: 0.95rem;
+            line-height: 1.3;
         }
 
         .schedule {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
         }
 
         .time-slot {
             background-color: var(--darker);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -285,21 +299,21 @@
 
         .time {
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
         }
 
         .time svg {
-            margin-right: 8px;
+            margin-right: 6px;
         }
 
         .activity {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         /* Różne kolory dla każdej gry */
@@ -360,11 +374,12 @@
         }
 
         footer {
-            margin-top: 50px;
-            padding: 20px;
+            margin-top: 40px;
+            padding: 15px;
             text-align: center;
             color: var(--gray);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
         }
 
         @media (max-width: 600px) {
@@ -373,7 +388,7 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .date-container {
@@ -396,7 +411,7 @@
             }
             
             .giveaway-main-text {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -408,13 +423,13 @@
             
             <div class="date-container">
                 <div class="date-box">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/>
                     </svg>
                     02.11.2025
                 </div>
                 <div class="time-box">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                     </svg>
                     12:00 - 24:00
@@ -422,7 +437,7 @@
             </div>
             
             <a href="https://twitch.tv/angelkacs" class="twitch-btn" target="_blank">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
                 </svg>
                 twitch.tv/angelkacs
@@ -430,7 +445,7 @@
             
             <div class="giveaway-info">
                 <h2>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/>
                     </svg>
                     LOSOWANIA CO GODZINĘ
@@ -440,8 +455,9 @@
                     🎁 CO GODZINĘ LOSUJEMY NAGRODY! 🎁
                 </div>
                 
-                <div class="giveaway-description">
-                    Dla wszystkich widzów oraz dla subskrybentów!
+                <div class="wheel-info">
+                    <h3>🎡 KOŁO FORTUNY NA STREAMIE 🎡</h3>
+                    <p>1 los = 25 zł</p>
                 </div>
                 
                 <div class="giveaway-types">
@@ -461,7 +477,7 @@
             <div class="schedule">
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         12:00 - 12:30
@@ -471,7 +487,7 @@
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         12:30 - 15:00
@@ -481,7 +497,7 @@
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         15:00 - 16:00
@@ -491,17 +507,17 @@
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         16:00 - 18:00
                     </div>
-                    <div class="activity">BATTLEFIELD REDSEC</div>
+                    <div class="activity">BF6</div>
                 </div>
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         18:00 - 18:30
@@ -511,7 +527,7 @@
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         18:30 - 21:00
@@ -521,22 +537,22 @@
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         21:00 - 22:30
                     </div>
-                    <div class="activity">PUMMEL PARTY</div>
+                    <div class="activity">PUMMEL</div>
                 </div>
                 
                 <div class="time-slot">
                     <div class="time">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                         </svg>
                         22:30 - 24:00
                     </div>
-                    <div class="activity">GRID 2</div>
+                    <div class="activity">GRID</div>
                 </div>
             </div>
         </main>

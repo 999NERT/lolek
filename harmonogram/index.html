@@ -27,9 +27,8 @@
             min-height: 100vh;
             padding: 15px;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(145, 71, 255, 0.15) 0%, transparent 25%),
-                radial-gradient(circle at 90% 80%, rgba(78, 205, 196, 0.15) 0%, transparent 25%),
-                linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                radial-gradient(circle at 10% 20%, rgba(145, 71, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(145, 71, 255, 0.1) 0%, transparent 20%);
         }
 
         .container {
@@ -88,179 +87,70 @@
         }
 
         .date-box {
-            background: linear-gradient(135deg, #9147ff, #5c16c5);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             padding: 12px 20px;
             border-radius: 10px;
             font-size: 1.3rem;
             font-weight: 700;
             color: white;
-            box-shadow: 0 4px 15px rgba(145, 71, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             gap: 8px;
+            border: 1px solid rgba(145, 71, 255, 0.3);
         }
 
         .time-box {
-            background: linear-gradient(135deg, #4ecdc4, #06d6a0);
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
             padding: 12px 20px;
             border-radius: 10px;
             font-size: 1.3rem;
             font-weight: 700;
             color: white;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             gap: 8px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
         }
 
         .date-box svg, .time-box svg {
             flex-shrink: 0;
         }
 
-        .giveaway-info {
+        .wheel-info {
             background: rgba(25, 25, 35, 0.95);
             padding: 20px;
             border-radius: 12px;
             margin: 15px 0;
-            border: 1px solid rgba(145, 71, 255, 0.4);
+            border: 1px solid rgba(239, 71, 111, 0.4);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
-        .giveaway-info::before {
+        .wheel-info::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--primary), #4ecdc4, #ffd166);
+            background: linear-gradient(90deg, #ef476f, #ffd166);
         }
 
-        .giveaway-info h2 {
+        .wheel-info h2 {
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: #fff;
             font-size: 1.6rem;
             text-align: center;
-        }
-
-        .giveaway-info h2 svg {
-            margin-right: 8px;
-            color: var(--primary);
-        }
-
-        .giveaway-main-text {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            line-height: 1.4;
-            color: #ffd166;
-            font-weight: 700;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(255, 209, 102, 0.1);
-            border: 1px solid rgba(255, 209, 102, 0.3);
-        }
-
-        .wheel-info {
-            text-align: center;
-            margin: 15px 0;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(239, 71, 111, 0.1);
-            border: 1px solid rgba(239, 71, 111, 0.3);
-        }
-
-        .wheel-info h3 {
-            color: #ef476f;
-            font-size: 1.3rem;
-            margin-bottom: 5px;
         }
 
         .wheel-info p {
             color: var(--light);
             font-size: 1.1rem;
             font-weight: 600;
-        }
-
-        .giveaway-types {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 12px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .giveaway-type {
-            padding: 15px;
-            border-radius: 10px;
-            flex-grow: 1;
-            text-align: center;
-            max-width: 250px;
-            transition: transform 0.3s;
-            position: relative;
-            overflow: hidden;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .giveaway-type:hover {
-            transform: translateY(-5px);
-        }
-
-        .giveaway-type::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .giveaway-type.normal {
-            background: rgba(78, 205, 196, 0.15);
-            border: 1px solid rgba(78, 205, 196, 0.5);
-        }
-
-        .giveaway-type.normal::before {
-            background: linear-gradient(135deg, #4ecdc4, #06d6a0);
-        }
-
-        .giveaway-type.sub {
-            background: rgba(145, 71, 255, 0.15);
-            border: 1px solid rgba(145, 71, 255, 0.5);
-        }
-
-        .giveaway-type.sub::before {
-            background: linear-gradient(135deg, #9147ff, #5c16c5);
-        }
-
-        .giveaway-type h3 {
-            margin-bottom: 8px;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .giveaway-type.normal h3 {
-            color: #4ecdc4;
-        }
-
-        .giveaway-type.sub h3 {
-            color: #bf94ff;
-        }
-
-        .giveaway-type p {
-            color: var(--light);
-            font-size: 0.95rem;
-            line-height: 1.3;
         }
 
         .schedule {
@@ -399,20 +289,6 @@
                 width: 100%;
                 justify-content: center;
             }
-            
-            .giveaway-types {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .giveaway-type {
-                max-width: 100%;
-                width: 100%;
-            }
-            
-            .giveaway-main-text {
-                font-size: 1.1rem;
-            }
         }
     </style>
 </head>
@@ -443,33 +319,9 @@
                 twitch.tv/angelkacs
             </a>
             
-            <div class="giveaway-info">
-                <h2>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/>
-                    </svg>
-                    LOSOWANIA CO GODZINĘ
-                </h2>
-                
-                <div class="giveaway-main-text">
-                    🎁 CO GODZINĘ LOSUJEMY NAGRODY! 🎁
-                </div>
-                
-                <div class="wheel-info">
-                    <h3>🎡 KOŁO FORTUNY NA STREAMIE 🎡</h3>
-                    <p>1 los = 25 zł</p>
-                </div>
-                
-                <div class="giveaway-types">
-                    <div class="giveaway-type normal">
-                        <h3>Dla wszystkich widzów</h3>
-                        <p>Każdy może wygrać, niezależnie od subskrypcji!</p>
-                    </div>
-                    <div class="giveaway-type sub">
-                        <h3>Dla subskrybentów</h3>
-                        <p>Ekskluzywne nagrody tylko dla subów!</p>
-                    </div>
-                </div>
+            <div class="wheel-info">
+                <h2>🎡 KOŁO FORTUNY NA STREAMIE 🎡</h2>
+                <p>1 los = 25 zł</p>
             </div>
         </header>
 

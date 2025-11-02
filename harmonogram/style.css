@@ -177,7 +177,7 @@ header {
     margin-bottom: 20px;
     font-size: 1.6rem;
     line-height: 1.4;
-    color: white;
+    color: #ffffff;
     font-weight: 700;
     padding: 12px;
     border-radius: 8px;
@@ -334,13 +334,6 @@ header {
 }
 .time-slot:nth-child(7) .time {
     color: #7b2cbf;
-}
-
-.time-slot:nth-child(8) {
-    border-left-color: #ff9e00;
-}
-.time-slot:nth-child(8) .time {
-    color: #ff9e00;
 }
 
 footer {

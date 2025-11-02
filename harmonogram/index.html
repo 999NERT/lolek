@@ -53,7 +53,7 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 1.2rem;
-            margin-top: 10px;
+            margin: 20px 0;
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(145, 71, 255, 0.3);
         }
@@ -68,16 +68,6 @@
             margin-right: 10px;
             width: 24px;
             height: 24px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            background: linear-gradient(90deg, var(--primary), #bf94ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .date-container {
@@ -121,6 +111,17 @@
             flex-shrink: 0;
         }
 
+        .stream-title {
+            font-size: 1.8rem;
+            margin: 15px 0;
+            background: linear-gradient(90deg, #ff6b6b, #ffd166, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+        }
+
         .wheel-info {
             background: rgba(25, 25, 35, 0.95);
             padding: 20px;
@@ -145,15 +146,18 @@
 
         .wheel-info h2 {
             margin-bottom: 12px;
-            color: #fff;
-            font-size: 1.6rem;
+            color: #ffd166;
+            font-size: 1.8rem;
             text-align: center;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .wheel-info p {
-            color: var(--light);
-            font-size: 1.1rem;
-            font-weight: 600;
+            color: #ffd166;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .giveaway-info {
@@ -390,10 +394,6 @@
                 grid-template-columns: 1fr;
             }
             
-            h1 {
-                font-size: 1.8rem;
-            }
-            
             .date-container {
                 flex-direction: column;
             }
@@ -417,14 +417,24 @@
                 padding: 14px 28px;
                 font-size: 1.1rem;
             }
+            
+            .stream-title {
+                font-size: 1.5rem;
+            }
+            
+            .wheel-info h2 {
+                font-size: 1.5rem;
+            }
+            
+            .wheel-info p {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>HARMONOGRAM 12H URODZINOWEGO STREAMA</h1>
-            
             <div class="date-container">
                 <div class="date-box">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -446,6 +456,8 @@
                 </svg>
                 twitch.tv/angelkacs
             </a>
+            
+            <div class="stream-title">HARMONOGRAM 12H URODZINOWEGO STREAMA</div>
             
             <div class="wheel-info">
                 <h2>🎡 KOŁO FORTUNY NA STREAMIE 🎡</h2>
@@ -499,7 +511,7 @@
                         </svg>
                         15:00 - 16:00
                     </div>
-                    <div class="activity">CHOWANY/FIFA</div>
+                    <div class="activity">FIFA</div>
                 </div>
                 
                 <div class="time-slot">

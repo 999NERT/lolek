@@ -12,6 +12,7 @@ async function loadLatestVideo() {
   if (err) {
     err.style.display = "none";
     err.textContent = "";
+    err.innerHTML = ""; // Czyścimy całą zawartość
   }
   if (btn) btn.style.display = "none";
   if (img) {
@@ -23,106 +24,164 @@ async function loadLatestVideo() {
   try {
     console.log("🔄 Pobieranie danych z YouTube RSS...");
     
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
-    const res = await fetch(proxy, {
-      mode: 'cors',
-      headers: {
-        'Accept': 'application/xml, application/json, text/plain, */*'
+    // Lista alternatywnych proxy z różnymi metodami
+    const proxyList = [
+      {
+        name: "allorigins",
+        url: `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}&callback=?`
+      },
+      {
+        name: "corsproxy",
+        url: `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`
+      },
+      {
+        name: "codetabs",
+        url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(rssUrl)}`
+      },
+      {
+        name: "thingproxy",
+        url: `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(rssUrl)}`
       }
-    });
+    ];
     
-    if (!res.ok) {
-      throw new Error("Błąd połączenia z serwerem proxy");
+    let responseData = null;
+    let successfulProxy = null;
+    
+    // Próbujemy każde proxy po kolei
+    for (const proxy of proxyList) {
+      try {
+        console.log(`🔗 Próba proxy: ${proxy.name}`);
+        
+        const response = await fetch(proxy.url, {
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/xml, text/xml, application/json, text/plain, */*',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          },
+          signal: AbortSignal.timeout(8000) // 8 sekund timeout
+        });
+        
+        if (!response.ok) {
+          console.warn(`⚠️ Proxy ${proxy.name} odpowiedziało statusem: ${response.status}`);
+          continue;
+        }
+        
+        let data;
+        if (proxy.name === "allorigins") {
+          const json = await response.json();
+          data = json.contents;
+        } else {
+          data = await response.text();
+        }
+        
+        // Sprawdzamy czy to prawidłowe dane
+        if (data && data.includes('<entry>')) {
+          responseData = data;
+          successfulProxy = proxy.name;
+          console.log(`✅ Proxy ${proxy.name} zadziałało pomyślnie`);
+          break;
+        } else {
+          console.warn(`⚠️ Proxy ${proxy.name} zwróciło nieprawidłowe dane`);
+        }
+        
+      } catch (proxyError) {
+        console.warn(`⚠️ Błąd proxy ${proxy.name}:`, proxyError.name);
+        continue;
+      }
     }
     
-    const data = await res.json();
-    const xml = new DOMParser().parseFromString(data.contents, "application/xml");
+    if (!responseData) {
+      throw new Error("Nie udało się pobrać danych z YouTube. Spróbuj ponownie za chwilę.");
+    }
+    
+    const xml = new DOMParser().parseFromString(responseData, "application/xml");
+    
+    // Sprawdzamy czy to nie jest błąd parsowania
+    const parserError = xml.querySelector('parsererror');
+    if (parserError) {
+      console.error("Błąd parsowania XML:", parserError.textContent);
+      throw new Error("Nieprawidłowy format danych z YouTube");
+    }
+    
     const entries = xml.getElementsByTagName("entry");
 
     if (!entries.length) throw new Error("Brak filmów na kanale");
 
-    // Konwertujemy HTMLCollection do tablicy dla łatwiejszego przetwarzania
+    // Konwertujemy do tablicy i sortujemy od najnowszych
     const videoEntries = Array.from(entries);
-
-    console.log(`📹 Znaleziono ${videoEntries.length} filmów`);
-
-    // Sortujemy od najnowszego do najstarszego
+    
     videoEntries.sort((a, b) => {
-      const dateA = new Date(a.querySelector('published').textContent);
-      const dateB = new Date(b.querySelector('published').textContent);
+      const dateA = new Date(a.querySelector('published')?.textContent || 0);
+      const dateB = new Date(b.querySelector('published')?.textContent || 0);
       return dateB - dateA;
     });
 
-    // Szukamy pierwszego NIE-shorta
-    for (const entry of videoEntries) {
-      const videoId = entry.querySelector('yt\\:videoId').textContent.trim();
-      const title = entry.querySelector('title').textContent;
-      
-      console.log(`🔍 Analizuję: "${title}" (ID: ${videoId})`);
+    console.log(`📹 Znaleziono ${videoEntries.length} filmów (użyto proxy: ${successfulProxy})`);
 
-      // ROZSZERZONE FILTROWANIE SHORTSÓW
+    // Szukamy pierwszego nie-shorta
+    for (const entry of videoEntries) {
+      const videoIdElem = entry.querySelector('yt\\:videoId, videoId');
+      const titleElem = entry.querySelector('title');
+      
+      if (!videoIdElem || !titleElem) continue;
+      
+      const videoId = videoIdElem.textContent.trim();
+      const title = titleElem.textContent;
+      
+      console.log(`🔍 Analizuję: "${title.substring(0, 50)}..."`);
+
+      // FILTROWANIE SHORTSÓW
       const titleLower = title.toLowerCase();
-      const mediaGroup = entry.querySelector('media\\:group');
-      const description = mediaGroup ? mediaGroup.querySelector('media\\:description')?.textContent?.toLowerCase() || '' : '';
+      const mediaGroup = entry.querySelector('media\\:group, media\\:description');
+      let description = '';
+      
+      if (mediaGroup) {
+        const descElem = mediaGroup.querySelector('media\\:description, description');
+        if (descElem) {
+          description = descElem.textContent.toLowerCase();
+        }
+      }
       
       // Lista słów kluczowych dla shortów
       const shortKeywords = [
         '#short', '#shorts', 'shorts', 'short', 
         '#yt短片', '#shortsfeed', '#shortsvideo',
         '#youtubeshorts', '#ytshorts', '#短影片',
-        '#shortsyoutube', '#shortsbeta', '#shorts_video'
+        '#shortsyoutube', '#shortsbeta', '#shorts_video',
+        '#ショート', '#shorts', 'shorts'
       ];
       
-      // Sprawdzamy czy tytuł lub opis zawiera którykolwiek z keywordów
-      const isShortByKeyword = shortKeywords.some(keyword => 
+      // Sprawdzamy keywordy
+      const hasShortKeyword = shortKeywords.some(keyword => 
         titleLower.includes(keyword.toLowerCase()) || 
         description.includes(keyword.toLowerCase())
       );
       
-      // Sprawdzamy wzorce regex dla shortów
+      // Sprawdzamy wzorce regex
       const shortPatterns = [
         /#?shorts?/i,
         /short\s*#?\d+/i,
         /shorts\s*#?\d+/i,
         /yt\s*shorts?/i,
-        /youtube\s*shorts?/i,
-        /#?\d+\s*second(s)?\s*#?shorts?/i,
-        /#?\d+\s*秒/i // krótkie filmy po chińsku/japońsku
+        /youtube\s*shorts?/i
       ];
       
-      const isShortByPattern = shortPatterns.some(pattern => 
+      const hasShortPattern = shortPatterns.some(pattern => 
         pattern.test(title) || pattern.test(description)
       );
       
-      // Sprawdzamy czy to może być short po długości tytułu/opisu
-      // Shortsy często mają bardzo krótkie opisy
-      const isShortByLength = description.length < 50 && title.length < 30;
-      
-      // Łączymy wszystkie warunki
-      const isShort = isShortByKeyword || isShortByPattern || isShortByLength;
-      
-      if (isShort) {
-        console.log(`⏭️ POMIJAM - Znaleziono keyword short: "${title}"`);
-        console.log(`   Tytuł: ${title}`);
-        console.log(`   Opis fragment: ${description.substring(0, 100)}...`);
-        continue; // Przechodzimy do następnego filmu
+      // Jeśli to short, pomijamy
+      if (hasShortKeyword || hasShortPattern) {
+        console.log(`⏭️ POMIJAM - Short wykryty: "${title.substring(0, 30)}..."`);
+        continue;
       }
 
-      // Sprawdzamy czy film jest publiczny
+      // Sprawdzamy dostępność filmu
       console.log("🔍 Sprawdzam dostępność filmu...");
       const isPublic = await checkVideoAvailability(videoId);
       
       if (isPublic) {
         console.log("✅ Film publiczny - ustawiam miniaturę");
-        
-        // DODATKOWO: Sprawdzamy proporcje miniaturki
-        // Shortsy mają proporcje 9:16 (pionowe), a filmy 16:9 (poziome)
-        const isVerticalThumbnail = await checkThumbnailOrientation(videoId);
-        
-        if (isVerticalThumbnail) {
-          console.log("📐 Miniaturka ma proporcje pionowe (short) - szukam dalej");
-          continue;
-        }
         
         // Ustawiamy miniaturę i link
         if (btn) {
@@ -142,33 +201,25 @@ async function loadLatestVideo() {
           
           img.onerror = function() {
             console.log("🔄 Fallback do hqdefault...");
-            // Fallback na hqdefault jeśli maxresdefault nie istnieje
             img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
             img.style.display = "block";
             if (loader) loader.style.display = "none";
           };
         }
         
-        return; // Znaleźliśmy film - przerywamy funkcję
+        return; // Sukces - przerywamy funkcję
       } else {
         console.log("❌ Film niepubliczny - szukam dalej");
       }
     }
 
-    // Jeśli dotarliśmy tutaj, nie znaleziono żadnego publicznego filmu
-    throw new Error("Nie znaleziono publicznych filmów (tylko normalne, nie-shorts)");
+    // Jeśli nie znaleziono filmu
+    throw new Error("Nie znaleziono dostępnych filmów (tylko normalne, nie-shorts)");
 
   } catch (error) {
     console.error("🚨 Błąd ładowania filmu:", error);
     if (loader) loader.style.display = "none";
-    if (err) {
-      err.innerHTML = `
-        <strong>Nie można załadować filmu</strong><br>
-        ${error.message}<br>
-        <small>Możesz <a href="https://www.youtube.com/channel/${channelId}" target="_blank">obejrzeć kanał na YouTube</a></small>
-      `;
-      err.style.display = "block";
-    }
+    showError(error.message);
   }
 }
 
@@ -183,86 +234,192 @@ async function checkVideoAvailability(videoId) {
     };
     
     testImg.onerror = function() {
-      console.log("❌ Film nie jest publiczny lub nie istnieje");
+      console.log("❌ Film nie jest publiczny");
       resolve(false);
     };
     
-    // Używamy hqdefault jako sprawdzenie - najbardziej niezawodne
     testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
     
-    // Timeout na wypadek braku odpowiedzi
     setTimeout(() => {
-      console.log("⏰ Timeout - film niedostępny");
       resolve(false);
     }, 3000);
   });
 }
 
-// NOWA FUNKCJA: Sprawdza proporcje miniaturki
-async function checkThumbnailOrientation(videoId) {
-  return new Promise((resolve) => {
-    const testImg = new Image();
-    
-    testImg.onload = function() {
-      // Sprawdzamy proporcje: jeśli wysokość > szerokości, to może to być short
-      // Normalne filmy: width > height (16:9)
-      // Shortsy: height > width (9:16)
-      const isVertical = testImg.naturalHeight > testImg.naturalWidth;
-      
-      console.log(`📏 Miniaturka: ${testImg.naturalWidth}x${testImg.naturalHeight} (${isVertical ? 'pionowa' : 'pozioma'})`);
-      
-      if (isVertical) {
-        // Dodatkowe sprawdzenie: jeśli proporcje są bardzo ekstremalne (powyżej 1.5:1)
-        const ratio = testImg.naturalHeight / testImg.naturalWidth;
-        if (ratio > 1.3) { // Więcej niż 1.3:1 to prawdopodobnie short
-          console.log("📱 Prawdopodobnie short (pionowe proporcje)");
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      } else {
-        resolve(false);
-      }
-    };
-    
-    testImg.onerror = function() {
-      console.log("❌ Nie udało się sprawdzić miniaturki");
-      resolve(false); // W razie błędu zakładamy, że to nie short
-    };
-    
-    // Używamy sddefault, który często lepiej pokazuje proporcje
-    testImg.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-    
-    setTimeout(() => {
-      resolve(false); // W razie timeout zakładamy, że to nie short
-    }, 2000);
+// Funkcja do wyświetlania błędu z przyciskiem odświeżania
+function showError(message) {
+  const err = document.getElementById("videoError");
+  if (!err) return;
+  
+  err.innerHTML = `
+    <div class="error-content">
+      <div class="error-icon">⚠️</div>
+      <div class="error-text">
+        <strong>Nie można załadować filmu</strong><br>
+        <span class="error-message">${message}</span>
+      </div>
+      <div class="error-actions">
+        <button id="retryButton" class="retry-btn">
+          🔄 Spróbuj ponownie
+        </button>
+        <a href="https://www.youtube.com/channel/UCb4KZzyxv9-PL_BcKOrpFyQ" 
+           target="_blank" 
+           class="yt-link">
+          ▶️ Obejrzyj na YouTube
+        </a>
+      </div>
+    </div>
+  `;
+  
+  err.style.display = "block";
+  
+  // Dodajemy obsługę kliknięcia przycisku
+  document.getElementById("retryButton").addEventListener("click", function() {
+    console.log("🔄 Ręczne odświeżanie...");
+    loadLatestVideo();
   });
 }
 
-// Inicjalizacja przy załadowaniu strony
-document.addEventListener('DOMContentLoaded', function() {
-  loadLatestVideo();
+// Styl dla błędu (możesz dodać do CSS)
+const errorStyles = `
+  .error-content {
+    text-align: center;
+    padding: 20px;
+    background: #fff3f3;
+    border: 1px solid #ffcdd2;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+  .error-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  .error-text {
+    margin-bottom: 15px;
+    color: #d32f2f;
+  }
+  .error-message {
+    font-size: 14px;
+    color: #666;
+  }
+  .error-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .retry-btn {
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  .retry-btn:hover {
+    background: #cc0000;
+  }
+  .yt-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #f8f8f8;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+  }
+  .yt-link:hover {
+    background: #eee;
+  }
+`;
+
+// Dodajemy style do dokumentu
+if (!document.querySelector('#error-styles')) {
+  const styleSheet = document.createElement("style");
+  styleSheet.id = "error-styles";
+  styleSheet.textContent = errorStyles;
+  document.head.appendChild(styleSheet);
+}
+
+// Dodajemy przycisk odświeżania na stałe
+function addRefreshButton() {
+  const container = document.querySelector('.yt-video-container');
+  if (!container) return;
   
-  // Opcjonalnie: przycisk do ręcznego odświeżenia
+  // Sprawdzamy czy przycisk już istnieje
+  if (document.getElementById('manualRefreshBtn')) return;
+  
   const refreshBtn = document.createElement('button');
-  refreshBtn.textContent = '⟳ Odśwież filmy';
+  refreshBtn.id = 'manualRefreshBtn';
+  refreshBtn.innerHTML = '🔄 Odśwież filmy';
   refreshBtn.style.cssText = `
     display: block;
-    margin: 10px auto;
+    margin: 15px auto;
     padding: 8px 16px;
-    background: #ff0000;
+    background: #2196F3;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s;
   `;
-  refreshBtn.onclick = loadLatestVideo;
   
-  const container = document.querySelector('.yt-video-container');
-  if (container) {
-    container.appendChild(refreshBtn);
-  }
+  refreshBtn.addEventListener('mouseenter', () => {
+    refreshBtn.style.background = '#1976D2';
+  });
+  
+  refreshBtn.addEventListener('mouseleave', () => {
+    refreshBtn.style.background = '#2196F3';
+  });
+  
+  refreshBtn.addEventListener('click', function() {
+    console.log("🔃 Ręczne odświeżanie na żądanie...");
+    this.innerHTML = '⌛ Ładuję...';
+    this.disabled = true;
+    
+    loadLatestVideo();
+    
+    // Przywróć przycisk po 3 sekundach
+    setTimeout(() => {
+      this.innerHTML = '🔄 Odśwież filmy';
+      this.disabled = false;
+    }, 3000);
+  });
+  
+  container.appendChild(refreshBtn);
+}
+
+// Inicjalizacja
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("🎬 Inicjalizacja YouTube Miniaturki...");
+  
+  // Pierwsze ładowanie
+  loadLatestVideo();
+  
+  // Dodaj przycisk odświeżania
+  setTimeout(addRefreshButton, 500);
+  
+  // Automatyczne odświeżanie co 10 minut
+  setInterval(() => {
+    console.log("🔄 Automatyczne odświeżanie...");
+    loadLatestVideo();
+  }, 10 * 60 * 1000);
+});
+
+// Obsługa offline/online
+window.addEventListener('online', function() {
+  console.log("🌐 Połączenie przywrócone - odświeżam...");
+  loadLatestVideo();
+});
+
+window.addEventListener('offline', function() {
+  showError("Brak połączenia z internetem. Sprawdź swoje połączenie.");
 });
 
 // === STATUS STREAMÓW ===

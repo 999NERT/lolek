@@ -34,11 +34,30 @@ async function loadLatestVideo() {
       const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent.trim();
       const title = entry.getElementsByTagName("title")[0].textContent;
       
-      console.log(`📹 Sprawdzam film: "${title}" (ID: ${videoId})`);
+      // Pobieramy czas trwania z mediagroup jeśli dostępny
+      const mediaGroup = entry.getElementsByTagName("media:group")[0];
+      let duration = null;
+      if (mediaGroup) {
+        const mediaContent = mediaGroup.getElementsByTagName("media:content")[0];
+        if (mediaContent && mediaContent.getAttribute("duration")) {
+          duration = parseInt(mediaContent.getAttribute("duration"));
+        }
+      }
+      
+      console.log(`📹 Sprawdzam film: "${title}" (ID: ${videoId}, czas: ${duration ? duration + 's' : 'nieznany'})`);
 
-      // Sprawdzamy czy to nie short
-      if (title.toLowerCase().includes("#short") || title.toLowerCase().includes("shorts")) {
-        console.log("⏭️ Pomijam short");
+      // FILTROWANIE SHORTSÓW - kilka warunków
+      const titleLower = title.toLowerCase();
+      const isShortByTitle = titleLower.includes("#short") || 
+                            titleLower.includes("#shorts") ||
+                            titleLower.includes("short") || 
+                            titleLower.includes("shorts");
+      
+      // Sprawdzamy czy czas trwania jest krótszy niż 60 sekund
+      const isShortByDuration = duration && duration <= 60;
+      
+      if (isShortByTitle || isShortByDuration) {
+        console.log("⏭️ Pomijam short (filtr tytułu lub czasu)");
         continue;
       }
 
@@ -81,7 +100,7 @@ async function loadLatestVideo() {
     }
 
     // Jeśli dotarliśmy tutaj, nie znaleziono żadnego publicznego filmu
-    throw new Error("Nie znaleziono publicznych filmów");
+    throw new Error("Nie znaleziono publicznych filmów (tylko normalne, nie-shorts)");
 
   } catch (error) {
     console.error("🚨 Błąd ładowania filmu:", error);
@@ -91,6 +110,32 @@ async function loadLatestVideo() {
       err.style.display = "block";
     }
   }
+}
+
+// Funkcja sprawdzająca dostępność filmu
+async function checkVideoAvailability(videoId) {
+  return new Promise((resolve) => {
+    const testImg = new Image();
+    
+    testImg.onload = function() {
+      console.log("✅ Film jest publiczny");
+      resolve(true);
+    };
+    
+    testImg.onerror = function() {
+      console.log("❌ Film nie jest publiczny lub nie istnieje");
+      resolve(false);
+    };
+    
+    // Używamy hqdefault jako sprawdzenie - najbardziej niezawodne
+    testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    
+    // Timeout na wypadek braku odpowiedzi
+    setTimeout(() => {
+      console.log("⏰ Timeout - film niedostępny");
+      resolve(false);
+    }, 5000);
+  });
 }
 
 // Funkcja sprawdzająca dostępność filmu

@@ -23,89 +23,89 @@ async function loadLatestVideo() {
   try {
     console.log("🔄 Pobieranie danych z YouTube RSS...");
     
-    // Lista alternatywnych proxy (CORS proxy)
-    const proxyOptions = [
-      `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}&callback=?`,
-      `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`,
-      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(rssUrl)}`
-    ];
-    
-    let data = null;
-    let lastError = null;
-    
-    // Próbujemy kolejne proxy aż któreś zadziała
-    for (let proxy of proxyOptions) {
-      try {
-        console.log(`🔗 Próba proxy: ${proxy.split('/')[2]}`); // Log tylko domeny
-        const res = await fetch(proxy, {
-          mode: 'cors',
-          headers: {
-            'Accept': 'application/xml, application/json, text/plain, */*'
-          }
-        });
-        
-        if (!res.ok) {
-          console.warn(`⚠️ Proxy ${proxy.split('/')[2]} nie odpowiada: ${res.status}`);
-          continue;
-        }
-        
-        data = await res.text();
-        console.log(`✅ Proxy ${proxy.split('/')[2]} działa`);
-        
-        // Jeśli to allorigins, trzeba sparsować JSON
-        if (proxy.includes('allorigins.win')) {
-          const jsonData = JSON.parse(data);
-          data = jsonData.contents;
-        }
-        
-        break; // Jeśli się udało, przerywamy pętlę
-      } catch (proxyError) {
-        console.warn(`⚠️ Błąd proxy ${proxy.split('/')[2]}:`, proxyError.message);
-        lastError = proxyError;
-        continue;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+    const res = await fetch(proxy, {
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/xml, application/json, text/plain, */*'
       }
+    });
+    
+    if (!res.ok) {
+      throw new Error("Błąd połączenia z serwerem proxy");
     }
     
-    if (!data) {
-      throw new Error("Nie udało się połączyć z żadnym serwerem proxy. Spróbuj odświeżyć stronę.");
-    }
-    
-    const xml = new DOMParser().parseFromString(data, "application/xml");
-    
-    // Sprawdzamy czy to prawidłowy XML (nie strona błędu)
-    if (xml.querySelector('parsererror')) {
-      throw new Error("Nieprawidłowe dane XML z YouTube");
-    }
-    
+    const data = await res.json();
+    const xml = new DOMParser().parseFromString(data.contents, "application/xml");
     const entries = xml.getElementsByTagName("entry");
 
     if (!entries.length) throw new Error("Brak filmów na kanale");
 
-    // Przetwarzamy wszystkie filmy w kolejności (najnowszy pierwszy)
-    for (let i = 0; i < entries.length; i++) {
-      const entry = entries[i];
-      const videoIdElement = entry.getElementsByTagName("yt:videoId")[0];
-      const titleElement = entry.getElementsByTagName("title")[0];
-      
-      if (!videoIdElement || !titleElement) continue;
-      
-      const videoId = videoIdElement.textContent.trim();
-      const title = titleElement.textContent;
-      
-      console.log(`📹 Sprawdzam film: "${title}" (ID: ${videoId})`);
+    // Konwertujemy HTMLCollection do tablicy dla łatwiejszego przetwarzania
+    const videoEntries = Array.from(entries);
 
-      // FILTROWANIE SHORTSÓW
-      const titleLower = title.toLowerCase();
-      const isShortByTitle = titleLower.includes("#short") || 
-                            titleLower.includes("#shorts") ||
-                            titleLower.includes(" shorts") ||
-                            titleLower.includes(" short") ||
-                            /^shorts:/i.test(title) ||
-                            /^short:/i.test(title);
+    console.log(`📹 Znaleziono ${videoEntries.length} filmów`);
+
+    // Sortujemy od najnowszego do najstarszego
+    videoEntries.sort((a, b) => {
+      const dateA = new Date(a.querySelector('published').textContent);
+      const dateB = new Date(b.querySelector('published').textContent);
+      return dateB - dateA;
+    });
+
+    // Szukamy pierwszego NIE-shorta
+    for (const entry of videoEntries) {
+      const videoId = entry.querySelector('yt\\:videoId').textContent.trim();
+      const title = entry.querySelector('title').textContent;
       
-      if (isShortByTitle) {
-        console.log("⏭️ Pomijam short (filtr tytułu)");
-        continue;
+      console.log(`🔍 Analizuję: "${title}" (ID: ${videoId})`);
+
+      // ROZSZERZONE FILTROWANIE SHORTSÓW
+      const titleLower = title.toLowerCase();
+      const mediaGroup = entry.querySelector('media\\:group');
+      const description = mediaGroup ? mediaGroup.querySelector('media\\:description')?.textContent?.toLowerCase() || '' : '';
+      
+      // Lista słów kluczowych dla shortów
+      const shortKeywords = [
+        '#short', '#shorts', 'shorts', 'short', 
+        '#yt短片', '#shortsfeed', '#shortsvideo',
+        '#youtubeshorts', '#ytshorts', '#短影片',
+        '#shortsyoutube', '#shortsbeta', '#shorts_video'
+      ];
+      
+      // Sprawdzamy czy tytuł lub opis zawiera którykolwiek z keywordów
+      const isShortByKeyword = shortKeywords.some(keyword => 
+        titleLower.includes(keyword.toLowerCase()) || 
+        description.includes(keyword.toLowerCase())
+      );
+      
+      // Sprawdzamy wzorce regex dla shortów
+      const shortPatterns = [
+        /#?shorts?/i,
+        /short\s*#?\d+/i,
+        /shorts\s*#?\d+/i,
+        /yt\s*shorts?/i,
+        /youtube\s*shorts?/i,
+        /#?\d+\s*second(s)?\s*#?shorts?/i,
+        /#?\d+\s*秒/i // krótkie filmy po chińsku/japońsku
+      ];
+      
+      const isShortByPattern = shortPatterns.some(pattern => 
+        pattern.test(title) || pattern.test(description)
+      );
+      
+      // Sprawdzamy czy to może być short po długości tytułu/opisu
+      // Shortsy często mają bardzo krótkie opisy
+      const isShortByLength = description.length < 50 && title.length < 30;
+      
+      // Łączymy wszystkie warunki
+      const isShort = isShortByKeyword || isShortByPattern || isShortByLength;
+      
+      if (isShort) {
+        console.log(`⏭️ POMIJAM - Znaleziono keyword short: "${title}"`);
+        console.log(`   Tytuł: ${title}`);
+        console.log(`   Opis fragment: ${description.substring(0, 100)}...`);
+        continue; // Przechodzimy do następnego filmu
       }
 
       // Sprawdzamy czy film jest publiczny
@@ -114,6 +114,15 @@ async function loadLatestVideo() {
       
       if (isPublic) {
         console.log("✅ Film publiczny - ustawiam miniaturę");
+        
+        // DODATKOWO: Sprawdzamy proporcje miniaturki
+        // Shortsy mają proporcje 9:16 (pionowe), a filmy 16:9 (poziome)
+        const isVerticalThumbnail = await checkThumbnailOrientation(videoId);
+        
+        if (isVerticalThumbnail) {
+          console.log("📐 Miniaturka ma proporcje pionowe (short) - szukam dalej");
+          continue;
+        }
         
         // Ustawiamy miniaturę i link
         if (btn) {
@@ -147,7 +156,7 @@ async function loadLatestVideo() {
     }
 
     // Jeśli dotarliśmy tutaj, nie znaleziono żadnego publicznego filmu
-    throw new Error("Nie znaleziono publicznych filmów");
+    throw new Error("Nie znaleziono publicznych filmów (tylko normalne, nie-shorts)");
 
   } catch (error) {
     console.error("🚨 Błąd ładowania filmu:", error);
@@ -185,30 +194,76 @@ async function checkVideoAvailability(videoId) {
     setTimeout(() => {
       console.log("⏰ Timeout - film niedostępny");
       resolve(false);
-    }, 3000); // Zmniejszony timeout
+    }, 3000);
   });
 }
 
-// Dodajemy obsługę ponownego załadowania po błędzie
-function setupErrorHandling() {
-  const errElement = document.getElementById("videoError");
-  if (errElement) {
-    errElement.addEventListener('click', function(e) {
-      if (e.target && e.target.tagName === 'BUTTON') {
-        loadLatestVideo();
+// NOWA FUNKCJA: Sprawdza proporcje miniaturki
+async function checkThumbnailOrientation(videoId) {
+  return new Promise((resolve) => {
+    const testImg = new Image();
+    
+    testImg.onload = function() {
+      // Sprawdzamy proporcje: jeśli wysokość > szerokości, to może to być short
+      // Normalne filmy: width > height (16:9)
+      // Shortsy: height > width (9:16)
+      const isVertical = testImg.naturalHeight > testImg.naturalWidth;
+      
+      console.log(`📏 Miniaturka: ${testImg.naturalWidth}x${testImg.naturalHeight} (${isVertical ? 'pionowa' : 'pozioma'})`);
+      
+      if (isVertical) {
+        // Dodatkowe sprawdzenie: jeśli proporcje są bardzo ekstremalne (powyżej 1.5:1)
+        const ratio = testImg.naturalHeight / testImg.naturalWidth;
+        if (ratio > 1.3) { // Więcej niż 1.3:1 to prawdopodobnie short
+          console.log("📱 Prawdopodobnie short (pionowe proporcje)");
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      } else {
+        resolve(false);
       }
-    });
-  }
+    };
+    
+    testImg.onerror = function() {
+      console.log("❌ Nie udało się sprawdzić miniaturki");
+      resolve(false); // W razie błędu zakładamy, że to nie short
+    };
+    
+    // Używamy sddefault, który często lepiej pokazuje proporcje
+    testImg.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+    
+    setTimeout(() => {
+      resolve(false); // W razie timeout zakładamy, że to nie short
+    }, 2000);
+  });
 }
 
 // Inicjalizacja przy załadowaniu strony
 document.addEventListener('DOMContentLoaded', function() {
   loadLatestVideo();
-  setupErrorHandling();
+  
+  // Opcjonalnie: przycisk do ręcznego odświeżenia
+  const refreshBtn = document.createElement('button');
+  refreshBtn.textContent = '⟳ Odśwież filmy';
+  refreshBtn.style.cssText = `
+    display: block;
+    margin: 10px auto;
+    padding: 8px 16px;
+    background: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  `;
+  refreshBtn.onclick = loadLatestVideo;
+  
+  const container = document.querySelector('.yt-video-container');
+  if (container) {
+    container.appendChild(refreshBtn);
+  }
 });
-
-// Opcjonalnie: automatyczne odświeżanie co 5 minut
-setInterval(loadLatestVideo, 5 * 60 * 1000);
 
 // === STATUS STREAMÓW ===
 async function checkStreamStatus() {

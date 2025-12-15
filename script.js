@@ -1,7 +1,7 @@
 // === YOUTUBE MINIATURKA ===
 async function loadLatestVideo() {
   const channelId = "UCb4KZzyxv9-PL_BcKOrpFyQ";
-  const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
+  const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
   
   const img = document.getElementById("latestThumbnail");
   const btn = document.getElementById("watchButton");
@@ -9,7 +9,10 @@ async function loadLatestVideo() {
   const loader = document.querySelector(".yt-loader");
 
   // Reset stanu
-  if (err) err.style.display = "none";
+  if (err) {
+    err.style.display = "none";
+    err.textContent = "";
+  }
   if (btn) btn.style.display = "none";
   if (img) {
     img.style.display = "none";
@@ -19,11 +22,61 @@ async function loadLatestVideo() {
 
   try {
     console.log("🔄 Pobieranie danych z YouTube RSS...");
-    const res = await fetch(proxy);
-    if (!res.ok) throw new Error("Błąd połączenia z serwerem");
     
-    const data = await res.json();
-    const xml = new DOMParser().parseFromString(data.contents, "application/xml");
+    // Lista alternatywnych proxy (CORS proxy)
+    const proxyOptions = [
+      `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}&callback=?`,
+      `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`,
+      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(rssUrl)}`
+    ];
+    
+    let data = null;
+    let lastError = null;
+    
+    // Próbujemy kolejne proxy aż któreś zadziała
+    for (let proxy of proxyOptions) {
+      try {
+        console.log(`🔗 Próba proxy: ${proxy.split('/')[2]}`); // Log tylko domeny
+        const res = await fetch(proxy, {
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/xml, application/json, text/plain, */*'
+          }
+        });
+        
+        if (!res.ok) {
+          console.warn(`⚠️ Proxy ${proxy.split('/')[2]} nie odpowiada: ${res.status}`);
+          continue;
+        }
+        
+        data = await res.text();
+        console.log(`✅ Proxy ${proxy.split('/')[2]} działa`);
+        
+        // Jeśli to allorigins, trzeba sparsować JSON
+        if (proxy.includes('allorigins.win')) {
+          const jsonData = JSON.parse(data);
+          data = jsonData.contents;
+        }
+        
+        break; // Jeśli się udało, przerywamy pętlę
+      } catch (proxyError) {
+        console.warn(`⚠️ Błąd proxy ${proxy.split('/')[2]}:`, proxyError.message);
+        lastError = proxyError;
+        continue;
+      }
+    }
+    
+    if (!data) {
+      throw new Error("Nie udało się połączyć z żadnym serwerem proxy. Spróbuj odświeżyć stronę.");
+    }
+    
+    const xml = new DOMParser().parseFromString(data, "application/xml");
+    
+    // Sprawdzamy czy to prawidłowy XML (nie strona błędu)
+    if (xml.querySelector('parsererror')) {
+      throw new Error("Nieprawidłowe dane XML z YouTube");
+    }
+    
     const entries = xml.getElementsByTagName("entry");
 
     if (!entries.length) throw new Error("Brak filmów na kanale");
@@ -31,33 +84,27 @@ async function loadLatestVideo() {
     // Przetwarzamy wszystkie filmy w kolejności (najnowszy pierwszy)
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i];
-      const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent.trim();
-      const title = entry.getElementsByTagName("title")[0].textContent;
+      const videoIdElement = entry.getElementsByTagName("yt:videoId")[0];
+      const titleElement = entry.getElementsByTagName("title")[0];
       
-      // Pobieramy czas trwania z mediagroup jeśli dostępny
-      const mediaGroup = entry.getElementsByTagName("media:group")[0];
-      let duration = null;
-      if (mediaGroup) {
-        const mediaContent = mediaGroup.getElementsByTagName("media:content")[0];
-        if (mediaContent && mediaContent.getAttribute("duration")) {
-          duration = parseInt(mediaContent.getAttribute("duration"));
-        }
-      }
+      if (!videoIdElement || !titleElement) continue;
       
-      console.log(`📹 Sprawdzam film: "${title}" (ID: ${videoId}, czas: ${duration ? duration + 's' : 'nieznany'})`);
+      const videoId = videoIdElement.textContent.trim();
+      const title = titleElement.textContent;
+      
+      console.log(`📹 Sprawdzam film: "${title}" (ID: ${videoId})`);
 
-      // FILTROWANIE SHORTSÓW - kilka warunków
+      // FILTROWANIE SHORTSÓW
       const titleLower = title.toLowerCase();
       const isShortByTitle = titleLower.includes("#short") || 
                             titleLower.includes("#shorts") ||
-                            titleLower.includes("short") || 
-                            titleLower.includes("shorts");
+                            titleLower.includes(" shorts") ||
+                            titleLower.includes(" short") ||
+                            /^shorts:/i.test(title) ||
+                            /^short:/i.test(title);
       
-      // Sprawdzamy czy czas trwania jest krótszy niż 60 sekund
-      const isShortByDuration = duration && duration <= 60;
-      
-      if (isShortByTitle || isShortByDuration) {
-        console.log("⏭️ Pomijam short (filtr tytułu lub czasu)");
+      if (isShortByTitle) {
+        console.log("⏭️ Pomijam short (filtr tytułu)");
         continue;
       }
 
@@ -100,13 +147,17 @@ async function loadLatestVideo() {
     }
 
     // Jeśli dotarliśmy tutaj, nie znaleziono żadnego publicznego filmu
-    throw new Error("Nie znaleziono publicznych filmów (tylko normalne, nie-shorts)");
+    throw new Error("Nie znaleziono publicznych filmów");
 
   } catch (error) {
     console.error("🚨 Błąd ładowania filmu:", error);
     if (loader) loader.style.display = "none";
     if (err) {
-      err.textContent = error.message;
+      err.innerHTML = `
+        <strong>Nie można załadować filmu</strong><br>
+        ${error.message}<br>
+        <small>Możesz <a href="https://www.youtube.com/channel/${channelId}" target="_blank">obejrzeć kanał na YouTube</a></small>
+      `;
       err.style.display = "block";
     }
   }
@@ -134,35 +185,30 @@ async function checkVideoAvailability(videoId) {
     setTimeout(() => {
       console.log("⏰ Timeout - film niedostępny");
       resolve(false);
-    }, 5000);
+    }, 3000); // Zmniejszony timeout
   });
 }
 
-// Funkcja sprawdzająca dostępność filmu
-async function checkVideoAvailability(videoId) {
-  return new Promise((resolve) => {
-    const testImg = new Image();
-    
-    testImg.onload = function() {
-      console.log("✅ Film jest publiczny");
-      resolve(true);
-    };
-    
-    testImg.onerror = function() {
-      console.log("❌ Film nie jest publiczny lub nie istnieje");
-      resolve(false);
-    };
-    
-    // Używamy hqdefault jako sprawdzenie - najbardziej niezawodne
-    testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    
-    // Timeout na wypadek braku odpowiedzi
-    setTimeout(() => {
-      console.log("⏰ Timeout - film niedostępny");
-      resolve(false);
-    }, 5000);
-  });
+// Dodajemy obsługę ponownego załadowania po błędzie
+function setupErrorHandling() {
+  const errElement = document.getElementById("videoError");
+  if (errElement) {
+    errElement.addEventListener('click', function(e) {
+      if (e.target && e.target.tagName === 'BUTTON') {
+        loadLatestVideo();
+      }
+    });
+  }
 }
+
+// Inicjalizacja przy załadowaniu strony
+document.addEventListener('DOMContentLoaded', function() {
+  loadLatestVideo();
+  setupErrorHandling();
+});
+
+// Opcjonalnie: automatyczne odświeżanie co 5 minut
+setInterval(loadLatestVideo, 5 * 60 * 1000);
 
 // === STATUS STREAMÓW ===
 async function checkStreamStatus() {

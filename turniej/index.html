@@ -1,1 +1,95 @@
-dadadad
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; URL=https://docs.google.com/forms/d/e/1FAIpQLSdk6VIwIg0_HkB5IeC_iHhpF0RYS92xriFhShXyCeyDbBpSTQ/viewform">
+    <title>AngelKACS - CSGO Skins</title>
+    
+    <!-- DNS Prefetch dla maksymalnej szybkości -->
+    <link rel="dns-prefetch" href="https://docs.google.com">
+    <link rel="preconnect" href="https://docs.google.com">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .loader {
+            border: 3px solid #333;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+
+    <script>
+        // INSTANT REDIRECT - maksymalnie zabezpieczone
+        (function() {
+            'use strict';
+            
+            // Zablokuj możliwość otwarcia w iframe
+            if (window.self !== window.top) {
+                window.top.location.href = window.self.location.href;
+            }
+            
+            // Zablokuj przycisk wstecz
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function() {
+                history.pushState(null, null, document.URL);
+            });
+            
+            // Główna funkcja przekierowania
+            function instantRedirect() {
+                // Użyj replace() aby usunąć stronę z historii
+                window.location.replace('https://docs.google.com/forms/d/e/1FAIpQLSdk6VIwIg0_HkB5IeC_iHhpF0RYS92xriFhShXyCeyDbBpSTQ/viewform');
+            }
+            
+            // Wiele warstw przekierowania dla bezpieczeństwa
+            setTimeout(instantRedirect, 0);
+            setTimeout(instantRedirect, 10);
+            setTimeout(instantRedirect, 50);
+            
+            // Fallback na wypadek blokady
+            document.addEventListener('DOMContentLoaded', instantRedirect);
+            window.addEventListener('load', instantRedirect);
+            
+            // Ochrona przed cancelowaniem przekierowania
+            document.onclick = instantRedirect;
+            document.ontouchstart = instantRedirect;
+            document.onkeydown = instantRedirect;
+            
+        })();
+        
+        // Dodatkowe zabezpieczenie - przekierowanie przez meta refresh
+        setTimeout(function() {
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'refresh';
+            meta.content = '0; url=https://docs.google.com/forms/d/e/1FAIpQLSdk6VIwIg0_HkB5IeC_iHhpF0RYS92xriFhShXyCeyDbBpSTQ/viewform';
+            document.head.appendChild(meta);
+        }, 100);
+    </script>
+    
+    <!-- Ostatnia warstwa - meta refresh w HTML -->
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=https://docs.google.com/forms/d/e/1FAIpQLSdk6VIwIg0_HkB5IeC_iHhpF0RYS92xriFhShXyCeyDbBpSTQ/viewform">
+    </noscript>
+</body>
+</html>

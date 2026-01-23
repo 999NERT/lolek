@@ -24,7 +24,6 @@
         "logo": "EJ"
       },
       "score": null,
-      "detailsLink": "https://example.com/match/1",
       "playersTeam1": [
         {
           "name": "Angelkacs"
@@ -59,24 +58,6 @@
           "name": "Enemy5"
         }
       ]
-    },
-    {
-      "id": 2,
-      "date": "PT. 21 LIS, 15:36",
-      "status": "finished",
-      "team1": {
-        "name": "VPProdigy",
-        "logo": "VP"
-      },
-      "team2": {
-        "name": "Endless Journey",
-        "logo": "EJ"
-      },
-      "score": {
-        "team1": 0,
-        "team2": 2
-      },
-      "detailsLink": "https://example.com/match/2"
     }
   ]
 }

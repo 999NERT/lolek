@@ -1,0 +1,32 @@
+{
+  "tournament": {
+    "id": "fortnite-fncs-2025",
+    "name": "Fortnite Champion Series - Season 5",
+    "date": "SOBOTA, 15 MARCA 2025 O 19:00 CET",
+    "status": "active",
+    "organizer": "Epic Games",
+    "format": "Solo",
+    "teams": "250",
+    "prize": "$100,000",
+    "game": "fortnite"
+  },
+  "matches": [
+    {
+      "id": 1,
+      "date": "SOBOTA, 15 MAR, 19:00",
+      "status": "live",
+      "team1": {
+        "name": "Team Liquid",
+        "logo": "TL"
+      },
+      "score": {
+        "team1": 45
+      },
+      "playersTeam1": [
+        {
+          "name": "Liquid Player 1"
+        }
+      ]
+    }
+  ]
+}

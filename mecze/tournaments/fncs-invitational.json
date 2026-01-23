@@ -6,8 +6,8 @@
     "status": "upcoming",
     "game": "fortnite",
     "organizer": "Epic Games",
-    "format": "Duos",
-    "teams": "100 par",
+    "format": "Solo Battle Royale",
+    "teams": "100 graczy",
     "prize": "$250,000"
   },
   "matches": [
@@ -16,19 +16,18 @@
       "date": "25.04, 21:00",
       "status": "upcoming",
       "team1": {
-        "name": "Angelkacs & Partner",
-        "logo": "AP",
+        "name": "Angelkacs",
+        "logo": "A",
         "hasAngelkacs": true
       },
       "team2": null,
-      "score": null,
+      "score": {
+        "team1": 0
+      },
       "playersTeam1": [
         {
           "name": "Angelkacs",
           "isAngelkacs": true
-        },
-        {
-          "name": "Pro Player"
         }
       ],
       "link": "https://twitch.tv/angelkacs"

@@ -1,32 +1,35 @@
 {
   "tournament": {
     "id": "betclic-birch-2026",
-    "name": "Betclic Birch Cup Bitwa Streamerow Kolejka 1",
-    "date": "CZWARTEK, 29 STYCZNIA 2026 O 20:17 CET",
+    "name": "Betclic Birch Cup - Bitwa Streamerów",
+    "date": "29.01.2026, 20:17 CET",
     "status": "upcoming",
-    "organizer": "yspwWYxq",
+    "game": "cs2",
+    "organizer": "Betclic",
     "format": "5v5",
-    "teams": "32",
-    "prize": "$10,000",
-    "game": "cs2"
+    "teams": "32 drużyn",
+    "prize": "$10,000"
   },
   "matches": [
     {
       "id": 1,
-      "date": "5R 03 GRU, 18:44",
-      "status": "cancelled",
+      "date": "03.12, 18:44",
+      "status": "upcoming",
       "team1": {
         "name": "Millenium",
-        "logo": "M"
+        "logo": "M",
+        "hasAngelkacs": true
       },
       "team2": {
         "name": "Endless Journey",
-        "logo": "EJ"
+        "logo": "EJ",
+        "hasAngelkacs": false
       },
       "score": null,
       "playersTeam1": [
         {
-          "name": "Angelkacs"
+          "name": "Angelkacs",
+          "isAngelkacs": true
         },
         {
           "name": "Player2"
@@ -57,7 +60,8 @@
         {
           "name": "Enemy5"
         }
-      ]
+      ],
+      "link": "https://twitch.tv/angelkacs"
     }
   ]
 }

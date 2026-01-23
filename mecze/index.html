@@ -3,227 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turnieje Esportowe | CS2 & Fortnite</title>
+    <title>Angelkacs | Turnieje Esportowe</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Ekran ładowania -->
     <div class="loading-screen" id="loading">
-        <div class="loading-container">
+        <div class="loading-content">
             <div class="loading-spinner">
-                <div class="spinner-circle"></div>
-                <div class="spinner-glow"></div>
+                <div class="spinner-inner">
+                    <div class="spinner-circle"></div>
+                    <div class="spinner-glow"></div>
+                </div>
             </div>
-            <h3 class="loading-text">Ładowanie turniejów...</h3>
-            <div class="loading-progress">
-                <div class="progress-bar"></div>
+            <div class="loading-text">
+                <h3>Ładowanie turniejów Angelkacs</h3>
+                <p>Proszę czekać...</p>
             </div>
         </div>
     </div>
 
     <!-- Główny kontener -->
-    <div class="app-container" id="container" style="display: none;">
-        <!-- Nagłówek -->
-        <header class="app-header">
-            <div class="header-top-section">
-                <div class="logo-container">
-                    <div class="logo-icon">
-                        <i class="fas fa-crown"></i>
-                        <div class="logo-pulse"></div>
+    <div class="main-container" id="container" style="display: none;">
+        <!-- Nagłówek z profilem -->
+        <header class="profile-header">
+            <div class="profile-overlay"></div>
+            <div class="profile-container">
+                <div class="profile-avatar">
+                    <div class="avatar-frame">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=angelkacs&backgroundColor=6366f1" alt="Angelkacs" class="avatar-img">
+                        <div class="avatar-status">
+                            <div class="status-indicator active"></div>
+                        </div>
                     </div>
-                    <div class="logo-text">
-                        <h1 class="logo-title">ESPORT<span class="logo-highlight">HUB</span></h1>
-                        <p class="logo-subtitle">Platforma turniejów gamingowych</p>
+                    <div class="profile-badges">
+                        <div class="badge pro">
+                            <i class="fas fa-crown"></i>
+                            <span>PRO</span>
+                        </div>
+                        <div class="badge verified">
+                            <i class="fas fa-check-circle"></i>
+                            <span>ZWERYFIKOWANA</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="header-stats-container">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-trophy"></i>
+                <div class="profile-info">
+                    <h1 class="profile-name">Angelkacs</h1>
+                    <p class="profile-title">Zawodniczka Esportowa</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-number" id="totalTournaments">12</span>
+                                <span class="stat-label">Turniejów</span>
+                            </div>
                         </div>
-                        <div class="stat-data">
-                            <span class="stat-number" id="totalTournaments">0</span>
-                            <span class="stat-label">Turniejów</span>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-number" id="totalMatches">47</span>
+                                <span class="stat-label">Meczów</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-number">$24.5K</span>
+                                <span class="stat-label">Wygrane</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-number">87%</span>
+                                <span class="stat-label">Wygrane</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-gamepad"></i>
+                    
+                    <div class="profile-games">
+                        <div class="game-tag cs2">
+                            <i class="fas fa-crosshairs"></i>
+                            <span>Counter-Strike 2</span>
                         </div>
-                        <div class="stat-data">
-                            <span class="stat-number" id="totalMatches">0</span>
-                            <span class="stat-label">Meczów</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="stat-data">
-                            <span class="stat-number">$110K</span>
-                            <span class="stat-label">Nagród</span>
+                        <div class="game-tag fortnite">
+                            <i class="fas fa-parachute-box"></i>
+                            <span>Fortnite</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="header-bottom-section">
-                <div class="filter-container">
-                    <div class="filter-group">
-                        <div class="filter-label">
-                            <i class="fas fa-gamepad"></i>
-                            <span>Filtruj grę:</span>
-                        </div>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="all">
-                                <i class="fas fa-globe-americas"></i>
-                                <span>Wszystkie</span>
-                            </button>
-                            <button class="filter-btn cs2-btn" data-filter="cs2">
-                                <i class="fas fa-crosshairs"></i>
-                                <span>CS2</span>
-                            </button>
-                            <button class="filter-btn fortnite-btn" data-filter="fortnite">
-                                <i class="fas fa-parachute-box"></i>
-                                <span>Fortnite</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <div class="filter-label">
-                            <i class="fas fa-flag"></i>
-                            <span>Status:</span>
-                        </div>
-                        <div class="status-buttons">
-                            <button class="status-btn active" data-status="all">Wszystkie</button>
-                            <button class="status-btn status-upcoming" data-status="upcoming">Nadchodzące</button>
-                            <button class="status-btn status-active" data-status="active">Aktywne</button>
-                            <button class="status-btn status-finished" data-status="finished">Zakończone</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="search-container">
-                    <div class="search-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Wyszukaj turniej, organizatora...">
-                    <div class="search-actions">
-                        <button class="search-clear" id="clearSearch">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
+            
+            <div class="profile-nav">
+                <nav class="main-nav">
+                    <a href="#tournaments" class="nav-item active">
+                        <i class="fas fa-trophy"></i>
+                        <span>Turnieje</span>
+                    </a>
+                    <a href="#matches" class="nav-item">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Mecze</span>
+                    </a>
+                    <a href="#stats" class="nav-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Statystyki</span>
+                    </a>
+                    <a href="#achievements" class="nav-item">
+                        <i class="fas fa-medal"></i>
+                        <span>Osiągnięcia</span>
+                    </a>
+                </nav>
             </div>
         </header>
 
         <!-- Główna zawartość -->
-        <main class="main-content">
-            <div class="content-header-section">
-                <div class="content-title">
-                    <h2>
-                        <i class="fas fa-fire"></i>
-                        <span>Aktualne turnieje</span>
-                    </h2>
-                    <div class="title-badge" id="tournamentCount">0 turniejów</div>
+        <main class="content-area">
+            <div class="content-section" id="tournaments">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>
+                            <i class="fas fa-calendar-alt"></i>
+                            Moje Turnieje
+                        </h2>
+                        <p class="section-subtitle">Turnieje w których biorę/bralam udział</p>
+                    </div>
+                    
+                    <div class="section-filters">
+                        <div class="filter-group">
+                            <div class="filter-label">
+                                <i class="fas fa-gamepad"></i>
+                                <span>Gra:</span>
+                            </div>
+                            <div class="filter-options">
+                                <button class="filter-option active" data-filter="all">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Wszystkie</span>
+                                </button>
+                                <button class="filter-option" data-filter="cs2">
+                                    <i class="fas fa-crosshairs"></i>
+                                    <span>CS2</span>
+                                </button>
+                                <button class="filter-option" data-filter="fortnite">
+                                    <i class="fas fa-parachute-box"></i>
+                                    <span>Fortnite</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <div class="filter-label">
+                                <i class="fas fa-flag"></i>
+                                <span>Status:</span>
+                            </div>
+                            <div class="status-options">
+                                <button class="status-option active" data-status="all">Wszystkie</button>
+                                <button class="status-option" data-status="upcoming">Nadchodzące</button>
+                                <button class="status-option" data-status="active">Aktywne</button>
+                                <button class="status-option" data-status="finished">Zakończone</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="active-filters" id="activeFilters">
-                    <div class="filter-tag">
-                        <span>Wszystkie gry</span>
-                        <button class="filter-remove">
-                            <i class="fas fa-times"></i>
-                        </button>
+
+                <div class="tournaments-grid" id="tournamentsGrid">
+                    <!-- Turnieje będą ładowane tutaj -->
+                </div>
+
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-search"></i>
                     </div>
-                    <div class="filter-tag">
-                        <span>Wszystkie statusy</span>
-                        <button class="filter-remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+                    <h3>Nie znaleziono turniejów</h3>
+                    <p>Nie znaleziono turniejów spełniających wybrane kryteria</p>
+                    <button class="btn-reset" id="resetFilters">
+                        <i class="fas fa-redo"></i>
+                        Wyczyść filtry
+                    </button>
                 </div>
             </div>
 
-            <div class="tournaments-grid" id="tournamentsGrid">
-                <!-- Karty turniejów będą ładowane tutaj -->
-            </div>
-
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <div class="empty-icon">
-                    <i class="fas fa-search"></i>
-                    <div class="empty-pulse"></div>
+            <!-- Sekcja statystyk -->
+            <div class="content-section" id="stats" style="display: none;">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>
+                            <i class="fas fa-chart-line"></i>
+                            Moje Statystyki
+                        </h2>
+                        <p class="section-subtitle">Podsumowanie moich wyników w turniejach</p>
+                    </div>
                 </div>
-                <h3>Nie znaleziono turniejów</h3>
-                <p>Żaden turniej nie spełnia wybranych kryteriów wyszukiwania</p>
-                <button class="empty-action" id="resetFilters">
-                    <i class="fas fa-redo"></i>
-                    Wyczyść wszystkie filtry
-                </button>
+                
+                <div class="stats-grid">
+                    <div class="stat-card large">
+                        <div class="stat-header">
+                            <h3>Ogólne statystyki</h3>
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-row">
+                                <span class="stat-label">Wygrane mecze</span>
+                                <span class="stat-value">41</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Przegrane mecze</span>
+                                <span class="stat-value">6</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Wygrane turnieje</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">MVP turniejów</span>
+                                <span class="stat-value">5</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>CS2</h3>
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-progress">
+                                <span class="progress-label">K/D Ratio</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 82%"></div>
+                                </div>
+                                <span class="progress-value">1.42</span>
+                            </div>
+                            <div class="stat-progress">
+                                <span class="progress-label">Headshot %</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 68%"></div>
+                                </div>
+                                <span class="progress-value">68%</span>
+                            </div>
+                            <div class="stat-progress">
+                                <span class="progress-label">Win Rate</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%"></div>
+                                </div>
+                                <span class="progress-value">85%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Fortnite</h3>
+                            <i class="fas fa-parachute-box"></i>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-progress">
+                                <span class="progress-label">Win Rate</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 75%"></div>
+                                </div>
+                                <span class="progress-value">75%</span>
+                            </div>
+                            <div class="stat-progress">
+                                <span class="progress-label">Top 10 Rate</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 92%"></div>
+                                </div>
+                                <span class="progress-value">92%</span>
+                            </div>
+                            <div class="stat-progress">
+                                <span class="progress-label">Kills per Game</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 78%"></div>
+                                </div>
+                                <span class="progress-value">7.3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
 
         <!-- Stopka -->
-        <footer class="app-footer">
+        <footer class="main-footer">
             <div class="footer-content">
                 <div class="footer-section">
-                    <div class="footer-logo">
-                        <i class="fas fa-crown"></i>
-                        <span>ESPORTHUB</span>
+                    <div class="footer-brand">
+                        <div class="brand-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="brand-text">
+                            <h3>Angelkacs</h3>
+                            <p>Zawodniczka Esportowa</p>
+                        </div>
                     </div>
-                    <p class="footer-description">
-                        Najlepsza platforma turniejów esportowych dla graczy CS2 i Fortnite.
+                    <p class="footer-desc">
+                        Oficjalna strona turniejów i statystyk zawodniczki Angelkacs. Śledź moje postępy w świecie esportu!
                     </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-discord"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Gry</h4>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-crosshairs"></i> Counter-Strike 2</a></li>
-                        <li><a href="#"><i class="fas fa-parachute-box"></i> Fortnite</a></li>
-                        <li><a href="#"><i class="fas fa-plus"></i> Więcej wkrótce</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Turnieje</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-calendar-alt"></i> Nadchodzące</a></li>
-                        <li><a href="#"><i class="fas fa-play-circle"></i> Aktywne</a></li>
-                        <li><a href="#"><i class="fas fa-history"></i> Zakończone</a></li>
+                        <li>
+                            <i class="fas fa-crosshairs"></i>
+                            <a href="#">Counter-Strike 2</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-parachute-box"></i>
+                            <a href="#">Fortnite</a>
+                        </li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Kontakt</h4>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-question-circle"></i> Pomoc</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> angelkacs@esport.com</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> Polityka prywatności</a></li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:angelkacs@esport.com">angelkacs@esport.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-stream"></i>
+                            <a href="#">Twitch</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-twitter"></i>
+                            <a href="#">Twitter</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> ESPORTHUB | Platforma turniejów esportowych</p>
-                <div class="footer-badges">
-                    <span class="footer-badge">
-                        <i class="fas fa-bolt"></i>
-                        Powered by Angelkacs
-                    </span>
+                <p>&copy; <span id="currentYear"></span> Angelkacs. Wszystkie prawa zastrzeżone.</p>
+                <div class="footer-social">
+                    <span>Śledź mnie:</span>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitch"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
         </footer>
@@ -232,11 +370,12 @@
     <!-- Modal turnieju -->
     <div class="modal-overlay" id="modalOverlay" style="display: none;"></div>
     <div class="tournament-modal" id="tournamentModal" style="display: none;">
+        <div class="modal-close-btn" id="modalClose">
+            <i class="fas fa-times"></i>
+        </div>
+        
         <div class="modal-header">
-            <button class="modal-close" id="modalClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-game-badge" id="modalGameTag"></div>
+            <div class="modal-game-icon" id="modalGameIcon"></div>
             <div class="modal-title-section">
                 <h2 id="modalTournamentName"></h2>
                 <div class="modal-subtitle">
@@ -244,60 +383,112 @@
                         <i class="far fa-calendar"></i>
                         <span id="modalDate"></span>
                     </div>
-                    <div class="modal-status-badge" id="modalStatus"></div>
+                    <div class="modal-status" id="modalStatus"></div>
                 </div>
             </div>
         </div>
 
         <div class="modal-content">
-            <div class="tournament-details-grid">
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="detail-content">
-                        <span class="detail-label">Organizator</span>
-                        <span class="detail-value" id="detailOrganizer"></span>
-                    </div>
+            <!-- Statystyki Angelkacs w tym turnieju -->
+            <div class="player-stats-card">
+                <div class="stats-header">
+                    <h3>
+                        <i class="fas fa-user"></i>
+                        Moje statystyki w turnieju
+                    </h3>
                 </div>
-                
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fas fa-users"></i>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Miejsce</span>
+                            <span class="stat-value" id="playerRank">-</span>
+                        </div>
                     </div>
-                    <div class="detail-content">
-                        <span class="detail-label">Format</span>
-                        <span class="detail-value" id="detailFormat"></span>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">W/L</span>
+                            <span class="stat-value" id="playerWL">-</span>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fas fa-flag"></i>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">K/D</span>
+                            <span class="stat-value" id="playerKD">-</span>
+                        </div>
                     </div>
-                    <div class="detail-content">
-                        <span class="detail-label">Drużyny</span>
-                        <span class="detail-value" id="detailTeams"></span>
-                    </div>
-                </div>
-                
-                <div class="detail-card highlight">
-                    <div class="detail-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="detail-content">
-                        <span class="detail-label">Pula nagród</span>
-                        <span class="detail-value prize-value" id="detailPrize"></span>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Nagroda</span>
+                            <span class="stat-value" id="playerPrize">-</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Szczegóły turnieju -->
+            <div class="tournament-details">
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Organizator</span>
+                            <span class="detail-value" id="detailOrganizer"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Format</span>
+                            <span class="detail-value" id="detailFormat"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Drużyny/Gracze</span>
+                            <span class="detail-value" id="detailTeams"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card highlight">
+                        <div class="detail-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Pula nagród</span>
+                            <span class="detail-value" id="detailPrize"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mecze Angelkacs w tym turnieju -->
             <div class="matches-section">
                 <div class="section-header">
                     <h3>
                         <i class="fas fa-gamepad"></i>
-                        Mecze turnieju
-                        <span class="matches-count-badge" id="matchesCount">0</span>
+                        Moje mecze w tym turnieju
+                        <span class="matches-count" id="matchesCount">0</span>
                     </h3>
                 </div>
                 
@@ -310,7 +501,7 @@
                         <i class="fas fa-gamepad"></i>
                     </div>
                     <h4>Brak meczów</h4>
-                    <p>W tym turnieju nie ma jeszcze zaplanowanych meczów</p>
+                    <p>Nie znaleziono meczów z moim udziałem w tym turnieju</p>
                 </div>
             </div>
         </div>

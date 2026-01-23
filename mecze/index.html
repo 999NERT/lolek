@@ -6,79 +6,230 @@
     <title>Angelkacs - Turnieje</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- Widok główny - lista turniejów -->
-        <div id="tournamentsView" class="view active">
-            <header class="header">
-                <div class="logo">
-                    <h1><i class="fas fa-trophy"></i> Angelkacs Turnieje</h1>
-                    <p class="subtitle">Wybierz turniej aby zobaczyć mecze</p>
+        <!-- Loading screen -->
+        <div id="loadingScreen" class="loading-screen">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <h2>Ładowanie turniejów...</h2>
+                <p>Proszę czekać</p>
+            </div>
+        </div>
+
+        <!-- Main tournaments view -->
+        <div id="mainView" class="main-view">
+            <header class="main-header">
+                <div class="header-top">
+                    <div class="logo">
+                        <i class="fas fa-trophy"></i>
+                        <h1>Angelkacs <span>Turnieje</span></h1>
+                    </div>
+                    <div class="header-actions">
+                        <a href="https://angelkacs.pl" class="home-link">
+                            <i class="fas fa-home"></i> Strona główna
+                        </a>
+                    </div>
                 </div>
                 
-                <div class="filters">
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">Wszystkie</button>
-                        <button class="filter-btn" data-filter="upcoming">Nadchodzące</button>
-                        <button class="filter-btn" data-filter="active">Aktywne</button>
-                        <button class="filter-btn" data-filter="finished">Zakończone</button>
+                <div class="header-bottom">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Wyszukaj turniej lub drużynę...">
+                        </div>
                     </div>
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="tournamentSearch" placeholder="Szukaj turnieju...">
+                    
+                    <div class="filters-container">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">
+                                <i class="fas fa-list"></i> Wszystkie
+                            </button>
+                            <button class="filter-btn" data-filter="upcoming">
+                                <i class="fas fa-clock"></i> Nadchodzące
+                            </button>
+                            <button class="filter-btn" data-filter="active">
+                                <i class="fas fa-play"></i> Aktywne
+                            </button>
+                            <button class="filter-btn" data-filter="finished">
+                                <i class="fas fa-flag-checkered"></i> Zakończone
+                            </button>
+                        </div>
                     </div>
                 </div>
             </header>
 
-            <main class="tournaments-grid" id="tournamentsGrid">
-                <!-- Turnieje będą ładowane z JSON -->
+            <main class="content-area">
+                <div class="content-header">
+                    <h2><i class="fas fa-gamepad"></i> Dostępne turnieje</h2>
+                    <div class="tournament-count" id="tournamentCount">0 turniejów</div>
+                </div>
+                
+                <div class="tournaments-grid" id="tournamentsGrid">
+                    <!-- Tournaments will be loaded here -->
+                </div>
+                
+                <div class="no-results" id="noResults" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <h3>Nie znaleziono turniejów</h3>
+                    <p>Spróbuj zmienić kryteria wyszukiwania</p>
+                </div>
             </main>
 
-            <footer class="footer">
+            <footer class="main-footer">
                 <div class="footer-content">
-                    <p>Angelkacs Turnieje &copy; <span id="currentYear"></span></p>
-                    <a href="https://angelkacs.pl" class="back-link">
-                        <i class="fas fa-home"></i> Powrót na stronę główną
-                    </a>
+                    <div class="footer-left">
+                        <p>Angelkacs Turnieje &copy; <span id="currentYear"></span></p>
+                        <p class="footer-info">Wszystkie dane w plikach JSON</p>
+                    </div>
+                    <div class="footer-right">
+                        <div class="json-info">
+                            <i class="fas fa-database"></i>
+                            <span>Struktura danych w pliku: <code>template.json</code></span>
+                        </div>
+                        <a href="template.json" target="_blank" class="template-link">
+                            <i class="fas fa-file-code"></i> Zobacz wzór JSON
+                        </a>
+                    </div>
                 </div>
             </footer>
         </div>
 
-        <!-- Widok meczów turnieju -->
-        <div id="matchesView" class="view">
-            <header class="header">
-                <button id="backToTournaments" class="back-button">
-                    <i class="fas fa-arrow-left"></i> Wróć do turniejów
+        <!-- Tournament matches view -->
+        <div id="matchesView" class="matches-view" style="display: none;">
+            <header class="matches-header">
+                <button id="backButton" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Powrót
                 </button>
-                <div class="tournament-header-info">
-                    <h1 id="tournamentTitle"></h1>
-                    <div class="tournament-subtitle" id="tournamentSubtitle"></div>
+                <div class="tournament-header">
+                    <h1 id="tournamentName">Turniej</h1>
+                    <div class="tournament-meta">
+                        <span class="tournament-date" id="tournamentDate"></span>
+                        <span class="tournament-status" id="tournamentStatus"></span>
+                    </div>
                 </div>
             </header>
 
-            <main class="matches-content">
-                <div class="tournament-details" id="tournamentDetails">
-                    <!-- Szczegóły turnieju będą ładowane dynamicznie -->
-                </div>
-
-                <div class="matches-section">
-                    <h2 class="section-title">
-                        <i class="fas fa-gamepad"></i> Mecze turnieju
-                    </h2>
-                    
-                    <div class="matches-list" id="matchesList">
-                        <!-- Mecze będą ładowane dynamicznie -->
+            <div class="tournament-details">
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <i class="fas fa-user-tie"></i>
+                        <div>
+                            <span class="detail-label">Organizator</span>
+                            <span class="detail-value" id="detailOrganizer"></span>
+                        </div>
                     </div>
+                    <div class="detail-card">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <span class="detail-label">Format</span>
+                            <span class="detail-value" id="detailFormat"></span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-flag"></i>
+                        <div>
+                            <span class="detail-label">Drużyny</span>
+                            <span class="detail-value" id="detailTeams"></span>
+                        </div>
+                    </div>
+                    <div class="detail-card prize-card">
+                        <i class="fas fa-trophy"></i>
+                        <div>
+                            <span class="detail-label">Pula nagród</span>
+                            <span class="detail-value" id="detailPrize"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <main class="matches-container">
+                <div class="matches-header-section">
+                    <h2><i class="fas fa-list-ol"></i> Mecze w turnieju</h2>
+                    <div class="match-count" id="matchCount">0 meczów</div>
+                </div>
+                
+                <div class="matches-list" id="matchesList">
+                    <!-- Matches will be loaded here -->
+                </div>
+                
+                <div class="no-matches" id="noMatches" style="display: none;">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Brak meczów w tym turnieju</h3>
+                    <p>Mecze zostaną dodane wkrótce</p>
                 </div>
             </main>
         </div>
 
-        <!-- Link do edycji danych -->
-        <div class="edit-data-link">
-            <a href="data.json" target="_blank" class="edit-btn">
-                <i class="fas fa-edit"></i> Edytuj dane (data.json)
-            </a>
+        <!-- Add tournament button -->
+        <button id="addTournamentBtn" class="add-tournament-btn">
+            <i class="fas fa-plus"></i> Dodaj nowy turniej
+        </button>
+
+        <!-- Instructions modal -->
+        <div id="instructionsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-info-circle"></i> Jak dodać nowy turniej?</h2>
+                    <button id="closeModal" class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Utwórz plik JSON</h3>
+                            <p>Stwórz nowy plik z rozszerzeniem .json, np. <code>moj-turniej.json</code></p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Skopiuj wzór</h3>
+                            <p>Użyj struktury z pliku <a href="template.json" target="_blank">template.json</a></p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Wypełnij dane</h3>
+                            <p>Zmień dane turnieju i dodaj mecze według potrzeb</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Dodaj do listy</h3>
+                            <p>Dodaj nazwę pliku do <code>tournament-list.json</code></p>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <h4><i class="fas fa-code"></i> Przykład:</h4>
+                        <pre><code>{
+  "tournament": {
+    "id": "unikalny-id",
+    "name": "Nazwa turnieju",
+    "date": "Data turnieju",
+    "status": "upcoming/active/finished",
+    "organizer": "Organizator",
+    "format": "Format rozgrywek",
+    "teams": "Liczba drużyn",
+    "prize": "Pula nagród"
+  },
+  "matches": [...]
+}</code></pre>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="template.json" target="_blank" class="btn-primary">
+                        <i class="fas fa-download"></i> Pobierz wzór
+                    </a>
+                    <button id="editListBtn" class="btn-secondary">
+                        <i class="fas fa-edit"></i> Edytuj listę turniejów
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

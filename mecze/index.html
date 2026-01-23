@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angelkacs - Turnieje</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Ekran ładowania -->
     <div class="loading" id="loading">
-        <div class="loading-icon">
+        <div class="loader">
             <i class="fas fa-gamepad"></i>
         </div>
-        <p>Ładowanie turniejów...</p>
+        <p class="loading-text">Ładowanie turniejów...</p>
     </div>
 
     <!-- Główna aplikacja -->
@@ -23,13 +23,13 @@
         <header class="header">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-crosshairs"></i>
-                    <h1>Turnieje</h1>
+                    <i class="fas fa-trophy"></i>
+                    <h1>Angelkacs<span class="logo-highlight">Turnieje</span></h1>
                 </div>
-                <div class="header-info">
-                    <div class="tournament-counter" id="tournamentCounter">
-                        <i class="fas fa-trophy"></i>
-                        <span id="tournamentCount">0</span> turniejów
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="tournamentCount">0</span>
+                        <span class="stat-label">Turniejów</span>
                     </div>
                 </div>
             </div>
@@ -38,19 +38,19 @@
         <!-- Filtry -->
         <div class="filters">
             <div class="filter-section">
-                <div class="filter-title">
+                <div class="filter-label">
                     <i class="fas fa-gamepad"></i>
-                    <span>Gra</span>
+                    <span>Gra:</span>
                 </div>
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-filter="all">
                         <span>Wszystkie</span>
                     </button>
-                    <button class="filter-btn" data-filter="cs2">
+                    <button class="filter-btn cs2" data-filter="cs2">
                         <i class="fas fa-crosshairs"></i>
                         <span>CS2</span>
                     </button>
-                    <button class="filter-btn" data-filter="fortnite">
+                    <button class="filter-btn fortnite" data-filter="fortnite">
                         <i class="fas fa-parachute-box"></i>
                         <span>Fortnite</span>
                     </button>
@@ -58,63 +58,46 @@
             </div>
 
             <div class="filter-section">
-                <div class="filter-title">
-                    <i class="fas fa-clock"></i>
-                    <span>Status</span>
+                <div class="filter-label">
+                    <i class="fas fa-flag"></i>
+                    <span>Status:</span>
                 </div>
                 <div class="filter-buttons">
                     <button class="status-btn active" data-status="all">Wszystkie</button>
-                    <button class="status-btn" data-status="upcoming">Nadchodzące</button>
-                    <button class="status-btn" data-status="active">Aktywne</button>
-                    <button class="status-btn" data-status="finished">Zakończone</button>
+                    <button class="status-btn upcoming" data-status="upcoming">Nadchodzące</button>
+                    <button class="status-btn active" data-status="active">Aktywne</button>
+                    <button class="status-btn finished" data-status="finished">Zakończone</button>
                 </div>
             </div>
         </div>
 
         <!-- Lista turniejów -->
         <main class="main">
-            <div class="tournaments-container">
-                <div class="section-title">
-                    <h2>Turnieje</h2>
-                    <div class="section-actions">
-                        <button class="refresh-btn" id="refreshBtn">
-                            <i class="fas fa-redo"></i>
-                            Odśwież
-                        </button>
-                    </div>
-                </div>
+            <div class="section-header">
+                <h2>Turnieje</h2>
+                <button class="refresh-btn" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i>
+                    Odśwież
+                </button>
+            </div>
 
-                <div class="tournaments-grid" id="tournamentsGrid">
-                    <!-- Turnieje będą ładowane tutaj -->
-                </div>
+            <div class="tournaments-grid" id="tournamentsGrid">
+                <!-- Turnieje będą ładowane tutaj -->
+            </div>
 
-                <div class="empty-state" id="emptyState" style="display: none;">
-                    <div class="empty-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>Brak turniejów</h3>
-                    <p>Nie znaleziono turniejów spełniających kryteria</p>
-                    <button class="reset-btn" id="resetFilters">
-                        Wyczyść filtry
-                    </button>
-                </div>
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>Nie znaleziono turniejów</h3>
+                <p>Brak turniejów spełniających wybrane kryteria</p>
+                <button class="btn-primary" id="resetFilters">Wyczyść filtry</button>
             </div>
         </main>
 
         <!-- Stopka -->
         <footer class="footer">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Angelkacs</h4>
-                    <p>System turniejów esportowych</p>
-                </div>
-                <div class="footer-section">
-                    <p>Turnieje przechowywane w plikach JSON</p>
-                    <p class="footer-small">Edytuj turnieje w folderze /tournaments</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> | Pliki JSON</p>
+                <p>&copy; <span id="currentYear"></span> Angelkacs - System turniejów</p>
+                <p class="footer-note">Dane w plikach JSON</p>
             </div>
         </footer>
     </div>
@@ -122,13 +105,11 @@
     <!-- Modal z meczami -->
     <div class="modal-overlay" id="modalOverlay" style="display: none;"></div>
     <div class="modal" id="matchModal" style="display: none;">
-        <div class="modal-close" id="modalClose">
-            <i class="fas fa-times"></i>
-        </div>
-
         <div class="modal-header">
-            <div class="modal-game-icon" id="modalGameIcon"></div>
-            <div class="modal-title">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-title-section">
                 <h2 id="modalTournamentName"></h2>
                 <div class="modal-subtitle">
                     <span id="modalDate"></span>
@@ -137,14 +118,19 @@
             </div>
         </div>
 
-        <div class="modal-content">
-            <div class="matches-list" id="matchesList">
-                <!-- Mecze będą ładowane tutaj -->
-            </div>
-
-            <div class="no-matches" id="noMatches" style="display: none;">
-                <i class="fas fa-gamepad"></i>
-                <p>Brak meczów w tym turnieju</p>
+        <div class="modal-body">
+            <div class="matches-container">
+                <h3 class="matches-title">
+                    <i class="fas fa-gamepad"></i>
+                    Mecze
+                </h3>
+                <div class="matches-list" id="matchesList">
+                    <!-- Mecze będą ładowane tutaj -->
+                </div>
+                <div class="no-matches" id="noMatches" style="display: none;">
+                    <i class="fas fa-gamepad"></i>
+                    <p>Brak meczów w tym turnieju</p>
+                </div>
             </div>
         </div>
     </div>

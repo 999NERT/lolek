@@ -14,6 +14,9 @@ const searchInput = document.getElementById('searchInput');
 const filterButtons = document.querySelectorAll('.filter-btn');
 const statusButtons = document.querySelectorAll('.status-btn');
 const activeFilters = document.getElementById('activeFilters');
+const resetFiltersBtn = document.getElementById('resetFilters');
+const clearSearchBtn = document.getElementById('clearSearch');
+const tournamentCount = document.getElementById('tournamentCount');
 
 // Elementy statystyk
 const totalTournaments = document.getElementById('totalTournaments');
@@ -53,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loading.style.display = 'none';
             container.style.display = 'block';
         }, 300);
-    }, 800);
+    }, 1000);
 });
 
 // Konfiguracja event listeners
@@ -84,7 +87,19 @@ function setupEventListeners() {
     searchInput.addEventListener('input', () => {
         currentSearch = searchInput.value.toLowerCase();
         filterTournaments();
+        clearSearchBtn.style.display = currentSearch ? 'block' : 'none';
     });
+    
+    // Przycisk wyczyść wyszukiwanie
+    clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentSearch = '';
+        filterTournaments();
+        clearSearchBtn.style.display = 'none';
+    });
+    
+    // Przycisk resetuj filtry
+    resetFiltersBtn.addEventListener('click', resetFilters);
     
     // Zamknięcie modala
     modalClose.addEventListener('click', closeModal);
@@ -96,6 +111,32 @@ function setupEventListeners() {
             closeModal();
         }
     });
+}
+
+// Resetuj wszystkie filtry
+function resetFilters() {
+    filterButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === 'all') {
+            btn.classList.add('active');
+        }
+    });
+    
+    statusButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.status === 'all') {
+            btn.classList.add('active');
+        }
+    });
+    
+    searchInput.value = '';
+    currentFilter = 'all';
+    currentStatus = 'all';
+    currentSearch = '';
+    clearSearchBtn.style.display = 'none';
+    
+    filterTournaments();
+    updateActiveFilters();
 }
 
 // Ładowanie turniejów
@@ -143,6 +184,7 @@ async function loadTournaments() {
         // Aktualizuj statystyki
         totalTournaments.textContent = tournaments.length;
         totalMatches.textContent = matchesTotal;
+        tournamentCount.textContent = `${tournaments.length} turniejów`;
         
         // Wyświetl turnieje
         filterTournaments();
@@ -185,6 +227,7 @@ function filterTournaments() {
         return true;
     });
     
+    tournamentCount.textContent = `${filteredTournaments.length} turniejów`;
     displayTournaments();
 }
 
@@ -261,6 +304,11 @@ function displayTournaments() {
                         <span class="detail-label">Drużyny</span>
                         <span class="detail-value">${tournament.teams}</span>
                     </div>
+                    
+                    <div class="detail">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value">${statusText.toLowerCase()}</span>
+                    </div>
                 </div>
                 
                 <div class="prize-highlight">
@@ -275,7 +323,7 @@ function displayTournaments() {
                     ${matches.length} mecz${getPolishPlural(matches.length)}
                 </div>
                 <button class="view-btn" onclick="openTournamentModal('${tournament.id}')">
-                    <i class="fas fa-eye"></i> Zobacz
+                    <i class="fas fa-external-link-alt"></i> Szczegóły
                 </button>
             </div>
         `;
@@ -303,9 +351,45 @@ function updateActiveFilters() {
     }
     
     activeFilters.innerHTML = `
-        <span class="filter-tag">${gameText}</span>
-        <span class="filter-tag">${statusText}</span>
+        <div class="filter-tag">
+            <span>${gameText}</span>
+            <button class="filter-remove" onclick="resetGameFilter()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="filter-tag">
+            <span>${statusText}</span>
+            <button class="filter-remove" onclick="resetStatusFilter()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     `;
+}
+
+// Resetuj filtr gier
+function resetGameFilter() {
+    filterButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === 'all') {
+            btn.classList.add('active');
+        }
+    });
+    currentFilter = 'all';
+    filterTournaments();
+    updateActiveFilters();
+}
+
+// Resetuj filtr statusów
+function resetStatusFilter() {
+    statusButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.status === 'all') {
+            btn.classList.add('active');
+        }
+    });
+    currentStatus = 'all';
+    filterTournaments();
+    updateActiveFilters();
 }
 
 // Otwórz modal turnieju
@@ -359,7 +443,7 @@ function openTournamentModal(tournamentId) {
     modalStatus.style.border = `1px solid ${statusColor}30`;
     
     // Ustaw liczbę meczów
-    matchesCount.textContent = `${matches.length} mecz${getPolishPlural(matches.length)}`;
+    matchesCount.textContent = `${matches.length}`;
     
     // Wyświetl mecze
     if (matches.length === 0) {
@@ -372,6 +456,7 @@ function openTournamentModal(tournamentId) {
     
     // Pokaż modal
     tournamentModal.style.display = 'block';
+    modalOverlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
 }
 
@@ -379,7 +464,7 @@ function openTournamentModal(tournamentId) {
 function displayMatches(matches, gameType) {
     matchesList.innerHTML = '';
     
-    matches.forEach(match => {
+    matches.forEach((match, index) => {
         const matchItem = document.createElement('div');
         matchItem.className = 'match-item';
         
@@ -412,6 +497,9 @@ function displayMatches(matches, gameType) {
         
         // Dla Fortnite sprawdź czy to solo/duo
         const isFortniteSolo = gameType === 'fortnite' && (!match.team2 || match.team2.name === '');
+        
+        // URL dla przycisku "Zobacz Lobby" - przykładowy link
+        const lobbyUrl = match.link || `https://esport-hub.com/lobby/${match.id || index}`;
         
         matchItem.innerHTML = `
             <div class="match-header">
@@ -451,9 +539,9 @@ function displayMatches(matches, gameType) {
                             <div class="team-name">${match.team1.name}</div>
                         </div>
                         ${!isFortniteSolo && match.team2 ? `
-                            <div style="margin: 16px 0; text-align: center;">
+                            <div style="margin: 20px 0; text-align: center;">
                                 <div class="vs-text">vs</div>
-                                <div class="match-score" style="font-size: 20px; margin-top: 8px;">${getMatchScore(match)}</div>
+                                <div class="match-score" style="font-size: 24px; margin-top: 8px;">${getMatchScore(match)}</div>
                             </div>
                             <div class="team-single">
                                 <div class="team-logo">${getTeamLogo(match.team2)}</div>
@@ -529,6 +617,12 @@ function displayMatches(matches, gameType) {
                         </div>
                     </div>
                 ` : ''}
+                
+                <!-- Przycisk Zobacz Lobby -->
+                <button class="lobby-btn" onclick="window.open('${lobbyUrl}', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                    Zobacz lobby meczu
+                </button>
             </div>
         `;
         
@@ -546,6 +640,7 @@ function togglePlayers(button) {
 // Zamknij modal
 function closeModal() {
     tournamentModal.style.display = 'none';
+    modalOverlay.style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
@@ -582,10 +677,10 @@ function loadSampleData() {
         {
             tournament: {
                 id: "betclic-birch-2026",
-                name: "Betclic Birch Cup Bitwa Streamerow Kolejka 1",
+                name: "Betclic Birch Cup Bitwa Streamerów",
                 date: "CZWARTEK, 29 STYCZNIA 2026 O 20:17 CET",
                 status: "upcoming",
-                organizer: "yspwWYxq",
+                organizer: "Betclic",
                 format: "5v5",
                 teams: "32",
                 prize: "$10,000",
@@ -595,7 +690,7 @@ function loadSampleData() {
                 {
                     id: 1,
                     date: "5R 03 GRU, 18:44",
-                    status: "cancelled",
+                    status: "upcoming",
                     team1: { name: "Millenium", logo: "M" },
                     team2: { name: "Endless Journey", logo: "EJ" },
                     score: null,
@@ -612,7 +707,8 @@ function loadSampleData() {
                         { name: "Enemy3" },
                         { name: "Enemy4" },
                         { name: "Enemy5" }
-                    ]
+                    ],
+                    link: "https://esport-hub.com/lobby/12345"
                 },
                 {
                     id: 2,
@@ -627,7 +723,8 @@ function loadSampleData() {
                         { name: "VP Player 3" },
                         { name: "VP Player 4" },
                         { name: "VP Player 5" }
-                    ]
+                    ],
+                    link: "https://esport-hub.com/lobby/12346"
                 }
             ]
         },
@@ -653,9 +750,74 @@ function loadSampleData() {
                     score: { team1: 45 },
                     playersTeam1: [
                         { name: "Liquid Player 1" }
-                    ]
+                    ],
+                    link: "https://esport-hub.com/lobby/12347"
+                },
+                {
+                    id: 2,
+                    date: "NIEDZIELA, 16 MAR, 19:00",
+                    status: "upcoming",
+                    team1: { name: "FaZe Clan", logo: "FZ" },
+                    team2: null,
+                    score: null,
+                    playersTeam1: [
+                        { name: "FaZe Player 1" }
+                    ],
+                    link: "https://esport-hub.com/lobby/12348"
                 }
             ]
+        },
+        {
+            tournament: {
+                id: "esl-pro-league-2025",
+                name: "ESL Pro League Season 18",
+                date: "PONIEDZIAŁEK, 10 LUTEGO 2025 O 17:00 CET",
+                status: "active",
+                organizer: "ESL Gaming",
+                format: "5v5, Grupy + Playoffs",
+                teams: "24",
+                prize: "$750,000",
+                game: "cs2"
+            },
+            matches: [
+                {
+                    id: 1,
+                    date: "WTOREK, 11 LUT, 18:00",
+                    status: "live",
+                    team1: { name: "Natus Vincere", logo: "NAVI" },
+                    team2: { name: "G2 Esports", logo: "G2" },
+                    score: { team1: 8, team2: 6 },
+                    playersTeam1: [
+                        { name: "s1mple" },
+                        { name: "b1t" },
+                        { name: "electroNic" },
+                        { name: "Perfecto" },
+                        { name: "sdy" }
+                    ],
+                    playersTeam2: [
+                        { name: "NiKo" },
+                        { name: "huNter-" },
+                        { name: "m0NESY" },
+                        { name: "jks" },
+                        { name: "HooXi" }
+                    ],
+                    link: "https://esport-hub.com/lobby/12349"
+                }
+            ]
+        },
+        {
+            tournament: {
+                id: "fncs-invitational-2025",
+                name: "FNCS Invitational 2025",
+                date: "PIĄTEK, 25 KWIETNIA 2025 O 21:00 CET",
+                status: "upcoming",
+                organizer: "Epic Games",
+                format: "Duos",
+                teams: "100",
+                prize: "$250,000",
+                game: "fortnite"
+            },
+            matches: []
         }
     ];
     
@@ -664,6 +826,7 @@ function loadSampleData() {
     
     totalTournaments.textContent = tournaments.length;
     totalMatches.textContent = matchesTotal;
+    tournamentCount.textContent = `${tournaments.length} turniejów`;
     
     // Wyświetl turnieje
     filteredTournaments = [...tournaments];

@@ -1,274 +1,7 @@
-// Dane turniejów Angelkacs
-const tournaments = [
-    {
-        id: "betclic-birch-2026",
-        name: "Betclic Birch Cup - Bitwa Streamerów",
-        date: "29.01.2026, 20:17 CET",
-        status: "upcoming",
-        game: "cs2",
-        organizer: "Betclic",
-        format: "5v5",
-        teams: "32 drużyn",
-        prize: "$10,000",
-        matches: [
-            {
-                id: 1,
-                date: "03.12, 18:44",
-                status: "upcoming",
-                team1: { 
-                    name: "Millenium", 
-                    logo: "M",
-                    hasAngelkacs: true
-                },
-                team2: { 
-                    name: "Endless Journey", 
-                    logo: "EJ",
-                    hasAngelkacs: false
-                },
-                score: null,
-                playersTeam1: [
-                    { name: "Angelkacs", isAngelkacs: true },
-                    { name: "Player2" },
-                    { name: "Player3" },
-                    { name: "Player4" },
-                    { name: "Player5" }
-                ],
-                playersTeam2: [
-                    { name: "Enemy1" },
-                    { name: "Enemy2" },
-                    { name: "Enemy3" },
-                    { name: "Enemy4" },
-                    { name: "Enemy5" }
-                ],
-                link: "https://twitch.tv/angelkacs"
-            }
-        ]
-    },
-    {
-        id: "esl-pro-league-2025",
-        name: "ESL Pro League Season 18",
-        date: "10.02.2025, 17:00 CET",
-        status: "active",
-        game: "cs2",
-        organizer: "ESL Gaming",
-        format: "5v5, Grupy + Playoffs",
-        teams: "24 drużyn",
-        prize: "$750,000",
-        matches: [
-            {
-                id: 1,
-                date: "11.02, 18:00",
-                status: "finished",
-                team1: { 
-                    name: "Team Liquid", 
-                    logo: "TL",
-                    hasAngelkacs: false
-                },
-                team2: { 
-                    name: "G2 Esports", 
-                    logo: "G2",
-                    hasAngelkacs: true
-                },
-                score: { team1: 1, team2: 2 },
-                playersTeam1: [
-                    { name: "Player1" },
-                    { name: "Player2" },
-                    { name: "Player3" },
-                    { name: "Player4" },
-                    { name: "Player5" }
-                ],
-                playersTeam2: [
-                    { name: "Angelkacs", isAngelkacs: true },
-                    { name: "NiKo" },
-                    { name: "huNter-" },
-                    { name: "m0NESY" },
-                    { name: "HooXi" }
-                ],
-                link: "https://twitch.tv/esl_csgo"
-            },
-            {
-                id: 2,
-                date: "13.02, 19:00",
-                status: "live",
-                team1: { 
-                    name: "Natus Vincere", 
-                    logo: "NAVI",
-                    hasAngelkacs: false
-                },
-                team2: { 
-                    name: "G2 Esports", 
-                    logo: "G2",
-                    hasAngelkacs: true
-                },
-                score: { team1: 8, team2: 11 },
-                playersTeam1: [
-                    { name: "s1mple" },
-                    { name: "b1t" },
-                    { name: "electroNic" },
-                    { name: "Perfecto" },
-                    { name: "sdy" }
-                ],
-                playersTeam2: [
-                    { name: "Angelkacs", isAngelkacs: true },
-                    { name: "NiKo" },
-                    { name: "huNter-" },
-                    { name: "m0NESY" },
-                    { name: "HooXi" }
-                ],
-                link: "https://twitch.tv/esl_csgo"
-            }
-        ]
-    },
-    {
-        id: "blast-premier-2025",
-        name: "BLAST Premier Spring Finals",
-        date: "15.03.2025, 16:00 CET",
-        status: "finished",
-        game: "cs2",
-        organizer: "BLAST",
-        format: "5v5, Double Elimination",
-        teams: "8 drużyn",
-        prize: "$425,000",
-        matches: [
-            {
-                id: 1,
-                date: "15.03, 16:00",
-                status: "finished",
-                team1: { 
-                    name: "FaZe Clan", 
-                    logo: "FZ",
-                    hasAngelkacs: true
-                },
-                team2: { 
-                    name: "Natus Vincere", 
-                    logo: "NAVI",
-                    hasAngelkacs: false
-                },
-                score: { team1: 2, team2: 0 },
-                playersTeam1: [
-                    { name: "Angelkacs", isAngelkacs: true },
-                    { name: "karrigan" },
-                    { name: "rain" },
-                    { name: "broky" },
-                    { name: "Twistzz" }
-                ],
-                playersTeam2: [
-                    { name: "s1mple" },
-                    { name: "b1t" },
-                    { name: "electroNic" },
-                    { name: "Perfecto" },
-                    { name: "sdy" }
-                ],
-                link: "https://blast.tv"
-            }
-        ]
-    },
-    {
-        id: "fncs-invitational-2025",
-        name: "FNCS Invitational 2025",
-        date: "25.04.2025, 21:00 CET",
-        status: "upcoming",
-        game: "fortnite",
-        organizer: "Epic Games",
-        format: "Duos",
-        teams: "100 par",
-        prize: "$250,000",
-        matches: [
-            {
-                id: 1,
-                date: "25.04, 21:00",
-                status: "upcoming",
-                team1: { 
-                    name: "Angelkacs & Partner", 
-                    logo: "AP",
-                    hasAngelkacs: true
-                },
-                team2: null,
-                score: null,
-                playersTeam1: [
-                    { name: "Angelkacs", isAngelkacs: true },
-                    { name: "Pro Player" }
-                ],
-                link: "https://twitch.tv/angelkacs"
-            }
-        ]
-    },
-    {
-        id: "dreamhack-masters-2025",
-        name: "DreamHack Masters Malmö",
-        date: "08.04.2025, 14:00 CET",
-        status: "finished",
-        game: "cs2",
-        organizer: "DreamHack",
-        format: "5v5, Single Elimination",
-        teams: "16 drużyn",
-        prize: "$250,000",
-        matches: [
-            {
-                id: 1,
-                date: "08.04, 14:00",
-                status: "finished",
-                team1: { 
-                    name: "Ninjas in Pyjamas", 
-                    logo: "NIP",
-                    hasAngelkacs: true
-                },
-                team2: { 
-                    name: "Astralis", 
-                    logo: "AST",
-                    hasAngelkacs: false
-                },
-                score: { team1: 2, team2: 0 },
-                playersTeam1: [
-                    { name: "Angelkacs", isAngelkacs: true },
-                    { name: "REZ" },
-                    { name: "Brollan" },
-                    { name: "Plopski" },
-                    { name: "es3tag" }
-                ],
-                playersTeam2: [
-                    { name: "device" },
-                    { name: "blameF" },
-                    { name: "gla1ve" },
-                    { name: "Xyp9x" },
-                    { name: "Buzz" }
-                ],
-                link: "https://dreamhack.com"
-            }
-        ]
-    },
-    {
-        id: "fortnite-worldcup-2025",
-        name: "Fortnite World Cup Warmup",
-        date: "20.07.2025, 20:00 CET",
-        status: "upcoming",
-        game: "fortnite",
-        organizer: "Epic Games",
-        format: "Solo",
-        teams: "300 graczy",
-        prize: "$100,000",
-        matches: [
-            {
-                id: 1,
-                date: "20.07, 20:00",
-                status: "upcoming",
-                team1: { 
-                    name: "Angelkacs", 
-                    logo: "A",
-                    hasAngelkacs: true
-                },
-                team2: null,
-                score: null,
-                playersTeam1: [
-                    { name: "Angelkacs", isAngelkacs: true }
-                ],
-                link: "https://twitch.tv/angelkacs"
-            }
-        ]
-    }
-];
+// System zarządzania turniejami z plikami JSON
 
 // Zmienne globalne
+let tournaments = [];
 let filteredTournaments = [];
 let currentFilter = 'all';
 let currentStatus = 'all';
@@ -279,14 +12,17 @@ const app = document.getElementById('app');
 const tournamentsGrid = document.getElementById('tournamentsGrid');
 const emptyState = document.getElementById('emptyState');
 const tournamentCount = document.getElementById('tournamentCount');
+const tournamentCounter = document.getElementById('tournamentCounter');
 const filterButtons = document.querySelectorAll('.filter-btn');
 const statusButtons = document.querySelectorAll('.status-btn');
 const resetFiltersBtn = document.getElementById('resetFilters');
+const refreshBtn = document.getElementById('refreshBtn');
 
 // Modal
 const matchModal = document.getElementById('matchModal');
 const modalOverlay = document.getElementById('modalOverlay');
 const modalClose = document.getElementById('modalClose');
+const modalGameIcon = document.getElementById('modalGameIcon');
 const modalTournamentName = document.getElementById('modalTournamentName');
 const modalDate = document.getElementById('modalDate');
 const modalStatus = document.getElementById('modalStatus');
@@ -304,14 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Konfiguruj event listeners
     setupEventListeners();
     
-    // Ukryj ekran ładowania
+    // Ukryj ekran ładowania po chwili
     setTimeout(() => {
         loading.style.opacity = '0';
         setTimeout(() => {
             loading.style.display = 'none';
             app.style.display = 'block';
         }, 300);
-    }, 800);
+    }, 1000);
 });
 
 // Konfiguracja event listeners
@@ -338,6 +74,15 @@ function setupEventListeners() {
     
     // Przycisk resetuj filtry
     resetFiltersBtn.addEventListener('click', resetFilters);
+    
+    // Przycisk odśwież
+    refreshBtn.addEventListener('click', () => {
+        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
+        loadTournaments();
+        setTimeout(() => {
+            refreshBtn.innerHTML = '<i class="fas fa-redo"></i> Odśwież';
+        }, 1000);
+    });
     
     // Zamknięcie modala
     modalClose.addEventListener('click', closeModal);
@@ -373,8 +118,152 @@ function resetFilters() {
     filterTournaments();
 }
 
-// Ładowanie turniejów
-function loadTournaments() {
+// Ładowanie turniejów z plików JSON
+async function loadTournaments() {
+    try {
+        // Najpierw ładuj listę plików turniejów
+        const listResponse = await fetch('tournament-list.json');
+        
+        if (!listResponse.ok) {
+            throw new Error('Nie znaleziono pliku tournament-list.json');
+        }
+        
+        const fileList = await listResponse.json();
+        
+        // Ładuj każdy turniej z osobnego pliku
+        tournaments = [];
+        
+        for (const file of fileList.tournaments) {
+            try {
+                const tournamentResponse = await fetch(`tournaments/${file}`);
+                
+                if (!tournamentResponse.ok) {
+                    console.warn(`Nie znaleziono pliku: tournaments/${file}`);
+                    continue;
+                }
+                
+                const tournamentData = await tournamentResponse.json();
+                tournaments.push(tournamentData);
+                
+            } catch (error) {
+                console.error(`Błąd ładowania ${file}:`, error);
+            }
+        }
+        
+        // Jeśli brak turniejów, pokaż przykładowe dane
+        if (tournaments.length === 0) {
+            console.warn('Brak turniejów. Ładowanie przykładowych danych...');
+            loadSampleData();
+            return;
+        }
+        
+        // Wyświetl turnieje
+        filteredTournaments = [...tournaments];
+        displayTournaments();
+        
+    } catch (error) {
+        console.error('Błąd ładowania turniejów:', error);
+        loadSampleData();
+    }
+}
+
+// Ładowanie przykładowych danych (na wypadek braku plików)
+function loadSampleData() {
+    tournaments = [
+        {
+            tournament: {
+                id: "betclic-birch-2026",
+                name: "Betclic Birch Cup - Bitwa Streamerów",
+                date: "29.01.2026, 20:17 CET",
+                status: "upcoming",
+                game: "cs2",
+                organizer: "Betclic",
+                format: "5v5",
+                teams: "32 drużyn",
+                prize: "$10,000"
+            },
+            matches: [
+                {
+                    id: 1,
+                    date: "03.12, 18:44",
+                    status: "upcoming",
+                    team1: { 
+                        name: "Millenium", 
+                        logo: "M",
+                        hasAngelkacs: true
+                    },
+                    team2: { 
+                        name: "Endless Journey", 
+                        logo: "EJ",
+                        hasAngelkacs: false
+                    },
+                    score: null,
+                    playersTeam1: [
+                        { name: "Angelkacs", isAngelkacs: true },
+                        { name: "Player2" },
+                        { name: "Player3" },
+                        { name: "Player4" },
+                        { name: "Player5" }
+                    ],
+                    playersTeam2: [
+                        { name: "Enemy1" },
+                        { name: "Enemy2" },
+                        { name: "Enemy3" },
+                        { name: "Enemy4" },
+                        { name: "Enemy5" }
+                    ],
+                    link: "https://twitch.tv/angelkacs"
+                }
+            ]
+        },
+        {
+            tournament: {
+                id: "esl-pro-league-2025",
+                name: "ESL Pro League Season 18",
+                date: "10.02.2025, 17:00 CET",
+                status: "active",
+                game: "cs2",
+                organizer: "ESL Gaming",
+                format: "5v5, Grupy + Playoffs",
+                teams: "24 drużyn",
+                prize: "$750,000"
+            },
+            matches: [
+                {
+                    id: 1,
+                    date: "11.02, 18:00",
+                    status: "finished",
+                    team1: { 
+                        name: "Team Liquid", 
+                        logo: "TL",
+                        hasAngelkacs: false
+                    },
+                    team2: { 
+                        name: "G2 Esports", 
+                        logo: "G2",
+                        hasAngelkacs: true
+                    },
+                    score: { team1: 1, team2: 2 },
+                    playersTeam1: [
+                        { name: "Player1" },
+                        { name: "Player2" },
+                        { name: "Player3" },
+                        { name: "Player4" },
+                        { name: "Player5" }
+                    ],
+                    playersTeam2: [
+                        { name: "Angelkacs", isAngelkacs: true },
+                        { name: "NiKo" },
+                        { name: "huNter-" },
+                        { name: "m0NESY" },
+                        { name: "HooXi" }
+                    ],
+                    link: "https://twitch.tv/esl_csgo"
+                }
+            ]
+        }
+    ];
+    
     filteredTournaments = [...tournaments];
     displayTournaments();
 }
@@ -382,8 +271,8 @@ function loadTournaments() {
 // Filtruj turnieje
 function filterTournaments() {
     filteredTournaments = tournaments.filter(tournament => {
-        const game = tournament.game;
-        const status = tournament.status;
+        const game = tournament.tournament.game;
+        const status = tournament.tournament.status;
         
         // Filtruj po grze
         if (currentFilter !== 'all' && game !== currentFilter) {
@@ -407,15 +296,18 @@ function displayTournaments() {
     
     if (filteredTournaments.length === 0) {
         emptyState.style.display = 'block';
-        tournamentCount.textContent = '0 turniejów';
+        tournamentCount.textContent = '0';
+        tournamentCounter.querySelector('span').textContent = '0';
         return;
     }
     
     emptyState.style.display = 'none';
-    tournamentCount.textContent = `${filteredTournaments.length} turniejów`;
+    tournamentCount.textContent = filteredTournaments.length;
+    tournamentCounter.querySelector('span').textContent = filteredTournaments.length;
     
-    filteredTournaments.forEach(tournament => {
-        const matches = tournament.matches || [];
+    filteredTournaments.forEach(tournamentData => {
+        const tournament = tournamentData.tournament;
+        const matches = tournamentData.matches || [];
         
         const tournamentCard = document.createElement('div');
         tournamentCard.className = 'tournament-card';
@@ -440,24 +332,23 @@ function displayTournaments() {
                 break;
         }
         
-        // Ikona gry
+        // Klasa gry
+        const gameClass = tournament.game === 'cs2' ? 'cs2' : 'fortnite';
         const gameIcon = tournament.game === 'cs2' ? 
             '<i class="fas fa-crosshairs"></i>' : 
             '<i class="fas fa-parachute-box"></i>';
         
-        const gameClass = tournament.game === 'cs2' ? 'cs2' : 'fortnite';
-        
         tournamentCard.innerHTML = `
             <div class="card-header">
-                <div class="card-game">
-                    <div class="game-icon ${gameClass}">${gameIcon}</div>
-                    <div class="game-name">${tournament.game.toUpperCase()}</div>
+                <div class="card-title-row">
+                    <h3 class="card-title">${tournament.name}</h3>
+                    <div class="card-game ${gameClass}">${gameIcon} ${tournament.game.toUpperCase()}</div>
                 </div>
-                <h3 class="card-title">${tournament.name}</h3>
                 <div class="card-date">
                     <i class="far fa-calendar-alt"></i>
                     ${tournament.date}
                 </div>
+                <div class="card-status ${statusClass}">${statusText}</div>
             </div>
             
             <div class="card-body">
@@ -482,8 +373,6 @@ function displayTournaments() {
                         <div class="detail-value">${tournament.prize}</div>
                     </div>
                 </div>
-                
-                <div class="card-status ${statusClass}">${statusText}</div>
             </div>
             
             <div class="card-footer">
@@ -503,14 +392,21 @@ function displayTournaments() {
 
 // Otwórz modal z meczami
 function openMatchModal(tournamentId) {
-    const tournament = tournaments.find(t => t.id === tournamentId);
-    if (!tournament) return;
+    const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
+    if (!tournamentData) return;
     
-    const matches = tournament.matches || [];
+    const tournament = tournamentData.tournament;
+    const matches = tournamentData.matches || [];
     
     // Ustaw informacje o turnieju
     modalTournamentName.textContent = tournament.name;
     modalDate.textContent = tournament.date;
+    
+    // Ustaw ikonę gry
+    const gameIcon = tournament.game === 'cs2' ? 
+        '<i class="fas fa-crosshairs"></i>' : 
+        '<i class="fas fa-parachute-box"></i>';
+    modalGameIcon.innerHTML = gameIcon;
     
     // Ustaw status
     let statusText = '';

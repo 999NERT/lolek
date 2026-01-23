@@ -6,155 +6,264 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: #0a0a0a;
     color: #ffffff;
     line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .app-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
-    position: relative;
+    padding: 0 20px;
 }
 
-/* Widoki */
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Nagłówek */
-.header {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #8a2be2;
-}
-
-.logo {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo h1 {
-    font-size: 2.5rem;
-    color: #ffffff;
-    margin-bottom: 10px;
+/* Ekran ładowania */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
 }
 
-.logo h1 i {
-    color: #8a2be2;
+.loading-content {
+    text-align: center;
 }
 
-.subtitle {
-    font-size: 1.1rem;
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(138, 43, 226, 0.3);
+    border-top-color: #8a2be2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-content h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.loading-content p {
     color: #bbbbbb;
 }
 
-/* Filtry */
-.filters {
+/* Nagłówek główny */
+.main-header {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 10, 46, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin: 20px 0 30px;
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.header-top {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: #8a2be2;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.logo h1 span {
+    color: #8a2be2;
+}
+
+.home-link {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    transition: all 0.3s ease;
+}
+
+.home-link:hover {
+    background: rgba(138, 43, 226, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
+}
+
+.header-bottom {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    margin-top: 30px;
+}
+
+.search-container {
+    width: 100%;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-box i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8a2be2;
+    font-size: 1.2rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 16px 20px 16px 60px;
+    background: rgba(26, 26, 26, 0.8);
+    border: 2px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #8a2be2;
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+}
+
+.filters-container {
+    display: flex;
+    justify-content: center;
 }
 
 .filter-buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .filter-btn {
-    padding: 10px 20px;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border: 2px solid #333;
-    border-radius: 25px;
-    cursor: pointer;
+    padding: 12px 24px;
+    background: rgba(26, 26, 26, 0.8);
+    color: #bbbbbb;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    cursor: pointer;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .filter-btn:hover {
-    border-color: #8a2be2;
+    border-color: rgba(138, 43, 226, 0.5);
     color: #8a2be2;
 }
 
 .filter-btn.active {
-    background-color: #8a2be2;
+    background: #8a2be2;
     border-color: #8a2be2;
     color: white;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
 }
 
-.search-box {
+/* Obszar treści */
+.content-area {
+    margin-bottom: 50px;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+}
+
+.content-header h2 {
+    font-size: 1.8rem;
+    color: #ffffff;
     display: flex;
     align-items: center;
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 25px;
-    padding: 10px 20px;
-    min-width: 300px;
+    gap: 12px;
 }
 
-.search-box i {
+.content-header h2 i {
     color: #8a2be2;
-    margin-right: 10px;
 }
 
-.search-box input {
-    background: transparent;
-    border: none;
-    color: white;
-    width: 100%;
-    font-size: 16px;
-    outline: none;
+.tournament-count {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid rgba(138, 43, 226, 0.3);
 }
 
 /* Siatka turniejów */
 .tournaments-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: 25px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .tournament-card {
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(32, 18, 46, 0.95) 100%);
+    border-radius: 16px;
     padding: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
+    border: 1px solid rgba(138, 43, 226, 0.2);
     position: relative;
     overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    display: block;
 }
 
 .tournament-card:hover {
-    border-color: #8a2be2;
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2);
+    border-color: rgba(138, 43, 226, 0.5);
+    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
 }
 
 .tournament-card::before {
@@ -164,71 +273,70 @@ body {
     left: 0;
     width: 100%;
     height: 4px;
-    background-color: #8a2be2;
+    background: linear-gradient(90deg, #8a2be2, #4a1e8a);
 }
 
-.tournament-status {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 6px 15px;
-    border-radius: 15px;
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.tournament-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+    flex: 1;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
     font-weight: 700;
     font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .status-upcoming {
-    background-color: rgba(138, 43, 226, 0.2);
+    background: rgba(138, 43, 226, 0.2);
     color: #8a2be2;
-    border: 1px solid #8a2be2;
+    border: 1px solid rgba(138, 43, 226, 0.4);
 }
 
 .status-active {
-    background-color: rgba(220, 53, 69, 0.2);
+    background: rgba(220, 53, 69, 0.2);
     color: #dc3545;
-    border: 1px solid #dc3545;
-    animation: pulse 2s infinite;
+    border: 1px solid rgba(220, 53, 69, 0.4);
 }
 
 .status-finished {
-    background-color: rgba(40, 167, 69, 0.2);
+    background: rgba(40, 167, 69, 0.2);
     color: #28a745;
-    border: 1px solid #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.4);
 }
 
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-.tournament-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 10px;
-    padding-right: 100px;
-}
-
-.tournament-date {
-    color: #8a2be2;
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 20px;
+.tournament-meta {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: #bbbbbb;
+    font-size: 0.95rem;
 }
 
-.tournament-date i {
-    font-size: 1rem;
+.tournament-meta i {
+    color: #8a2be2;
+    margin-right: 6px;
 }
 
-.tournament-details-grid {
+.details-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .detail-item {
@@ -240,6 +348,7 @@ body {
 .detail-label {
     font-size: 0.85rem;
     color: #bbbbbb;
+    font-weight: 500;
 }
 
 .detail-value {
@@ -248,158 +357,305 @@ body {
     font-weight: 600;
 }
 
-.tournament-matches-count {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #333;
+.prize-highlight {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(74, 30, 138, 0.1));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.prize-highlight i {
+    color: #8a2be2;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.prize-amount {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #8a2be2;
+}
+
+.matches-count {
     display: flex;
     align-items: center;
     gap: 8px;
     color: #8a2be2;
     font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Widok meczów */
-.back-button {
-    background-color: transparent;
-    color: #8a2be2;
-    border: 2px solid #8a2be2;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+/* Brak wyników */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(26, 26, 26, 0.5);
+    border-radius: 16px;
+    border: 2px dashed rgba(138, 43, 226, 0.3);
 }
 
-.back-button:hover {
-    background-color: #8a2be2;
-    color: white;
+.no-results i {
+    font-size: 4rem;
+    color: rgba(138, 43, 226, 0.5);
+    margin-bottom: 20px;
 }
 
-.tournament-header-info {
-    margin-bottom: 30px;
-}
-
-.tournament-header-info h1 {
-    font-size: 2.2rem;
-    color: white;
+.no-results h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
-.tournament-subtitle {
-    font-size: 1.2rem;
-    color: #8a2be2;
-    font-weight: 600;
+.no-results p {
+    color: #bbbbbb;
 }
 
-/* Szczegóły turnieju */
-.matches-content {
-    margin-top: 30px;
+/* Stopka */
+.main-footer {
+    background: rgba(26, 26, 26, 0.8);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(138, 43, 226, 0.2);
 }
 
-.tournament-details {
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 40px;
-}
-
-.tournament-details-header {
+.footer-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 25px;
+    align-items: center;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.tournament-details-left {
-    flex: 1;
+.footer-left p {
+    color: #bbbbbb;
+    margin-bottom: 5px;
 }
 
-.tournament-details-right {
-    background-color: #0a0a0a;
-    border: 2px solid #8a2be2;
-    border-radius: 12px;
-    padding: 20px;
-    min-width: 200px;
-    text-align: center;
+.footer-info {
+    font-size: 0.9rem;
+    color: #8a2be2;
 }
 
-.tournament-prize {
-    font-size: 1.8rem;
-    color: #ffffff;
-    font-weight: 700;
-    margin-bottom: 10px;
+.footer-right {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     gap: 10px;
 }
 
-.tournament-prize i {
-    color: #8a2be2;
-    font-size: 2rem;
-}
-
-.tournament-prize-label {
-    font-size: 0.9rem;
-    color: #bbbbbb;
-}
-
-.tournament-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.tournament-info-item {
+.json-info {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    gap: 10px;
+    color: #bbbbbb;
+    font-size: 0.9rem;
 }
 
-.tournament-info-label {
-    font-size: 0.9rem;
-    color: #bbbbbb;
+.json-info i {
+    color: #8a2be2;
+}
+
+.json-info code {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: 'Consolas', monospace;
+}
+
+.template-link {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    transition: all 0.3s ease;
+}
+
+.template-link:hover {
+    background: rgba(138, 43, 226, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Widok meczów */
+.matches-view {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.matches-header {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 10, 46, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin: 20px 0 30px;
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.back-button {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(138, 43, 226, 0.2);
+    transform: translateX(-3px);
+}
+
+.tournament-header h1 {
+    font-size: 2.2rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.tournament-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.tournament-date {
+    color: #8a2be2;
+    font-weight: 600;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.tournament-info-label i {
-    color: #8a2be2;
+.tournament-date::before {
+    content: '📅';
     font-size: 1rem;
 }
 
-.tournament-info-value {
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 600;
+.tournament-status {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
 }
 
-/* Lista meczów */
-.matches-section {
-    margin-top: 40px;
+/* Szczegóły turnieju */
+.tournament-details {
+    background: rgba(26, 26, 26, 0.8);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(138, 43, 226, 0.2);
 }
 
-.section-title {
-    font-size: 1.8rem;
-    color: #ffffff;
-    margin-bottom: 25px;
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.detail-card {
+    background: rgba(10, 10, 10, 0.8);
+    border-radius: 12px;
+    padding: 20px;
     display: flex;
     align-items: center;
     gap: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
-.section-title i {
+.detail-card:hover {
+    border-color: rgba(138, 43, 226, 0.5);
+    transform: translateY(-2px);
+}
+
+.detail-card i {
+    font-size: 1.8rem;
     color: #8a2be2;
+}
+
+.detail-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-label {
+    font-size: 0.9rem;
+    color: #bbbbbb;
+    font-weight: 500;
+}
+
+.detail-value {
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.prize-card {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(74, 30, 138, 0.1));
+    border-color: rgba(138, 43, 226, 0.3);
+}
+
+/* Lista meczów */
+.matches-container {
+    margin-bottom: 50px;
+}
+
+.matches-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+}
+
+.matches-header-section h2 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.matches-header-section h2 i {
+    color: #8a2be2;
+}
+
+.match-count {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid rgba(138, 43, 226, 0.3);
 }
 
 .matches-list {
@@ -409,15 +665,17 @@ body {
 }
 
 .match-item {
-    background-color: #1a1a1a;
-    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(32, 18, 46, 0.95) 100%);
+    border-radius: 16px;
     overflow: hidden;
-    border: 2px solid #333;
+    border: 1px solid rgba(138, 43, 226, 0.2);
     transition: all 0.3s ease;
 }
 
 .match-item:hover {
-    border-color: #8a2be2;
+    border-color: rgba(138, 43, 226, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.15);
 }
 
 .match-header {
@@ -425,12 +683,11 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: rgba(10, 10, 10, 0.8);
-    border-bottom: 1px solid #333;
+    background: rgba(10, 10, 10, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .match-date {
-    font-size: 1rem;
     color: #8a2be2;
     font-weight: 600;
     display: flex;
@@ -439,42 +696,48 @@ body {
 }
 
 .match-status {
-    padding: 6px 15px;
-    border-radius: 15px;
+    padding: 6px 16px;
+    border-radius: 20px;
     font-weight: 700;
     font-size: 0.85rem;
+    text-transform: uppercase;
 }
 
-.match-cancelled {
-    background-color: rgba(108, 117, 125, 0.2);
+.match-status.cancelled {
+    background: rgba(108, 117, 125, 0.2);
     color: #6c757d;
-    border: 1px solid #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.4);
 }
 
-.match-finished {
-    background-color: rgba(40, 167, 69, 0.2);
+.match-status.finished {
+    background: rgba(40, 167, 69, 0.2);
     color: #28a745;
-    border: 1px solid #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.4);
 }
 
-.match-upcoming {
-    background-color: rgba(138, 43, 226, 0.2);
+.match-status.upcoming {
+    background: rgba(138, 43, 226, 0.2);
     color: #8a2be2;
-    border: 1px solid #8a2be2;
+    border: 1px solid rgba(138, 43, 226, 0.4);
 }
 
-.match-live {
-    background-color: rgba(220, 53, 69, 0.2);
+.match-status.live {
+    background: rgba(220, 53, 69, 0.2);
     color: #dc3545;
-    border: 1px solid #dc3545;
-    animation: pulse 2s infinite;
+    border: 1px solid rgba(220, 53, 69, 0.4);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .match-content {
     display: flex;
     align-items: center;
-    padding: 20px;
-    gap: 30px;
+    padding: 25px;
+    gap: 20px;
 }
 
 .team {
@@ -486,12 +749,13 @@ body {
 
 .team-left {
     justify-content: flex-end;
+    text-align: right;
 }
 
 .team-logo {
     width: 50px;
     height: 50px;
-    background-color: #333;
+    background: rgba(138, 43, 226, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -499,6 +763,7 @@ body {
     font-size: 1.2rem;
     color: #8a2be2;
     font-weight: 700;
+    border: 2px solid rgba(138, 43, 226, 0.3);
 }
 
 .team-name {
@@ -508,33 +773,35 @@ body {
 }
 
 .team-score {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.2rem;
+    font-weight: 800;
     color: #ffffff;
-    min-width: 40px;
+    min-width: 60px;
     text-align: center;
 }
 
 .match-vs {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #8a2be2;
     padding: 0 20px;
 }
 
 .match-footer {
     padding: 15px 20px;
-    background-color: rgba(10, 10, 10, 0.8);
-    border-top: 1px solid #333;
+    background: rgba(10, 10, 10, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .match-tournament {
-    font-size: 1rem;
     color: #bbbbbb;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .match-link {
@@ -544,7 +811,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .match-link:hover {
@@ -552,109 +819,273 @@ body {
     text-decoration: underline;
 }
 
-/* Stopka */
-.footer {
-    margin-top: 60px;
-    padding-top: 30px;
-    border-top: 2px solid #333;
+/* Brak meczów */
+.no-matches {
     text-align: center;
+    padding: 60px 20px;
+    background: rgba(26, 26, 26, 0.5);
+    border-radius: 16px;
+    border: 2px dashed rgba(138, 43, 226, 0.3);
 }
 
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.no-matches i {
+    font-size: 4rem;
+    color: rgba(138, 43, 226, 0.5);
     margin-bottom: 20px;
 }
 
-.footer p {
+.no-matches h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.no-matches p {
     color: #bbbbbb;
-    font-size: 1rem;
 }
 
-.back-link {
-    color: #8a2be2;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.3s ease;
-}
-
-.back-link:hover {
-    color: #a855f7;
-    text-decoration: underline;
-}
-
-/* Link do edycji */
-.edit-data-link {
+/* Przycisk dodawania */
+.add-tournament-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 30px;
+    background: #8a2be2;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 18px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+    transition: all 0.3s ease;
     z-index: 100;
 }
 
-.edit-btn {
-    background-color: #8a2be2;
+.add-tournament-btn:hover {
+    background: #a855f7;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.5);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 100%);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 700px;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 25px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-header h2 i {
+    color: #8a2be2;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #bbbbbb;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: #8a2be2;
+}
+
+.modal-body {
+    padding: 30px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.instruction-step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instruction-step:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: #8a2be2;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.step-content p {
+    color: #bbbbbb;
+    line-height: 1.6;
+}
+
+.code-example {
+    background: rgba(10, 10, 10, 0.8);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.code-example h4 {
+    font-size: 1.1rem;
+    color: #8a2be2;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.code-example pre {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.code-example code {
+    color: #e6db74;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    padding: 25px 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: #8a2be2;
     color: white;
     text-decoration: none;
-    padding: 12px 25px;
-    border-radius: 25px;
+    padding: 14px 28px;
+    border-radius: 12px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 10px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+    border: none;
+    cursor: pointer;
 }
 
-.edit-btn:hover {
-    background-color: #a855f7;
+.btn-primary:hover {
+    background: #a855f7;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(138, 43, 226, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(138, 43, 226, 0.1);
+    color: #8a2be2;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(138, 43, 226, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Responsywność */
 @media (max-width: 768px) {
     .app-container {
-        padding: 15px;
+        padding: 0 15px;
     }
     
-    .logo h1 {
-        font-size: 2rem;
+    .main-header {
+        padding: 20px;
+    }
+    
+    .header-top {
         flex-direction: column;
-        gap: 10px;
-    }
-    
-    .filters {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .search-box {
-        min-width: auto;
+        gap: 20px;
+        align-items: flex-start;
     }
     
     .tournaments-grid {
         grid-template-columns: 1fr;
     }
     
-    .tournament-header-info h1 {
-        font-size: 1.8rem;
+    .details-grid {
+        grid-template-columns: 1fr;
     }
     
-    .tournament-details-header {
+    .footer-content {
         flex-direction: column;
-    }
-    
-    .tournament-details-right {
-        width: 100%;
+        align-items: flex-start;
+        gap: 15px;
     }
     
     .match-content {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
     }
     
     .team {
@@ -670,15 +1101,14 @@ body {
         margin: 10px 0;
     }
     
-    .match-footer {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
+    .add-tournament-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 20px;
     }
     
-    .edit-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
+    .modal-body {
+        padding: 20px;
     }
 }
 
@@ -688,23 +1118,28 @@ body {
     }
     
     .filter-buttons {
-        justify-content: center;
+        flex-direction: column;
+        width: 100%;
     }
     
     .filter-btn {
-        padding: 8px 15px;
-        font-size: 0.8rem;
+        width: 100%;
+        justify-content: center;
     }
     
-    .tournament-title {
-        font-size: 1.2rem;
+    .tournament-header h1 {
+        font-size: 1.8rem;
     }
     
-    .tournament-details-grid {
-        grid-template-columns: 1fr;
+    .match-content {
+        padding: 15px;
     }
     
-    .tournament-info-grid {
-        grid-template-columns: 1fr;
+    .team-name {
+        font-size: 1.1rem;
+    }
+    
+    .team-score {
+        font-size: 1.8rem;
     }
 }

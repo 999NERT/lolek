@@ -6,31 +6,31 @@
 }
 
 :root {
-    /* Nowa paleta kolorów */
-    --color-bg: #0a0a0f;
-    --color-surface: #1a1825;
-    --color-surface-light: #242135;
-    --color-surface-lighter: #2d2945;
-    --color-border: #3a3555;
-    --color-border-light: #4a4679;
+    /* Nowa, żywsza paleta kolorów */
+    --color-bg: #0d0b14;
+    --color-surface: #1a1726;
+    --color-surface-light: #252239;
+    --color-surface-lighter: #322d4d;
+    --color-border: #3d3661;
+    --color-border-light: #4d4480;
     
-    /* Kolory akcentów */
-    --color-primary: #8C6EA8;
-    --color-primary-hover: #7a5c95;
-    --color-secondary: #4A4679;
-    --color-success: #10b981;
-    --color-danger: #ef4444;
-    --color-warning: #f59e0b;
-    --color-info: #06b6d4;
+    /* Kolory akcentów - bardziej żywe */
+    --color-primary: #9d4edd;
+    --color-primary-hover: #8a3ec9;
+    --color-secondary: #7b2cbf;
+    --color-success: #0acf83;
+    --color-danger: #ff4757;
+    --color-warning: #ff9f43;
+    --color-info: #2e86de;
     
     /* Kolory gier */
-    --color-cs2: #f97316;
-    --color-fortnite: #8C6EA8;
+    --color-cs2: #ff6b35;
+    --color-fortnite: #9d4edd;
     
     /* Kolory tekstu */
     --color-text: #ffffff;
-    --color-text-secondary: #d0d0e0;
-    --color-text-muted: #8888aa;
+    --color-text-secondary: #e0e0ff;
+    --color-text-muted: #a0a0cc;
     
     /* Czcionki */
     --font-heading: 'Montserrat', sans-serif;
@@ -43,9 +43,9 @@
     --radius-xl: 16px;
     
     /* Cienie */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
     
     /* Animacje */
     --transition: 0.2s ease;
@@ -57,6 +57,7 @@ body {
     color: var(--color-text);
     line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* Ekran ładowania */
@@ -334,7 +335,7 @@ body {
     color: white;
 }
 
-/* Siatka turniejów - minimalistyczna */
+/* Siatka turniejów */
 .tournaments-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -426,19 +427,19 @@ body {
 }
 
 .status-upcoming {
-    background-color: rgba(140, 110, 168, 0.15);
+    background-color: rgba(157, 78, 221, 0.15);
     border: 1px solid var(--color-primary);
     color: var(--color-primary);
 }
 
 .status-active {
-    background-color: rgba(239, 68, 68, 0.15);
+    background-color: rgba(255, 71, 87, 0.15);
     border: 1px solid var(--color-danger);
     color: var(--color-danger);
 }
 
 .status-finished {
-    background-color: rgba(16, 185, 129, 0.15);
+    background-color: rgba(10, 207, 131, 0.15);
     border: 1px solid var(--color-success);
     color: var(--color-success);
 }
@@ -587,14 +588,14 @@ body {
     color: var(--color-text-muted) !important;
 }
 
-/* Modal - minimalistyczny */
+/* Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(10, 10, 15, 0.95);
+    background-color: rgba(13, 11, 20, 0.95);
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -754,74 +755,81 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Podgląd meczu - minimalistyczny */
+/* Podgląd meczu - ZMIENIONY: usunięto VS, wyśrodkowano */
 .match-preview {
-    padding: 16px;
+    padding: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    gap: 16px;
 }
 
-.match-vs {
+.teams-container {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
 }
 
 .team-preview {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
+    flex: 1;
+    max-width: 200px;
 }
 
-.team-logo-small {
-    width: 32px;
-    height: 32px;
+.team-logo-large {
+    width: 60px;
+    height: 60px;
     background-color: var(--color-primary);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 800;
     color: white;
+    margin-bottom: 8px;
 }
 
-.team-name-small {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-text);
-}
-
-.vs-text {
-    font-size: 12px;
-    color: var(--color-text-muted);
-    font-weight: 600;
-    padding: 0 8px;
-}
-
-.match-score-preview {
+.team-name-large {
     font-family: var(--font-heading);
     font-size: 18px;
     font-weight: 700;
     color: var(--color-text);
-    min-width: 50px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.match-score-container {
+    margin: 16px 0;
+}
+
+.match-score-large {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-text);
     text-align: center;
 }
 
 .toggle-players-btn {
-    padding: 6px 12px;
+    padding: 8px 16px;
     background-color: var(--color-surface-light);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     color: var(--color-text-secondary);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    margin-top: 8px;
 }
 
 .toggle-players-btn:hover {
@@ -831,7 +839,7 @@ body {
 }
 
 .toggle-players-btn i {
-    font-size: 10px;
+    font-size: 12px;
     transition: transform 0.3s ease;
 }
 
@@ -839,7 +847,7 @@ body {
     transform: rotate(180deg);
 }
 
-/* Sekcja graczy - ukrywana/rozwijana */
+/* Sekcja graczy */
 .players-section {
     max-height: 0;
     overflow: hidden;
@@ -853,60 +861,68 @@ body {
 }
 
 .players-container {
-    padding: 16px;
-}
-
-.players-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-border-light);
+    padding: 20px;
 }
 
 .players-title {
-    font-size: 14px;
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
     color: var(--color-text);
+    margin-bottom: 16px;
+    text-align: center;
 }
 
-.players-count {
-    font-size: 12px;
-    color: var(--color-text-secondary);
+/* Nowy układ graczy - wszyscy na jednej stronie */
+.all-players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 4px;
 }
 
-/* Suwak graczy */
-.players-slider {
-    position: relative;
-    overflow: hidden;
+/* Styl scrollbara */
+.all-players-grid::-webkit-scrollbar {
+    width: 6px;
 }
 
-.players-track {
-    display: flex;
-    gap: 8px;
-    padding: 4px 0;
-    transition: transform 0.3s ease;
+.all-players-grid::-webkit-scrollbar-track {
+    background: var(--color-surface);
+    border-radius: 3px;
+}
+
+.all-players-grid::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 3px;
+}
+
+.all-players-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-hover);
 }
 
 .player-card {
-    flex: 0 0 auto;
-    width: 120px;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: 12px;
     text-align: center;
     transition: var(--transition);
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .player-card:hover {
     border-color: var(--color-primary);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .player-card.angelkacs {
-    background-color: rgba(140, 110, 168, 0.2);
+    background-color: rgba(157, 78, 221, 0.2);
     border-color: var(--color-primary);
 }
 
@@ -925,13 +941,15 @@ body {
 
 .player-card.angelkacs .player-icon {
     background-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.3);
 }
 
 .player-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 2px;
+    word-break: break-word;
 }
 
 .player-card.angelkacs .player-name {
@@ -939,63 +957,14 @@ body {
     font-weight: 700;
 }
 
-.player-role {
+.player-team {
     font-size: 11px;
     color: var(--color-text-muted);
-}
-
-/* Sterowanie suwakiem */
-.slider-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--color-border-light);
-}
-
-.slider-btn {
-    width: 28px;
-    height: 28px;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-light);
+    padding: 2px 6px;
     border-radius: var(--radius-sm);
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.slider-btn:hover {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-    color: white;
-}
-
-.slider-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.slider-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.slider-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-border);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.slider-dot.active {
-    background-color: var(--color-primary);
+    display: inline-block;
+    margin-top: 4px;
 }
 
 /* Akcje meczu */
@@ -1025,16 +994,6 @@ body {
 
 .match-link-btn:hover {
     background-color: var(--color-primary-hover);
-}
-
-.match-link-btn.secondary {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    color: var(--color-text);
-}
-
-.match-link-btn.secondary:hover {
-    background-color: var(--color-surface-light);
 }
 
 /* Brak meczów */
@@ -1101,22 +1060,25 @@ body {
         gap: 8px;
     }
     
-    .match-preview {
+    .teams-container {
         flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
+        gap: 16px;
     }
     
-    .match-score-preview {
-        align-self: flex-start;
+    .team-preview {
+        max-width: 100%;
+    }
+    
+    .match-score-large {
+        font-size: 28px;
     }
     
     .match-actions {
         flex-direction: column;
     }
     
-    .player-card {
-        width: 100px;
+    .all-players-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -1141,17 +1103,21 @@ body {
         gap: 12px;
     }
     
-    .team-logo-small {
-        width: 28px;
-        height: 28px;
-        font-size: 12px;
+    .team-logo-large {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
     }
     
-    .team-name-small {
-        font-size: 13px;
-    }
-    
-    .match-score-preview {
+    .team-name-large {
         font-size: 16px;
+    }
+    
+    .match-score-large {
+        font-size: 24px;
+    }
+    
+    .all-players-grid {
+        grid-template-columns: 1fr;
     }
 }

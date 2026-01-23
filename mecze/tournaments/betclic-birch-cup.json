@@ -24,7 +24,41 @@
         "logo": "EJ"
       },
       "score": null,
-      "link": "https://example.com/match/1"
+      "detailsLink": "https://example.com/match/1",
+      "playersTeam1": [
+        {
+          "name": "Angelkacs"
+        },
+        {
+          "name": "Player2"
+        },
+        {
+          "name": "Player3"
+        },
+        {
+          "name": "Player4"
+        },
+        {
+          "name": "Player5"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "Enemy1"
+        },
+        {
+          "name": "Enemy2"
+        },
+        {
+          "name": "Enemy3"
+        },
+        {
+          "name": "Enemy4"
+        },
+        {
+          "name": "Enemy5"
+        }
+      ]
     },
     {
       "id": 2,
@@ -42,47 +76,7 @@
         "team1": 0,
         "team2": 2
       },
-      "link": "https://example.com/match/2"
-    },
-    {
-      "id": 3,
-      "date": "PT. 28 LIS, 21:08",
-      "status": "finished",
-      "team1": {
-        "name": "Millenium",
-        "logo": "M"
-      },
-      "team2": {
-        "name": "Endless Journey",
-        "logo": "EJ"
-      },
-      "score": {
-        "team1": 2,
-        "team2": 1
-      },
-      "link": "https://example.com/match/3"
-    }
-  ],
-  "players": [
-    {
-      "name": "Angelkacs",
-      "role": "IGL"
-    },
-    {
-      "name": "Player2",
-      "role": "Entry Fragger"
-    },
-    {
-      "name": "Player3",
-      "role": "Support"
-    },
-    {
-      "name": "Player4",
-      "role": "AWPer"
-    },
-    {
-      "name": "Player5",
-      "role": "Rifler"
+      "detailsLink": "https://example.com/match/2"
     }
   ]
 }

@@ -1,166 +1,120 @@
-[
-    {
-        "id": 1,
+{
+    "tournament": {
         "title": "Betclic Birch Cup Bitwa Streamerow Kolejka 1",
         "date": "CZWARTEK, 29 STYCZNIA 2026 O 20:17 CET",
-        "format": "Pojedyncza eliminacja",
-        "status": "upcoming",
-        "teams": {
-            "team1": {
-                "name": "Team A",
-                "score": null,
-                "logo": ""
-            },
-            "team2": {
-                "name": "Team B",
-                "score": null,
-                "logo": ""
-            }
-        },
+        "status": "Nadchodzący",
+        "prize": "$10,000",
         "details": [
             {
-                "icon": "fa-user-group",
                 "label": "Organizator",
                 "value": "yspwWYxq"
             },
             {
-                "icon": "fa-users",
                 "label": "Format",
                 "value": "5v5"
             },
             {
-                "icon": "fa-list-ol",
                 "label": "Liczba drużyn",
                 "value": "32"
-            },
-            {
-                "icon": "fa-trophy",
-                "label": "Pula nagród",
-                "value": "$10,000"
             }
         ]
     },
-    {
-        "id": 2,
-        "title": "S56 EU Main Central - Regular Season",
-        "date": "ŚRODA, 2 GRUDNIA 2026 O 23:39 CET",
-        "format": "System szwajcarski",
-        "status": "live",
-        "teams": {
+    "matches": [
+        {
+            "id": 1,
             "team1": {
-                "name": "Virtus.pro",
-                "score": 12,
-                "logo": ""
+                "name": "Millenium",
+                "logo": "M"
             },
             "team2": {
-                "name": "Natus Vincere",
-                "score": 10,
-                "logo": ""
-            }
+                "name": "Endless Journey",
+                "logo": "EJ"
+            },
+            "status": "cancelled",
+            "date": "5R 03 GRU, 18:44",
+            "score": null,
+            "tournament": "Endless Journey",
+            "link": "https://example.com/match1"
         },
-        "details": [
-            {
-                "icon": "fa-user-group",
-                "label": "Organizator",
-                "value": "dZR"
-            },
-            {
-                "icon": "fa-users",
-                "label": "Format",
-                "value": "5v5"
-            },
-            {
-                "icon": "fa-list-ol",
-                "label": "Liczba drużyn",
-                "value": "512"
-            },
-            {
-                "icon": "fa-trophy",
-                "label": "Pula nagród",
-                "value": "$25,000"
-            }
-        ]
-    },
-    {
-        "id": 3,
-        "title": "ESEA S55 EU Main Central - Regular Season",
-        "date": "ROZPOCZĘTE WTOREK, 7 PAŻDZIERNIKA 2025 O 20:00 CEST",
-        "format": "System szwajcarski",
-        "status": "finished",
-        "teams": {
+        {
+            "id": 2,
             "team1": {
-                "name": "Fnatic",
-                "score": 2,
-                "logo": ""
+                "name": "VPProdigy",
+                "logo": "VP"
             },
             "team2": {
-                "name": "Astralis",
-                "score": 0,
-                "logo": ""
-            }
+                "name": "Endless Journey",
+                "logo": "EJ"
+            },
+            "status": "finished",
+            "date": "PT. 21 LIS, 15:36",
+            "score": "0 - 2",
+            "tournament": "Endless Journey",
+            "link": "https://example.com/match2"
         },
-        "details": [
-            {
-                "icon": "fa-user-group",
-                "label": "Organizator",
-                "value": "dZR"
-            },
-            {
-                "icon": "fa-users",
-                "label": "Format",
-                "value": "5v5"
-            },
-            {
-                "icon": "fa-list-ol",
-                "label": "Liczba drużyn",
-                "value": "512"
-            },
-            {
-                "icon": "fa-trophy",
-                "label": "Pula nagród",
-                "value": "$50,000"
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "title": "Female Pro League 1 - Open Qual 4",
-        "date": "NIEDZIELA, 12 PAŻDZIERNIKA 2025 O 11:00 CEST",
-        "format": "Pojedyncza eliminacja",
-        "status": "finished",
-        "teams": {
+        {
+            "id": 3,
             "team1": {
-                "name": "Team Secret",
-                "score": 2,
-                "logo": ""
+                "name": "Aurora YB",
+                "logo": "AY"
             },
             "team2": {
-                "name": "CLG Red",
-                "score": 1,
-                "logo": ""
-            }
+                "name": "Millennium",
+                "logo": "M"
+            },
+            "status": "finished",
+            "date": "50B. 22 LIS, 20:54",
+            "score": "1 - 2",
+            "tournament": "Millennium",
+            "link": "https://example.com/match3"
         },
-        "details": [
-            {
-                "icon": "fa-user-group",
-                "label": "Organizator",
-                "value": "PEEK-"
+        {
+            "id": 4,
+            "team1": {
+                "name": "VPProdigy",
+                "logo": "VP"
             },
-            {
-                "icon": "fa-users",
-                "label": "Format",
-                "value": "5v5"
+            "team2": {
+                "name": "Aurora YB",
+                "logo": "AY"
             },
-            {
-                "icon": "fa-list-ol",
-                "label": "Liczba drużyn",
-                "value": "256"
+            "status": "finished",
+            "date": "PON. 24 LIS, 15:23",
+            "score": "1 - 2",
+            "tournament": "Aurora YB",
+            "link": "https://example.com/match4"
+        },
+        {
+            "id": 5,
+            "team1": {
+                "name": "Millenium",
+                "logo": "M"
             },
-            {
-                "icon": "fa-trophy",
-                "label": "Pula nagród",
-                "value": "$15,000"
-            }
-        ]
-    }
-]
+            "team2": {
+                "name": "Endless Journey",
+                "logo": "EJ"
+            },
+            "status": "finished",
+            "date": "PT. 28 LIS, 21:08",
+            "score": "2 - 1",
+            "tournament": "Endless Journey",
+            "link": "https://example.com/match5"
+        },
+        {
+            "id": 6,
+            "team1": {
+                "name": "Aurora YB",
+                "logo": "AY"
+            },
+            "team2": {
+                "name": "Endless Journey",
+                "logo": "EJ"
+            },
+            "status": "finished",
+            "date": "PON. 01 GRU, 16:34",
+            "score": "0 - 2",
+            "tournament": "Endless Journey",
+            "link": "https://example.com/match6"
+        }
+    ]
+}

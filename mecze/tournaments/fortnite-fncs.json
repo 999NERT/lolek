@@ -1,32 +1,37 @@
 {
   "tournament": {
-    "id": "fortnite-fncs-2025",
-    "name": "Fortnite Champion Series - Season 5",
-    "date": "SOBOTA, 15 MARCA 2025 O 19:00 CET",
-    "status": "active",
+    "id": "fncs-invitational-2025",
+    "name": "FNCS Invitational 2025",
+    "date": "25.04.2025, 21:00 CET",
+    "status": "upcoming",
+    "game": "fortnite",
     "organizer": "Epic Games",
-    "format": "Solo",
-    "teams": "250",
-    "prize": "$100,000",
-    "game": "fortnite"
+    "format": "Duos",
+    "teams": "100 par",
+    "prize": "$250,000"
   },
   "matches": [
     {
       "id": 1,
-      "date": "SOBOTA, 15 MAR, 19:00",
-      "status": "live",
+      "date": "25.04, 21:00",
+      "status": "upcoming",
       "team1": {
-        "name": "Team Liquid",
-        "logo": "TL"
+        "name": "Angelkacs & Partner",
+        "logo": "AP",
+        "hasAngelkacs": true
       },
-      "score": {
-        "team1": 45
-      },
+      "team2": null,
+      "score": null,
       "playersTeam1": [
         {
-          "name": "Liquid Player 1"
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "Pro Player"
         }
-      ]
+      ],
+      "link": "https://twitch.tv/angelkacs"
     }
   ]
 }

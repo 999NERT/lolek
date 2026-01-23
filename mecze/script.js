@@ -1,13 +1,12 @@
-// System turniejów Angelkacs z plikami JSON
+// System turniejów Angelkacs - Optymalizowany
 
 // Zmienne globalne
 let tournaments = [];
 let filteredTournaments = [];
 let currentFilter = 'all';
 let currentStatus = 'all';
-let currentMatchPlayers = {};
 
-// Elementy DOM
+// Cache elementów DOM
 const loading = document.getElementById('loading');
 const app = document.getElementById('app');
 const tournamentsGrid = document.getElementById('tournamentsGrid');
@@ -28,8 +27,16 @@ const modalStatus = document.getElementById('modalStatus');
 const matchesList = document.getElementById('matchesList');
 const noMatches = document.getElementById('noMatches');
 
+// Cache załadowanych danych
+const tournamentCache = new Map();
+
 // Inicjalizacja
 document.addEventListener('DOMContentLoaded', () => {
+    initApp();
+});
+
+// Inicjalizacja aplikacji
+function initApp() {
     // Ustaw aktualny rok
     document.getElementById('currentYear').textContent = new Date().getFullYear();
     
@@ -46,55 +53,64 @@ document.addEventListener('DOMContentLoaded', () => {
             loading.style.display = 'none';
             app.style.display = 'block';
         }, 300);
-    }, 1000);
-});
+    }, 800);
+}
 
-// Konfiguracja event listeners
+// Konfiguracja event listeners - zoptymalizowana
 function setupEventListeners() {
-    // Filtry gier
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
+    // Delegacja zdarzeń dla przycisków filtrów
+    document.addEventListener('click', (e) => {
+        // Filtry gier
+        if (e.target.closest('.filter-btn')) {
+            const button = e.target.closest('.filter-btn');
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFilter = button.dataset.filter;
             filterTournaments();
-        });
-    });
-    
-    // Filtry statusów
-    statusButtons.forEach(button => {
-        button.addEventListener('click', () => {
+        }
+        
+        // Filtry statusów
+        if (e.target.closest('.status-btn')) {
+            const button = e.target.closest('.status-btn');
             statusButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentStatus = button.dataset.status;
             filterTournaments();
-        });
+        }
+        
+        // Karty turniejów
+        if (e.target.closest('.tournament-card')) {
+            const tournamentCard = e.target.closest('.tournament-card');
+            const tournamentId = tournamentCard.dataset.id;
+            openMatchModal(tournamentId);
+        }
+        
+        // Przycisk zobacz mecze
+        if (e.target.closest('.view-btn')) {
+            e.stopPropagation();
+            const tournamentCard = e.target.closest('.tournament-card');
+            const tournamentId = tournamentCard.dataset.id;
+            openMatchModal(tournamentId);
+        }
+        
+        // Przycisk pokaż/ukryj graczy
+        if (e.target.closest('.toggle-players-btn')) {
+            e.stopPropagation();
+            const matchId = e.target.closest('.match-item').dataset.matchId;
+            togglePlayers(matchId);
+        }
+        
+        // Zamknięcie modala
+        if (e.target === modalOverlay || e.target.closest('#modalClose')) {
+            closeModal();
+        }
     });
     
     // Przycisk resetuj filtry
     resetFiltersBtn.addEventListener('click', resetFilters);
     
     // Przycisk odśwież
-    refreshBtn.addEventListener('click', () => {
-        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
-        loadTournaments();
-        setTimeout(() => {
-            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Odśwież';
-        }, 1000);
-    });
-    
-    // Kliknięcie na kafelek turnieju
-    document.addEventListener('click', (e) => {
-        const tournamentCard = e.target.closest('.tournament-card');
-        if (tournamentCard) {
-            const tournamentId = tournamentCard.dataset.id;
-            openMatchModal(tournamentId);
-        }
-    });
-    
-    // Zamknięcie modala
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
+    refreshBtn.addEventListener('click', handleRefresh);
     
     // Zamknięcie modala klawiszem Escape
     document.addEventListener('keydown', (e) => {
@@ -102,6 +118,22 @@ function setupEventListeners() {
             closeModal();
         }
     });
+}
+
+// Obsługa odświeżania
+function handleRefresh() {
+    refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
+    refreshBtn.disabled = true;
+    
+    // Wyczyść cache
+    tournamentCache.clear();
+    
+    loadTournaments();
+    
+    setTimeout(() => {
+        refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Odśwież';
+        refreshBtn.disabled = false;
+    }, 1000);
 }
 
 // Resetuj wszystkie filtry
@@ -126,11 +158,13 @@ function resetFilters() {
     filterTournaments();
 }
 
-// Ładowanie turniejów z plików JSON
+// Ładowanie turniejów z plików JSON - zoptymalizowane
 async function loadTournaments() {
     try {
         // Najpierw ładuj listę plików turniejów
-        const listResponse = await fetch('tournament-list.json');
+        const listResponse = await fetch('tournament-list.json', {
+            cache: 'no-cache'
+        });
         
         if (!listResponse.ok) {
             throw new Error('Nie znaleziono pliku tournament-list.json');
@@ -141,33 +175,50 @@ async function loadTournaments() {
         // Ładuj każdy turniej z osobnego pliku
         tournaments = [];
         
-        for (const fileName of fileList.tournaments) {
+        // Użyj Promise.all dla równoległego ładowania
+        const tournamentPromises = fileList.tournaments.map(async (fileName) => {
+            // Sprawdź cache
+            if (tournamentCache.has(fileName)) {
+                return tournamentCache.get(fileName);
+            }
+            
             try {
-                const tournamentResponse = await fetch(`tournaments/${fileName}`);
+                const tournamentResponse = await fetch(`tournaments/${fileName}`, {
+                    cache: 'no-cache'
+                });
                 
                 if (!tournamentResponse.ok) {
                     console.warn(`Nie znaleziono pliku: tournaments/${fileName}`);
-                    continue;
+                    return null;
                 }
                 
                 const tournamentData = await tournamentResponse.json();
                 
                 // Sprawdź poprawność struktury danych
                 if (tournamentData.tournament && tournamentData.tournament.id) {
-                    tournaments.push(tournamentData);
+                    // Zapisz w cache
+                    tournamentCache.set(fileName, tournamentData);
+                    return tournamentData;
                 } else {
                     console.warn(`Nieprawidłowa struktura pliku: ${fileName}`);
+                    return null;
                 }
                 
             } catch (error) {
                 console.error(`Błąd ładowania ${fileName}:`, error);
+                return null;
             }
-        }
+        });
         
-        // Jeśli brak turniejów, pokaż przykładowe dane
+        // Poczekaj na wszystkie obietnice
+        const tournamentResults = await Promise.all(tournamentPromises);
+        
+        // Filtruj null wartości
+        tournaments = tournamentResults.filter(t => t !== null);
+        
+        // Jeśli brak turniejów, pokaż stan pusty
         if (tournaments.length === 0) {
-            console.warn('Brak turniejów. Ładowanie przykładowych danych...');
-            loadSampleData();
+            showEmptyState();
             return;
         }
         
@@ -177,144 +228,21 @@ async function loadTournaments() {
         
     } catch (error) {
         console.error('Błąd ładowania turniejów:', error);
-        loadSampleData();
+        showEmptyState();
     }
 }
 
-// Ładowanie przykładowych danych
-function loadSampleData() {
-    tournaments = [
-        {
-            tournament: {
-                id: "betclic-birch-2026",
-                name: "Betclic Birch Cup - Bitwa Streamerów",
-                date: "29.01.2026, 20:17 CET",
-                status: "upcoming",
-                game: "cs2",
-                organizer: "Betclic",
-                format: "5v5",
-                teams: "32 drużyn",
-                prize: "$10,000"
-            },
-            matches: [
-                {
-                    id: 1,
-                    date: "03.12, 18:44",
-                    status: "upcoming",
-                    team1: { 
-                        name: "Millenium", 
-                        logo: "M",
-                        hasAngelkacs: true
-                    },
-                    team2: { 
-                        name: "Endless Journey", 
-                        logo: "EJ",
-                        hasAngelkacs: false
-                    },
-                    score: null,
-                    playersTeam1: [
-                        { name: "Angelkacs", isAngelkacs: true },
-                        { name: "Player2" },
-                        { name: "Player3" },
-                        { name: "Player4" },
-                        { name: "Player5" }
-                    ],
-                    playersTeam2: [
-                        { name: "Enemy1" },
-                        { name: "Enemy2" },
-                        { name: "Enemy3" },
-                        { name: "Enemy4" },
-                        { name: "Enemy5" }
-                    ],
-                    link: "https://twitch.tv/angelkacs"
-                }
-            ]
-        },
-        {
-            tournament: {
-                id: "esl-pro-league-2025",
-                name: "ESL Pro League Season 18",
-                date: "10.02.2025, 17:00 CET",
-                status: "active",
-                game: "cs2",
-                organizer: "ESL Gaming",
-                format: "5v5, Grupy + Playoffs",
-                teams: "24 drużyn",
-                prize: "$750,000"
-            },
-            matches: [
-                {
-                    id: 1,
-                    date: "11.02, 18:00",
-                    status: "finished",
-                    team1: { 
-                        name: "Team Liquid", 
-                        logo: "TL",
-                        hasAngelkacs: false
-                    },
-                    team2: { 
-                        name: "G2 Esports", 
-                        logo: "G2",
-                        hasAngelkacs: true
-                    },
-                    score: { team1: 1, team2: 2 },
-                    playersTeam1: [
-                        { name: "Player1" },
-                        { name: "Player2" },
-                        { name: "Player3" },
-                        { name: "Player4" },
-                        { name: "Player5" }
-                    ],
-                    playersTeam2: [
-                        { name: "Angelkacs", isAngelkacs: true },
-                        { name: "NiKo" },
-                        { name: "huNter-" },
-                        { name: "m0NESY" },
-                        { name: "HooXi" }
-                    ],
-                    link: "https://twitch.tv/esl_csgo"
-                }
-            ]
-        },
-        {
-            tournament: {
-                id: "fncs-invitational-2025",
-                name: "FNCS Invitational 2025",
-                date: "25.04.2025, 21:00 CET",
-                status: "upcoming",
-                game: "fortnite",
-                organizer: "Epic Games",
-                format: "Solo Battle Royale",
-                teams: "100 graczy",
-                prize: "$250,000"
-            },
-            matches: [
-                {
-                    id: 1,
-                    date: "25.04, 21:00",
-                    status: "upcoming",
-                    team1: { 
-                        name: "Angelkacs", 
-                        logo: "A",
-                        hasAngelkacs: true
-                    },
-                    team2: null,
-                    score: { team1: 0 },
-                    playersTeam1: [
-                        { name: "Angelkacs", isAngelkacs: true }
-                    ],
-                    link: "https://twitch.tv/angelkacs"
-                }
-            ]
-        }
-    ];
-    
-    filteredTournaments = [...tournaments];
-    displayTournaments();
+// Pokaż stan pusty
+function showEmptyState() {
+    tournamentsGrid.innerHTML = '';
+    emptyState.style.display = 'block';
+    tournamentCount.textContent = '0';
 }
 
-// Filtruj turnieje
+// Filtruj turnieje - zoptymalizowane
 function filterTournaments() {
+    const startTime = performance.now();
+    
     filteredTournaments = tournaments.filter(tournamentData => {
         const tournament = tournamentData.tournament;
         const game = tournament.game;
@@ -334,15 +262,20 @@ function filterTournaments() {
     });
     
     displayTournaments();
+    
+    const endTime = performance.now();
+    console.log(`Filtrowanie zajęło: ${(endTime - startTime).toFixed(2)}ms`);
 }
 
-// Wyświetl turnieje
+// Wyświetl turnieje - zoptymalizowane
 function displayTournaments() {
-    tournamentsGrid.innerHTML = '';
+    // Użyj DocumentFragment dla lepszej wydajności
+    const fragment = document.createDocumentFragment();
     
     if (filteredTournaments.length === 0) {
         emptyState.style.display = 'block';
         tournamentCount.textContent = '0';
+        tournamentsGrid.innerHTML = '';
         return;
     }
     
@@ -353,85 +286,79 @@ function displayTournaments() {
         const tournament = tournamentData.tournament;
         const matches = tournamentData.matches || [];
         
-        const tournamentCard = document.createElement('div');
-        tournamentCard.className = 'tournament-card';
-        tournamentCard.dataset.id = tournament.id;
-        
-        // Status
-        let statusText = '';
-        let statusClass = '';
-        
-        switch(tournament.status) {
-            case 'upcoming':
-                statusText = 'NADCHODZĄCY';
-                statusClass = 'status-upcoming';
-                break;
-            case 'active':
-                statusText = 'AKTYWNY';
-                statusClass = 'status-active';
-                break;
-            case 'finished':
-                statusText = 'ZAKOŃCZONY';
-                statusClass = 'status-finished';
-                break;
-        }
-        
-        // Klasa gry
-        const gameClass = tournament.game === 'cs2' ? 'cs2' : 'fortnite';
-        const gameIcon = tournament.game === 'cs2' ? 
-            '<i class="fas fa-crosshairs"></i>' : 
-            '<i class="fas fa-parachute-box"></i>';
-        
-        tournamentCard.innerHTML = `
-            <div class="card-header">
-                <div class="card-title-row">
-                    <h3 class="card-title">${tournament.name}</h3>
-                    <div class="card-game ${gameClass}">${gameIcon} ${tournament.game.toUpperCase()}</div>
-                </div>
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    ${tournament.date}
-                </div>
-                <div class="card-status ${statusClass}">${statusText}</div>
-            </div>
-            
-            <div class="card-body">
-                <div class="card-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Organizator</div>
-                        <div class="detail-value">${tournament.organizer}</div>
-                    </div>
-                    
-                    <div class="detail-item">
-                        <div class="detail-label">Format</div>
-                        <div class="detail-value">${tournament.format}</div>
-                    </div>
-                    
-                    <div class="detail-item">
-                        <div class="detail-label">Drużyny/Gracze</div>
-                        <div class="detail-value">${tournament.teams}</div>
-                    </div>
-                    
-                    <div class="detail-item">
-                        <div class="detail-label">Pula nagród</div>
-                        <div class="detail-value">${tournament.prize}</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card-footer">
-                <div class="matches-count">
-                    <i class="fas fa-gamepad"></i>
-                    ${matches.length} mecz${getPolishPlural(matches.length)}
-                </div>
-                <button class="view-btn" onclick="event.stopPropagation(); openMatchModal('${tournament.id}')">
-                    <i class="fas fa-eye"></i> Zobacz mecze
-                </button>
-            </div>
-        `;
-        
-        tournamentsGrid.appendChild(tournamentCard);
+        const tournamentCard = createTournamentCard(tournament, matches);
+        fragment.appendChild(tournamentCard);
     });
+    
+    // Jedna operacja DOM zamiast wielu
+    tournamentsGrid.innerHTML = '';
+    tournamentsGrid.appendChild(fragment);
+}
+
+// Utwórz kartę turnieju - zoptymalizowane
+function createTournamentCard(tournament, matches) {
+    const card = document.createElement('div');
+    card.className = 'tournament-card';
+    card.dataset.id = tournament.id;
+    
+    // Status
+    const statusConfig = getStatusConfig(tournament.status);
+    
+    // Klasa gry
+    const gameClass = tournament.game === 'cs2' ? 'cs2' : 'fortnite';
+    const gameIcon = tournament.game === 'cs2' ? 
+        '<i class="fas fa-crosshairs"></i>' : 
+        '<i class="fas fa-parachute-box"></i>';
+    
+    card.innerHTML = `
+        <div class="card-header">
+            <div class="card-title-row">
+                <h3 class="card-title">${escapeHtml(tournament.name)}</h3>
+                <div class="card-game ${gameClass}">${gameIcon} ${tournament.game.toUpperCase()}</div>
+            </div>
+            <div class="card-date">
+                <i class="far fa-calendar-alt"></i>
+                ${escapeHtml(tournament.date)}
+            </div>
+            <div class="card-status ${statusConfig.class}">${statusConfig.text}</div>
+        </div>
+        
+        <div class="card-body">
+            <div class="card-details">
+                <div class="detail-item">
+                    <div class="detail-label">Organizator</div>
+                    <div class="detail-value">${escapeHtml(tournament.organizer)}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Format</div>
+                    <div class="detail-value">${escapeHtml(tournament.format)}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Drużyny/Gracze</div>
+                    <div class="detail-value">${escapeHtml(tournament.teams)}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Pula nagród</div>
+                    <div class="detail-value">${escapeHtml(tournament.prize)}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-footer">
+            <div class="matches-count">
+                <i class="fas fa-gamepad"></i>
+                ${matches.length} mecz${getPolishPlural(matches.length)}
+            </div>
+            <button class="view-btn">
+                <i class="fas fa-eye"></i> Zobacz mecze
+            </button>
+        </div>
+    `;
+    
+    return card;
 }
 
 // Otwórz modal z meczami
@@ -447,28 +374,12 @@ function openMatchModal(tournamentId) {
     modalDate.textContent = tournament.date;
     
     // Ustaw status
-    let statusText = '';
-    let statusColor = '#8C6EA8';
+    const statusConfig = getStatusConfig(tournament.status);
     
-    switch(tournament.status) {
-        case 'upcoming':
-            statusText = 'NADCHODZĄCY';
-            statusColor = '#8C6EA8';
-            break;
-        case 'active':
-            statusText = 'AKTYWNY';
-            statusColor = '#ef4444';
-            break;
-        case 'finished':
-            statusText = 'ZAKOŃCZONY';
-            statusColor = '#10b981';
-            break;
-    }
-    
-    modalStatus.textContent = statusText;
-    modalStatus.style.color = statusColor;
-    modalStatus.style.borderColor = statusColor;
-    modalStatus.style.backgroundColor = statusColor + '15';
+    modalStatus.textContent = statusConfig.text;
+    modalStatus.style.color = statusConfig.color;
+    modalStatus.style.borderColor = statusConfig.color;
+    modalStatus.style.backgroundColor = statusConfig.bgColor;
     
     // Wyświetl mecze
     if (matches.length === 0) {
@@ -485,117 +396,104 @@ function openMatchModal(tournamentId) {
     document.body.style.overflow = 'hidden';
 }
 
-// Wyświetl mecze w modal
+// Wyświetl mecze w modal - zoptymalizowane
 function displayMatches(matches, gameType) {
-    matchesList.innerHTML = '';
-    currentMatchPlayers = {};
+    // Użyj DocumentFragment
+    const fragment = document.createDocumentFragment();
     
     matches.forEach((match, index) => {
-        const matchItem = document.createElement('div');
-        matchItem.className = 'match-item';
-        matchItem.dataset.matchId = index;
-        
-        // Status meczu
-        let statusText = '';
-        let statusColor = '#8C6EA8';
-        
-        switch(match.status) {
-            case 'cancelled':
-                statusText = 'ANULOWANY';
-                statusColor = '#888888';
-                break;
-            case 'finished':
-                statusText = 'ZAKOŃCZONY';
-                statusColor = '#10b981';
-                break;
-            case 'upcoming':
-                statusText = 'NADCHODZĄCY';
-                statusColor = '#8C6EA8';
-                break;
-            case 'live':
-                statusText = 'NA ŻYWO';
-                statusColor = '#ef4444';
-                break;
-        }
-        
-        // Gracze
-        const playersTeam1 = match.playersTeam1 || [];
-        const playersTeam2 = match.playersTeam2 || [];
-        
-        // Połącz wszystkich graczy
-        const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
-        currentMatchPlayers[index] = allPlayers;
-        
-        // Wynik meczu
-        const score = getMatchScore(match);
-        
-        matchItem.innerHTML = `
-            <div class="match-header" onclick="toggleMatchDetails(${index})">
-                <div class="match-date">
-                    <i class="far fa-calendar-alt"></i>
-                    ${match.date}
-                </div>
-                <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}; background-color: ${statusColor}15">
-                    ${statusText}
-                </div>
+        const matchItem = createMatchItem(match, index, gameType);
+        fragment.appendChild(matchItem);
+    });
+    
+    // Jedna operacja DOM
+    matchesList.innerHTML = '';
+    matchesList.appendChild(fragment);
+}
+
+// Utwórz element meczu
+function createMatchItem(match, index, gameType) {
+    const matchItem = document.createElement('div');
+    matchItem.className = 'match-item';
+    matchItem.dataset.matchId = index;
+    
+    // Status meczu
+    const statusConfig = getMatchStatusConfig(match.status);
+    
+    // Gracze
+    const playersTeam1 = match.playersTeam1 || [];
+    const playersTeam2 = match.playersTeam2 || [];
+    const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+    
+    // Wynik meczu
+    const score = getMatchScore(match);
+    
+    matchItem.innerHTML = `
+        <div class="match-header" onclick="toggleMatchDetails(${index})">
+            <div class="match-date">
+                <i class="far fa-calendar-alt"></i>
+                ${escapeHtml(match.date)}
             </div>
-            
-            <div class="match-preview">
-                <div class="match-vs">
+            <div class="match-status" style="color: ${statusConfig.color}; border-color: ${statusConfig.color}; background-color: ${statusConfig.bgColor}">
+                ${statusConfig.text}
+            </div>
+        </div>
+        
+        <div class="match-preview">
+            <div class="teams-container">
+                <div class="team-preview">
+                    <div class="team-logo-large">${getTeamLogo(match.team1)}</div>
+                    <div class="team-name-large">${escapeHtml(match.team1.name)}</div>
+                </div>
+                
+                ${match.team2 ? `
                     <div class="team-preview">
-                        <div class="team-logo-small">${getTeamLogo(match.team1)}</div>
-                        <div class="team-name-small">${match.team1.name}</div>
+                        <div class="team-logo-large">${getTeamLogo(match.team2)}</div>
+                        <div class="team-name-large">${escapeHtml(match.team2.name)}</div>
                     </div>
-                    
-                    ${match.team2 ? `
-                        <div class="vs-text">vs</div>
-                        <div class="team-preview">
-                            <div class="team-logo-small">${getTeamLogo(match.team2)}</div>
-                            <div class="team-name-small">${match.team2.name}</div>
-                        </div>
-                    ` : ''}
-                </div>
-                
-                <div class="match-score-preview">${score}</div>
-                
-                <button class="toggle-players-btn" onclick="event.stopPropagation(); togglePlayers(${index})">
-                    <i class="fas fa-chevron-down"></i>
-                    Pokaż graczy
-                </button>
+                ` : ''}
             </div>
             
+            <div class="match-score-container">
+                <div class="match-score-large">${score}</div>
+            </div>
+            
+            ${allPlayers.length > 0 ? `
+                <button class="toggle-players-btn">
+                    <i class="fas fa-chevron-down"></i>
+                    ${allPlayers.length === 1 ? 'Pokaż gracza' : 'Pokaż graczy'}
+                </button>
+            ` : ''}
+        </div>
+        
+        ${allPlayers.length > 0 ? `
             <div class="players-section" id="playersSection${index}">
                 <!-- Gracze będą ładowani tutaj -->
             </div>
-            
-            ${match.link ? `
-                <div class="match-actions">
-                    <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
-                        <i class="fas fa-external-link-alt"></i>
-                        ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
-                    </button>
-                </div>
-            ` : ''}
-        `;
+        ` : ''}
         
-        matchesList.appendChild(matchItem);
-    });
+        ${match.link ? `
+            <div class="match-actions">
+                <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                    ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
+                </button>
+            </div>
+        ` : ''}
+    `;
+    
+    return matchItem;
 }
 
 // Rozwiń/zwiń szczegóły meczu
 function toggleMatchDetails(matchId) {
-    const matchItem = document.querySelector(`.match-item[data-match-id="${matchId}"]`);
     const playersSection = document.getElementById(`playersSection${matchId}`);
     
-    if (playersSection.classList.contains('expanded')) {
+    if (playersSection && playersSection.classList.contains('expanded')) {
         playersSection.classList.remove('expanded');
-        playersSection.innerHTML = '';
-    } else {
-        // Jeśli sekcja graczy jest już rozwinięta, pokaż graczy
-        if (currentMatchPlayers[matchId] && currentMatchPlayers[matchId].length > 0) {
-            displayPlayersSlider(matchId, currentMatchPlayers[matchId]);
-            playersSection.classList.add('expanded');
-        }
+        setTimeout(() => {
+            playersSection.innerHTML = '';
+        }, 300);
     }
 }
 
@@ -604,170 +502,68 @@ function togglePlayers(matchId) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
     const toggleBtn = document.querySelector(`.match-item[data-match-id="${matchId}"] .toggle-players-btn`);
     
+    if (!playersSection) return;
+    
     if (playersSection.classList.contains('expanded')) {
         playersSection.classList.remove('expanded');
-        playersSection.innerHTML = '';
         toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
         toggleBtn.classList.remove('active');
+        
+        setTimeout(() => {
+            playersSection.innerHTML = '';
+        }, 300);
     } else {
-        if (currentMatchPlayers[matchId] && currentMatchPlayers[matchId].length > 0) {
-            displayPlayersSlider(matchId, currentMatchPlayers[matchId]);
-            playersSection.classList.add('expanded');
-            toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
-            toggleBtn.classList.add('active');
+        // Znajdź dane meczu
+        const matchItem = document.querySelector(`.match-item[data-match-id="${matchId}"]`);
+        const tournamentId = matchItem.closest('.modal') ? 
+            document.querySelector('.modal').dataset.tournamentId : null;
+        
+        if (tournamentId) {
+            const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
+            if (tournamentData && tournamentData.matches[matchId]) {
+                const match = tournamentData.matches[matchId];
+                const playersTeam1 = match.playersTeam1 || [];
+                const playersTeam2 = match.playersTeam2 || [];
+                const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+                
+                if (allPlayers.length > 0) {
+                    displayAllPlayers(matchId, allPlayers, match.team1, match.team2);
+                    playersSection.classList.add('expanded');
+                    toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
+                    toggleBtn.classList.add('active');
+                }
+            }
         }
     }
-    
-    event.stopPropagation();
 }
 
-// Wyświetl suwak graczy
-function displayPlayersSlider(matchId, players) {
+// Wyświetl wszystkich graczy razem
+function displayAllPlayers(matchId, players, team1, team2) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
     
-    // Oblicz ile slajdów potrzebujemy (5 graczy na slajd)
-    const playersPerSlide = 5;
-    const slideCount = Math.ceil(players.length / playersPerSlide);
-    
-    let slidesHTML = '';
-    let dotsHTML = '';
-    
-    for (let i = 0; i < slideCount; i++) {
-        const startIdx = i * playersPerSlide;
-        const endIdx = startIdx + playersPerSlide;
-        const slidePlayers = players.slice(startIdx, endIdx);
+    const playersHTML = players.map(player => {
+        const isAngelkacs = player.isAngelkacs || false;
+        const teamName = getPlayerTeam(player, team1, team2);
         
-        slidesHTML += `
-            <div class="players-track" data-slide="${i}">
-                ${slidePlayers.map(player => `
-                    <div class="player-card ${player.isAngelkacs ? 'angelkacs' : ''}">
-                        <div class="player-icon">
-                            <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
-                        </div>
-                        <div class="player-name">${player.name}</div>
-                        <div class="player-role">${player.isAngelkacs ? 'Główny' : 'Gracz'}</div>
-                    </div>
-                `).join('')}
+        return `
+            <div class="player-card ${isAngelkacs ? 'angelkacs' : ''}">
+                <div class="player-icon">
+                    <i class="fas fa-user${isAngelkacs ? '-crown' : ''}"></i>
+                </div>
+                <div class="player-name">${escapeHtml(player.name)}</div>
+                ${teamName ? `<div class="player-team">${teamName}</div>` : ''}
             </div>
         `;
-        
-        dotsHTML += `<div class="slider-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${matchId}, ${i})"></div>`;
-    }
+    }).join('');
     
     playersSection.innerHTML = `
         <div class="players-container">
-            <div class="players-header">
-                <div class="players-title">Gracze w meczu</div>
-                <div class="players-count">${players.length} graczy</div>
-            </div>
-            
-            <div class="players-slider">
-                <div class="slider-viewport" id="sliderViewport${matchId}">
-                    ${slidesHTML}
-                </div>
-                
-                ${slideCount > 1 ? `
-                    <div class="slider-controls">
-                        <button class="slider-btn" onclick="prevSlide(${matchId})" id="prevBtn${matchId}">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        
-                        <div class="slider-dots">
-                            ${dotsHTML}
-                        </div>
-                        
-                        <button class="slider-btn" onclick="nextSlide(${matchId})" id="nextBtn${matchId}">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                ` : ''}
+            <div class="players-title">Gracze w meczu</div>
+            <div class="all-players-grid">
+                ${playersHTML}
             </div>
         </div>
     `;
-    
-    // Inicjalizuj slider
-    initSlider(matchId);
-}
-
-// Inicjalizuj slider
-function initSlider(matchId) {
-    const viewport = document.getElementById(`sliderViewport${matchId}`);
-    const tracks = viewport.querySelectorAll('.players-track');
-    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
-    
-    if (tracks.length > 0) {
-        tracks.forEach((track, index) => {
-            if (index === 0) {
-                track.style.transform = 'translateX(0)';
-            } else {
-                track.style.transform = 'translateX(100%)';
-            }
-        });
-    }
-}
-
-// Przejdź do poprzedniego slajdu
-function prevSlide(matchId) {
-    const viewport = document.getElementById(`sliderViewport${matchId}`);
-    const tracks = viewport.querySelectorAll('.players-track');
-    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
-    
-    let currentSlide = 0;
-    tracks.forEach((track, index) => {
-        if (track.style.transform === 'translateX(0px)' || track.style.transform === '') {
-            currentSlide = index;
-        }
-    });
-    
-    if (currentSlide > 0) {
-        tracks[currentSlide].style.transform = 'translateX(100%)';
-        tracks[currentSlide - 1].style.transform = 'translateX(0)';
-        
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[currentSlide - 1].classList.add('active');
-    }
-}
-
-// Przejdź do następnego slajdu
-function nextSlide(matchId) {
-    const viewport = document.getElementById(`sliderViewport${matchId}`);
-    const tracks = viewport.querySelectorAll('.players-track');
-    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
-    
-    let currentSlide = 0;
-    tracks.forEach((track, index) => {
-        if (track.style.transform === 'translateX(0px)' || track.style.transform === '') {
-            currentSlide = index;
-        }
-    });
-    
-    if (currentSlide < tracks.length - 1) {
-        tracks[currentSlide].style.transform = 'translateX(-100%)';
-        tracks[currentSlide + 1].style.transform = 'translateX(0)';
-        
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[currentSlide + 1].classList.add('active');
-    }
-}
-
-// Przejdź do konkretnego slajdu
-function goToSlide(matchId, slideIndex) {
-    const viewport = document.getElementById(`sliderViewport${matchId}`);
-    const tracks = viewport.querySelectorAll('.players-track');
-    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
-    
-    tracks.forEach((track, index) => {
-        if (index === slideIndex) {
-            track.style.transform = 'translateX(0)';
-        } else if (index < slideIndex) {
-            track.style.transform = 'translateX(-100%)';
-        } else {
-            track.style.transform = 'translateX(100%)';
-        }
-    });
-    
-    dots.forEach(dot => dot.classList.remove('active'));
-    dots[slideIndex].classList.add('active');
 }
 
 // Zamknij modal
@@ -780,7 +576,9 @@ function closeModal() {
     const expandedSections = document.querySelectorAll('.players-section.expanded');
     expandedSections.forEach(section => {
         section.classList.remove('expanded');
-        section.innerHTML = '';
+        setTimeout(() => {
+            section.innerHTML = '';
+        }, 300);
     });
     
     const activeButtons = document.querySelectorAll('.toggle-players-btn.active');
@@ -790,7 +588,7 @@ function closeModal() {
     });
 }
 
-// Pomocnicze funkcje
+// Pomocnicze funkcje - zoptymalizowane
 function getTeamLogo(team) {
     if (!team) return '?';
     return team.logo || team.name.substring(0, 2).toUpperCase();
@@ -808,3 +606,92 @@ function getPolishPlural(count) {
     if (count >= 2 && count <= 4) return 'e';
     return 'ów';
 }
+
+function getStatusConfig(status) {
+    switch(status) {
+        case 'upcoming':
+            return {
+                text: 'NADCHODZĄCY',
+                class: 'status-upcoming',
+                color: '#9d4edd',
+                bgColor: 'rgba(157, 78, 221, 0.15)'
+            };
+        case 'active':
+            return {
+                text: 'AKTYWNY',
+                class: 'status-active',
+                color: '#ff4757',
+                bgColor: 'rgba(255, 71, 87, 0.15)'
+            };
+        case 'finished':
+            return {
+                text: 'ZAKOŃCZONY',
+                class: 'status-finished',
+                color: '#0acf83',
+                bgColor: 'rgba(10, 207, 131, 0.15)'
+            };
+        default:
+            return {
+                text: 'NIEZNANY',
+                class: '',
+                color: '#a0a0cc',
+                bgColor: 'rgba(160, 160, 204, 0.15)'
+            };
+    }
+}
+
+function getMatchStatusConfig(status) {
+    switch(status) {
+        case 'cancelled':
+            return {
+                text: 'ANULOWANY',
+                color: '#a0a0cc',
+                bgColor: 'rgba(160, 160, 204, 0.15)'
+            };
+        case 'finished':
+            return {
+                text: 'ZAKOŃCZONY',
+                color: '#0acf83',
+                bgColor: 'rgba(10, 207, 131, 0.15)'
+            };
+        case 'upcoming':
+            return {
+                text: 'NADCHODZĄCY',
+                color: '#9d4edd',
+                bgColor: 'rgba(157, 78, 221, 0.15)'
+            };
+        case 'live':
+            return {
+                text: 'NA ŻYWO',
+                color: '#ff4757',
+                bgColor: 'rgba(255, 71, 87, 0.15)'
+            };
+        default:
+            return {
+                text: 'NIEZNANY',
+                color: '#a0a0cc',
+                bgColor: 'rgba(160, 160, 204, 0.15)'
+            };
+    }
+}
+
+function getPlayerTeam(player, team1, team2) {
+    // Prosta heurystyka - sprawdź, czy gracz jest w którejś drużynie
+    if (team1 && team1.hasAngelkacs && player.isAngelkacs) {
+        return team1.name;
+    }
+    if (team2 && team2.hasAngelkacs && player.isAngelkacs) {
+        return team2.name;
+    }
+    return '';
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Eksport funkcji do globalnego scope
+window.toggleMatchDetails = toggleMatchDetails;
+window.togglePlayers = togglePlayers;

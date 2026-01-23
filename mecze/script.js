@@ -1,4 +1,4 @@
-// System zarządzania turniejami z plikami JSON
+// System turniejów Angelkacs z plikami JSON
 
 // Zmienne globalne
 let tournaments = [];
@@ -12,7 +12,6 @@ const app = document.getElementById('app');
 const tournamentsGrid = document.getElementById('tournamentsGrid');
 const emptyState = document.getElementById('emptyState');
 const tournamentCount = document.getElementById('tournamentCount');
-const tournamentCounter = document.getElementById('tournamentCounter');
 const filterButtons = document.querySelectorAll('.filter-btn');
 const statusButtons = document.querySelectorAll('.status-btn');
 const resetFiltersBtn = document.getElementById('resetFilters');
@@ -22,7 +21,6 @@ const refreshBtn = document.getElementById('refreshBtn');
 const matchModal = document.getElementById('matchModal');
 const modalOverlay = document.getElementById('modalOverlay');
 const modalClose = document.getElementById('modalClose');
-const modalGameIcon = document.getElementById('modalGameIcon');
 const modalTournamentName = document.getElementById('modalTournamentName');
 const modalDate = document.getElementById('modalDate');
 const modalStatus = document.getElementById('modalStatus');
@@ -40,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Konfiguruj event listeners
     setupEventListeners();
     
-    // Ukryj ekran ładowania po chwili
+    // Ukryj ekran ładowania
     setTimeout(() => {
         loading.style.opacity = '0';
         setTimeout(() => {
@@ -80,8 +78,17 @@ function setupEventListeners() {
         refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
         loadTournaments();
         setTimeout(() => {
-            refreshBtn.innerHTML = '<i class="fas fa-redo"></i> Odśwież';
+            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Odśwież';
         }, 1000);
+    });
+    
+    // Kliknięcie na kafelek turnieju
+    document.addEventListener('click', (e) => {
+        const tournamentCard = e.target.closest('.tournament-card');
+        if (tournamentCard) {
+            const tournamentId = tournamentCard.dataset.id;
+            openMatchModal(tournamentId);
+        }
     });
     
     // Zamknięcie modala
@@ -133,20 +140,26 @@ async function loadTournaments() {
         // Ładuj każdy turniej z osobnego pliku
         tournaments = [];
         
-        for (const file of fileList.tournaments) {
+        for (const fileName of fileList.tournaments) {
             try {
-                const tournamentResponse = await fetch(`tournaments/${file}`);
+                const tournamentResponse = await fetch(`tournaments/${fileName}`);
                 
                 if (!tournamentResponse.ok) {
-                    console.warn(`Nie znaleziono pliku: tournaments/${file}`);
+                    console.warn(`Nie znaleziono pliku: tournaments/${fileName}`);
                     continue;
                 }
                 
                 const tournamentData = await tournamentResponse.json();
-                tournaments.push(tournamentData);
+                
+                // Sprawdź poprawność struktury danych
+                if (tournamentData.tournament && tournamentData.tournament.id) {
+                    tournaments.push(tournamentData);
+                } else {
+                    console.warn(`Nieprawidłowa struktura pliku: ${fileName}`);
+                }
                 
             } catch (error) {
-                console.error(`Błąd ładowania ${file}:`, error);
+                console.error(`Błąd ładowania ${fileName}:`, error);
             }
         }
         
@@ -167,7 +180,7 @@ async function loadTournaments() {
     }
 }
 
-// Ładowanie przykładowych danych (na wypadek braku plików)
+// Ładowanie przykładowych danych
 function loadSampleData() {
     tournaments = [
         {
@@ -261,6 +274,37 @@ function loadSampleData() {
                     link: "https://twitch.tv/esl_csgo"
                 }
             ]
+        },
+        {
+            tournament: {
+                id: "fncs-invitational-2025",
+                name: "FNCS Invitational 2025",
+                date: "25.04.2025, 21:00 CET",
+                status: "upcoming",
+                game: "fortnite",
+                organizer: "Epic Games",
+                format: "Solo Battle Royale",
+                teams: "100 graczy",
+                prize: "$250,000"
+            },
+            matches: [
+                {
+                    id: 1,
+                    date: "25.04, 21:00",
+                    status: "upcoming",
+                    team1: { 
+                        name: "Angelkacs", 
+                        logo: "A",
+                        hasAngelkacs: true
+                    },
+                    team2: null,
+                    score: { team1: 0 },
+                    playersTeam1: [
+                        { name: "Angelkacs", isAngelkacs: true }
+                    ],
+                    link: "https://twitch.tv/angelkacs"
+                }
+            ]
         }
     ];
     
@@ -270,9 +314,10 @@ function loadSampleData() {
 
 // Filtruj turnieje
 function filterTournaments() {
-    filteredTournaments = tournaments.filter(tournament => {
-        const game = tournament.tournament.game;
-        const status = tournament.tournament.status;
+    filteredTournaments = tournaments.filter(tournamentData => {
+        const tournament = tournamentData.tournament;
+        const game = tournament.game;
+        const status = tournament.status;
         
         // Filtruj po grze
         if (currentFilter !== 'all' && game !== currentFilter) {
@@ -297,13 +342,11 @@ function displayTournaments() {
     if (filteredTournaments.length === 0) {
         emptyState.style.display = 'block';
         tournamentCount.textContent = '0';
-        tournamentCounter.querySelector('span').textContent = '0';
         return;
     }
     
     emptyState.style.display = 'none';
     tournamentCount.textContent = filteredTournaments.length;
-    tournamentCounter.querySelector('span').textContent = filteredTournaments.length;
     
     filteredTournaments.forEach(tournamentData => {
         const tournament = tournamentData.tournament;
@@ -364,12 +407,12 @@ function displayTournaments() {
                     </div>
                     
                     <div class="detail-item">
-                        <div class="detail-label">Drużyny</div>
+                        <div class="detail-label">Drużyny/Gracze</div>
                         <div class="detail-value">${tournament.teams}</div>
                     </div>
                     
                     <div class="detail-item">
-                        <div class="detail-label">Nagroda</div>
+                        <div class="detail-label">Pula nagród</div>
                         <div class="detail-value">${tournament.prize}</div>
                     </div>
                 </div>
@@ -380,7 +423,7 @@ function displayTournaments() {
                     <i class="fas fa-gamepad"></i>
                     ${matches.length} mecz${getPolishPlural(matches.length)}
                 </div>
-                <button class="view-btn" onclick="openMatchModal('${tournament.id}')">
+                <button class="view-btn" onclick="event.stopPropagation(); openMatchModal('${tournament.id}')">
                     <i class="fas fa-eye"></i> Zobacz mecze
                 </button>
             </div>
@@ -401,12 +444,6 @@ function openMatchModal(tournamentId) {
     // Ustaw informacje o turnieju
     modalTournamentName.textContent = tournament.name;
     modalDate.textContent = tournament.date;
-    
-    // Ustaw ikonę gry
-    const gameIcon = tournament.game === 'cs2' ? 
-        '<i class="fas fa-crosshairs"></i>' : 
-        '<i class="fas fa-parachute-box"></i>';
-    modalGameIcon.innerHTML = gameIcon;
     
     // Ustaw status
     let statusText = '';
@@ -461,7 +498,7 @@ function displayMatches(matches, gameType) {
         switch(match.status) {
             case 'cancelled':
                 statusText = 'ANULOWANY';
-                statusColor = '#666666';
+                statusColor = '#888888';
                 break;
             case 'finished':
                 statusText = 'ZAKOŃCZONY';
@@ -485,91 +522,139 @@ function displayMatches(matches, gameType) {
         const angelkacsInTeam1 = playersTeam1.some(p => p.isAngelkacs);
         const angelkacsInTeam2 = playersTeam2 && playersTeam2.some(p => p.isAngelkacs);
         
-        matchItem.innerHTML = `
-            <div class="match-header">
-                <div class="match-date">
-                    <i class="far fa-calendar-alt"></i>
-                    ${match.date}
-                </div>
-                <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}">
-                    ${statusText}
-                </div>
-            </div>
-            
-            <div class="match-content">
-                ${gameType === 'cs2' ? `
-                    <!-- CS2 - 2 drużyny -->
-                    <div class="match-teams">
-                        <div class="team ${angelkacsInTeam1 ? 'team-left' : ''}">
-                            <div class="team-logo">${getTeamLogo(match.team1)}</div>
-                            <div class="team-name">${match.team1.name}</div>
-                        </div>
-                        
-                        <div class="match-vs">
-                            <div class="vs-text">vs</div>
-                            <div class="match-score">${getMatchScore(match)}</div>
-                        </div>
-                        
-                        <div class="team ${angelkacsInTeam2 ? 'team-right' : ''}">
-                            <div class="team-logo">${getTeamLogo(match.team2)}</div>
-                            <div class="team-name">${match.team2.name}</div>
-                        </div>
+        // Wynik meczu
+        const score = getMatchScore(match);
+        
+        if (gameType === 'cs2') {
+            // Dla CS2 - 2 drużyny obok siebie
+            matchItem.innerHTML = `
+                <div class="match-header">
+                    <div class="match-date">
+                        <i class="far fa-calendar-alt"></i>
+                        ${match.date}
                     </div>
-                ` : `
-                    <!-- Fortnite - 1 drużyna -->
-                    <div class="match-teams">
-                        <div class="team team-left">
-                            <div class="team-logo">${getTeamLogo(match.team1)}</div>
-                            <div class="team-name">${match.team1.name}</div>
-                        </div>
+                    <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}">
+                        ${statusText}
                     </div>
-                `}
+                </div>
                 
-                ${(playersTeam1.length > 0 || (playersTeam2 && playersTeam2.length > 0)) ? `
-                    <div class="match-players">
-                        <button class="players-toggle" onclick="togglePlayers(this)">
-                            <span>Pokaż graczy</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="players-container">
-                            <div class="players-list">
-                                ${playersTeam1.map(player => `
-                                    <div class="player ${player.isAngelkacs ? 'angelkacs' : ''}">
-                                        <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
-                                        <span class="player-name">${player.name}</span>
-                                    </div>
-                                `).join('')}
-                                
-                                ${playersTeam2 && playersTeam2.length > 0 ? 
-                                    playersTeam2.map(player => `
-                                        <div class="player ${player.isAngelkacs ? 'angelkacs' : ''}">
-                                            <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
-                                            <span class="player-name">${player.name}</span>
-                                        </div>
-                                    `).join('') : ''
-                                }
+                <div class="match-content">
+                    <div class="match-teams cs2">
+                        <!-- Lewa drużyna -->
+                        <div class="team-column">
+                            <div class="team-header">
+                                <div class="team-logo">${getTeamLogo(match.team1)}</div>
+                                <div class="team-name">${match.team1.name}</div>
+                                ${match.score ? `<div class="team-score">${match.score.team1 || '0'}</div>` : ''}
                             </div>
+                            
+                            ${playersTeam1.length > 0 ? `
+                                <div class="team-players">
+                                    <div class="players-title">Gracze</div>
+                                    <div class="players-list">
+                                        ${playersTeam1.map(player => `
+                                            <div class="player-item ${player.isAngelkacs ? 'angelkacs' : ''}">
+                                                <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
+                                                <span class="player-name">${player.name}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <!-- Środek - VS i wynik -->
+                        <div class="vs-column">
+                            <div class="vs-text">vs</div>
+                            <div class="match-score">${score}</div>
+                        </div>
+                        
+                        <!-- Prawa drużyna -->
+                        ${match.team2 ? `
+                            <div class="team-column">
+                                <div class="team-header">
+                                    <div class="team-logo">${getTeamLogo(match.team2)}</div>
+                                    <div class="team-name">${match.team2.name}</div>
+                                    ${match.score ? `<div class="team-score">${match.score.team2 || '0'}</div>` : ''}
+                                </div>
+                                
+                                ${playersTeam2 && playersTeam2.length > 0 ? `
+                                    <div class="team-players">
+                                        <div class="players-title">Gracze</div>
+                                        <div class="players-list">
+                                            ${playersTeam2.map(player => `
+                                                <div class="player-item ${player.isAngelkacs ? 'angelkacs' : ''}">
+                                                    <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
+                                                    <span class="player-name">${player.name}</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${match.link ? `
+                        <button class="lobby-btn" onclick="window.open('${match.link}', '_blank')">
+                            <i class="fas fa-external-link-alt"></i>
+                            ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły meczu'}
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+        } else {
+            // Dla Fortnite - 1 drużyna na środku
+            const fortniteScore = match.score ? (match.score.team1 || '0') : '0';
+            
+            matchItem.innerHTML = `
+                <div class="match-header">
+                    <div class="match-date">
+                        <i class="far fa-calendar-alt"></i>
+                        ${match.date}
+                    </div>
+                    <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}">
+                        ${statusText}
+                    </div>
+                </div>
+                
+                <div class="match-content">
+                    <div class="match-teams fortnite">
+                        <div class="fortnite-team">
+                            <div class="team-header">
+                                <div class="team-logo">${getTeamLogo(match.team1)}</div>
+                                <div class="team-name">${match.team1.name}</div>
+                                <div class="fortnite-score">${fortniteScore} punktów</div>
+                            </div>
+                            
+                            ${playersTeam1.length > 0 ? `
+                                <div class="fortnite-players">
+                                    <div class="players-title">Gracze</div>
+                                    <div class="players-list">
+                                        ${playersTeam1.map(player => `
+                                            <div class="player-item ${player.isAngelkacs ? 'angelkacs' : ''}">
+                                                <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
+                                                <span class="player-name">${player.name}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
-                ` : ''}
-                
-                <!-- Przycisk Zobacz Lobby -->
-                <button class="lobby-btn" onclick="window.open('${match.link}', '_blank')">
-                    <i class="fas fa-external-link-alt"></i>
-                    ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły meczu'}
-                </button>
-            </div>
-        `;
+                    
+                    ${match.link ? `
+                        <button class="lobby-btn" onclick="window.open('${match.link}', '_blank')">
+                            <i class="fas fa-external-link-alt"></i>
+                            ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły meczu'}
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+        }
         
         matchesList.appendChild(matchItem);
     });
-}
-
-// Przełącz widoczność graczy
-function togglePlayers(button) {
-    const container = button.nextElementSibling;
-    button.classList.toggle('active');
-    container.classList.toggle('show');
 }
 
 // Zamknij modal

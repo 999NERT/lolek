@@ -3,59 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angelkacs - Mecze i Turnieje</title>
+    <title>Angelkacs - Turnieje</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Ekran ładowania -->
     <div class="loading" id="loading">
-        <div class="loading-content">
-            <div class="loading-icon">
-                <i class="fas fa-gamepad"></i>
-            </div>
-            <p>Ładowanie turniejów...</p>
+        <div class="loading-icon">
+            <i class="fas fa-gamepad"></i>
         </div>
+        <p>Ładowanie turniejów...</p>
     </div>
 
-    <!-- Główna strona -->
+    <!-- Główna aplikacja -->
     <div class="app" id="app" style="display: none;">
         <!-- Nagłówek -->
         <header class="header">
-            <div class="header-container">
+            <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-crosshairs"></i>
-                    <h1>Angelkacs</h1>
+                    <h1>Turnieje</h1>
                 </div>
-                <div class="header-subtitle">Turnieje & Mecze</div>
+                <div class="header-info">
+                    <div class="tournament-counter" id="tournamentCounter">
+                        <i class="fas fa-trophy"></i>
+                        <span id="tournamentCount">0</span> turniejów
+                    </div>
+                </div>
             </div>
         </header>
 
         <!-- Filtry -->
         <div class="filters">
-            <div class="filter-group">
-                <div class="filter-label">
+            <div class="filter-section">
+                <div class="filter-title">
                     <i class="fas fa-gamepad"></i>
-                    <span>Gra:</span>
+                    <span>Gra</span>
                 </div>
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-filter="all">
-                        Wszystkie
+                        <span>Wszystkie</span>
                     </button>
                     <button class="filter-btn" data-filter="cs2">
-                        <i class="fas fa-crosshairs"></i> CS2
+                        <i class="fas fa-crosshairs"></i>
+                        <span>CS2</span>
                     </button>
                     <button class="filter-btn" data-filter="fortnite">
-                        <i class="fas fa-parachute-box"></i> Fortnite
+                        <i class="fas fa-parachute-box"></i>
+                        <span>Fortnite</span>
                     </button>
                 </div>
             </div>
 
-            <div class="filter-group">
-                <div class="filter-label">
+            <div class="filter-section">
+                <div class="filter-title">
                     <i class="fas fa-clock"></i>
-                    <span>Status:</span>
+                    <span>Status</span>
                 </div>
                 <div class="filter-buttons">
                     <button class="status-btn active" data-status="all">Wszystkie</button>
@@ -68,13 +73,15 @@
 
         <!-- Lista turniejów -->
         <main class="main">
-            <div class="tournaments-section">
-                <div class="section-header">
-                    <h2>
-                        <i class="fas fa-trophy"></i>
-                        Turnieje
-                    </h2>
-                    <div class="tournament-count" id="tournamentCount">0 turniejów</div>
+            <div class="tournaments-container">
+                <div class="section-title">
+                    <h2>Turnieje</h2>
+                    <div class="section-actions">
+                        <button class="refresh-btn" id="refreshBtn">
+                            <i class="fas fa-redo"></i>
+                            Odśwież
+                        </button>
+                    </div>
                 </div>
 
                 <div class="tournaments-grid" id="tournamentsGrid">
@@ -82,10 +89,14 @@
                 </div>
 
                 <div class="empty-state" id="emptyState" style="display: none;">
-                    <i class="fas fa-search"></i>
-                    <h3>Nie znaleziono turniejów</h3>
-                    <p>Brak turniejów spełniających wybrane kryteria</p>
-                    <button class="reset-btn" id="resetFilters">Wyczyść filtry</button>
+                    <div class="empty-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Brak turniejów</h3>
+                    <p>Nie znaleziono turniejów spełniających kryteria</p>
+                    <button class="reset-btn" id="resetFilters">
+                        Wyczyść filtry
+                    </button>
                 </div>
             </div>
         </main>
@@ -95,19 +106,15 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Angelkacs</h4>
-                    <p>Strona meczów i turniejów</p>
+                    <p>System turniejów esportowych</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Gry</h4>
-                    <p>CS2 • Fortnite</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Kontakt</h4>
-                    <p>angelkacs@esport.com</p>
+                    <p>Turnieje przechowywane w plikach JSON</p>
+                    <p class="footer-small">Edytuj turnieje w folderze /tournaments</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> Angelkacs</p>
+                <p>&copy; <span id="currentYear"></span> | Pliki JSON</p>
             </div>
         </footer>
     </div>
@@ -115,10 +122,12 @@
     <!-- Modal z meczami -->
     <div class="modal-overlay" id="modalOverlay" style="display: none;"></div>
     <div class="modal" id="matchModal" style="display: none;">
+        <div class="modal-close" id="modalClose">
+            <i class="fas fa-times"></i>
+        </div>
+
         <div class="modal-header">
-            <button class="modal-close" id="modalClose">
-                <i class="fas fa-times"></i>
-            </button>
+            <div class="modal-game-icon" id="modalGameIcon"></div>
             <div class="modal-title">
                 <h2 id="modalTournamentName"></h2>
                 <div class="modal-subtitle">

@@ -3,83 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angelkacs - Turnieje Esportowe</title>
+    <title>Turnieje Esportowe - Angelkacs</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Loading screen -->
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-spinner">
-                <div class="spinner-inner"></div>
-            </div>
-            <h2>Ładowanie turniejów</h2>
-            <p>Proszę czekać...</p>
-        </div>
+    <!-- Ekran ładowania -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <p>Ładowanie danych...</p>
     </div>
 
-    <!-- Main container -->
-    <div class="container">
-        <!-- Navigation -->
-        <nav class="navbar">
-            <div class="nav-brand">
-                <div class="logo">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Angelkacs</span>
+    <!-- Kontener główny -->
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Nagłówek -->
+        <header class="header">
+            <div class="header-content">
+                <div class="site-title">
+                    <h1><i class="fas fa-trophy"></i> Turnieje Esportowe</h1>
+                    <p class="subtitle">CS2 & Fortnite - Najnowsze rozgrywki</p>
                 </div>
-                <div class="game-badges">
-                    <span class="game-badge cs2">CS2</span>
-                    <span class="game-badge fortnite">Fortnite</span>
+                
+                <div class="game-selector">
+                    <div class="game-filter">
+                        <button class="game-btn active" data-game="all">
+                            <i class="fas fa-layer-group"></i> Wszystkie
+                        </button>
+                        <button class="game-btn" data-game="cs2">
+                            <i class="fas fa-crosshairs"></i> CS2
+                        </button>
+                        <button class="game-btn" data-game="fortnite">
+                            <i class="fas fa-parachute-box"></i> Fortnite
+                        </button>
+                    </div>
                 </div>
             </div>
             
-            <div class="nav-controls">
-                <div class="search-box">
+            <div class="header-controls">
+                <div class="search-container">
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Wyszukaj turniej...">
                 </div>
                 
-                <div class="filter-tabs">
-                    <button class="filter-tab active" data-filter="all">
-                        <i class="fas fa-layer-group"></i> Wszystkie
-                    </button>
-                    <button class="filter-tab" data-filter="cs2">
-                        <i class="fas fa-crosshairs"></i> CS2
-                    </button>
-                    <button class="filter-tab" data-filter="fortnite">
-                        <i class="fas fa-parachute-box"></i> Fortnite
-                    </button>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main content -->
-        <main class="main-content">
-            <!-- Welcome banner -->
-            <div class="welcome-banner">
-                <div class="welcome-text">
-                    <h1><span class="gradient-text">Turnieje Esportowe</span></h1>
-                    <p>Śledź najnowsze turnieje CS2 i Fortnite w jednym miejscu</p>
-                </div>
-                <div class="stats">
-                    <div class="stat-item">
-                        <i class="fas fa-trophy"></i>
-                        <span id="totalTournaments">0</span>
-                        <small>Turniejów</small>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-gamepad"></i>
-                        <span id="totalMatches">0</span>
-                        <small>Meczów</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tournaments grid -->
-            <div class="tournaments-header">
-                <h2><i class="fas fa-chess-board"></i> Dostępne turnieje</h2>
                 <div class="status-filter">
                     <button class="status-btn active" data-status="all">Wszystkie</button>
                     <button class="status-btn" data-status="upcoming">Nadchodzące</button>
@@ -87,140 +52,147 @@
                     <button class="status-btn" data-status="finished">Zakończone</button>
                 </div>
             </div>
+        </header>
 
-            <div class="tournaments-grid" id="tournamentsGrid">
-                <!-- Tournaments loaded dynamically -->
+        <!-- Statystyki -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number" id="tournamentCount">0</span>
+                <span class="stat-label">Turnieje</span>
             </div>
+            <div class="stat-item">
+                <span class="stat-number" id="matchCount">0</span>
+                <span class="stat-label">Mecze</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="cs2Count">0</span>
+                <span class="stat-label">CS2</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="fortniteCount">0</span>
+                <span class="stat-label">Fortnite</span>
+            </div>
+        </div>
 
-            <!-- No results message -->
-            <div class="no-results" id="noResults" style="display: none;">
-                <div class="no-results-icon">
-                    <i class="fas fa-search"></i>
+        <!-- Główna zawartość -->
+        <main class="main-content">
+            <!-- Lista turniejów -->
+            <div class="tournaments-section">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i> Dostępne turnieje
+                    <span class="section-subtitle" id="filterInfo">Wszystkie gry • Wszystkie statusy</span>
+                </h2>
+                
+                <div class="tournaments-grid" id="tournamentsGrid">
+                    <!-- Turnieje będą ładowane tutaj -->
                 </div>
-                <h3>Brak turniejów</h3>
-                <p>Spróbuj zmienić filtr lub kryteria wyszukiwania</p>
-            </div>
-
-            <!-- Info section -->
-            <div class="info-section">
-                <div class="info-card">
-                    <i class="fas fa-download"></i>
-                    <h3>Dodaj nowy turniej</h3>
-                    <p>Stwórz nowy plik JSON według wzoru dla CS2 lub Fortnite</p>
-                    <div class="info-buttons">
-                        <a href="templates/cs2-template.json" target="_blank" class="template-btn cs2-btn">
-                            <i class="fas fa-file-code"></i> Wzór CS2
-                        </a>
-                        <a href="templates/fortnite-template.json" target="_blank" class="template-btn fortnite-btn">
-                            <i class="fas fa-file-code"></i> Wzór Fortnite
-                        </a>
+                
+                <div class="no-results" id="noResults" style="display: none;">
+                    <div class="no-results-icon">
+                        <i class="fas fa-search"></i>
                     </div>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-list"></i>
-                    <h3>Lista turniejów</h3>
-                    <p>Dodaj nazwę pliku do tournament-list.json aby pojawił się na stronie</p>
-                    <a href="tournament-list.json" target="_blank" class="view-list-btn">
-                        <i class="fas fa-eye"></i> Zobacz listę
-                    </a>
+                    <h3>Nie znaleziono turniejów</h3>
+                    <p>Spróbuj zmienić filtr lub wyszukiwanie</p>
                 </div>
             </div>
         </main>
 
-        <!-- Footer -->
+        <!-- Stopka -->
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>Angelkacs Turnieje</h4>
+                    <h4><i class="fas fa-gamepad"></i> Angelkacs Turnieje</h4>
                     <p>Platforma turniejów esportowych CS2 i Fortnite</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-twitch"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                    </div>
                 </div>
                 <div class="footer-section">
-                    <h4>Gry</h4>
-                    <ul>
-                        <li><i class="fas fa-crosshairs"></i> Counter-Strike 2</li>
-                        <li><i class="fas fa-parachute-box"></i> Fortnite</li>
-                    </ul>
+                    <h4><i class="fas fa-info-circle"></i> Informacje</h4>
+                    <p>Wszystkie dane pobierane z plików JSON</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Dokumentacja</h4>
-                    <ul>
-                        <li><a href="templates/cs2-template.json" target="_blank"><i class="fas fa-file-alt"></i> Wzór CS2</a></li>
-                        <li><a href="templates/fortnite-template.json" target="_blank"><i class="fas fa-file-alt"></i> Wzór Fortnite</a></li>
-                        <li><a href="tournament-list.json" target="_blank"><i class="fas fa-list"></i> Lista turniejów</a></li>
-                    </ul>
+                    <h4><i class="fas fa-calendar"></i> Aktualizacje</h4>
+                    <p>Dane aktualizowane automatycznie</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> Angelkacs Turnieje. Wszystkie dane w plikach JSON.</p>
-                <p class="version">v1.0.0</p>
+                <p>&copy; <span id="currentYear"></span> Angelkacs Turnieje</p>
             </div>
         </footer>
     </div>
 
-    <!-- Tournament details modal -->
-    <div id="tournamentModal" class="modal">
+    <!-- Modal turnieju -->
+    <div class="modal" id="tournamentModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <button id="closeModal" class="close-modal">&times;</button>
-                <div class="modal-game-badge" id="modalGameBadge"></div>
-                <h2 id="modalTournamentName"></h2>
-                <div class="modal-subtitle">
-                    <span id="modalTournamentDate"></span>
-                    <span class="modal-status" id="modalStatus"></span>
+                <button class="modal-close" id="modalClose">&times;</button>
+                <div class="modal-title-section">
+                    <div class="modal-game-badge" id="modalGameBadge"></div>
+                    <h2 id="modalTournamentName"></h2>
+                    <div class="modal-subtitle">
+                        <span id="modalTournamentDate"></span>
+                        <span class="modal-status" id="modalStatus"></span>
+                    </div>
                 </div>
             </div>
             
             <div class="modal-body">
-                <!-- Tournament details -->
-                <div class="tournament-info-grid">
-                    <div class="info-item">
-                        <i class="fas fa-user-tie"></i>
-                        <div>
-                            <span class="info-label">Organizator</span>
-                            <span class="info-value" id="infoOrganizer"></span>
+                <!-- Szczegóły turnieju -->
+                <div class="tournament-details-grid">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Organizator</span>
+                            <span class="detail-value" id="detailOrganizer"></span>
                         </div>
                     </div>
-                    <div class="info-item">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <span class="info-label">Format</span>
-                            <span class="info-value" id="infoFormat"></span>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Format</span>
+                            <span class="detail-value" id="detailFormat"></span>
                         </div>
                     </div>
-                    <div class="info-item">
-                        <i class="fas fa-flag"></i>
-                        <div>
-                            <span class="info-label">Drużyny</span>
-                            <span class="info-value" id="infoTeams"></span>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Drużyny</span>
+                            <span class="detail-value" id="detailTeams"></span>
                         </div>
                     </div>
-                    <div class="info-item prize-item">
-                        <i class="fas fa-trophy"></i>
-                        <div>
-                            <span class="info-label">Pula nagród</span>
-                            <span class="info-value" id="infoPrize"></span>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Pula nagród</span>
+                            <span class="detail-value" id="detailPrize"></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Matches section -->
+                <!-- Lista meczów -->
                 <div class="matches-section">
-                    <h3><i class="fas fa-gamepad"></i> Mecze turnieju</h3>
-                    <div class="matches-container" id="matchesContainer">
-                        <!-- Matches loaded dynamically -->
+                    <h3 class="matches-title">
+                        <i class="fas fa-gamepad"></i> Mecze turnieju
+                        <span class="matches-count" id="modalMatchesCount">0 meczów</span>
+                    </h3>
+                    
+                    <div class="matches-list" id="modalMatchesList">
+                        <!-- Mecze będą ładowane tutaj -->
                     </div>
-                </div>
-
-                <!-- Players section (if available) -->
-                <div class="players-section" id="playersSection" style="display: none;">
-                    <h3><i class="fas fa-user-friends"></i> Gracze</h3>
-                    <div class="players-container" id="playersContainer">
-                        <!-- Players loaded dynamically -->
+                    
+                    <div class="no-matches" id="modalNoMatches" style="display: none;">
+                        <i class="fas fa-gamepad"></i>
+                        <p>Brak meczów w tym turnieju</p>
                     </div>
                 </div>
             </div>

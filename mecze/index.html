@@ -1,710 +1,87 @@
-/* Reset i podstawy */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0a0a0a;
-    color: #ffffff;
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
-}
-
-/* Widoki */
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Nagłówek */
-.header {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #8a2be2;
-}
-
-.logo {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo h1 {
-    font-size: 2.5rem;
-    color: #ffffff;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-.logo h1 i {
-    color: #8a2be2;
-}
-
-.subtitle {
-    font-size: 1.1rem;
-    color: #bbbbbb;
-}
-
-/* Filtry */
-.filters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 10px 20px;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border: 2px solid #333;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-    border-color: #8a2be2;
-    color: #8a2be2;
-}
-
-.filter-btn.active {
-    background-color: #8a2be2;
-    border-color: #8a2be2;
-    color: white;
-}
-
-.search-box {
-    display: flex;
-    align-items: center;
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 25px;
-    padding: 10px 20px;
-    min-width: 300px;
-}
-
-.search-box i {
-    color: #8a2be2;
-    margin-right: 10px;
-}
-
-.search-box input {
-    background: transparent;
-    border: none;
-    color: white;
-    width: 100%;
-    font-size: 16px;
-    outline: none;
-}
-
-/* Siatka turniejów */
-.tournaments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 25px;
-    margin-bottom: 50px;
-}
-
-.tournament-card {
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 12px;
-    padding: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.tournament-card:hover {
-    border-color: #8a2be2;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2);
-}
-
-.tournament-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: #8a2be2;
-}
-
-.tournament-status {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 6px 15px;
-    border-radius: 15px;
-    font-weight: 700;
-    font-size: 0.8rem;
-}
-
-.status-upcoming {
-    background-color: rgba(138, 43, 226, 0.2);
-    color: #8a2be2;
-    border: 1px solid #8a2be2;
-}
-
-.status-active {
-    background-color: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
-    border: 1px solid #dc3545;
-    animation: pulse 2s infinite;
-}
-
-.status-finished {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #28a745;
-    border: 1px solid #28a745;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-.tournament-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 10px;
-    padding-right: 100px;
-}
-
-.tournament-date {
-    color: #8a2be2;
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.tournament-date i {
-    font-size: 1rem;
-}
-
-.tournament-details-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.detail-label {
-    font-size: 0.85rem;
-    color: #bbbbbb;
-}
-
-.detail-value {
-    font-size: 1rem;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-.tournament-matches-count {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #333;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #8a2be2;
-    font-weight: 600;
-}
-
-/* Widok meczów */
-.back-button {
-    background-color: transparent;
-    color: #8a2be2;
-    border: 2px solid #8a2be2;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.back-button:hover {
-    background-color: #8a2be2;
-    color: white;
-}
-
-.tournament-header-info {
-    margin-bottom: 30px;
-}
-
-.tournament-header-info h1 {
-    font-size: 2.2rem;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.tournament-subtitle {
-    font-size: 1.2rem;
-    color: #8a2be2;
-    font-weight: 600;
-}
-
-/* Szczegóły turnieju */
-.matches-content {
-    margin-top: 30px;
-}
-
-.tournament-details {
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 40px;
-}
-
-.tournament-details-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.tournament-details-left {
-    flex: 1;
-}
-
-.tournament-details-right {
-    background-color: #0a0a0a;
-    border: 2px solid #8a2be2;
-    border-radius: 12px;
-    padding: 20px;
-    min-width: 200px;
-    text-align: center;
-}
-
-.tournament-prize {
-    font-size: 1.8rem;
-    color: #ffffff;
-    font-weight: 700;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.tournament-prize i {
-    color: #8a2be2;
-    font-size: 2rem;
-}
-
-.tournament-prize-label {
-    font-size: 0.9rem;
-    color: #bbbbbb;
-}
-
-.tournament-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.tournament-info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.tournament-info-label {
-    font-size: 0.9rem;
-    color: #bbbbbb;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.tournament-info-label i {
-    color: #8a2be2;
-    font-size: 1rem;
-}
-
-.tournament-info-value {
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-/* Lista meczów */
-.matches-section {
-    margin-top: 40px;
-}
-
-.section-title {
-    font-size: 1.8rem;
-    color: #ffffff;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.section-title i {
-    color: #8a2be2;
-}
-
-.matches-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.match-item {
-    background-color: #1a1a1a;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid #333;
-    transition: all 0.3s ease;
-}
-
-.match-item:hover {
-    border-color: #8a2be2;
-}
-
-.match-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: rgba(10, 10, 10, 0.8);
-    border-bottom: 1px solid #333;
-}
-
-.match-date {
-    font-size: 1rem;
-    color: #8a2be2;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.match-status {
-    padding: 6px 15px;
-    border-radius: 15px;
-    font-weight: 700;
-    font-size: 0.85rem;
-}
-
-.match-cancelled {
-    background-color: rgba(108, 117, 125, 0.2);
-    color: #6c757d;
-    border: 1px solid #6c757d;
-}
-
-.match-finished {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #28a745;
-    border: 1px solid #28a745;
-}
-
-.match-upcoming {
-    background-color: rgba(138, 43, 226, 0.2);
-    color: #8a2be2;
-    border: 1px solid #8a2be2;
-}
-
-.match-live {
-    background-color: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
-    border: 1px solid #dc3545;
-    animation: pulse 2s infinite;
-}
-
-.match-content {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    gap: 30px;
-}
-
-.team {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.team-left {
-    justify-content: flex-end;
-}
-
-.team-logo {
-    width: 50px;
-    height: 50px;
-    background-color: #333;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: #8a2be2;
-    font-weight: 700;
-}
-
-.team-name {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.team-score {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #ffffff;
-    min-width: 40px;
-    text-align: center;
-}
-
-.match-vs {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #8a2be2;
-    padding: 0 20px;
-}
-
-.match-footer {
-    padding: 15px 20px;
-    background-color: rgba(10, 10, 10, 0.8);
-    border-top: 1px solid #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.match-tournament {
-    font-size: 1rem;
-    color: #bbbbbb;
-    font-weight: 600;
-}
-
-.match-link {
-    color: #8a2be2;
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.3s ease;
-}
-
-.match-link:hover {
-    color: #a855f7;
-    text-decoration: underline;
-}
-
-/* Stopka */
-.footer {
-    margin-top: 60px;
-    padding-top: 30px;
-    border-top: 2px solid #333;
-    text-align: center;
-}
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.footer p {
-    color: #bbbbbb;
-    font-size: 1rem;
-}
-
-.back-link {
-    color: #8a2be2;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.3s ease;
-}
-
-.back-link:hover {
-    color: #a855f7;
-    text-decoration: underline;
-}
-
-/* Link do edycji */
-.edit-data-link {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 100;
-}
-
-.edit-btn {
-    background-color: #8a2be2;
-    color: white;
-    text-decoration: none;
-    padding: 12px 25px;
-    border-radius: 25px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
-}
-
-.edit-btn:hover {
-    background-color: #a855f7;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(138, 43, 226, 0.4);
-}
-
-/* Responsywność */
-@media (max-width: 768px) {
-    .app-container {
-        padding: 15px;
-    }
-    
-    .logo h1 {
-        font-size: 2rem;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .filters {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .search-box {
-        min-width: auto;
-    }
-    
-    .tournaments-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .tournament-header-info h1 {
-        font-size: 1.8rem;
-    }
-    
-    .tournament-details-header {
-        flex-direction: column;
-    }
-    
-    .tournament-details-right {
-        width: 100%;
-    }
-    
-    .match-content {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .team {
-        width: 100%;
-        justify-content: center !important;
-    }
-    
-    .team-left {
-        flex-direction: row-reverse;
-    }
-    
-    .match-vs {
-        margin: 10px 0;
-    }
-    
-    .match-footer {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .edit-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo h1 {
-        font-size: 1.6rem;
-    }
-    
-    .filter-buttons {
-        justify-content: center;
-    }
-    
-    .filter-btn {
-        padding: 8px 15px;
-        font-size: 0.8rem;
-    }
-    
-    .tournament-title {
-        font-size: 1.2rem;
-    }
-    
-    .tournament-details-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .tournament-info-grid {
-        grid-template-columns: 1fr;
-    }
-}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angelkacs - Turnieje</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Widok główny - lista turniejów -->
+        <div id="tournamentsView" class="view active">
+            <header class="header">
+                <div class="logo">
+                    <h1><i class="fas fa-trophy"></i> Angelkacs Turnieje</h1>
+                    <p class="subtitle">Wybierz turniej aby zobaczyć mecze</p>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Wszystkie</button>
+                        <button class="filter-btn" data-filter="upcoming">Nadchodzące</button>
+                        <button class="filter-btn" data-filter="active">Aktywne</button>
+                        <button class="filter-btn" data-filter="finished">Zakończone</button>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="tournamentSearch" placeholder="Szukaj turnieju...">
+                    </div>
+                </div>
+            </header>
+
+            <main class="tournaments-grid" id="tournamentsGrid">
+                <!-- Turnieje będą ładowane z JSON -->
+            </main>
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <p>Angelkacs Turnieje &copy; <span id="currentYear"></span></p>
+                    <a href="https://angelkacs.pl" class="back-link">
+                        <i class="fas fa-home"></i> Powrót na stronę główną
+                    </a>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Widok meczów turnieju -->
+        <div id="matchesView" class="view">
+            <header class="header">
+                <button id="backToTournaments" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Wróć do turniejów
+                </button>
+                <div class="tournament-header-info">
+                    <h1 id="tournamentTitle"></h1>
+                    <div class="tournament-subtitle" id="tournamentSubtitle"></div>
+                </div>
+            </header>
+
+            <main class="matches-content">
+                <div class="tournament-details" id="tournamentDetails">
+                    <!-- Szczegóły turnieju będą ładowane dynamicznie -->
+                </div>
+
+                <div class="matches-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-gamepad"></i> Mecze turnieju
+                    </h2>
+                    
+                    <div class="matches-list" id="matchesList">
+                        <!-- Mecze będą ładowane dynamicznie -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Link do edycji danych -->
+        <div class="edit-data-link">
+            <a href="data.json" target="_blank" class="edit-btn">
+                <i class="fas fa-edit"></i> Edytuj dane (data.json)
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

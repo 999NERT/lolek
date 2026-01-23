@@ -5,6 +5,7 @@ let tournaments = [];
 let filteredTournaments = [];
 let currentFilter = 'all';
 let currentStatus = 'all';
+let currentMatchPlayers = {};
 
 // Elementy DOM
 const loading = document.getElementById('loading');
@@ -447,12 +448,12 @@ function openMatchModal(tournamentId) {
     
     // Ustaw status
     let statusText = '';
-    let statusColor = '';
+    let statusColor = '#8C6EA8';
     
     switch(tournament.status) {
         case 'upcoming':
             statusText = 'NADCHODZĄCY';
-            statusColor = '#3b82f6';
+            statusColor = '#8C6EA8';
             break;
         case 'active':
             statusText = 'AKTYWNY';
@@ -467,6 +468,7 @@ function openMatchModal(tournamentId) {
     modalStatus.textContent = statusText;
     modalStatus.style.color = statusColor;
     modalStatus.style.borderColor = statusColor;
+    modalStatus.style.backgroundColor = statusColor + '15';
     
     // Wyświetl mecze
     if (matches.length === 0) {
@@ -486,14 +488,16 @@ function openMatchModal(tournamentId) {
 // Wyświetl mecze w modal
 function displayMatches(matches, gameType) {
     matchesList.innerHTML = '';
+    currentMatchPlayers = {};
     
     matches.forEach((match, index) => {
         const matchItem = document.createElement('div');
         matchItem.className = 'match-item';
+        matchItem.dataset.matchId = index;
         
         // Status meczu
         let statusText = '';
-        let statusColor = '';
+        let statusColor = '#8C6EA8';
         
         switch(match.status) {
             case 'cancelled':
@@ -506,7 +510,7 @@ function displayMatches(matches, gameType) {
                 break;
             case 'upcoming':
                 statusText = 'NADCHODZĄCY';
-                statusColor = '#3b82f6';
+                statusColor = '#8C6EA8';
                 break;
             case 'live':
                 statusText = 'NA ŻYWO';
@@ -518,143 +522,252 @@ function displayMatches(matches, gameType) {
         const playersTeam1 = match.playersTeam1 || [];
         const playersTeam2 = match.playersTeam2 || [];
         
-        // Sprawdź, w której drużynie jest Angelkacs
-        const angelkacsInTeam1 = playersTeam1.some(p => p.isAngelkacs);
-        const angelkacsInTeam2 = playersTeam2 && playersTeam2.some(p => p.isAngelkacs);
+        // Połącz wszystkich graczy
+        const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+        currentMatchPlayers[index] = allPlayers;
         
         // Wynik meczu
         const score = getMatchScore(match);
         
-        if (gameType === 'cs2') {
-            // Dla CS2 - 2 drużyny obok siebie
-            matchItem.innerHTML = `
-                <div class="match-header">
-                    <div class="match-date">
-                        <i class="far fa-calendar-alt"></i>
-                        ${match.date}
-                    </div>
-                    <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}">
-                        ${statusText}
-                    </div>
+        matchItem.innerHTML = `
+            <div class="match-header" onclick="toggleMatchDetails(${index})">
+                <div class="match-date">
+                    <i class="far fa-calendar-alt"></i>
+                    ${match.date}
                 </div>
-                
-                <div class="match-content">
-                    <div class="match-teams cs2">
-                        <!-- Lewa drużyna -->
-                        <div class="team-column">
-                            <div class="team-header">
-                                <div class="team-logo">${getTeamLogo(match.team1)}</div>
-                                <div class="team-name">${match.team1.name}</div>
-                                ${match.score ? `<div class="team-score">${match.score.team1 || '0'}</div>` : ''}
-                            </div>
-                            
-                            ${playersTeam1.length > 0 ? `
-                                <div class="team-players">
-                                    <div class="players-title">Gracze</div>
-                                    <div class="players-list">
-                                        ${playersTeam1.map(player => `
-                                            <div class="player-item ${player.isAngelkacs ? 'angelkacs' : ''}">
-                                                <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
-                                                <span class="player-name">${player.name}</span>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            ` : ''}
-                        </div>
-                        
-                        <!-- Środek - VS i wynik -->
-                        <div class="vs-column">
-                            <div class="vs-text">vs</div>
-                            <div class="match-score">${score}</div>
-                        </div>
-                        
-                        <!-- Prawa drużyna -->
-                        ${match.team2 ? `
-                            <div class="team-column">
-                                <div class="team-header">
-                                    <div class="team-logo">${getTeamLogo(match.team2)}</div>
-                                    <div class="team-name">${match.team2.name}</div>
-                                    ${match.score ? `<div class="team-score">${match.score.team2 || '0'}</div>` : ''}
-                                </div>
-                                
-                                ${playersTeam2 && playersTeam2.length > 0 ? `
-                                    <div class="team-players">
-                                        <div class="players-title">Gracze</div>
-                                        <div class="players-list">
-                                            ${playersTeam2.map(player => `
-                                                <div class="player-item ${player.isAngelkacs ? 'angelkacs' : ''}">
-                                                    <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
-                                                    <span class="player-name">${player.name}</span>
-                                                </div>
-                                            `).join('')}
-                                        </div>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        ` : ''}
-                    </div>
-                    
-                    ${match.link ? `
-                        <button class="lobby-btn" onclick="window.open('${match.link}', '_blank')">
-                            <i class="fas fa-external-link-alt"></i>
-                            ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły meczu'}
-                        </button>
-                    ` : ''}
+                <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}; background-color: ${statusColor}15">
+                    ${statusText}
                 </div>
-            `;
-        } else {
-            // Dla Fortnite - 1 drużyna na środku
-            const fortniteScore = match.score ? (match.score.team1 || '0') : '0';
+            </div>
             
-            matchItem.innerHTML = `
-                <div class="match-header">
-                    <div class="match-date">
-                        <i class="far fa-calendar-alt"></i>
-                        ${match.date}
-                    </div>
-                    <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}">
-                        ${statusText}
-                    </div>
-                </div>
-                
-                <div class="match-content">
-                    <div class="match-teams fortnite">
-                        <div class="fortnite-team">
-                            <div class="team-header">
-                                <div class="team-logo">${getTeamLogo(match.team1)}</div>
-                                <div class="team-name">${match.team1.name}</div>
-                                <div class="fortnite-score">${fortniteScore} punktów</div>
-                            </div>
-                            
-                            ${playersTeam1.length > 0 ? `
-                                <div class="fortnite-players">
-                                    <div class="players-title">Gracze</div>
-                                    <div class="players-list">
-                                        ${playersTeam1.map(player => `
-                                            <div class="player-item ${player.isAngelkacs ? 'angelkacs' : ''}">
-                                                <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
-                                                <span class="player-name">${player.name}</span>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            ` : ''}
-                        </div>
+            <div class="match-preview">
+                <div class="match-vs">
+                    <div class="team-preview">
+                        <div class="team-logo-small">${getTeamLogo(match.team1)}</div>
+                        <div class="team-name-small">${match.team1.name}</div>
                     </div>
                     
-                    ${match.link ? `
-                        <button class="lobby-btn" onclick="window.open('${match.link}', '_blank')">
-                            <i class="fas fa-external-link-alt"></i>
-                            ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły meczu'}
-                        </button>
+                    ${match.team2 ? `
+                        <div class="vs-text">vs</div>
+                        <div class="team-preview">
+                            <div class="team-logo-small">${getTeamLogo(match.team2)}</div>
+                            <div class="team-name-small">${match.team2.name}</div>
+                        </div>
                     ` : ''}
                 </div>
-            `;
-        }
+                
+                <div class="match-score-preview">${score}</div>
+                
+                <button class="toggle-players-btn" onclick="event.stopPropagation(); togglePlayers(${index})">
+                    <i class="fas fa-chevron-down"></i>
+                    Pokaż graczy
+                </button>
+            </div>
+            
+            <div class="players-section" id="playersSection${index}">
+                <!-- Gracze będą ładowani tutaj -->
+            </div>
+            
+            ${match.link ? `
+                <div class="match-actions">
+                    <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
+                        <i class="fas fa-external-link-alt"></i>
+                        ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
+                    </button>
+                </div>
+            ` : ''}
+        `;
         
         matchesList.appendChild(matchItem);
     });
+}
+
+// Rozwiń/zwiń szczegóły meczu
+function toggleMatchDetails(matchId) {
+    const matchItem = document.querySelector(`.match-item[data-match-id="${matchId}"]`);
+    const playersSection = document.getElementById(`playersSection${matchId}`);
+    
+    if (playersSection.classList.contains('expanded')) {
+        playersSection.classList.remove('expanded');
+        playersSection.innerHTML = '';
+    } else {
+        // Jeśli sekcja graczy jest już rozwinięta, pokaż graczy
+        if (currentMatchPlayers[matchId] && currentMatchPlayers[matchId].length > 0) {
+            displayPlayersSlider(matchId, currentMatchPlayers[matchId]);
+            playersSection.classList.add('expanded');
+        }
+    }
+}
+
+// Pokaż/ukryj graczy
+function togglePlayers(matchId) {
+    const playersSection = document.getElementById(`playersSection${matchId}`);
+    const toggleBtn = document.querySelector(`.match-item[data-match-id="${matchId}"] .toggle-players-btn`);
+    
+    if (playersSection.classList.contains('expanded')) {
+        playersSection.classList.remove('expanded');
+        playersSection.innerHTML = '';
+        toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
+        toggleBtn.classList.remove('active');
+    } else {
+        if (currentMatchPlayers[matchId] && currentMatchPlayers[matchId].length > 0) {
+            displayPlayersSlider(matchId, currentMatchPlayers[matchId]);
+            playersSection.classList.add('expanded');
+            toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
+            toggleBtn.classList.add('active');
+        }
+    }
+    
+    event.stopPropagation();
+}
+
+// Wyświetl suwak graczy
+function displayPlayersSlider(matchId, players) {
+    const playersSection = document.getElementById(`playersSection${matchId}`);
+    
+    // Oblicz ile slajdów potrzebujemy (5 graczy na slajd)
+    const playersPerSlide = 5;
+    const slideCount = Math.ceil(players.length / playersPerSlide);
+    
+    let slidesHTML = '';
+    let dotsHTML = '';
+    
+    for (let i = 0; i < slideCount; i++) {
+        const startIdx = i * playersPerSlide;
+        const endIdx = startIdx + playersPerSlide;
+        const slidePlayers = players.slice(startIdx, endIdx);
+        
+        slidesHTML += `
+            <div class="players-track" data-slide="${i}">
+                ${slidePlayers.map(player => `
+                    <div class="player-card ${player.isAngelkacs ? 'angelkacs' : ''}">
+                        <div class="player-icon">
+                            <i class="fas fa-user${player.isAngelkacs ? '-crown' : ''}"></i>
+                        </div>
+                        <div class="player-name">${player.name}</div>
+                        <div class="player-role">${player.isAngelkacs ? 'Główny' : 'Gracz'}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        dotsHTML += `<div class="slider-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${matchId}, ${i})"></div>`;
+    }
+    
+    playersSection.innerHTML = `
+        <div class="players-container">
+            <div class="players-header">
+                <div class="players-title">Gracze w meczu</div>
+                <div class="players-count">${players.length} graczy</div>
+            </div>
+            
+            <div class="players-slider">
+                <div class="slider-viewport" id="sliderViewport${matchId}">
+                    ${slidesHTML}
+                </div>
+                
+                ${slideCount > 1 ? `
+                    <div class="slider-controls">
+                        <button class="slider-btn" onclick="prevSlide(${matchId})" id="prevBtn${matchId}">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="slider-dots">
+                            ${dotsHTML}
+                        </div>
+                        
+                        <button class="slider-btn" onclick="nextSlide(${matchId})" id="nextBtn${matchId}">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+    
+    // Inicjalizuj slider
+    initSlider(matchId);
+}
+
+// Inicjalizuj slider
+function initSlider(matchId) {
+    const viewport = document.getElementById(`sliderViewport${matchId}`);
+    const tracks = viewport.querySelectorAll('.players-track');
+    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
+    
+    if (tracks.length > 0) {
+        tracks.forEach((track, index) => {
+            if (index === 0) {
+                track.style.transform = 'translateX(0)';
+            } else {
+                track.style.transform = 'translateX(100%)';
+            }
+        });
+    }
+}
+
+// Przejdź do poprzedniego slajdu
+function prevSlide(matchId) {
+    const viewport = document.getElementById(`sliderViewport${matchId}`);
+    const tracks = viewport.querySelectorAll('.players-track');
+    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
+    
+    let currentSlide = 0;
+    tracks.forEach((track, index) => {
+        if (track.style.transform === 'translateX(0px)' || track.style.transform === '') {
+            currentSlide = index;
+        }
+    });
+    
+    if (currentSlide > 0) {
+        tracks[currentSlide].style.transform = 'translateX(100%)';
+        tracks[currentSlide - 1].style.transform = 'translateX(0)';
+        
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentSlide - 1].classList.add('active');
+    }
+}
+
+// Przejdź do następnego slajdu
+function nextSlide(matchId) {
+    const viewport = document.getElementById(`sliderViewport${matchId}`);
+    const tracks = viewport.querySelectorAll('.players-track');
+    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
+    
+    let currentSlide = 0;
+    tracks.forEach((track, index) => {
+        if (track.style.transform === 'translateX(0px)' || track.style.transform === '') {
+            currentSlide = index;
+        }
+    });
+    
+    if (currentSlide < tracks.length - 1) {
+        tracks[currentSlide].style.transform = 'translateX(-100%)';
+        tracks[currentSlide + 1].style.transform = 'translateX(0)';
+        
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentSlide + 1].classList.add('active');
+    }
+}
+
+// Przejdź do konkretnego slajdu
+function goToSlide(matchId, slideIndex) {
+    const viewport = document.getElementById(`sliderViewport${matchId}`);
+    const tracks = viewport.querySelectorAll('.players-track');
+    const dots = viewport.parentElement.querySelectorAll('.slider-dot');
+    
+    tracks.forEach((track, index) => {
+        if (index === slideIndex) {
+            track.style.transform = 'translateX(0)';
+        } else if (index < slideIndex) {
+            track.style.transform = 'translateX(-100%)';
+        } else {
+            track.style.transform = 'translateX(100%)';
+        }
+    });
+    
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[slideIndex].classList.add('active');
 }
 
 // Zamknij modal
@@ -662,6 +775,19 @@ function closeModal() {
     matchModal.style.display = 'none';
     modalOverlay.style.display = 'none';
     document.body.style.overflow = 'auto';
+    
+    // Zresetuj wszystkie rozwinięte sekcje
+    const expandedSections = document.querySelectorAll('.players-section.expanded');
+    expandedSections.forEach(section => {
+        section.classList.remove('expanded');
+        section.innerHTML = '';
+    });
+    
+    const activeButtons = document.querySelectorAll('.toggle-players-btn.active');
+    activeButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
+    });
 }
 
 // Pomocnicze funkcje

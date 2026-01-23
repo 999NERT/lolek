@@ -3,96 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angelkacs - Turnieje</title>
+    <title>Angelkacs - Mecze</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Ekran ładowania -->
-    <div id="loading" class="loading-screen">
-        <div class="loader"></div>
-        <p>Ładowanie turniejów...</p>
-    </div>
-
-    <!-- Widok główny - lista turniejów -->
-    <div id="mainView" class="main-view">
+    <div class="container">
         <header class="header">
-            <div class="header-content">
-                <h1>Angelkacs Turnieje</h1>
-                <p>Najnowsze turnieje i zawody esportowe</p>
+            <div class="logo">
+                <h1><i class="fas fa-gamepad"></i> Angelkacs Mecze</h1>
+                <p class="subtitle">Najnowsze mecze i turnieje esportowe</p>
             </div>
             
-            <div class="filters">
-                <div class="filter-group">
+            <div class="controls">
+                <div class="filter-buttons">
                     <button class="filter-btn active" data-filter="all">Wszystkie</button>
                     <button class="filter-btn" data-filter="upcoming">Nadchodzące</button>
-                    <button class="filter-btn" data-filter="previous">Wcześniejsze</button>
-                </div>
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Szukaj turnieju...">
+                    <button class="filter-btn" data-filter="live">Na żywo</button>
+                    <button class="filter-btn" data-filter="finished">Zakończone</button>
+                    <button class="filter-btn" data-filter="cancelled">Anulowane</button>
                 </div>
             </div>
         </header>
 
-        <main class="tournaments-list" id="tournamentsList">
-            <!-- Turnieje będą wczytywane dynamicznie z JSON -->
+        <main class="content">
+            <!-- Sekcja z turniejem głównym -->
+            <section class="featured-tournament">
+                <div class="tournament-banner">
+                    <div class="banner-content">
+                        <h2 class="tournament-title" id="tournamentTitle"></h2>
+                        <div class="tournament-date" id="tournamentDate"></div>
+                        <div class="tournament-status" id="tournamentStatus"></div>
+                        <div class="tournament-details" id="tournamentDetails"></div>
+                    </div>
+                    <div class="tournament-prize">
+                        <i class="fas fa-trophy"></i>
+                        <span id="tournamentPrize"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lista meczów -->
+            <section class="matches-section">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i> Ostatnie mecze
+                </h2>
+                
+                <div class="matches-container" id="matchesContainer">
+                    <!-- Mecze będą ładowane z pliku JSON -->
+                </div>
+            </section>
         </main>
 
         <footer class="footer">
-            <p>Angelkacs Turnieje &copy; <span id="currentYear"></span></p>
-            <a href="https://angelkacs.pl" class="back-link">Powrót na główną</a>
+            <div class="footer-content">
+                <p>Angelkacs Mecze &copy; <span id="currentYear"></span></p>
+                <a href="https://angelkacs.pl" class="back-link">
+                    <i class="fas fa-home"></i> Powrót na stronę główną
+                </a>
+            </div>
+            <div class="json-link">
+                <a href="data.json" target="_blank" class="edit-json-btn">
+                    <i class="fas fa-edit"></i> Edytuj dane (data.json)
+                </a>
+            </div>
         </footer>
-    </div>
-
-    <!-- Widok szczegółów turnieju -->
-    <div id="detailView" class="detail-view hidden">
-        <div class="detail-container">
-            <button id="backBtn" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Powrót
-            </button>
-            
-            <div class="match-header">
-                <div class="match-info">
-                    <div class="match-title" id="detailTitle"></div>
-                    <div class="match-date" id="detailDate"></div>
-                    <div class="match-format" id="detailFormat"></div>
-                </div>
-                <div class="match-status" id="detailStatus"></div>
-            </div>
-
-            <div class="teams-container">
-                <div class="team team-left">
-                    <div class="team-name" id="team1Name"></div>
-                    <div class="team-score" id="team1Score"></div>
-                    <div class="team-logo">
-                        <i class="fas fa-users"></i>
-                    </div>
-                </div>
-                
-                <div class="vs">VS</div>
-                
-                <div class="team team-right">
-                    <div class="team-logo">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="team-score" id="team2Score"></div>
-                    <div class="team-name" id="team2Name"></div>
-                </div>
-            </div>
-
-            <div class="match-details">
-                <h3><i class="fas fa-info-circle"></i> Szczegóły</h3>
-                <div class="details-grid" id="detailsGrid"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Link do edycji danych JSON -->
-    <div class="edit-link">
-        <a href="data.json" target="_blank" class="edit-btn">
-            <i class="fas fa-edit"></i> Edytuj dane turniejów (data.json)
-        </a>
     </div>
 
     <script src="script.js"></script>

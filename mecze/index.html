@@ -3,60 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turnieje - Angelkacs</title>
+    <title>Angelkacs - Turnieje</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="main-header">
-            <div class="logo-container">
-                <h1><i class="fas fa-trophy"></i> Angelkacs Turnieje</h1>
-                <p class="subtitle">Najnowsze turnieje i zawody esportowe</p>
+    <!-- Ekran ładowania -->
+    <div id="loading" class="loading-screen">
+        <div class="loader"></div>
+        <p>Ładowanie turniejów...</p>
+    </div>
+
+    <!-- Widok główny - lista turniejów -->
+    <div id="mainView" class="main-view">
+        <header class="header">
+            <div class="header-content">
+                <h1>Angelkacs Turnieje</h1>
+                <p>Najnowsze turnieje i zawody esportowe</p>
             </div>
-            <div class="view-controls">
-                <button class="view-btn active" data-view="upcoming">
-                    <i class="fas fa-clock"></i> Nadchodzące i trwające
-                </button>
-                <button class="view-btn" data-view="previous">
-                    <i class="fas fa-history"></i> Wcześniejsze
-                </button>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Wszystkie</button>
+                    <button class="filter-btn" data-filter="upcoming">Nadchodzące</button>
+                    <button class="filter-btn" data-filter="previous">Wcześniejsze</button>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Szukaj turnieju...">
+                </div>
             </div>
         </header>
 
-        <main class="tournament-container">
-            <!-- Sekcja nadchodzących i trwających turniejów -->
-            <section class="tournament-section active" id="upcoming-section">
-                <h2 class="section-title">
-                    <i class="fas fa-bolt"></i> Nadchodzące i trwające
-                </h2>
-                
-                <!-- Turnieje będą wstawiane tutaj przez JavaScript -->
-            </section>
-
-            <!-- Sekcja wcześniejszych turniejów -->
-            <section class="tournament-section" id="previous-section">
-                <h2 class="section-title">
-                    <i class="fas fa-archive"></i> Wcześniejsze
-                </h2>
-                
-                <!-- Turnieje będą wstawiane tutaj przez JavaScript -->
-            </section>
+        <main class="tournaments-list" id="tournamentsList">
+            <!-- Turnieje będą wczytywane dynamicznie z JSON -->
         </main>
 
-        <footer class="main-footer">
-            <div class="footer-content">
-                <p>Angelkacs Turnieje &copy; <span id="currentYear"></span> | Wszelkie prawa zastrzeżone</p>
-                <p class="back-link">
-                    <a href="https://angelkacs.pl">
-                        <i class="fas fa-arrow-left"></i> Powrót na główną stronę
-                    </a>
-                </p>
-            </div>
+        <footer class="footer">
+            <p>Angelkacs Turnieje &copy; <span id="currentYear"></span></p>
+            <a href="https://angelkacs.pl" class="back-link">Powrót na główną</a>
         </footer>
+    </div>
+
+    <!-- Widok szczegółów turnieju -->
+    <div id="detailView" class="detail-view hidden">
+        <div class="detail-container">
+            <button id="backBtn" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Powrót
+            </button>
+            
+            <div class="match-header">
+                <div class="match-info">
+                    <div class="match-title" id="detailTitle"></div>
+                    <div class="match-date" id="detailDate"></div>
+                    <div class="match-format" id="detailFormat"></div>
+                </div>
+                <div class="match-status" id="detailStatus"></div>
+            </div>
+
+            <div class="teams-container">
+                <div class="team team-left">
+                    <div class="team-name" id="team1Name"></div>
+                    <div class="team-score" id="team1Score"></div>
+                    <div class="team-logo">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                
+                <div class="vs">VS</div>
+                
+                <div class="team team-right">
+                    <div class="team-logo">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="team-score" id="team2Score"></div>
+                    <div class="team-name" id="team2Name"></div>
+                </div>
+            </div>
+
+            <div class="match-details">
+                <h3><i class="fas fa-info-circle"></i> Szczegóły</h3>
+                <div class="details-grid" id="detailsGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link do edycji danych JSON -->
+    <div class="edit-link">
+        <a href="data.json" target="_blank" class="edit-btn">
+            <i class="fas fa-edit"></i> Edytuj dane turniejów (data.json)
+        </a>
     </div>
 
     <script src="script.js"></script>

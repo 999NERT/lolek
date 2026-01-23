@@ -1,0 +1,338 @@
+/* Reset i podstawowe style */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Nagłówek */
+header {
+    background: linear-gradient(135deg, #2c3e50, #1a2530);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header h1 i {
+    margin-right: 10px;
+    color: #3498db;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Kontrolki */
+.controls {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 30px;
+    padding: 10px 20px;
+    flex-grow: 1;
+    max-width: 400px;
+    border: 1px solid #e0e0e0;
+}
+
+.search-box i {
+    color: #7f8c8d;
+    margin-right: 10px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 1rem;
+    color: #333;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background-color: #ecf0f1;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #d5dbdb;
+}
+
+.filter-btn.active {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Kontener na mecze */
+.matches-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 2rem;
+}
+
+/* Pojedyncza tabelka meczów */
+.match-table {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.match-table:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.table-header {
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-header h3 {
+    font-size: 1.3rem;
+}
+
+.league-icon {
+    font-size: 1.5rem;
+}
+
+.table-date {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+}
+
+.match-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.match-row:last-child {
+    border-bottom: none;
+}
+
+.match-row:hover {
+    background-color: #f9f9f9;
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.team.home {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.team-logo {
+    width: 24px;
+    height: 24px;
+    margin: 0 10px;
+    background-color: #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.score {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.match-time {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.match-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.status-live {
+    background-color: #e74c3c;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+.status-finished {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.status-upcoming {
+    background-color: #f39c12;
+    color: white;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Przycisk ładowania więcej */
+.load-more-container {
+    text-align: center;
+    margin: 2rem 0 3rem;
+}
+
+.load-more-btn {
+    padding: 12px 30px;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.load-more-btn i {
+    margin-right: 8px;
+}
+
+.load-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Stopka */
+footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #5dade2;
+    text-decoration: underline;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .matches-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .match-row {
+        grid-template-columns: 1fr auto 1fr;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .match-row {
+        font-size: 0.9rem;
+    }
+    
+    .score {
+        font-size: 1rem;
+    }
+}

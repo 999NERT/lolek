@@ -1,4 +1,4 @@
-// System turniejów Angelkacs - Optymalizowany
+// System turniejów Angelkacs - Poprawiona wersja
 
 // Zmienne globalne
 let tournaments = [];
@@ -27,24 +27,16 @@ const modalStatus = document.getElementById('modalStatus');
 const matchesList = document.getElementById('matchesList');
 const noMatches = document.getElementById('noMatches');
 
-// Cache załadowanych danych
-const tournamentCache = new Map();
-
 // Inicjalizacja
 document.addEventListener('DOMContentLoaded', () => {
-    initApp();
-});
-
-// Inicjalizacja aplikacji
-function initApp() {
     // Ustaw aktualny rok
     document.getElementById('currentYear').textContent = new Date().getFullYear();
     
-    // Załaduj turnieje
-    loadTournaments();
-    
     // Konfiguruj event listeners
     setupEventListeners();
+    
+    // Załaduj turnieje
+    loadTournaments();
     
     // Ukryj ekran ładowania
     setTimeout(() => {
@@ -54,33 +46,48 @@ function initApp() {
             app.style.display = 'block';
         }, 300);
     }, 800);
-}
+});
 
-// Konfiguracja event listeners - zoptymalizowana
+// Konfiguracja event listeners
 function setupEventListeners() {
-    // Delegacja zdarzeń dla przycisków filtrów
-    document.addEventListener('click', (e) => {
-        // Filtry gier
-        if (e.target.closest('.filter-btn')) {
-            const button = e.target.closest('.filter-btn');
+    // Filtry gier
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFilter = button.dataset.filter;
             filterTournaments();
-        }
-        
-        // Filtry statusów
-        if (e.target.closest('.status-btn')) {
-            const button = e.target.closest('.status-btn');
+        });
+    });
+    
+    // Filtry statusów
+    statusButtons.forEach(button => {
+        button.addEventListener('click', () => {
             statusButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentStatus = button.dataset.status;
             filterTournaments();
-        }
-        
-        // Karty turniejów
-        if (e.target.closest('.tournament-card')) {
-            const tournamentCard = e.target.closest('.tournament-card');
+        });
+    });
+    
+    // Przycisk resetuj filtry
+    resetFiltersBtn.addEventListener('click', resetFilters);
+    
+    // Przycisk odśwież
+    refreshBtn.addEventListener('click', () => {
+        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
+        refreshBtn.disabled = true;
+        loadTournaments();
+        setTimeout(() => {
+            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Odśwież';
+            refreshBtn.disabled = false;
+        }, 1000);
+    });
+    
+    // Kliknięcie na kafelek turnieju
+    document.addEventListener('click', (e) => {
+        const tournamentCard = e.target.closest('.tournament-card');
+        if (tournamentCard) {
             const tournamentId = tournamentCard.dataset.id;
             openMatchModal(tournamentId);
         }
@@ -106,34 +113,12 @@ function setupEventListeners() {
         }
     });
     
-    // Przycisk resetuj filtry
-    resetFiltersBtn.addEventListener('click', resetFilters);
-    
-    // Przycisk odśwież
-    refreshBtn.addEventListener('click', handleRefresh);
-    
     // Zamknięcie modala klawiszem Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && matchModal.style.display === 'block') {
             closeModal();
         }
     });
-}
-
-// Obsługa odświeżania
-function handleRefresh() {
-    refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
-    refreshBtn.disabled = true;
-    
-    // Wyczyść cache
-    tournamentCache.clear();
-    
-    loadTournaments();
-    
-    setTimeout(() => {
-        refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Odśwież';
-        refreshBtn.disabled = false;
-    }, 1000);
 }
 
 // Resetuj wszystkie filtry
@@ -158,34 +143,29 @@ function resetFilters() {
     filterTournaments();
 }
 
-// Ładowanie turniejów z plików JSON - zoptymalizowane
+// Ładowanie turniejów z plików JSON
 async function loadTournaments() {
     try {
+        console.log('Ładowanie listy turniejów...');
+        
         // Najpierw ładuj listę plików turniejów
-        const listResponse = await fetch('tournament-list.json', {
-            cache: 'no-cache'
-        });
+        const listResponse = await fetch('tournament-list.json');
         
         if (!listResponse.ok) {
             throw new Error('Nie znaleziono pliku tournament-list.json');
         }
         
         const fileList = await listResponse.json();
+        console.log('Znaleziono pliki turniejów:', fileList.tournaments);
         
         // Ładuj każdy turniej z osobnego pliku
         tournaments = [];
         
         // Użyj Promise.all dla równoległego ładowania
         const tournamentPromises = fileList.tournaments.map(async (fileName) => {
-            // Sprawdź cache
-            if (tournamentCache.has(fileName)) {
-                return tournamentCache.get(fileName);
-            }
-            
             try {
-                const tournamentResponse = await fetch(`tournaments/${fileName}`, {
-                    cache: 'no-cache'
-                });
+                console.log(`Ładowanie: tournaments/${fileName}`);
+                const tournamentResponse = await fetch(`tournaments/${fileName}`);
                 
                 if (!tournamentResponse.ok) {
                     console.warn(`Nie znaleziono pliku: tournaments/${fileName}`);
@@ -196,8 +176,7 @@ async function loadTournaments() {
                 
                 // Sprawdź poprawność struktury danych
                 if (tournamentData.tournament && tournamentData.tournament.id) {
-                    // Zapisz w cache
-                    tournamentCache.set(fileName, tournamentData);
+                    console.log(`Załadowano: ${tournamentData.tournament.name}`);
                     return tournamentData;
                 } else {
                     console.warn(`Nieprawidłowa struktura pliku: ${fileName}`);
@@ -216,8 +195,11 @@ async function loadTournaments() {
         // Filtruj null wartości
         tournaments = tournamentResults.filter(t => t !== null);
         
+        console.log(`Załadowano ${tournaments.length} turniejów`);
+        
         // Jeśli brak turniejów, pokaż stan pusty
         if (tournaments.length === 0) {
+            console.log('Brak turniejów do wyświetlenia');
             showEmptyState();
             return;
         }
@@ -239,10 +221,8 @@ function showEmptyState() {
     tournamentCount.textContent = '0';
 }
 
-// Filtruj turnieje - zoptymalizowane
+// Filtruj turnieje
 function filterTournaments() {
-    const startTime = performance.now();
-    
     filteredTournaments = tournaments.filter(tournamentData => {
         const tournament = tournamentData.tournament;
         const game = tournament.game;
@@ -262,12 +242,9 @@ function filterTournaments() {
     });
     
     displayTournaments();
-    
-    const endTime = performance.now();
-    console.log(`Filtrowanie zajęło: ${(endTime - startTime).toFixed(2)}ms`);
 }
 
-// Wyświetl turnieje - zoptymalizowane
+// Wyświetl turnieje
 function displayTournaments() {
     // Użyj DocumentFragment dla lepszej wydajności
     const fragment = document.createDocumentFragment();
@@ -295,7 +272,7 @@ function displayTournaments() {
     tournamentsGrid.appendChild(fragment);
 }
 
-// Utwórz kartę turnieju - zoptymalizowane
+// Utwórz kartę turnieju
 function createTournamentCard(tournament, matches) {
     const card = document.createElement('div');
     card.className = 'tournament-card';
@@ -313,12 +290,12 @@ function createTournamentCard(tournament, matches) {
     card.innerHTML = `
         <div class="card-header">
             <div class="card-title-row">
-                <h3 class="card-title">${escapeHtml(tournament.name)}</h3>
+                <h3 class="card-title">${tournament.name}</h3>
                 <div class="card-game ${gameClass}">${gameIcon} ${tournament.game.toUpperCase()}</div>
             </div>
             <div class="card-date">
                 <i class="far fa-calendar-alt"></i>
-                ${escapeHtml(tournament.date)}
+                ${tournament.date}
             </div>
             <div class="card-status ${statusConfig.class}">${statusConfig.text}</div>
         </div>
@@ -327,22 +304,22 @@ function createTournamentCard(tournament, matches) {
             <div class="card-details">
                 <div class="detail-item">
                     <div class="detail-label">Organizator</div>
-                    <div class="detail-value">${escapeHtml(tournament.organizer)}</div>
+                    <div class="detail-value">${tournament.organizer}</div>
                 </div>
                 
                 <div class="detail-item">
                     <div class="detail-label">Format</div>
-                    <div class="detail-value">${escapeHtml(tournament.format)}</div>
+                    <div class="detail-value">${tournament.format}</div>
                 </div>
                 
                 <div class="detail-item">
                     <div class="detail-label">Drużyny/Gracze</div>
-                    <div class="detail-value">${escapeHtml(tournament.teams)}</div>
+                    <div class="detail-value">${tournament.teams}</div>
                 </div>
                 
                 <div class="detail-item">
                     <div class="detail-label">Pula nagród</div>
-                    <div class="detail-value">${escapeHtml(tournament.prize)}</div>
+                    <div class="detail-value">${tournament.prize}</div>
                 </div>
             </div>
         </div>
@@ -364,10 +341,15 @@ function createTournamentCard(tournament, matches) {
 // Otwórz modal z meczami
 function openMatchModal(tournamentId) {
     const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
-    if (!tournamentData) return;
+    if (!tournamentData) {
+        console.error(`Nie znaleziono turnieju o ID: ${tournamentId}`);
+        return;
+    }
     
     const tournament = tournamentData.tournament;
     const matches = tournamentData.matches || [];
+    
+    console.log(`Otwieranie modala dla turnieju: ${tournament.name}, mecze: ${matches.length}`);
     
     // Ustaw informacje o turnieju
     modalTournamentName.textContent = tournament.name;
@@ -394,9 +376,12 @@ function openMatchModal(tournamentId) {
     matchModal.style.display = 'block';
     modalOverlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
+    
+    // Zapisz ID turnieju w modal
+    matchModal.dataset.tournamentId = tournamentId;
 }
 
-// Wyświetl mecze w modal - zoptymalizowane
+// Wyświetl mecze w modal
 function displayMatches(matches, gameType) {
     // Użyj DocumentFragment
     const fragment = document.createDocumentFragment();
@@ -429,10 +414,10 @@ function createMatchItem(match, index, gameType) {
     const score = getMatchScore(match);
     
     matchItem.innerHTML = `
-        <div class="match-header" onclick="toggleMatchDetails(${index})">
+        <div class="match-header">
             <div class="match-date">
                 <i class="far fa-calendar-alt"></i>
-                ${escapeHtml(match.date)}
+                ${match.date}
             </div>
             <div class="match-status" style="color: ${statusConfig.color}; border-color: ${statusConfig.color}; background-color: ${statusConfig.bgColor}">
                 ${statusConfig.text}
@@ -443,13 +428,13 @@ function createMatchItem(match, index, gameType) {
             <div class="teams-container">
                 <div class="team-preview">
                     <div class="team-logo-large">${getTeamLogo(match.team1)}</div>
-                    <div class="team-name-large">${escapeHtml(match.team1.name)}</div>
+                    <div class="team-name-large">${match.team1.name}</div>
                 </div>
                 
                 ${match.team2 ? `
                     <div class="team-preview">
                         <div class="team-logo-large">${getTeamLogo(match.team2)}</div>
-                        <div class="team-name-large">${escapeHtml(match.team2.name)}</div>
+                        <div class="team-name-large">${match.team2.name}</div>
                     </div>
                 ` : ''}
             </div>
@@ -485,18 +470,6 @@ function createMatchItem(match, index, gameType) {
     return matchItem;
 }
 
-// Rozwiń/zwiń szczegóły meczu
-function toggleMatchDetails(matchId) {
-    const playersSection = document.getElementById(`playersSection${matchId}`);
-    
-    if (playersSection && playersSection.classList.contains('expanded')) {
-        playersSection.classList.remove('expanded');
-        setTimeout(() => {
-            playersSection.innerHTML = '';
-        }, 300);
-    }
-}
-
 // Pokaż/ukryj graczy
 function togglePlayers(matchId) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
@@ -505,6 +478,7 @@ function togglePlayers(matchId) {
     if (!playersSection) return;
     
     if (playersSection.classList.contains('expanded')) {
+        // Ukryj graczy
         playersSection.classList.remove('expanded');
         toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
         toggleBtn.classList.remove('active');
@@ -514,24 +488,20 @@ function togglePlayers(matchId) {
         }, 300);
     } else {
         // Znajdź dane meczu
-        const matchItem = document.querySelector(`.match-item[data-match-id="${matchId}"]`);
-        const tournamentId = matchItem.closest('.modal') ? 
-            document.querySelector('.modal').dataset.tournamentId : null;
+        const tournamentId = matchModal.dataset.tournamentId;
+        const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
         
-        if (tournamentId) {
-            const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
-            if (tournamentData && tournamentData.matches[matchId]) {
-                const match = tournamentData.matches[matchId];
-                const playersTeam1 = match.playersTeam1 || [];
-                const playersTeam2 = match.playersTeam2 || [];
-                const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
-                
-                if (allPlayers.length > 0) {
-                    displayAllPlayers(matchId, allPlayers, match.team1, match.team2);
-                    playersSection.classList.add('expanded');
-                    toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
-                    toggleBtn.classList.add('active');
-                }
+        if (tournamentData && tournamentData.matches[matchId]) {
+            const match = tournamentData.matches[matchId];
+            const playersTeam1 = match.playersTeam1 || [];
+            const playersTeam2 = match.playersTeam2 || [];
+            const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+            
+            if (allPlayers.length > 0) {
+                displayAllPlayers(matchId, allPlayers, match.team1, match.team2);
+                playersSection.classList.add('expanded');
+                toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
+                toggleBtn.classList.add('active');
             }
         }
     }
@@ -550,7 +520,7 @@ function displayAllPlayers(matchId, players, team1, team2) {
                 <div class="player-icon">
                     <i class="fas fa-user${isAngelkacs ? '-crown' : ''}"></i>
                 </div>
-                <div class="player-name">${escapeHtml(player.name)}</div>
+                <div class="player-name">${player.name}</div>
                 ${teamName ? `<div class="player-team">${teamName}</div>` : ''}
             </div>
         `;
@@ -588,7 +558,7 @@ function closeModal() {
     });
 }
 
-// Pomocnicze funkcje - zoptymalizowane
+// Pomocnicze funkcje
 function getTeamLogo(team) {
     if (!team) return '?';
     return team.logo || team.name.substring(0, 2).toUpperCase();
@@ -683,15 +653,15 @@ function getPlayerTeam(player, team1, team2) {
     if (team2 && team2.hasAngelkacs && player.isAngelkacs) {
         return team2.name;
     }
+    
+    // Dla zwykłych graczy - możesz dodać bardziej zaawansowaną logikę
+    // na podstawie danych z plików JSON
+    if (player.team) {
+        return player.team;
+    }
+    
     return '';
 }
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
 // Eksport funkcji do globalnego scope
-window.toggleMatchDetails = toggleMatchDetails;
 window.togglePlayers = togglePlayers;

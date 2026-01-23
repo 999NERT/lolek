@@ -3,50 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mecze - Angelkacs</title>
+    <title>Turnieje - Angelkacs</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-futbol"></i> Mecze Angelkacs</h1>
-            <p>Najnowsze mecze w tabelarycznym podglądzie</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="controls">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Wyszukaj drużynę lub ligę...">
+    <div class="container">
+        <header class="main-header">
+            <div class="logo-container">
+                <h1><i class="fas fa-trophy"></i> Angelkacs Turnieje</h1>
+                <p class="subtitle">Najnowsze turnieje i zawody esportowe</p>
             </div>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Wszystkie</button>
-                <button class="filter-btn" data-filter="premier">Premier League</button>
-                <button class="filter-btn" data-filter="la-liga">La Liga</button>
-                <button class="filter-btn" data-filter="serie-a">Serie A</button>
-                <button class="filter-btn" data-filter="bundesliga">Bundesliga</button>
+            <div class="view-controls">
+                <button class="view-btn active" data-view="upcoming">
+                    <i class="fas fa-clock"></i> Nadchodzące i trwające
+                </button>
+                <button class="view-btn" data-view="previous">
+                    <i class="fas fa-history"></i> Wcześniejsze
+                </button>
             </div>
-        </div>
+        </header>
 
-        <div class="matches-container">
-            <!-- Tabelki meczów będą dodawane dynamicznie przez JavaScript -->
-        </div>
+        <main class="tournament-container">
+            <!-- Sekcja nadchodzących i trwających turniejów -->
+            <section class="tournament-section active" id="upcoming-section">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt"></i> Nadchodzące i trwające
+                </h2>
+                
+                <!-- Turnieje będą wstawiane tutaj przez JavaScript -->
+            </section>
 
-        <div class="load-more-container">
-            <button id="loadMoreBtn" class="load-more-btn">
-                <i class="fas fa-plus"></i> Załaduj więcej meczów
-            </button>
-        </div>
-    </main>
+            <!-- Sekcja wcześniejszych turniejów -->
+            <section class="tournament-section" id="previous-section">
+                <h2 class="section-title">
+                    <i class="fas fa-archive"></i> Wcześniejsze
+                </h2>
+                
+                <!-- Turnieje będą wstawiane tutaj przez JavaScript -->
+            </section>
+        </main>
 
-    <footer>
-        <div class="container">
-            <p>Strona meczów Angelkacs.pl &copy; 2023 | Wszelkie prawa zastrzeżone</p>
-            <p class="back-link"><a href="https://angelkacs.pl">Powrót na główną stronę</a></p>
-        </div>
-    </footer>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>Angelkacs Turnieje &copy; <span id="currentYear"></span> | Wszelkie prawa zastrzeżone</p>
+                <p class="back-link">
+                    <a href="https://angelkacs.pl">
+                        <i class="fas fa-arrow-left"></i> Powrót na główną stronę
+                    </a>
+                </p>
+            </div>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

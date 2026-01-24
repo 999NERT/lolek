@@ -708,7 +708,7 @@ body {
     gap: 16px;
 }
 
-/* Nowy styl dla meczów - minimalistyczny */
+/* Nowy styl dla meczów - bardziej kompaktowy */
 .match-item {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -722,7 +722,7 @@ body {
 }
 
 .match-header {
-    padding: 16px;
+    padding: 14px 16px;
     background-color: var(--color-surface-light);
     border-bottom: 1px solid var(--color-border);
     display: flex;
@@ -754,20 +754,20 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Podgląd meczu - ZMIENIONY: usunięto VS, wyśrodkowano */
+/* Podgląd meczu - KOMPAKTOWY */
 .match-preview {
-    padding: 20px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .teams-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 16px; /* Zmniejszono z 24px */
     width: 100%;
 }
 
@@ -775,28 +775,28 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px; /* Zmniejszono z 8px */
     flex: 1;
-    max-width: 200px;
+    max-width: 180px; /* Zmniejszono z 200px */
 }
 
 .team-logo-large {
-    width: 60px;
-    height: 60px;
+    width: 48px; /* Zmniejszono z 60px */
+    height: 48px; /* Zmniejszono z 60px */
     background-color: var(--color-primary);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 18px; /* Zmniejszono z 20px */
     font-weight: 800;
     color: white;
-    margin-bottom: 8px;
+    margin-bottom: 4px; /* Zmniejszono z 8px */
 }
 
 .team-name-large {
     font-family: var(--font-heading);
-    font-size: 18px;
+    font-size: 16px; /* Zmniejszono z 18px */
     font-weight: 700;
     color: var(--color-text);
     text-align: center;
@@ -804,31 +804,32 @@ body {
 }
 
 .match-score-container {
-    margin: 16px 0;
+    margin: 12px 0; /* Zmniejszono z 16px */
 }
 
 .match-score-large {
     font-family: var(--font-heading);
-    font-size: 32px;
+    font-size: 28px; /* Zmniejszono z 32px */
     font-weight: 800;
     color: var(--color-text);
     text-align: center;
+    letter-spacing: 1px;
 }
 
 .toggle-players-btn {
-    padding: 8px 16px;
+    padding: 6px 12px; /* Zmniejszono z 8px 16px */
     background-color: var(--color-surface-light);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     color: var(--color-text-secondary);
-    font-size: 13px;
+    font-size: 12px; /* Zmniejszono z 13px */
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 4px; /* Zmniejszono z 6px */
+    margin-top: 4px;
 }
 
 .toggle-players-btn:hover {
@@ -838,7 +839,7 @@ body {
 }
 
 .toggle-players-btn i {
-    font-size: 12px;
+    font-size: 11px; /* Zmniejszono z 12px */
     transition: transform 0.3s ease;
 }
 
@@ -846,7 +847,7 @@ body {
     transform: rotate(180deg);
 }
 
-/* Sekcja graczy */
+/* Sekcja graczy - NOWY KOMPAKTOWY UKŁAD */
 .players-section {
     max-height: 0;
     overflow: hidden;
@@ -856,62 +857,82 @@ body {
 }
 
 .players-section.expanded {
-    max-height: 500px;
+    max-height: 600px;
 }
 
 .players-container {
-    padding: 20px;
+    padding: 16px; /* Zmniejszono z 20px */
 }
 
 .players-title {
     font-family: var(--font-heading);
-    font-size: 16px;
+    font-size: 15px; /* Zmniejszono z 16px */
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: 16px;
+    margin-bottom: 12px; /* Zmniejszono z 16px */
     text-align: center;
 }
 
-/* Nowy układ graczy - wszyscy na jednej stronie */
-.all-players-grid {
+/* Nowy układ graczy - 2 rzędy po 5 graczy dla CS2 */
+.players-grid-cs2 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.team-players-section {
+    margin-bottom: 12px;
+}
+
+.team-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.team-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.team-label.team1 {
+    color: var(--color-primary);
+}
+
+.team-label.team2 {
+    color: var(--color-cs2);
+}
+
+.players-row {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 4px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
 }
 
-/* Styl scrollbara */
-.all-players-grid::-webkit-scrollbar {
-    width: 6px;
-}
-
-.all-players-grid::-webkit-scrollbar-track {
-    background: var(--color-surface);
-    border-radius: 3px;
-}
-
-.all-players-grid::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
-    border-radius: 3px;
-}
-
-.all-players-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary-hover);
+/* Gracze Fortnite - 1 rząd */
+.players-grid-fortnite {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    justify-content: center;
 }
 
 .player-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: 12px;
+    padding: 10px; /* Zmniejszono z 12px */
     text-align: center;
     transition: var(--transition);
-    min-height: 100px;
+    min-height: 90px; /* Zmniejszono z 100px */
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .player-card:hover {
@@ -926,16 +947,16 @@ body {
 }
 
 .player-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px; /* Zmniejszono z 36px */
+    height: 32px; /* Zmniejszono z 36px */
     background-color: var(--color-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 8px;
+    margin: 0 auto 6px; /* Zmniejszono z 8px */
     color: white;
-    font-size: 16px;
+    font-size: 14px; /* Zmniejszono z 16px */
 }
 
 .player-card.angelkacs .player-icon {
@@ -944,11 +965,15 @@ body {
 }
 
 .player-name {
-    font-size: 14px;
+    font-size: 13px; /* Zmniejszono z 14px */
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 2px;
     word-break: break-word;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .player-card.angelkacs .player-name {
@@ -956,19 +981,9 @@ body {
     font-weight: 700;
 }
 
-.player-team {
-    font-size: 11px;
-    color: var(--color-text-muted);
-    background-color: var(--color-surface-light);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
-    display: inline-block;
-    margin-top: 4px;
-}
-
 /* Akcje meczu */
 .match-actions {
-    padding: 16px;
+    padding: 14px 16px; /* Zmniejszono z 16px */
     border-top: 1px solid var(--color-border);
     display: flex;
     gap: 8px;
@@ -976,12 +991,12 @@ body {
 
 .match-link-btn {
     flex: 1;
-    padding: 10px 16px;
+    padding: 8px 14px; /* Zmniejszono z 10px 16px */
     background-color: var(--color-primary);
     border: none;
     border-radius: var(--radius-md);
     color: white;
-    font-size: 13px;
+    font-size: 12px; /* Zmniejszono z 13px */
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -1061,7 +1076,7 @@ body {
     
     .teams-container {
         flex-direction: column;
-        gap: 16px;
+        gap: 12px; /* Zmniejszono z 16px */
     }
     
     .team-preview {
@@ -1069,14 +1084,19 @@ body {
     }
     
     .match-score-large {
-        font-size: 28px;
+        font-size: 24px; /* Zmniejszono z 28px */
     }
     
     .match-actions {
         flex-direction: column;
     }
     
-    .all-players-grid {
+    .players-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .players-grid-fortnite {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -1103,20 +1123,24 @@ body {
     }
     
     .team-logo-large {
-        width: 50px;
-        height: 50px;
-        font-size: 18px;
+        width: 40px; /* Zmniejszono z 50px */
+        height: 40px; /* Zmniejszono z 50px */
+        font-size: 16px; /* Zmniejszono z 18px */
     }
     
     .team-name-large {
-        font-size: 16px;
+        font-size: 14px; /* Zmniejszono z 16px */
     }
     
     .match-score-large {
-        font-size: 24px;
+        font-size: 22px; /* Zmniejszono z 24px */
     }
     
-    .all-players-grid {
+    .players-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .players-grid-fortnite {
         grid-template-columns: 1fr;
     }
 }

@@ -93,8 +93,8 @@ function setupEventListeners() {
     
     // Kliknięcie na kafelek turnieju
     tournamentsGrid.addEventListener('click', (e) => {
-        if (e.target.closest('.tournament-card')) {
-            const tournamentCard = e.target.closest('.tournament-card');
+        const tournamentCard = e.target.closest('.tournament-card');
+        if (tournamentCard) {
             const tournamentId = tournamentCard.dataset.id;
             openMatchModal(tournamentId);
         }
@@ -106,17 +106,32 @@ function setupEventListeners() {
     
     // Zamknięcie modala klawiszem Escape
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && matchModal.style.display === 'block') {
+        if (e.key === 'Escape') {
             closeModal();
         }
     });
     
-    // Delegowane eventy dla przycisków w modal
+    // Delegowane eventy dla przycisków w matchesList
     matchesList.addEventListener('click', (e) => {
+        // Przycisk Pokaż graczy
         if (e.target.closest('.toggle-players-btn')) {
             const btn = e.target.closest('.toggle-players-btn');
             const matchIndex = parseInt(btn.dataset.matchIndex);
-            togglePlayers(matchIndex, btn);
+            togglePlayers(matchIndex);
+            e.preventDefault();
+        }
+        
+        // Przycisk linku do meczu
+        if (e.target.closest('.match-link-btn')) {
+            const btn = e.target.closest('.match-link-btn');
+            const matchIndex = parseInt(btn.dataset.matchIndex);
+            if (currentTournamentData && currentTournamentData.matches[matchIndex]) {
+                const match = currentTournamentData.matches[matchIndex];
+                if (match.link) {
+                    window.open(match.link, '_blank');
+                }
+            }
+            e.preventDefault();
         }
     });
 }
@@ -403,21 +418,19 @@ function openMatchModal(tournamentId) {
     }
     
     // Pokaż modal
-    matchModal.style.display = 'block';
+    matchModal.style.display = 'flex';
     modalOverlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
+    
+    // Zresetuj scroll do góry
+    matchModal.querySelector('.modal-body').scrollTop = 0;
 }
 
 // Wyświetl mecze w modal
 function displayMatches(matches, gameType) {
     matchesList.innerHTML = '';
     
-    // Sortuj mecze po dacie (najnowsze na górze)
-    const sortedMatches = [...matches].sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-    });
-    
-    sortedMatches.forEach((match, index) => {
+    matches.forEach((match, index) => {
         const matchItem = createMatchItem(match, index, gameType);
         matchesList.appendChild(matchItem);
     });
@@ -517,7 +530,7 @@ function createMatchItem(match, index, gameType) {
         
         ${match.link ? `
             <div class="match-actions">
-                <button class="match-link-btn">
+                <button class="match-link-btn" data-match-index="${index}">
                     <i class="fas fa-external-link-alt"></i>
                     ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
                 </button>
@@ -525,31 +538,21 @@ function createMatchItem(match, index, gameType) {
         ` : ''}
     `;
     
-    // Dodaj event listener dla przycisku linku
-    const linkBtn = matchItem.querySelector('.match-link-btn');
-    if (linkBtn) {
-        linkBtn.addEventListener('click', () => {
-            window.open(match.link, '_blank');
-        });
-    }
-    
     return matchItem;
 }
 
 // Pokaż/ukryj graczy
-function togglePlayers(matchIndex, button) {
+function togglePlayers(matchIndex) {
     const playersSection = document.getElementById(`playersSection${matchIndex}`);
+    const toggleBtn = document.querySelector(`.toggle-players-btn[data-match-index="${matchIndex}"]`);
     
-    if (!playersSection) {
-        console.error('Nie znaleziono sekcji graczy');
-        return;
-    }
+    if (!playersSection || !toggleBtn) return;
     
     if (playersSection.classList.contains('expanded')) {
         // Ukryj graczy
         playersSection.classList.remove('expanded');
-        button.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
-        button.classList.remove('active');
+        toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
+        toggleBtn.classList.remove('active');
         
         // Opóźnione czyszczenie
         setTimeout(() => {
@@ -566,8 +569,8 @@ function togglePlayers(matchIndex, button) {
             if (playersTeam1.length > 0 || playersTeam2.length > 0) {
                 displayAllPlayers(matchIndex, playersTeam1, playersTeam2, match.team1, match.team2, gameType);
                 playersSection.classList.add('expanded');
-                button.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
-                button.classList.add('active');
+                toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
+                toggleBtn.classList.add('active');
             }
         }
     }
@@ -690,7 +693,3 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-
-// Eksport funkcji do globalnego scope
-window.togglePlayers = togglePlayers;
-window.openMatchModal = openMatchModal;

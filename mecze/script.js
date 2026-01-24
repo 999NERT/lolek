@@ -30,16 +30,10 @@ const noMatches = document.getElementById('noMatches');
 
 // Inicjalizacja
 document.addEventListener('DOMContentLoaded', () => {
-    // Ustaw aktualny rok
     document.getElementById('currentYear').textContent = new Date().getFullYear();
-    
-    // Konfiguruj event listeners
     setupEventListeners();
-    
-    // Załaduj turnieje
     loadTournaments();
     
-    // Ukryj ekran ładowania
     setTimeout(() => {
         loading.style.opacity = '0';
         setTimeout(() => {
@@ -124,7 +118,6 @@ function resetFilters() {
     
     currentFilter = 'all';
     currentStatus = 'all';
-    
     filterTournaments();
 }
 
@@ -133,7 +126,7 @@ async function loadTournaments() {
     try {
         console.log('Rozpoczynanie ładowania turniejów...');
         
-        // Najpierw ładuj listę plików turniejów
+        // Ładuj listę plików turniejów
         const listResponse = await fetch('tournament-list.json');
         
         if (!listResponse.ok) {
@@ -164,7 +157,7 @@ async function loadTournaments() {
                 
                 // Sprawdź poprawność struktury danych
                 if (tournamentData && tournamentData.tournament && tournamentData.tournament.id) {
-                    console.log(`Załadowano turniej: ${tournamentData.tournament.name} z ${tournamentData.matches ? tournamentData.matches.length : 0} meczami`);
+                    console.log(`Załadowano turniej: ${tournamentData.tournament.name}`);
                     tournaments.push(tournamentData);
                 } else {
                     console.warn(`Nieprawidłowa struktura pliku: ${fileName}`);
@@ -178,7 +171,6 @@ async function loadTournaments() {
         console.log(`Łącznie załadowano ${tournaments.length} turniejów`);
         
         if (tournaments.length === 0) {
-            console.log('Brak turniejów do wyświetlenia');
             showEmptyState();
             return;
         }
@@ -445,6 +437,7 @@ function createMatchItem(match, index, gameType) {
                 </div>
                 
                 ${match.team2 ? `
+                    <div class="vs-text">VS</div>
                     <div class="team-preview">
                         <div class="team-logo-large">${getTeamLogo(match.team2)}</div>
                         <div class="team-name-large">${escapeHtml(match.team2.name)}</div>
@@ -506,10 +499,9 @@ function togglePlayers(matchId) {
             const gameType = currentTournamentData.tournament.game;
             const playersTeam1 = match.playersTeam1 || [];
             const playersTeam2 = match.playersTeam2 || [];
-            const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
             
-            if (allPlayers.length > 0) {
-                displayAllPlayers(matchId, allPlayers, match.team1, match.team2, gameType);
+            if (playersTeam1.length > 0 || playersTeam2.length > 0) {
+                displayAllPlayers(matchId, playersTeam1, playersTeam2, match.team1, match.team2, gameType);
                 playersSection.classList.add('expanded');
                 toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
                 toggleBtn.classList.add('active');
@@ -518,22 +510,12 @@ function togglePlayers(matchId) {
     }
 }
 
-// Wyświetl wszystkich graczy razem - NOWY UKŁAD
-function displayAllPlayers(matchId, players, team1, team2, gameType) {
+// Wyświetl wszystkich graczy
+function displayAllPlayers(matchId, playersTeam1, playersTeam2, team1, team2, gameType) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
     
     if (gameType === 'cs2' && team2) {
-        // Dla CS2: 2 rzędy po 5 graczy
-        const playersTeam1 = players.filter(p => 
-            team1.hasAngelkacs && p.isAngelkacs || 
-            players.slice(0, 5).some(p2 => p2.name === p.name)
-        );
-        
-        const playersTeam2 = players.filter(p => 
-            team2.hasAngelkacs && p.isAngelkacs || 
-            players.slice(5).some(p2 => p2.name === p.name)
-        );
-        
+        // Dla CS2: 2 drużyny
         const team1HTML = playersTeam1.map(player => createPlayerCard(player, team1)).join('');
         const team2HTML = playersTeam2.map(player => createPlayerCard(player, team2)).join('');
         
@@ -564,8 +546,9 @@ function displayAllPlayers(matchId, players, team1, team2, gameType) {
             </div>
         `;
     } else {
-        // Dla Fortnite lub innych gier
-        const playersHTML = players.map(player => createPlayerCard(player, team1)).join('');
+        // Dla Fortnite lub pojedynczych graczy
+        const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+        const playersHTML = allPlayers.map(player => createPlayerCard(player, team1)).join('');
         
         playersSection.innerHTML = `
             <div class="players-container">
@@ -623,10 +606,17 @@ function getTeamLogo(team) {
 }
 
 function getMatchScore(match) {
-    if (!match.score) return '- : -';
-    const team1Score = match.score.team1 !== undefined ? match.score.team1 : '-';
-    const team2Score = match.score.team2 !== undefined ? match.score.team2 : '-';
-    return `${team1Score} : ${team2Score}`;
+    if (!match.score || match.score === null) {
+        return '- : -';
+    }
+    
+    if (typeof match.score === 'object') {
+        const team1Score = match.score.team1 !== undefined ? match.score.team1 : '-';
+        const team2Score = match.score.team2 !== undefined ? match.score.team2 : '-';
+        return `${team1Score} : ${team2Score}`;
+    }
+    
+    return String(match.score);
 }
 
 function getPolishPlural(count) {

@@ -1,4 +1,4 @@
-// System turniejów Angelkacs - Wersja z wyświetlaniem formatu meczów
+// System turniejów Angelkacs - ZOPTYMALIZOWANA WERSJA
 
 // Zmienne globalne
 let tournaments = [];
@@ -7,6 +7,7 @@ let currentGameFilter = 'all';
 let currentFormatFilter = 'all';
 let currentStatusFilter = 'all';
 let currentTournamentData = null;
+let isLoading = false;
 
 // Elementy DOM
 const loading = document.getElementById('loading');
@@ -31,50 +32,66 @@ const modalStatus = document.getElementById('modalStatus');
 const matchesList = document.getElementById('matchesList');
 const noMatches = document.getElementById('noMatches');
 
-// Inicjalizacja
+// Inicjalizacja - ZOPTYMALIZOWANA
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('currentYear').textContent = new Date().getFullYear();
     setupEventListeners();
     loadTournaments();
     
+    // Optymalizacja ładowania
     setTimeout(() => {
         loading.style.opacity = '0';
         setTimeout(() => {
             loading.style.display = 'none';
             app.style.display = 'block';
+            // Wymuszenie kompozycji GPU dla lepszej wydajności
+            app.style.willChange = 'auto';
         }, 300);
-    }, 800);
+    }, 600);
 });
 
-// Konfiguracja event listeners
+// Konfiguracja event listeners - ZOPTYMALIZOWANA
 function setupEventListeners() {
-    // Filtry gier
+    // Filtry gier - z debounce
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
+            if (button.classList.contains('active')) return;
+            
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentGameFilter = button.dataset.filter;
-            filterTournaments();
+            
+            // Opóźnienie filtrowania dla lepszej wydajności
+            clearTimeout(window.filterTimeout);
+            window.filterTimeout = setTimeout(filterTournaments, 50);
         });
     });
     
     // Filtry formatu
     formatButtons.forEach(button => {
         button.addEventListener('click', () => {
+            if (button.classList.contains('active')) return;
+            
             formatButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFormatFilter = button.dataset.format;
-            filterTournaments();
+            
+            clearTimeout(window.filterTimeout);
+            window.filterTimeout = setTimeout(filterTournaments, 50);
         });
     });
     
     // Filtry statusów
     statusButtons.forEach(button => {
         button.addEventListener('click', () => {
+            if (button.classList.contains('active')) return;
+            
             statusButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentStatusFilter = button.dataset.status;
-            filterTournaments();
+            
+            clearTimeout(window.filterTimeout);
+            window.filterTimeout = setTimeout(filterTournaments, 50);
         });
     });
     
@@ -84,21 +101,37 @@ function setupEventListeners() {
     
     // Przycisk odśwież
     refreshBtn.addEventListener('click', () => {
+        if (isLoading) return;
+        
         refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
         refreshBtn.disabled = true;
+        isLoading = true;
+        
         loadTournaments();
+        
         setTimeout(() => {
             refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Odśwież';
             refreshBtn.disabled = false;
+            isLoading = false;
         }, 1000);
     });
     
-    // Kliknięcie na kafelek turnieju
-    document.addEventListener('click', (e) => {
+    // Kliknięcie na kafelek turnieju - z delegacją zdarzeń
+    tournamentsGrid.addEventListener('click', (e) => {
         const tournamentCard = e.target.closest('.tournament-card');
         if (tournamentCard) {
             const tournamentId = tournamentCard.dataset.id;
             openMatchModal(tournamentId);
+        }
+        
+        const viewBtn = e.target.closest('.view-btn');
+        if (viewBtn) {
+            e.stopPropagation();
+            const tournamentCard = viewBtn.closest('.tournament-card');
+            if (tournamentCard) {
+                const tournamentId = tournamentCard.dataset.id;
+                openMatchModal(tournamentId);
+            }
         }
     });
     
@@ -111,6 +144,11 @@ function setupEventListeners() {
         if (e.key === 'Escape' && matchModal.style.display === 'block') {
             closeModal();
         }
+    });
+    
+    // Zapobieganie propagacji kliknięć w modal
+    matchModal.addEventListener('click', (e) => {
+        e.stopPropagation();
     });
 }
 
@@ -144,7 +182,7 @@ function resetFilters() {
     filterTournaments();
 }
 
-// Ładowanie turniejów z plików JSON
+// Ładowanie turniejów z plików JSON - ZOPTYMALIZOWANE
 async function loadTournaments() {
     try {
         console.log('Rozpoczynanie ładowania turniejów...');
@@ -157,39 +195,42 @@ async function loadTournaments() {
         }
         
         const fileList = await listResponse.json();
-        console.log('Znaleziono listę turniejów:', fileList);
         
         if (!fileList.tournaments || !Array.isArray(fileList.tournaments)) {
             throw new Error('Nieprawidłowy format pliku tournament-list.json');
         }
         
-        // Ładuj każdy turniej z osobnego pliku
-        tournaments = [];
-        
-        for (const fileName of fileList.tournaments) {
+        // Ładuj każdy turniej z osobnego pliku równolegle
+        const tournamentPromises = fileList.tournaments.map(async (fileName) => {
             try {
-                console.log(`Próba załadowania: tournaments/${fileName}`);
                 const tournamentResponse = await fetch(`tournaments/${fileName}`);
                 
                 if (!tournamentResponse.ok) {
                     console.error(`Nie znaleziono pliku: tournaments/${fileName}`);
-                    continue;
+                    return null;
                 }
                 
                 const tournamentData = await tournamentResponse.json();
                 
                 // Sprawdź poprawność struktury danych
                 if (tournamentData && tournamentData.tournament && tournamentData.tournament.id) {
-                    console.log(`Załadowano turniej: ${tournamentData.tournament.name}`);
-                    tournaments.push(tournamentData);
+                    return tournamentData;
                 } else {
                     console.warn(`Nieprawidłowa struktura pliku: ${fileName}`);
+                    return null;
                 }
                 
             } catch (error) {
                 console.error(`Błąd ładowania ${fileName}:`, error);
+                return null;
             }
-        }
+        });
+        
+        // Czekaj na wszystkie obietnice
+        const tournamentResults = await Promise.all(tournamentPromises);
+        
+        // Filtruj null wartości
+        tournaments = tournamentResults.filter(t => t !== null);
         
         console.log(`Łącznie załadowano ${tournaments.length} turniejów`);
         
@@ -204,7 +245,6 @@ async function loadTournaments() {
         
     } catch (error) {
         console.error('Błąd ładowania turniejów:', error);
-        alert('Błąd ładowania turniejów. Sprawdź konsolę dla szczegółów.');
         showEmptyState();
     }
 }
@@ -216,60 +256,73 @@ function showEmptyState() {
     tournamentCount.textContent = '0';
 }
 
-// Filtruj turnieje
+// Filtruj turnieje - ZOPTYMALIZOWANE
 function filterTournaments() {
-    filteredTournaments = tournaments.filter(tournamentData => {
-        const tournament = tournamentData.tournament;
-        const game = tournament.game;
-        const status = tournament.status;
-        const matches = tournamentData.matches || [];
-        
-        // Sprawdź formaty meczów w turnieju
-        let hasBo1 = false;
-        let hasBo3 = false;
-        let hasFortnite = false;
-        
-        matches.forEach(match => {
-            if (match.format === 'bo1' || !match.format) hasBo1 = true;
-            if (match.format === 'bo3') hasBo3 = true;
-            if (game === 'fortnite') hasFortnite = true;
+    // Tymczasowe ukrycie gridu dla lepszej wydajności
+    tournamentsGrid.style.opacity = '0.5';
+    
+    // Użyj requestAnimationFrame dla płynności
+    requestAnimationFrame(() => {
+        filteredTournaments = tournaments.filter(tournamentData => {
+            const tournament = tournamentData.tournament;
+            const game = tournament.game;
+            const status = tournament.status;
+            const matches = tournamentData.matches || [];
+            
+            // Sprawdź formaty meczów w turnieju
+            let hasBo1 = false;
+            let hasBo3 = false;
+            let hasFortnite = false;
+            
+            matches.forEach(match => {
+                if (match.format === 'bo1' || !match.format) hasBo1 = true;
+                if (match.format === 'bo3') hasBo3 = true;
+                if (game === 'fortnite') hasFortnite = true;
+            });
+            
+            // Filtruj po grze
+            if (currentGameFilter !== 'all' && game !== currentGameFilter) {
+                return false;
+            }
+            
+            // Filtruj po statusie
+            if (currentStatusFilter !== 'all' && status !== currentStatusFilter) {
+                return false;
+            }
+            
+            // Filtruj po formacie
+            if (currentFormatFilter !== 'all') {
+                if (currentFormatFilter === 'bo1' && !hasBo1) return false;
+                if (currentFormatFilter === 'bo3' && !hasBo3) return false;
+                if (currentFormatFilter === 'fortnite' && !hasFortnite) return false;
+            }
+            
+            return true;
         });
         
-        // Filtruj po grze
-        if (currentGameFilter !== 'all' && game !== currentGameFilter) {
-            return false;
-        }
+        displayTournaments();
         
-        // Filtruj po statusie
-        if (currentStatusFilter !== 'all' && status !== currentStatusFilter) {
-            return false;
-        }
-        
-        // Filtruj po formacie
-        if (currentFormatFilter !== 'all') {
-            if (currentFormatFilter === 'bo1' && !hasBo1) return false;
-            if (currentFormatFilter === 'bo3' && !hasBo3) return false;
-            if (currentFormatFilter === 'fortnite' && !hasFortnite) return false;
-        }
-        
-        return true;
+        // Przywróć opacity
+        setTimeout(() => {
+            tournamentsGrid.style.opacity = '1';
+        }, 50);
     });
-    
-    displayTournaments();
 }
 
-// Wyświetl turnieje
+// Wyświetl turnieje - ZOPTYMALIZOWANE (użyj DocumentFragment)
 function displayTournaments() {
-    tournamentsGrid.innerHTML = '';
-    
     if (filteredTournaments.length === 0) {
         emptyState.style.display = 'block';
         tournamentCount.textContent = '0';
+        tournamentsGrid.innerHTML = '';
         return;
     }
     
     emptyState.style.display = 'none';
     tournamentCount.textContent = filteredTournaments.length;
+    
+    // Użyj DocumentFragment dla lepszej wydajności
+    const fragment = document.createDocumentFragment();
     
     filteredTournaments.forEach(tournamentData => {
         const tournament = tournamentData.tournament;
@@ -346,17 +399,21 @@ function displayTournaments() {
                     <i class="fas fa-gamepad"></i>
                     ${matches.length} mecz${getPolishPlural(matches.length)}
                 </div>
-                <button class="view-btn" onclick="event.stopPropagation(); openMatchModal('${tournament.id}')">
+                <div class="view-btn">
                     <i class="fas fa-eye"></i> Zobacz mecze
-                </button>
+                </div>
             </div>
         `;
         
-        tournamentsGrid.appendChild(tournamentCard);
+        fragment.appendChild(tournamentCard);
     });
+    
+    // Jednorazowe dodanie do DOM
+    tournamentsGrid.innerHTML = '';
+    tournamentsGrid.appendChild(fragment);
 }
 
-// Otwórz modal z meczami
+// Otwórz modal z meczami - ZOPTYMALIZOWANE
 function openMatchModal(tournamentId) {
     const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
     if (!tournamentData) {
@@ -367,8 +424,6 @@ function openMatchModal(tournamentId) {
     currentTournamentData = tournamentData;
     const tournament = tournamentData.tournament;
     const matches = tournamentData.matches || [];
-    
-    console.log(`Otwieranie modala dla turnieju: ${tournament.name}, mecze: ${matches.length}`);
     
     // Ustaw informacje o turnieju
     modalTournamentName.textContent = tournament.name;
@@ -401,7 +456,7 @@ function openMatchModal(tournamentId) {
     // Wyświetl mecze
     if (matches.length === 0) {
         matchesList.innerHTML = '';
-        noMatches.style.display = 'block';
+        noMatches.style.display = 'flex';
     } else {
         noMatches.style.display = 'none';
         displayMatches(matches, tournament.game);
@@ -411,11 +466,15 @@ function openMatchModal(tournamentId) {
     matchModal.style.display = 'block';
     modalOverlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
+    
+    // Zresetuj scroll do góry
+    matchesList.scrollTop = 0;
 }
 
-// Wyświetl mecze w modal
+// Wyświetl mecze w modal - ZOPTYMALIZOWANE
 function displayMatches(matches, gameType) {
-    matchesList.innerHTML = '';
+    // Użyj DocumentFragment
+    const fragment = document.createDocumentFragment();
     
     // Sortuj mecze po dacie (najnowsze na górze)
     const sortedMatches = [...matches].sort((a, b) => {
@@ -424,11 +483,15 @@ function displayMatches(matches, gameType) {
     
     sortedMatches.forEach((match, index) => {
         const matchItem = createMatchItem(match, index, gameType);
-        matchesList.appendChild(matchItem);
+        fragment.appendChild(matchItem);
     });
+    
+    // Jednorazowe dodanie do DOM
+    matchesList.innerHTML = '';
+    matchesList.appendChild(fragment);
 }
 
-// Utwórz element meczu
+// Utwórz element meczu - ZOPTYMALIZOWANE
 function createMatchItem(match, index, gameType) {
     const matchItem = document.createElement('div');
     matchItem.className = 'match-item';
@@ -510,7 +573,7 @@ function createMatchItem(match, index, gameType) {
             ${gameType === 'fortnite' && match.stats ? renderFortniteStats(match.stats) : ''}
             
             ${allPlayers.length > 0 ? `
-                <button class="toggle-players-btn" onclick="togglePlayers(${index})">
+                <button class="toggle-players-btn" data-match-index="${index}">
                     <i class="fas fa-chevron-down"></i>
                     ${allPlayers.length === 1 ? 'Pokaż gracza' : 'Pokaż graczy'}
                 </button>
@@ -525,13 +588,27 @@ function createMatchItem(match, index, gameType) {
         
         ${match.link ? `
             <div class="match-actions">
-                <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
+                <button class="match-link-btn" data-link="${match.link}" data-status="${match.status}">
                     <i class="fas fa-external-link-alt"></i>
                     ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
                 </button>
             </div>
         ` : ''}
     `;
+    
+    // Dodaj event listener dla przycisku pokaż/ukryj graczy
+    const toggleBtn = matchItem.querySelector('.toggle-players-btn');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => togglePlayers(parseInt(toggleBtn.dataset.matchIndex)));
+    }
+    
+    // Dodaj event listener dla przycisku linku
+    const linkBtn = matchItem.querySelector('.match-link-btn');
+    if (linkBtn) {
+        linkBtn.addEventListener('click', () => {
+            window.open(linkBtn.dataset.link, '_blank');
+        });
+    }
     
     return matchItem;
 }
@@ -618,12 +695,12 @@ function renderFortniteStats(stats) {
     `;
 }
 
-// Pokaż/ukryj graczy
+// Pokaż/ukryj graczy - ZOPTYMALIZOWANE
 function togglePlayers(matchId) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
     const toggleBtn = document.querySelector(`.match-item[data-match-id="${matchId}"] .toggle-players-btn`);
     
-    if (!playersSection) return;
+    if (!playersSection || !toggleBtn) return;
     
     if (playersSection.classList.contains('expanded')) {
         // Ukryj graczy
@@ -631,6 +708,7 @@ function togglePlayers(matchId) {
         toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
         toggleBtn.classList.remove('active');
         
+        // Opóźnione wyczyszczenie dla lepszej wydajności
         setTimeout(() => {
             playersSection.innerHTML = '';
         }, 300);
@@ -652,16 +730,18 @@ function togglePlayers(matchId) {
     }
 }
 
-// Wyświetl wszystkich graczy
+// Wyświetl wszystkich graczy - ZOPTYMALIZOWANE
 function displayAllPlayers(matchId, playersTeam1, playersTeam2, team1, team2, gameType) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
+    
+    let playersHTML = '';
     
     if (gameType === 'cs2' && team2) {
         // Dla CS2: 2 drużyny
         const team1HTML = playersTeam1.map(player => createPlayerCard(player, team1)).join('');
         const team2HTML = playersTeam2.map(player => createPlayerCard(player, team2)).join('');
         
-        playersSection.innerHTML = `
+        playersHTML = `
             <div class="players-container">
                 <div class="players-title">Gracze w meczu</div>
                 <div class="players-grid-cs2">
@@ -688,17 +768,19 @@ function displayAllPlayers(matchId, playersTeam1, playersTeam2, team1, team2, ga
     } else {
         // Dla Fortnite lub pojedynczych graczy
         const allPlayers = [...playersTeam1, ...playersTeam2];
-        const playersHTML = allPlayers.map(player => createPlayerCard(player, team1)).join('');
+        const playersCards = allPlayers.map(player => createPlayerCard(player, team1)).join('');
         
-        playersSection.innerHTML = `
+        playersHTML = `
             <div class="players-container">
                 <div class="players-title">Gracze w meczu</div>
                 <div class="players-grid-fortnite">
-                    ${playersHTML}
+                    ${playersCards}
                 </div>
             </div>
         `;
     }
+    
+    playersSection.innerHTML = playersHTML;
 }
 
 // Utwórz kartę gracza
@@ -715,7 +797,7 @@ function createPlayerCard(player, team) {
     `;
 }
 
-// Zamknij modal
+// Zamknij modal - ZOPTYMALIZOWANE
 function closeModal() {
     matchModal.style.display = 'none';
     modalOverlay.style.display = 'none';
@@ -725,9 +807,7 @@ function closeModal() {
     const expandedSections = document.querySelectorAll('.players-section.expanded');
     expandedSections.forEach(section => {
         section.classList.remove('expanded');
-        setTimeout(() => {
-            section.innerHTML = '';
-        }, 300);
+        section.innerHTML = '';
     });
     
     const activeButtons = document.querySelectorAll('.toggle-players-btn.active');

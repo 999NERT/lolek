@@ -64,4 +64,57 @@
       "link": "https://twitch.tv/angelkacs"
     }
   ]
+   "matches": [
+    {
+      "id": 2,
+      "date": "03.13, 13:44",
+      "status": "upcoming",
+      "team1": {
+        "name": "Millenium",
+        "logo": "M",
+        "hasAngelkacs": true
+      },
+      "team2": {
+        "name": "Endless Journey",
+        "logo": "EJ",
+        "hasAngelkacs": false
+      },
+      "score": null,
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "Player2"
+        },
+        {
+          "name": "Player3"
+        },
+        {
+          "name": "Player4"
+        },
+        {
+          "name": "Player5"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "Enemy1"
+        },
+        {
+          "name": "Enemy2"
+        },
+        {
+          "name": "Enemy3"
+        },
+        {
+          "name": "Enemy4"
+        },
+        {
+          "name": "Enemy5"
+        }
+      ],
+      "link": "https://twitch.tv/angelkacs"
+    }
 }

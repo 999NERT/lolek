@@ -549,7 +549,7 @@ body {
     display: none;
 }
 
-/* Modal - Jeden scroll dla całego modala */
+/* Modal */
 .modal {
     position: fixed;
     top: 50%;
@@ -637,7 +637,7 @@ body {
     color: var(--danger-color);
 }
 
-/* Modal Body - GŁÓWNY SCROLL */
+/* Modal Body */
 .modal-body {
     padding: 0;
     overflow-y: auto;
@@ -672,7 +672,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* Matches List - BEZ SCROLLA */
+/* Matches List */
 .matches-list {
     display: flex;
     flex-direction: column;
@@ -681,7 +681,7 @@ body {
     min-height: auto;
 }
 
-/* Custom scrollbar dla modal-body */
+/* Custom scrollbar */
 .modal-body::-webkit-scrollbar {
     width: 10px;
 }
@@ -839,7 +839,7 @@ body {
     line-height: 1;
 }
 
-/* Maps Section - ZUPEŁNIE UPROSZCZONA */
+/* Maps Section */
 .maps-section {
     margin: 20px 0;
     padding: 20px;

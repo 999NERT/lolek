@@ -2,30 +2,30 @@
   "tournament": {
     "id": "betclic-birch-2026",
     "name": "Betclic Birch Cup - Bitwa Streamerów",
-    "date": "29.01.2026, 20:17 CET",
-    "status": "upcoming",
+    "date": "22.01.2026, 18:00 CET",
+    "status": "active",
     "game": "cs2",
     "organizer": "Betclic",
     "format": "5v5",
-    "teams": "32 drużyn",
-    "prize": "$10,000"
+    "teams": "12 drużyn",
+    "prize": "???"
   },
   "matches": [
     {
       "id": 1,
-      "date": "03.12, 18:44",
-      "status": "upcoming",
+      "date": "22.01, 19:00",
+      "status": "finished",
       "team1": {
-        "name": "Millenium",
-        "logo": "M",
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
         "hasAngelkacs": true
       },
       "team2": {
-        "name": "Endless Journey",
-        "logo": "EJ",
+        "name": "TEAM_GUZIK",
+        "logo": "G",
         "hasAngelkacs": false
       },
-      "score": null,
+      "score": 13:6,
       "playersTeam1": [
         {
           "name": "Angelkacs",

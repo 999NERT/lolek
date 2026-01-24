@@ -238,7 +238,7 @@
     {
       "id": 5,
       "date": "24.01.2026, 21:00",
-      "status": "active",
+      "status": "finished",
       "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -251,8 +251,8 @@
         "hasAngelkacs": false
       },
       "score": {
-        "team1": 0,
-        "team2": 0
+        "team1": 8,
+        "team2": 13
       },
       "playersTeam1": [
         {

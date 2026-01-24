@@ -123,55 +123,113 @@
     },
     {
       "id": 3,
-      "date": "22.01.2026, 22:00",
-      "status": "upcoming",
+      "date": "22.01.2026, 19:00",
+      "status": "finished",
       "team1": {
-        "name": "TEAM_WOLF",
-        "logo": "W",
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
         "hasAngelkacs": true
       },
       "team2": {
-        "name": "TEAM_EAGLE",
-        "logo": "E",
+        "name": "TEAM_GUZIK",
+        "logo": "G",
         "hasAngelkacs": false
       },
-      "score": null,
+      "score": {
+        "team1": 13,
+        "team2": 6
+      },
       "playersTeam1": [
         {
           "name": "Angelkacs",
           "isAngelkacs": true
         },
         {
-          "name": "WolfPlayer2"
+          "name": "AK1ng_"
         },
         {
-          "name": "WolfPlayer3"
+          "name": "Melciaaaa"
         },
         {
-          "name": "WolfPlayer4"
+          "name": "Bizi69Hz"
         },
         {
-          "name": "WolfPlayer5"
+          "name": "wylkanit"
         }
       ],
       "playersTeam2": [
         {
-          "name": "EaglePlayer1"
+          "name": "LeGuzikens"
         },
         {
-          "name": "EaglePlayer2"
+          "name": "TiTom"
         },
         {
-          "name": "EaglePlayer3"
+          "name": "belzebub"
         },
         {
-          "name": "EaglePlayer4"
+          "name": "omlel187"
         },
         {
-          "name": "EaglePlayer5"
+          "name": "Kulesz"
         }
       ],
-      "link": "https://twitch.tv/angelkacs"
+      "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
+    },
+     {
+      "id": 4,
+      "date": "22.01.2026, 19:00",
+      "status": "finished",
+      "team1": {
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
+        "hasAngelkacs": true
+      },
+      "team2": {
+        "name": "TEAM_GUZIK",
+        "logo": "G",
+        "hasAngelkacs": false
+      },
+      "score": {
+        "team1": 13,
+        "team2": 6
+      },
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "AK1ng_"
+        },
+        {
+          "name": "Melciaaaa"
+        },
+        {
+          "name": "Bizi69Hz"
+        },
+        {
+          "name": "wylkanit"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "LeGuzikens"
+        },
+        {
+          "name": "TiTom"
+        },
+        {
+          "name": "belzebub"
+        },
+        {
+          "name": "omlel187"
+        },
+        {
+          "name": "Kulesz"
+        }
+      ],
+      "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
     }
   ]
 }

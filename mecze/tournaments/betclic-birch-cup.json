@@ -3,12 +3,12 @@
     "id": "betclic-birch-2026",
     "name": "Betclic Birch Cup - Bitwa Streamerów",
     "date": "22.01.2026, 18:00 CET",
-    "status": "active",
+    "status": "finished",
     "game": "cs2",
     "organizer": "Betclic",
-    "format": "5v5 BO1",
+    "format": "5v5 BO1/BO3",
     "teams": "12 drużyn",
-    "prize": "???"
+    "prize": "10,000 PLN"
   },
   "matches": [
     {
@@ -292,7 +292,7 @@
       "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
     },
     {
-      id": 6,
+      "id": 6,
       "date": "26.01.2026, 18:00",
       "status": "finished",
       "format": "bo3",
@@ -307,24 +307,24 @@
         "hasAngelkacs": false
       },
       "score": {
-        "team1": 0,
-        "team2": 0
+        "team1": 2,
+        "team2": 1
       },
       "maps": [
         {
           "name": "Mirage",
-          "score_team1": 0,
-          "score_team2": 0
+          "score_team1": 16,
+          "score_team2": 12
         },
         {
           "name": "Inferno",
-          "score_team1": 0,
-          "score_team2": 0
+          "score_team1": 10,
+          "score_team2": 16
         },
         {
           "name": "Nuke",
-          "score_team1": 0,
-          "score_team2": 0
+          "score_team1": 16,
+          "score_team2": 9
         }
       ],
       "playersTeam1": [
@@ -362,7 +362,7 @@
           "name": "-WJTN-"
         }
       ],
-      "link": "https://example.com/match/2"
+      "link": "https://example.com/match/6"
     }
   ]
 }

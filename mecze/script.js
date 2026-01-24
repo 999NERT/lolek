@@ -114,17 +114,18 @@ function setupEventListeners() {
     // Delegowane eventy dla przycisków w matchesList
     matchesList.addEventListener('click', (e) => {
         // Przycisk Pokaż graczy
-        if (e.target.closest('.toggle-players-btn')) {
-            const btn = e.target.closest('.toggle-players-btn');
-            const matchIndex = parseInt(btn.dataset.matchIndex);
+        const toggleBtn = e.target.closest('.toggle-players-btn');
+        if (toggleBtn) {
+            const matchIndex = parseInt(toggleBtn.dataset.matchIndex);
             togglePlayers(matchIndex);
             e.preventDefault();
+            return;
         }
         
         // Przycisk linku do meczu
-        if (e.target.closest('.match-link-btn')) {
-            const btn = e.target.closest('.match-link-btn');
-            const matchIndex = parseInt(btn.dataset.matchIndex);
+        const linkBtn = e.target.closest('.match-link-btn');
+        if (linkBtn) {
+            const matchIndex = parseInt(linkBtn.dataset.matchIndex);
             if (currentTournamentData && currentTournamentData.matches[matchIndex]) {
                 const match = currentTournamentData.matches[matchIndex];
                 if (match.link) {

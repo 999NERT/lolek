@@ -8,7 +8,7 @@
     "organizer": "Betclic",
     "format": "5v5",
     "teams": "12 drużyn",
-    "prize": "soont"
+    "prize": "???"
   },
   "matches": [
     {
@@ -25,7 +25,10 @@
         "logo": "G",
         "hasAngelkacs": false
       },
-      "score": "13:6",
+      "score": {
+        "team1": 13,
+        "team2": 6
+      },
       "playersTeam1": [
         {
           "name": "Angelkacs",
@@ -65,34 +68,34 @@
     },
     {
       "id": 2,
-      "date": "04.12, 19:30",
+      "date": "22.01.2026, 20:30",
       "status": "upcoming",
       "team1": {
-        "name": "Team Liquid",
-        "logo": "TL",
+        "name": "TEAM_HERO",
+        "logo": "H",
         "hasAngelkacs": false
       },
       "team2": {
-        "name": "Millenium",
-        "logo": "M",
+        "name": "TEAM_DRAGON",
+        "logo": "D",
         "hasAngelkacs": true
       },
       "score": null,
       "playersTeam1": [
         {
-          "name": "PlayerA"
+          "name": "HeroPlayer1"
         },
         {
-          "name": "PlayerB"
+          "name": "HeroPlayer2"
         },
         {
-          "name": "PlayerC"
+          "name": "HeroPlayer3"
         },
         {
-          "name": "PlayerD"
+          "name": "HeroPlayer4"
         },
         {
-          "name": "PlayerE"
+          "name": "HeroPlayer5"
         }
       ],
       "playersTeam2": [
@@ -101,32 +104,32 @@
           "isAngelkacs": true
         },
         {
-          "name": "Player6"
+          "name": "DragonPlayer2"
         },
         {
-          "name": "Player7"
+          "name": "DragonPlayer3"
         },
         {
-          "name": "Player8"
+          "name": "DragonPlayer4"
         },
         {
-          "name": "Player9"
+          "name": "DragonPlayer5"
         }
       ],
       "link": "https://twitch.tv/angelkacs"
     },
     {
       "id": 3,
-      "date": "05.12, 21:00",
+      "date": "22.01.2026, 22:00",
       "status": "upcoming",
       "team1": {
-        "name": "Millenium",
-        "logo": "M",
+        "name": "TEAM_WOLF",
+        "logo": "W",
         "hasAngelkacs": true
       },
       "team2": {
-        "name": "G2 Esports",
-        "logo": "G2",
+        "name": "TEAM_EAGLE",
+        "logo": "E",
         "hasAngelkacs": false
       },
       "score": null,
@@ -136,33 +139,33 @@
           "isAngelkacs": true
         },
         {
-          "name": "Player10"
+          "name": "WolfPlayer2"
         },
         {
-          "name": "Player11"
+          "name": "WolfPlayer3"
         },
         {
-          "name": "Player12"
+          "name": "WolfPlayer4"
         },
         {
-          "name": "Player13"
+          "name": "WolfPlayer5"
         }
       ],
       "playersTeam2": [
         {
-          "name": "NiKo"
+          "name": "EaglePlayer1"
         },
         {
-          "name": "huNter-"
+          "name": "EaglePlayer2"
         },
         {
-          "name": "m0NESY"
+          "name": "EaglePlayer3"
         },
         {
-          "name": "HooXi"
+          "name": "EaglePlayer4"
         },
         {
-          "name": "jks"
+          "name": "EaglePlayer5"
         }
       ],
       "link": "https://twitch.tv/angelkacs"

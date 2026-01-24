@@ -290,6 +290,81 @@
         }
       ],
       "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
+    },
+    {
+      "id": 6,
+      "date": "26.01.2026, 18:00",
+      "status": "finished",
+      "format": "bo3",
+      "team1": {
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
+        "hasAngelkacs": true
+      },
+      "team2": {
+        "name": "OPPONENT_TEAM",
+        "logo": "OT",
+        "hasAngelkacs": false
+      },
+      "score": {
+        "team1": 2,
+        "team2": 1
+      },
+      "maps": [
+        {
+          "name": "Mirage",
+          "score_team1": 16,
+          "score_team2": 10
+        },
+        {
+          "name": "Inferno",
+          "score_team1": 8,
+          "score_team2": 16
+        },
+        {
+          "name": "Nuke",
+          "score_team1": 16,
+          "score_team2": 14
+        }
+      ],
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "AK1ng_"
+        },
+        {
+          "name": "Melciaaaa"
+        },
+        {
+          "name": "Bizi69Hz"
+        },
+        {
+          "name": "wylkanit"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "Opponent1"
+        },
+        {
+          "name": "Opponent2"
+        },
+        {
+          "name": "Opponent3"
+        },
+        {
+          "name": "Opponent4"
+        },
+        {
+          "name": "Opponent5"
+        }
+      ],
+      "link": "https://example.com/match/2"
     }
+  ]
+}
   ]
 }

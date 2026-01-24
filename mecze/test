@@ -1,1 +1,274 @@
-lol
+[ BO3 ]
+{
+  "tournament": {
+    "id": "cs2-bo3-example",
+    "name": "CS2 BO3 Tournament Example",
+    "date": "26.01.2026, 17:00 CET",
+    "status": "finished",
+    "game": "cs2",
+    "organizer": "Organizer Name",
+    "format": "5v5 BO3",
+    "teams": "16 drużyn",
+    "prize": "$5,000"
+  },
+  "matches": [
+    {
+      "id": 1,
+      "date": "26.01.2026, 18:00",
+      "status": "finished",
+      "format": "bo3",
+      "team1": {
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
+        "hasAngelkacs": true
+      },
+      "team2": {
+        "name": "OPPONENT_TEAM",
+        "logo": "OT",
+        "hasAngelkacs": false
+      },
+      "score": {
+        "team1": 2,
+        "team2": 1
+      },
+      "maps": [
+        {
+          "name": "Mirage",
+          "score_team1": 16,
+          "score_team2": 10
+        },
+        {
+          "name": "Inferno",
+          "score_team1": 8,
+          "score_team2": 16
+        },
+        {
+          "name": "Nuke",
+          "score_team1": 16,
+          "score_team2": 14
+        }
+      ],
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "Player2"
+        },
+        {
+          "name": "Player3"
+        },
+        {
+          "name": "Player4"
+        },
+        {
+          "name": "Player5"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "Opponent1"
+        },
+        {
+          "name": "Opponent2"
+        },
+        {
+          "name": "Opponent3"
+        },
+        {
+          "name": "Opponent4"
+        },
+        {
+          "name": "Opponent5"
+        }
+      ],
+      "link": "https://example.com/match/2"
+    }
+  ]
+}
+
+
+/* BO1 */
+
+{
+  "tournament": {
+    "id": "cs2-bo1-example",
+    "name": "CS2 BO1 Tournament Example",
+    "date": "25.01.2026, 18:00 CET",
+    "status": "finished",
+    "game": "cs2",
+    "organizer": "Organizer Name",
+    "format": "5v5 BO1",
+    "teams": "8 drużyn",
+    "prize": "$1,000"
+  },
+  "matches": [
+    {
+      "id": 1,
+      "date": "25.01.2026, 19:00",
+      "status": "finished",
+      "format": "bo1",
+      "team1": {
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
+        "hasAngelkacs": true
+      },
+      "team2": {
+        "name": "OPPONENT_TEAM",
+        "logo": "OT",
+        "hasAngelkacs": false
+      },
+      "score": {
+        "team1": 16,
+        "team2": 12
+      },
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "Player2"
+        },
+        {
+          "name": "Player3"
+        },
+        {
+          "name": "Player4"
+        },
+        {
+          "name": "Player5"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "Opponent1"
+        },
+        {
+          "name": "Opponent2"
+        },
+        {
+          "name": "Opponent3"
+        },
+        {
+          "name": "Opponent4"
+        },
+        {
+          "name": "Opponent5"
+        }
+      ],
+      "link": "https://example.com/match/1"
+    }
+  ]
+}
+
+
+FORTNIE SOLO
+
+{
+  "tournament": {
+    "id": "fortnite-solo-example",
+    "name": "Fortnite Solo Tournament Example",
+    "date": "27.01.2026, 19:00 CET",
+    "status": "finished",
+    "game": "fortnite",
+    "organizer": "Organizer Name",
+    "format": "Solo Battle Royale",
+    "teams": "100 graczy",
+    "prize": "$2,000"
+  },
+  "matches": [
+    {
+      "id": 1,
+      "date": "27.01.2026, 20:00",
+      "status": "finished",
+      "format": "fortnite",
+      "team1": {
+        "name": "SOLO_PLAYERS",
+        "logo": "SP",
+        "hasAngelkacs": true
+      },
+      "team2": null,
+      "score": {
+        "team1": 1,
+        "team2": 0
+      },
+      "stats": {
+        "position": 1,
+        "kills": 12,
+        "damage": 2450,
+        "survivalTime": "22:45"
+      },
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "FortnitePlayer1"
+        },
+        {
+          "name": "FortnitePlayer2"
+        },
+        {
+          "name": "FortnitePlayer3"
+        },
+        {
+          "name": "FortnitePlayer4"
+        }
+      ],
+      "playersTeam2": null,
+      "link": "https://twitch.tv/angelkacs"
+    }
+  ]
+}
+
+
+FORNITE DUO:
+
+{
+  "tournament": {
+    "id": "fortnite-duo-example",
+    "name": "Fortnite Duo Tournament Example",
+    "date": "28.01.2026, 18:00 CET",
+    "status": "upcoming",
+    "game": "fortnite",
+    "organizer": "Organizer Name",
+    "format": "Duo Battle Royale",
+    "teams": "50 drużyn",
+    "prize": "$3,000"
+  },
+  "matches": [
+    {
+      "id": 1,
+      "date": "28.01.2026, 19:00",
+      "status": "upcoming",
+      "format": "fortnite",
+      "team1": {
+        "name": "DUO_TEAM_ANGELKA",
+        "logo": "DTA",
+        "hasAngelkacs": true
+      },
+      "team2": null,
+      "score": {
+        "team1": 0,
+        "team2": 0
+      },
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "DuoPartner",
+          "isAngelkacs": false
+        }
+      ],
+      "playersTeam2": null,
+      "link": "https://twitch.tv/angelkacs"
+    }
+  ]
+}
+
+

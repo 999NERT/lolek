@@ -1,10 +1,11 @@
-// System turniejów Angelkacs - Poprawiona wersja z obsługą wielu meczów
+// System turniejów Angelkacs - Wersja z wyświetlaniem formatu meczów
 
 // Zmienne globalne
 let tournaments = [];
 let filteredTournaments = [];
-let currentFilter = 'all';
-let currentStatus = 'all';
+let currentGameFilter = 'all';
+let currentFormatFilter = 'all';
+let currentStatusFilter = 'all';
 let currentTournamentData = null;
 
 // Elementy DOM
@@ -14,8 +15,10 @@ const tournamentsGrid = document.getElementById('tournamentsGrid');
 const emptyState = document.getElementById('emptyState');
 const tournamentCount = document.getElementById('tournamentCount');
 const filterButtons = document.querySelectorAll('.filter-btn');
+const formatButtons = document.querySelectorAll('.format-btn');
 const statusButtons = document.querySelectorAll('.status-btn');
 const resetFiltersBtn = document.getElementById('resetFilters');
+const resetFiltersBtn2 = document.getElementById('resetFilters2');
 const refreshBtn = document.getElementById('refreshBtn');
 
 // Modal
@@ -50,7 +53,17 @@ function setupEventListeners() {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-            currentFilter = button.dataset.filter;
+            currentGameFilter = button.dataset.filter;
+            filterTournaments();
+        });
+    });
+    
+    // Filtry formatu
+    formatButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            formatButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            currentFormatFilter = button.dataset.format;
             filterTournaments();
         });
     });
@@ -60,13 +73,14 @@ function setupEventListeners() {
         button.addEventListener('click', () => {
             statusButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-            currentStatus = button.dataset.status;
+            currentStatusFilter = button.dataset.status;
             filterTournaments();
         });
     });
     
     // Przycisk resetuj filtry
     resetFiltersBtn.addEventListener('click', resetFilters);
+    resetFiltersBtn2.addEventListener('click', resetFilters);
     
     // Przycisk odśwież
     refreshBtn.addEventListener('click', () => {
@@ -109,6 +123,13 @@ function resetFilters() {
         }
     });
     
+    formatButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.format === 'all') {
+            btn.classList.add('active');
+        }
+    });
+    
     statusButtons.forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.status === 'all') {
@@ -116,8 +137,10 @@ function resetFilters() {
         }
     });
     
-    currentFilter = 'all';
-    currentStatus = 'all';
+    currentGameFilter = 'all';
+    currentFormatFilter = 'all';
+    currentStatusFilter = 'all';
+    
     filterTournaments();
 }
 
@@ -199,15 +222,34 @@ function filterTournaments() {
         const tournament = tournamentData.tournament;
         const game = tournament.game;
         const status = tournament.status;
+        const matches = tournamentData.matches || [];
+        
+        // Sprawdź formaty meczów w turnieju
+        let hasBo1 = false;
+        let hasBo3 = false;
+        let hasFortnite = false;
+        
+        matches.forEach(match => {
+            if (match.format === 'bo1' || !match.format) hasBo1 = true;
+            if (match.format === 'bo3') hasBo3 = true;
+            if (game === 'fortnite') hasFortnite = true;
+        });
         
         // Filtruj po grze
-        if (currentFilter !== 'all' && game !== currentFilter) {
+        if (currentGameFilter !== 'all' && game !== currentGameFilter) {
             return false;
         }
         
         // Filtruj po statusie
-        if (currentStatus !== 'all' && status !== currentStatus) {
+        if (currentStatusFilter !== 'all' && status !== currentStatusFilter) {
             return false;
+        }
+        
+        // Filtruj po formacie
+        if (currentFormatFilter !== 'all') {
+            if (currentFormatFilter === 'bo1' && !hasBo1) return false;
+            if (currentFormatFilter === 'bo3' && !hasBo3) return false;
+            if (currentFormatFilter === 'fortnite' && !hasFortnite) return false;
         }
         
         return true;
@@ -375,7 +417,12 @@ function openMatchModal(tournamentId) {
 function displayMatches(matches, gameType) {
     matchesList.innerHTML = '';
     
-    matches.forEach((match, index) => {
+    // Sortuj mecze po dacie (najnowsze na górze)
+    const sortedMatches = [...matches].sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+    });
+    
+    sortedMatches.forEach((match, index) => {
         const matchItem = createMatchItem(match, index, gameType);
         matchesList.appendChild(matchItem);
     });
@@ -413,7 +460,12 @@ function createMatchItem(match, index, gameType) {
     // Gracze
     const playersTeam1 = match.playersTeam1 || [];
     const playersTeam2 = match.playersTeam2 || [];
-    const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+    const allPlayers = [...playersTeam1, ...playersTeam2];
+    
+    // Format meczu
+    const matchFormat = match.format || 'bo1';
+    const formatText = matchFormat.toUpperCase();
+    const formatClass = `format-${matchFormat}`;
     
     // Wynik meczu
     const score = getMatchScore(match);
@@ -432,14 +484,18 @@ function createMatchItem(match, index, gameType) {
         <div class="match-preview">
             <div class="teams-container">
                 <div class="team-preview">
-                    <div class="team-logo-large">${getTeamLogo(match.team1)}</div>
+                    <div class="team-logo-large ${match.team1.hasAngelkacs ? 'team-angelkacs' : ''}">${getTeamLogo(match.team1)}</div>
                     <div class="team-name-large">${escapeHtml(match.team1.name)}</div>
                 </div>
                 
-                ${match.team2 ? `
+                <div class="match-middle">
+                    <div class="match-format ${formatClass}">${formatText}</div>
                     <div class="vs-text">VS</div>
+                </div>
+                
+                ${match.team2 ? `
                     <div class="team-preview">
-                        <div class="team-logo-large">${getTeamLogo(match.team2)}</div>
+                        <div class="team-logo-large ${match.team2.hasAngelkacs ? 'team-angelkacs' : ''}">${getTeamLogo(match.team2)}</div>
                         <div class="team-name-large">${escapeHtml(match.team2.name)}</div>
                     </div>
                 ` : ''}
@@ -448,6 +504,10 @@ function createMatchItem(match, index, gameType) {
             <div class="match-score-container">
                 <div class="match-score-large">${score}</div>
             </div>
+            
+            ${matchFormat === 'bo3' && match.maps ? renderMaps(match.maps, match.team1, match.team2) : ''}
+            
+            ${gameType === 'fortnite' && match.stats ? renderFortniteStats(match.stats) : ''}
             
             ${allPlayers.length > 0 ? `
                 <button class="toggle-players-btn" onclick="togglePlayers(${index})">
@@ -474,6 +534,88 @@ function createMatchItem(match, index, gameType) {
     `;
     
     return matchItem;
+}
+
+// Renderuj mapy dla BO3
+function renderMaps(maps, team1, team2) {
+    let team1MapsHTML = '';
+    let team2MapsHTML = '';
+    
+    maps.forEach(map => {
+        const team1Score = map.score_team1 || 0;
+        const team2Score = map.score_team2 || 0;
+        
+        // Określ zwycięzcę mapy
+        let team1MapClass = '';
+        let team2MapClass = '';
+        
+        if (team1Score > team2Score) {
+            team1MapClass = 'map-winner';
+            team2MapClass = 'map-loser';
+        } else if (team2Score > team1Score) {
+            team1MapClass = 'map-loser';
+            team2MapClass = 'map-winner';
+        } else {
+            team1MapClass = 'map-draw';
+            team2MapClass = 'map-draw';
+        }
+        
+        team1MapsHTML += `
+            <div class="map-item ${team1MapClass}">
+                <div class="map-name">${escapeHtml(map.name)}</div>
+                <div class="map-score">${team1Score}</div>
+            </div>
+        `;
+        
+        team2MapsHTML += `
+            <div class="map-item ${team2MapClass}">
+                <div class="map-name">${escapeHtml(map.name)}</div>
+                <div class="map-score">${team2Score}</div>
+            </div>
+        `;
+    });
+    
+    return `
+        <div class="maps-container">
+            <div class="maps-title">Wyniki map (BO3)</div>
+            <div class="maps-list">
+                <div class="team-maps team1-maps">
+                    ${team1MapsHTML}
+                </div>
+                <div class="maps-vs">VS</div>
+                <div class="team-maps team2-maps">
+                    ${team2MapsHTML}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Renderuj statystyki Fortnite
+function renderFortniteStats(stats) {
+    return `
+        <div class="fortnite-stats">
+            <div class="stats-title">Statystyki meczu</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Pozycja</div>
+                    <div class="stat-value">#${stats.position || 1}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Eliminacje</div>
+                    <div class="stat-value">${stats.kills || 0}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Obrażenia</div>
+                    <div class="stat-value">${stats.damage || 0}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Czas przeżycia</div>
+                    <div class="stat-value">${stats.survivalTime || '0:00'}</div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 // Pokaż/ukryj graczy
@@ -532,22 +674,20 @@ function displayAllPlayers(matchId, playersTeam1, playersTeam2, team1, team2, ga
                         </div>
                     </div>
                     
-                    ${team2 ? `
-                        <div class="team-players-section">
-                            <div class="team-header">
-                                <div class="team-label team2">${team2.name}</div>
-                            </div>
-                            <div class="players-row">
-                                ${team2HTML}
-                            </div>
+                    <div class="team-players-section">
+                        <div class="team-header">
+                            <div class="team-label team2">${team2.name}</div>
                         </div>
-                    ` : ''}
+                        <div class="players-row">
+                            ${team2HTML}
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
     } else {
         // Dla Fortnite lub pojedynczych graczy
-        const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+        const allPlayers = [...playersTeam1, ...playersTeam2];
         const playersHTML = allPlayers.map(player => createPlayerCard(player, team1)).join('');
         
         playersSection.innerHTML = `
@@ -606,17 +746,13 @@ function getTeamLogo(team) {
 }
 
 function getMatchScore(match) {
-    if (!match.score || match.score === null) {
-        return '- : -';
+    if (!match.score || (match.score.team1 === undefined && match.score.team2 === undefined)) {
+        return '0 : 0';
     }
     
-    if (typeof match.score === 'object') {
-        const team1Score = match.score.team1 !== undefined ? match.score.team1 : '-';
-        const team2Score = match.score.team2 !== undefined ? match.score.team2 : '-';
-        return `${team1Score} : ${team2Score}`;
-    }
-    
-    return String(match.score);
+    const team1Score = match.score.team1 !== undefined ? match.score.team1 : 0;
+    const team2Score = match.score.team2 !== undefined ? match.score.team2 : 0;
+    return `${team1Score} : ${team2Score}`;
 }
 
 function getPolishPlural(count) {

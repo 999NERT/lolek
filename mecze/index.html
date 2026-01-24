@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MECZE</title>
+    <title>System Turniejów Angelkacs</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -149,11 +149,11 @@
                 <div class="footer-content">
                     <div class="footer-logo">
                         <i class="fas fa-crown"></i>
-                        <span>Angelkacs</span>
+                        <span>Angelkacs Tournament System</span>
                     </div>
                     <div class="footer-info">
-                        <p> <span id="currentYear">2026</span></p>
-                        <p class="footer-note"></p>
+                        <p>System zarządzania turniejami gamingowymi © <span id="currentYear">2024</span></p>
+                        <p class="footer-note">Wszystkie dane są ładowane dynamicznie z plików JSON</p>
                     </div>
                 </div>
             </div>
@@ -193,62 +193,6 @@
     </div>
     
     <div id="modalOverlay" class="modal-overlay"></div>
-
-    <!-- Map Edit Modal -->
-    <div id="mapEditModal" class="modal map-edit-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <h2 id="mapEditTitle">Edytuj wynik mapy</h2>
-                    <div class="modal-subtitle">
-                        <span id="mapEditMatchInfo"></span>
-                    </div>
-                </div>
-                <button id="mapEditClose" class="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="map-edit-form">
-                    <div class="map-name-display">
-                        <h3 id="currentMapName">Mirage</h3>
-                    </div>
-                    
-                    <div class="score-inputs">
-                        <div class="score-input-team">
-                            <div class="team-label-large">
-                                <div class="team-logo-small" id="editTeam1Logo">A</div>
-                                <span id="editTeam1Name">TEAM_ANGELKA</span>
-                            </div>
-                            <input type="number" id="team1MapScore" min="0" max="100" value="0" class="score-input">
-                        </div>
-                        
-                        <div class="vs-separator">:</div>
-                        
-                        <div class="score-input-team">
-                            <div class="team-label-large">
-                                <div class="team-logo-small" id="editTeam2Logo">OT</div>
-                                <span id="editTeam2Name">TEAM_LUKISTEVE</span>
-                            </div>
-                            <input type="number" id="team2MapScore" min="0" max="100" value="0" class="score-input">
-                        </div>
-                    </div>
-                    
-                    <div class="map-edit-actions">
-                        <button id="cancelMapEdit" class="btn-secondary">
-                            <i class="fas fa-times"></i> Anuluj
-                        </button>
-                        <button id="saveMapScore" class="btn-primary">
-                            <i class="fas fa-save"></i> Zapisz wynik
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="mapEditOverlay" class="modal-overlay"></div>
 
     <!-- Scripts -->
     <script src="script.js"></script>

@@ -518,7 +518,7 @@ function createMatchItem(match, index, gameType) {
                 <div class="match-score-large">${score}</div>
             </div>
             
-            ${hasMaps ? createMapsSection(match.maps, index, match.team1, match.team2) : ''}
+            ${hasMaps ? createMapsSection(match.maps) : ''}
             
             ${allPlayers.length > 0 ? `
                 <button class="toggle-players-btn" data-match-index="${index}">
@@ -547,8 +547,8 @@ function createMatchItem(match, index, gameType) {
     return matchItem;
 }
 
-// Utwórz uproszczoną sekcję map dla BO3
-function createMapsSection(maps, matchIndex, team1, team2) {
+// Utwórz sekcję map dla BO3
+function createMapsSection(maps) {
     let mapsHTML = `
         <div class="maps-section">
             <div class="maps-title">
@@ -558,7 +558,7 @@ function createMapsSection(maps, matchIndex, team1, team2) {
             <div class="maps-list">
     `;
     
-    maps.forEach((map, mapIndex) => {
+    maps.forEach((map) => {
         const team1Score = map.score_team1 || 0;
         const team2Score = map.score_team2 || 0;
         

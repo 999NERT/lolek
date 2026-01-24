@@ -182,7 +182,7 @@
     {
       "id": 4,
       "date": "24.01.2026, 19:00",
-      "status": "upcoming",
+      "status": "finished",
       "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -238,7 +238,7 @@
     {
       "id": 5,
       "date": "24.01.2026, 21:00",
-      "status": "upcoming",
+      "status": "active",
       "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",

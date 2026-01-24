@@ -13,7 +13,7 @@
   "matches": [
     {
       "id": 1,
-      "date": "22.01, 19:00",
+      "date": "22.01.2026, 19:00",
       "status": "finished",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -25,7 +25,7 @@
         "logo": "G",
         "hasAngelkacs": false
       },
-      "score": 13 6,
+      "score": "13:6",
       "playersTeam1": [
         {
           "name": "Angelkacs",
@@ -62,7 +62,9 @@
         }
       ],
       "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
-    },
+    }
+  ]
+},
     {
       "id": 2,
       "date": "04.12, 19:30",

@@ -1,10 +1,11 @@
-// System turniejów Angelkacs - Kompaktowa wersja
+// System turniejów Angelkacs - Poprawiona wersja z obsługą wielu meczów
 
 // Zmienne globalne
 let tournaments = [];
 let filteredTournaments = [];
 let currentFilter = 'all';
 let currentStatus = 'all';
+let currentTournamentData = null;
 
 // Elementy DOM
 const loading = document.getElementById('loading');
@@ -163,7 +164,7 @@ async function loadTournaments() {
                 
                 // Sprawdź poprawność struktury danych
                 if (tournamentData && tournamentData.tournament && tournamentData.tournament.id) {
-                    console.log(`Załadowano turniej: ${tournamentData.tournament.name}`);
+                    console.log(`Załadowano turniej: ${tournamentData.tournament.name} z ${tournamentData.matches ? tournamentData.matches.length : 0} meczami`);
                     tournaments.push(tournamentData);
                 } else {
                     console.warn(`Nieprawidłowa struktura pliku: ${fileName}`);
@@ -272,12 +273,12 @@ function displayTournaments() {
         tournamentCard.innerHTML = `
             <div class="card-header">
                 <div class="card-title-row">
-                    <h3 class="card-title">${tournament.name}</h3>
+                    <h3 class="card-title">${escapeHtml(tournament.name)}</h3>
                     <div class="card-game ${gameClass}">${gameIcon} ${tournament.game.toUpperCase()}</div>
                 </div>
                 <div class="card-date">
                     <i class="far fa-calendar-alt"></i>
-                    ${tournament.date}
+                    ${escapeHtml(tournament.date)}
                 </div>
                 <div class="card-status ${statusClass}">${statusText}</div>
             </div>
@@ -286,22 +287,22 @@ function displayTournaments() {
                 <div class="card-details">
                     <div class="detail-item">
                         <div class="detail-label">Organizator</div>
-                        <div class="detail-value">${tournament.organizer}</div>
+                        <div class="detail-value">${escapeHtml(tournament.organizer)}</div>
                     </div>
                     
                     <div class="detail-item">
                         <div class="detail-label">Format</div>
-                        <div class="detail-value">${tournament.format}</div>
+                        <div class="detail-value">${escapeHtml(tournament.format)}</div>
                     </div>
                     
                     <div class="detail-item">
                         <div class="detail-label">Drużyny/Gracze</div>
-                        <div class="detail-value">${tournament.teams}</div>
+                        <div class="detail-value">${escapeHtml(tournament.teams)}</div>
                     </div>
                     
                     <div class="detail-item">
                         <div class="detail-label">Pula nagród</div>
-                        <div class="detail-value">${tournament.prize}</div>
+                        <div class="detail-value">${escapeHtml(tournament.prize)}</div>
                     </div>
                 </div>
             </div>
@@ -324,10 +325,16 @@ function displayTournaments() {
 // Otwórz modal z meczami
 function openMatchModal(tournamentId) {
     const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
-    if (!tournamentData) return;
+    if (!tournamentData) {
+        console.error(`Nie znaleziono turnieju o ID: ${tournamentId}`);
+        return;
+    }
     
+    currentTournamentData = tournamentData;
     const tournament = tournamentData.tournament;
     const matches = tournamentData.matches || [];
+    
+    console.log(`Otwieranie modala dla turnieju: ${tournament.name}, mecze: ${matches.length}`);
     
     // Ustaw informacje o turnieju
     modalTournamentName.textContent = tournament.name;
@@ -357,10 +364,6 @@ function openMatchModal(tournamentId) {
     modalStatus.style.borderColor = statusColor;
     modalStatus.style.backgroundColor = statusColor + '15';
     
-    // Zapisz ID turnieju w modal dla późniejszego użycia
-    matchModal.dataset.tournamentId = tournamentId;
-    matchModal.dataset.tournamentGame = tournament.game;
-    
     // Wyświetl mecze
     if (matches.length === 0) {
         matchesList.innerHTML = '';
@@ -381,107 +384,103 @@ function displayMatches(matches, gameType) {
     matchesList.innerHTML = '';
     
     matches.forEach((match, index) => {
-        const matchItem = document.createElement('div');
-        matchItem.className = 'match-item';
-        matchItem.dataset.matchId = index;
-        
-        // Status meczu
-        let statusText = '';
-        let statusColor = '#9d4edd';
-        
-        switch(match.status) {
-            case 'cancelled':
-                statusText = 'ANULOWANY';
-                statusColor = '#a0a0cc';
-                break;
-            case 'finished':
-                statusText = 'ZAKOŃCZONY';
-                statusColor = '#0acf83';
-                break;
-            case 'upcoming':
-                statusText = 'NADCHODZĄCY';
-                statusColor = '#9d4edd';
-                break;
-            case 'live':
-                statusText = 'NA ŻYWO';
-                statusColor = '#ff4757';
-                break;
-        }
-        
-        // Gracze
-        const playersTeam1 = match.playersTeam1 || [];
-        const playersTeam2 = match.playersTeam2 || [];
-        const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
-        
-        // Wynik meczu
-        const score = getMatchScore(match);
-        
-        matchItem.innerHTML = `
-            <div class="match-header" onclick="toggleMatchDetails(${index})">
-                <div class="match-date">
-                    <i class="far fa-calendar-alt"></i>
-                    ${match.date}
-                </div>
-                <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}; background-color: ${statusColor}15">
-                    ${statusText}
-                </div>
-            </div>
-            
-            <div class="match-preview">
-                <div class="teams-container">
-                    <div class="team-preview">
-                        <div class="team-logo-large">${getTeamLogo(match.team1)}</div>
-                        <div class="team-name-large">${match.team1.name}</div>
-                    </div>
-                    
-                    ${match.team2 ? `
-                        <div class="team-preview">
-                            <div class="team-logo-large">${getTeamLogo(match.team2)}</div>
-                            <div class="team-name-large">${match.team2.name}</div>
-                        </div>
-                    ` : ''}
-                </div>
-                
-                <div class="match-score-container">
-                    <div class="match-score-large">${score}</div>
-                </div>
-                
-                ${allPlayers.length > 0 ? `
-                    <button class="toggle-players-btn" onclick="event.stopPropagation(); togglePlayers(${index})">
-                        <i class="fas fa-chevron-down"></i>
-                        ${allPlayers.length === 1 ? 'Pokaż gracza' : 'Pokaż graczy'}
-                    </button>
-                ` : ''}
-            </div>
-            
-            ${allPlayers.length > 0 ? `
-                <div class="players-section" id="playersSection${index}">
-                    <!-- Gracze będą ładowani tutaj -->
-                </div>
-            ` : ''}
-            
-            ${match.link ? `
-                <div class="match-actions">
-                    <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
-                        <i class="fas fa-external-link-alt"></i>
-                        ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
-                    </button>
-                </div>
-            ` : ''}
-        `;
-        
+        const matchItem = createMatchItem(match, index, gameType);
         matchesList.appendChild(matchItem);
     });
 }
 
-// Rozwiń/zwiń szczegóły meczu
-function toggleMatchDetails(matchId) {
-    const playersSection = document.getElementById(`playersSection${matchId}`);
+// Utwórz element meczu
+function createMatchItem(match, index, gameType) {
+    const matchItem = document.createElement('div');
+    matchItem.className = 'match-item';
+    matchItem.dataset.matchId = index;
     
-    if (playersSection && playersSection.classList.contains('expanded')) {
-        playersSection.classList.remove('expanded');
-        playersSection.innerHTML = '';
+    // Status meczu
+    let statusText = '';
+    let statusColor = '#9d4edd';
+    
+    switch(match.status) {
+        case 'cancelled':
+            statusText = 'ANULOWANY';
+            statusColor = '#a0a0cc';
+            break;
+        case 'finished':
+            statusText = 'ZAKOŃCZONY';
+            statusColor = '#0acf83';
+            break;
+        case 'upcoming':
+            statusText = 'NADCHODZĄCY';
+            statusColor = '#9d4edd';
+            break;
+        case 'live':
+            statusText = 'NA ŻYWO';
+            statusColor = '#ff4757';
+            break;
     }
+    
+    // Gracze
+    const playersTeam1 = match.playersTeam1 || [];
+    const playersTeam2 = match.playersTeam2 || [];
+    const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
+    
+    // Wynik meczu
+    const score = getMatchScore(match);
+    
+    matchItem.innerHTML = `
+        <div class="match-header">
+            <div class="match-date">
+                <i class="far fa-calendar-alt"></i>
+                ${escapeHtml(match.date)}
+            </div>
+            <div class="match-status" style="color: ${statusColor}; border-color: ${statusColor}; background-color: ${statusColor}15">
+                ${statusText}
+            </div>
+        </div>
+        
+        <div class="match-preview">
+            <div class="teams-container">
+                <div class="team-preview">
+                    <div class="team-logo-large">${getTeamLogo(match.team1)}</div>
+                    <div class="team-name-large">${escapeHtml(match.team1.name)}</div>
+                </div>
+                
+                ${match.team2 ? `
+                    <div class="team-preview">
+                        <div class="team-logo-large">${getTeamLogo(match.team2)}</div>
+                        <div class="team-name-large">${escapeHtml(match.team2.name)}</div>
+                    </div>
+                ` : ''}
+            </div>
+            
+            <div class="match-score-container">
+                <div class="match-score-large">${score}</div>
+            </div>
+            
+            ${allPlayers.length > 0 ? `
+                <button class="toggle-players-btn" onclick="togglePlayers(${index})">
+                    <i class="fas fa-chevron-down"></i>
+                    ${allPlayers.length === 1 ? 'Pokaż gracza' : 'Pokaż graczy'}
+                </button>
+            ` : ''}
+        </div>
+        
+        ${allPlayers.length > 0 ? `
+            <div class="players-section" id="playersSection${index}">
+                <!-- Gracze będą ładowani tutaj -->
+            </div>
+        ` : ''}
+        
+        ${match.link ? `
+            <div class="match-actions">
+                <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                    ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
+                </button>
+            </div>
+        ` : ''}
+    `;
+    
+    return matchItem;
 }
 
 // Pokaż/ukryj graczy
@@ -502,12 +501,9 @@ function togglePlayers(matchId) {
         }, 300);
     } else {
         // Znajdź dane meczu
-        const tournamentId = matchModal.dataset.tournamentId;
-        const gameType = matchModal.dataset.tournamentGame;
-        const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
-        
-        if (tournamentData && tournamentData.matches[matchId]) {
-            const match = tournamentData.matches[matchId];
+        if (currentTournamentData && currentTournamentData.matches[matchId]) {
+            const match = currentTournamentData.matches[matchId];
+            const gameType = currentTournamentData.tournament.game;
             const playersTeam1 = match.playersTeam1 || [];
             const playersTeam2 = match.playersTeam2 || [];
             const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
@@ -528,10 +524,15 @@ function displayAllPlayers(matchId, players, team1, team2, gameType) {
     
     if (gameType === 'cs2' && team2) {
         // Dla CS2: 2 rzędy po 5 graczy
-        const playersTeam1 = players.filter(p => team1.hasAngelkacs && p.isAngelkacs || 
-                                               players.slice(0, 5).includes(p));
-        const playersTeam2 = players.filter(p => team2.hasAngelkacs && p.isAngelkacs || 
-                                               players.slice(5).includes(p));
+        const playersTeam1 = players.filter(p => 
+            team1.hasAngelkacs && p.isAngelkacs || 
+            players.slice(0, 5).some(p2 => p2.name === p.name)
+        );
+        
+        const playersTeam2 = players.filter(p => 
+            team2.hasAngelkacs && p.isAngelkacs || 
+            players.slice(5).some(p2 => p2.name === p.name)
+        );
         
         const team1HTML = playersTeam1.map(player => createPlayerCard(player, team1)).join('');
         const team2HTML = playersTeam2.map(player => createPlayerCard(player, team2)).join('');
@@ -549,14 +550,16 @@ function displayAllPlayers(matchId, players, team1, team2, gameType) {
                         </div>
                     </div>
                     
-                    <div class="team-players-section">
-                        <div class="team-header">
-                            <div class="team-label team2">${team2.name}</div>
+                    ${team2 ? `
+                        <div class="team-players-section">
+                            <div class="team-header">
+                                <div class="team-label team2">${team2.name}</div>
+                            </div>
+                            <div class="players-row">
+                                ${team2HTML}
+                            </div>
                         </div>
-                        <div class="players-row">
-                            ${team2HTML}
-                        </div>
-                    </div>
+                    ` : ''}
                 </div>
             </div>
         `;
@@ -584,7 +587,7 @@ function createPlayerCard(player, team) {
             <div class="player-icon">
                 <i class="fas fa-user${isAngelkacs ? '-crown' : ''}"></i>
             </div>
-            <div class="player-name">${player.name}</div>
+            <div class="player-name">${escapeHtml(player.name)}</div>
         </div>
     `;
 }
@@ -609,6 +612,8 @@ function closeModal() {
         btn.classList.remove('active');
         btn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
     });
+    
+    currentTournamentData = null;
 }
 
 // Pomocnicze funkcje
@@ -630,7 +635,13 @@ function getPolishPlural(count) {
     return 'ów';
 }
 
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // Eksport funkcji do globalnego scope
-window.toggleMatchDetails = toggleMatchDetails;
 window.togglePlayers = togglePlayers;
 window.openMatchModal = openMatchModal;

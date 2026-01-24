@@ -6,7 +6,7 @@
     "status": "active",
     "game": "cs2",
     "organizer": "Betclic",
-    "format": "5v5",
+    "format": "5v5 BO1",
     "teams": "12 drużyn",
     "prize": "???"
   },
@@ -15,6 +15,7 @@
       "id": 1,
       "date": "22.01.2026, 19:00",
       "status": "finished",
+      "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
         "logo": "A",
@@ -70,6 +71,7 @@
       "id": 2,
       "date": "23.01.2026, 18:00",
       "status": "finished",
+      "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
         "logo": "A",
@@ -125,6 +127,7 @@
       "id": 3,
       "date": "23.01.2026, 21:00",
       "status": "finished",
+      "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
         "logo": "A",
@@ -180,6 +183,7 @@
       "id": 4,
       "date": "24.01.2026, 19:00",
       "status": "upcoming",
+      "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
         "logo": "A",
@@ -235,6 +239,7 @@
       "id": 5,
       "date": "24.01.2026, 21:00",
       "status": "upcoming",
+      "format": "bo1",
       "team1": {
         "name": "TEAM_ANGELKA",
         "logo": "A",

@@ -68,7 +68,7 @@
     },
     {
      "id": 2,
-      "date": "23.01.2026, 19:00",
+      "date": "23.01.2026, 18:00",
       "status": "finished",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -123,7 +123,7 @@
     },
     {
       "id": 3,
-      "date": "22.01.2026, 19:00",
+      "date": "23.01.2026, 21:00",
       "status": "finished",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -131,13 +131,13 @@
         "hasAngelkacs": true
       },
       "team2": {
-        "name": "TEAM_GUZIK",
+        "name": "TEAM_ARQUEL",
         "logo": "G",
         "hasAngelkacs": false
       },
       "score": {
         "team1": 13,
-        "team2": 6
+        "team2": 9
       },
       "playersTeam1": [
         {
@@ -159,16 +159,16 @@
       ],
       "playersTeam2": [
         {
-          "name": "LeGuzikens"
+          "name": "ARQUEL""
         },
         {
-          "name": "TiTom"
+          "name": "MrowaNiNjA"
         },
         {
-          "name": "belzebub"
+          "name": "szpadluch"
         },
         {
-          "name": "omlel187"
+          "name": "szymeksiema"
         },
         {
           "name": "Kulesz"
@@ -178,21 +178,21 @@
     },
      {
       "id": 4,
-      "date": "22.01.2026, 19:00",
-      "status": "finished",
+      "date": "24.01.2026, 19:00",
+      "status": "upcoming",
       "team1": {
         "name": "TEAM_ANGELKA",
         "logo": "A",
         "hasAngelkacs": true
       },
       "team2": {
-        "name": "TEAM_GUZIK",
+        "name": "TEAM_JASKÓŁ",
         "logo": "G",
         "hasAngelkacs": false
       },
       "score": {
-        "team1": 13,
-        "team2": 6
+        "team1": 0,
+        "team2": 0
       },
       "playersTeam1": [
         {
@@ -214,19 +214,74 @@
       ],
       "playersTeam2": [
         {
-          "name": "LeGuzikens"
+          "name": "Jaskół"
         },
         {
-          "name": "TiTom"
+          "name": "Ahwaz"
         },
         {
-          "name": "belzebub"
+          "name": "Stormblessed"
         },
         {
-          "name": "omlel187"
+          "name": "asdfmovvv"
         },
         {
-          "name": "Kulesz"
+          "name": "Wioster"
+        }
+      ],
+      "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
+    }
+        {
+      "id": 5,
+      "date": "22.01.2026, 21:00",
+      "status": "upcoming",
+      "team1": {
+        "name": "TEAM_ANGELKA",
+        "logo": "A",
+        "hasAngelkacs": true
+      },
+      "team2": {
+        "name": "TEAM_LEQUT",
+        "logo": "G",
+        "hasAngelkacs": false
+      },
+      "score": {
+        "team1": 13,
+        "team2": 9
+      },
+      "playersTeam1": [
+        {
+          "name": "Angelkacs",
+          "isAngelkacs": true
+        },
+        {
+          "name": "AK1ng_"
+        },
+        {
+          "name": "Melciaaaa"
+        },
+        {
+          "name": "Bizi69Hz"
+        },
+        {
+          "name": "wylkanit"
+        }
+      ],
+      "playersTeam2": [
+        {
+          "name": "Lequt"
+        },
+        {
+          "name": "maquk_"
+        },
+        {
+          "name": "qtasJanina"
+        },
+        {
+          "name": "pryk"
+        },
+        {
+          "name": "czeczen_0"
         }
       ],
       "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"

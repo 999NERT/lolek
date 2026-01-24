@@ -540,21 +540,21 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 1000;
     backdrop-filter: blur(5px);
     display: none;
 }
 
-/* Modal - POPRAWIONY SCROLL */
+/* Modal - ZMIENIONO: Pojedynczy scroll dla całego modala */
 .modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
-    max-width: 800px;
-    max-height: 85vh;
+    max-width: 900px;
+    height: 85vh;
     background: var(--card-bg);
     border-radius: 12px;
     z-index: 1001;
@@ -569,7 +569,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    max-height: 85vh;
+    width: 100%;
 }
 
 .modal-header {
@@ -634,19 +634,18 @@ body {
     color: var(--danger-color);
 }
 
-/* Modal Body - POPRAWIONY SCROLL */
+/* Modal Body - GŁÓWNA ZMIANA: Jeden scroll dla całego body */
 .modal-body {
     padding: 0;
     overflow-y: auto;
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: block;
 }
 
 .no-matches {
     text-align: center;
     padding: 40px 20px;
-    flex: 1;
+    height: 100%;
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -670,30 +669,28 @@ body {
     margin-bottom: 30px;
 }
 
-/* Matches List - POPRAWIONE */
+/* Matches List - BEZ SCROLLA, naturalny flow */
 .matches-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    flex: 1;
-    overflow-y: visible;
-    min-height: 200px;
+    min-height: auto;
 }
 
 /* Custom scrollbar dla modal-body */
 .modal-body::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 .modal-body::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 .modal-body::-webkit-scrollbar-thumb:hover {
@@ -1080,7 +1077,8 @@ body {
     
     .modal {
         width: 95%;
-        max-height: 90vh;
+        height: 90vh;
+        max-width: 95%;
     }
     
     .teams-container {
@@ -1100,10 +1098,6 @@ body {
     
     .players-grid-cs2 {
         grid-template-columns: 1fr;
-    }
-    
-    .modal-content {
-        max-height: 90vh;
     }
 }
 

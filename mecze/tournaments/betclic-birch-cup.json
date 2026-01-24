@@ -68,7 +68,7 @@
     },
     {
      "id": 2,
-      "date": "22.01.2026, 19:00",
+      "date": "23.01.2026, 19:00",
       "status": "finished",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -76,7 +76,7 @@
         "hasAngelkacs": true
       },
       "team2": {
-        "name": "TEAM_GUZIK",
+        "name": "TEAM_GANGAMURUN",
         "logo": "G",
         "hasAngelkacs": false
       },
@@ -104,22 +104,22 @@
       ],
       "playersTeam2": [
         {
-          "name": "LeGuzikens"
+          "name": "gangamurun"
         },
         {
-          "name": "TiTom"
+          "name": "Inguss"
         },
         {
-          "name": "belzebub"
+          "name": "898989898"
         },
         {
-          "name": "omlel187"
+          "name": "EMILUN1O"
         },
         {
-          "name": "Kulesz"
+          "name": "presha"
         }
       ],
-      "link": "https://www.faceit.com/pl/cs2/room/1-8f4612f0-5138-4ed0-a794-ab329816b80c/scoreboard"
+      "link": "https://www.faceit.com/pl/cs2/room/1-f491c312-650a-464f-b5f1-04e58a8c1d14d"
     },
     {
       "id": 3,

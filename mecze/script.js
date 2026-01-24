@@ -110,6 +110,15 @@ function setupEventListeners() {
             closeModal();
         }
     });
+    
+    // Delegowane eventy dla przycisków w modal
+    matchesList.addEventListener('click', (e) => {
+        if (e.target.closest('.toggle-players-btn')) {
+            const btn = e.target.closest('.toggle-players-btn');
+            const matchIndex = parseInt(btn.dataset.matchIndex);
+            togglePlayers(matchIndex, btn);
+        }
+    });
 }
 
 // Resetuj wszystkie filtry
@@ -218,12 +227,10 @@ function filterTournaments() {
         // Sprawdź formaty meczów w turnieju
         let hasBo1 = false;
         let hasBo3 = false;
-        let hasFortnite = false;
         
         matches.forEach(match => {
             if (match.format === 'bo1' || !match.format) hasBo1 = true;
             if (match.format === 'bo3') hasBo3 = true;
-            if (game === 'fortnite') hasFortnite = true;
         });
         
         // Filtruj po grze
@@ -240,7 +247,6 @@ function filterTournaments() {
         if (currentFormatFilter !== 'all') {
             if (currentFormatFilter === 'bo1' && !hasBo1) return false;
             if (currentFormatFilter === 'bo3' && !hasBo3) return false;
-            if (currentFormatFilter === 'fortnite' && !hasFortnite) return false;
         }
         
         return true;
@@ -337,7 +343,7 @@ function displayTournaments() {
                     <i class="fas fa-gamepad"></i>
                     ${matches.length} mecz${getPolishPlural(matches.length)}
                 </div>
-                <button class="view-btn" onclick="event.stopPropagation(); openMatchModal('${tournament.id}')">
+                <button class="view-btn">
                     <i class="fas fa-eye"></i> Zobacz mecze
                 </button>
             </div>
@@ -417,11 +423,11 @@ function displayMatches(matches, gameType) {
     });
 }
 
-// Utwórz element meczu - NAPRAWIONA FUNKCJA
+// Utwórz element meczu
 function createMatchItem(match, index, gameType) {
     const matchItem = document.createElement('div');
     matchItem.className = 'match-item';
-    matchItem.dataset.matchId = index;
+    matchItem.dataset.matchId = match.id;
     
     // Status meczu
     let statusText = '';
@@ -511,7 +517,7 @@ function createMatchItem(match, index, gameType) {
         
         ${match.link ? `
             <div class="match-actions">
-                <button class="match-link-btn" onclick="window.open('${match.link}', '_blank')">
+                <button class="match-link-btn">
                     <i class="fas fa-external-link-alt"></i>
                     ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
                 </button>
@@ -519,32 +525,31 @@ function createMatchItem(match, index, gameType) {
         ` : ''}
     `;
     
-    // Dodajemy event listener dla przycisku Pokaż graczy
-    const toggleBtn = matchItem.querySelector('.toggle-players-btn');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            togglePlayers(parseInt(toggleBtn.dataset.matchIndex));
+    // Dodaj event listener dla przycisku linku
+    const linkBtn = matchItem.querySelector('.match-link-btn');
+    if (linkBtn) {
+        linkBtn.addEventListener('click', () => {
+            window.open(match.link, '_blank');
         });
     }
     
     return matchItem;
 }
 
-// Pokaż/ukryj graczy - NAPRAWIONA FUNKCJA
-function togglePlayers(matchIndex) {
+// Pokaż/ukryj graczy
+function togglePlayers(matchIndex, button) {
     const playersSection = document.getElementById(`playersSection${matchIndex}`);
-    const toggleBtn = document.querySelector(`.toggle-players-btn[data-match-index="${matchIndex}"]`);
     
-    if (!playersSection || !toggleBtn) {
-        console.error('Nie znaleziono sekcji graczy lub przycisku');
+    if (!playersSection) {
+        console.error('Nie znaleziono sekcji graczy');
         return;
     }
     
     if (playersSection.classList.contains('expanded')) {
         // Ukryj graczy
         playersSection.classList.remove('expanded');
-        toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
-        toggleBtn.classList.remove('active');
+        button.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż graczy';
+        button.classList.remove('active');
         
         // Opóźnione czyszczenie
         setTimeout(() => {
@@ -561,8 +566,8 @@ function togglePlayers(matchIndex) {
             if (playersTeam1.length > 0 || playersTeam2.length > 0) {
                 displayAllPlayers(matchIndex, playersTeam1, playersTeam2, match.team1, match.team2, gameType);
                 playersSection.classList.add('expanded');
-                toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
-                toggleBtn.classList.add('active');
+                button.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
+                button.classList.add('active');
             }
         }
     }

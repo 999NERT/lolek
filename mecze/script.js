@@ -5,6 +5,8 @@ let currentGameFilter = 'all';
 let currentFormatFilter = 'all';
 let currentStatusFilter = 'all';
 let currentTournamentData = null;
+let currentMatchIndex = null;
+let currentMapIndex = null;
 
 // Elementy DOM
 const loading = document.getElementById('loading');
@@ -28,6 +30,22 @@ const modalDate = document.getElementById('modalDate');
 const modalStatus = document.getElementById('modalStatus');
 const matchesList = document.getElementById('matchesList');
 const noMatches = document.getElementById('noMatches');
+
+// Map Edit Modal
+const mapEditModal = document.getElementById('mapEditModal');
+const mapEditOverlay = document.getElementById('mapEditOverlay');
+const mapEditClose = document.getElementById('mapEditClose');
+const cancelMapEdit = document.getElementById('cancelMapEdit');
+const saveMapScore = document.getElementById('saveMapScore');
+const mapEditTitle = document.getElementById('mapEditTitle');
+const mapEditMatchInfo = document.getElementById('mapEditMatchInfo');
+const currentMapName = document.getElementById('currentMapName');
+const editTeam1Name = document.getElementById('editTeam1Name');
+const editTeam2Name = document.getElementById('editTeam2Name');
+const editTeam1Logo = document.getElementById('editTeam1Logo');
+const editTeam2Logo = document.getElementById('editTeam2Logo');
+const team1MapScore = document.getElementById('team1MapScore');
+const team2MapScore = document.getElementById('team2MapScore');
 
 // Inicjalizacja
 document.addEventListener('DOMContentLoaded', () => {
@@ -100,14 +118,26 @@ function setupEventListeners() {
         }
     });
     
-    // Zamknięcie modala
+    // Zamknięcie modala meczów
     modalClose.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', closeModal);
     
-    // Zamknięcie modala klawiszem Escape
+    // Zamknięcie modala edycji mapy
+    mapEditClose.addEventListener('click', closeMapEditModal);
+    cancelMapEdit.addEventListener('click', closeMapEditModal);
+    mapEditOverlay.addEventListener('click', closeMapEditModal);
+    
+    // Zapis wyniku mapy
+    saveMapScore.addEventListener('click', saveMapScoreHandler);
+    
+    // Zamknięcie modalów klawiszem Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeModal();
+            if (mapEditModal.style.display === 'flex') {
+                closeMapEditModal();
+            } else if (matchModal.style.display === 'flex') {
+                closeModal();
+            }
         }
     });
     
@@ -132,6 +162,15 @@ function setupEventListeners() {
                     window.open(match.link, '_blank');
                 }
             }
+            e.preventDefault();
+        }
+        
+        // Przycisk edycji mapy
+        const mapEditBtn = e.target.closest('.map-edit-btn');
+        if (mapEditBtn) {
+            const matchIndex = parseInt(mapEditBtn.dataset.matchIndex);
+            const mapIndex = parseInt(mapEditBtn.dataset.mapIndex);
+            openMapEditModal(matchIndex, mapIndex);
             e.preventDefault();
         }
     });
@@ -479,6 +518,9 @@ function createMatchItem(match, index, gameType) {
     // Wynik meczu
     const score = getMatchScore(match);
     
+    // Sprawdź czy są mapy (dla BO3)
+    const hasMaps = match.maps && match.maps.length > 0;
+    
     // GENERUJEMY HTML DLA MECZU
     matchItem.innerHTML = `
         <div class="match-header">
@@ -515,6 +557,8 @@ function createMatchItem(match, index, gameType) {
                 <div class="match-score-large">${score}</div>
             </div>
             
+            ${hasMaps ? createMapsSection(match.maps, index, match.team1, match.team2) : ''}
+            
             ${allPlayers.length > 0 ? `
                 <button class="toggle-players-btn" data-match-index="${index}">
                     <i class="fas fa-chevron-down"></i>
@@ -529,17 +573,192 @@ function createMatchItem(match, index, gameType) {
             </div>
         ` : ''}
         
-        ${match.link ? `
-            <div class="match-actions">
+        <div class="match-actions">
+            ${match.link ? `
                 <button class="match-link-btn" data-match-index="${index}">
                     <i class="fas fa-external-link-alt"></i>
                     ${match.status === 'live' ? 'Oglądaj na żywo' : 'Zobacz szczegóły'}
                 </button>
-            </div>
-        ` : ''}
+            ` : '<div></div>'}
+            
+            ${hasMaps ? `
+                <button class="btn-secondary" onclick="updateMatchScoreFromMaps(${index})">
+                    <i class="fas fa-sync-alt"></i> Oblicz wynik z map
+                </button>
+            ` : ''}
+        </div>
     `;
     
     return matchItem;
+}
+
+// Utwórz sekcję map dla BO3
+function createMapsSection(maps, matchIndex, team1, team2) {
+    let mapsHTML = `
+        <div class="maps-section">
+            <div class="maps-title">
+                <div class="maps-title-text">
+                    <i class="fas fa-map"></i>
+                    Mapy (BO${maps.length})
+                </div>
+            </div>
+            <div class="maps-list">
+    `;
+    
+    maps.forEach((map, mapIndex) => {
+        const team1Score = map.score_team1 || 0;
+        const team2Score = map.score_team2 || 0;
+        
+        // Określ klasę dla mapy (kto wygrał)
+        let mapClass = '';
+        if (team1Score > team2Score) {
+            mapClass = 'winner-team1';
+        } else if (team2Score > team1Score) {
+            mapClass = 'winner-team2';
+        } else {
+            mapClass = 'draw';
+        }
+        
+        mapsHTML += `
+            <div class="map-item ${mapClass}">
+                <button class="map-edit-btn" data-match-index="${matchIndex}" data-map-index="${mapIndex}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <div class="map-header">
+                    <div class="map-name">${escapeHtml(map.name)}</div>
+                    <div class="map-score">${team1Score} : ${team2Score}</div>
+                </div>
+                <div class="map-teams">
+                    <span>${getTeamLogo(team1)} ${team1.name.substring(0, 10)}${team1.name.length > 10 ? '...' : ''}</span>
+                    <span>${getTeamLogo(team2)} ${team2.name.substring(0, 10)}${team2.name.length > 10 ? '...' : ''}</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    mapsHTML += `
+            </div>
+        </div>
+    `;
+    
+    return mapsHTML;
+}
+
+// Otwórz modal edycji mapy
+function openMapEditModal(matchIndex, mapIndex) {
+    if (!currentTournamentData || !currentTournamentData.matches[matchIndex]) {
+        console.error('Nie znaleziono meczu');
+        return;
+    }
+    
+    const match = currentTournamentData.matches[matchIndex];
+    const map = match.maps[mapIndex];
+    
+    if (!map) {
+        console.error('Nie znaleziono mapy');
+        return;
+    }
+    
+    currentMatchIndex = matchIndex;
+    currentMapIndex = mapIndex;
+    
+    // Ustaw informacje w modal
+    mapEditTitle.textContent = 'Edytuj wynik mapy';
+    mapEditMatchInfo.textContent = `Mecz ${matchIndex + 1} - ${match.date}`;
+    currentMapName.textContent = map.name;
+    editTeam1Name.textContent = match.team1.name;
+    editTeam2Name.textContent = match.team2.name;
+    editTeam1Logo.textContent = getTeamLogo(match.team1);
+    editTeam2Logo.textContent = getTeamLogo(match.team2);
+    team1MapScore.value = map.score_team1 || 0;
+    team2MapScore.value = map.score_team2 || 0;
+    
+    // Ustaw klasy dla logo drużyn
+    editTeam1Logo.className = `team-logo-small ${match.team1.hasAngelkacs ? 'team-angelkacs' : ''}`;
+    editTeam2Logo.className = `team-logo-small ${match.team2.hasAngelkacs ? 'team-angelkacs' : ''}`;
+    
+    // Pokaż modal
+    mapEditModal.style.display = 'flex';
+    mapEditOverlay.style.display = 'block';
+}
+
+// Zamknij modal edycji mapy
+function closeMapEditModal() {
+    mapEditModal.style.display = 'none';
+    mapEditOverlay.style.display = 'none';
+    currentMatchIndex = null;
+    currentMapIndex = null;
+}
+
+// Zapisz wynik mapy
+function saveMapScoreHandler() {
+    if (currentMatchIndex === null || currentMapIndex === null) {
+        console.error('Brak danych mapy do zapisania');
+        return;
+    }
+    
+    const team1Score = parseInt(team1MapScore.value) || 0;
+    const team2Score = parseInt(team2MapScore.value) || 0;
+    
+    // Aktualizuj dane w currentTournamentData
+    currentTournamentData.matches[currentMatchIndex].maps[currentMapIndex].score_team1 = team1Score;
+    currentTournamentData.matches[currentMatchIndex].maps[currentMapIndex].score_team2 = team2Score;
+    
+    // Zamknij modal
+    closeMapEditModal();
+    
+    // Odśwież wyświetlanie meczów
+    const tournament = currentTournamentData.tournament;
+    const matches = currentTournamentData.matches;
+    displayMatches(matches, tournament.game);
+    
+    // Pokaż komunikat o sukcesie
+    showNotification('Wynik mapy został zapisany!', 'success');
+}
+
+// Oblicz wynik meczu z map (dla BO3)
+function updateMatchScoreFromMaps(matchIndex) {
+    if (!currentTournamentData || !currentTournamentData.matches[matchIndex]) {
+        console.error('Nie znaleziono meczu');
+        return;
+    }
+    
+    const match = currentTournamentData.matches[matchIndex];
+    
+    if (!match.maps || match.maps.length === 0) {
+        console.error('Brak map do obliczenia wyniku');
+        return;
+    }
+    
+    let team1Wins = 0;
+    let team2Wins = 0;
+    
+    // Oblicz wygrane mapy
+    match.maps.forEach(map => {
+        const team1Score = map.score_team1 || 0;
+        const team2Score = map.score_team2 || 0;
+        
+        if (team1Score > team2Score) {
+            team1Wins++;
+        } else if (team2Score > team1Score) {
+            team2Wins++;
+        }
+        // Remis nie liczy się jako wygrana dla żadnej drużyny
+    });
+    
+    // Zaktualizuj wynik meczu
+    match.score = {
+        team1: team1Wins,
+        team2: team2Wins
+    };
+    
+    // Odśwież wyświetlanie meczów
+    const tournament = currentTournamentData.tournament;
+    const matches = currentTournamentData.matches;
+    displayMatches(matches, tournament.game);
+    
+    // Pokaż komunikat
+    showNotification(`Wynik meczu zaktualizowany: ${team1Wins}:${team2Wins}`, 'success');
 }
 
 // Pokaż/ukryj graczy
@@ -642,7 +861,7 @@ function createPlayerCard(player, team) {
     `;
 }
 
-// Zamknij modal
+// Zamknij modal meczów
 function closeModal() {
     matchModal.style.display = 'none';
     modalOverlay.style.display = 'none';
@@ -694,3 +913,68 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+
+function showNotification(message, type = 'info') {
+    // Tworzymy element powiadomienia
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Dodajemy stylowanie dla powiadomień
+    if (!document.querySelector('.notification-styles')) {
+        const style = document.createElement('style');
+        style.className = 'notification-styles';
+        style.textContent = `
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                z-index: 9999;
+                animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+                animation-fill-mode: forwards;
+                max-width: 300px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            .notification-success {
+                background: var(--success-color);
+            }
+            .notification-info {
+                background: var(--info-color);
+            }
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Usuwamy powiadomienie po 3 sekundach
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
+}
+
+// Eksport funkcji do globalnego scope
+window.updateMatchScoreFromMaps = updateMatchScoreFromMaps;

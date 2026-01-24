@@ -839,7 +839,7 @@ body {
     line-height: 1;
 }
 
-/* Maps Section - NOWA SEKCJA DLA MAP */
+/* Maps Section - ZUPEŁNIE UPROSZCZONA */
 .maps-section {
     margin: 20px 0;
     padding: 20px;
@@ -854,34 +854,25 @@ body {
     margin-bottom: 15px;
     color: var(--text-secondary);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.maps-title-text {
-    display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .maps-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .map-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
     background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
-    position: relative;
-}
-
-.map-item:hover {
-    border-color: var(--secondary-color);
-    transform: translateY(-2px);
 }
 
 .map-item.winner-team1 {
@@ -899,17 +890,23 @@ body {
     border-color: rgba(157, 78, 221, 0.5);
 }
 
-.map-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.map-item:hover {
+    border-color: var(--secondary-color);
+    transform: translateX(5px);
 }
 
 .map-name {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.map-name i {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
 }
 
 .map-score {
@@ -920,164 +917,6 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-}
-
-.map-teams {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-}
-
-.map-edit-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.8rem;
-}
-
-.map-edit-btn:hover {
-    border-color: var(--secondary-color);
-    color: var(--secondary-color);
-    background: rgba(157, 78, 221, 0.1);
-}
-
-/* Map Edit Modal */
-.map-edit-modal {
-    max-width: 500px;
-    height: auto;
-}
-
-.map-edit-form {
-    padding: 20px;
-}
-
-.map-name-display {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.map-name-display h3 {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    margin-bottom: 10px;
-}
-
-.score-inputs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.score-input-team {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    flex: 1;
-}
-
-.team-label-large {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.team-logo-small {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--secondary-color), #ff6b8b);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: white;
-}
-
-.score-input {
-    width: 100px;
-    height: 60px;
-    font-size: 2rem;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.2);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-color);
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    transition: all 0.2s ease;
-}
-
-.score-input:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
-}
-
-.vs-separator {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-secondary);
-    margin: 0 10px;
-}
-
-.map-edit-actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.btn-primary, .btn-secondary {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1rem;
-}
-
-.btn-primary {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #8c3cd1;
-    transform: scale(1.05);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
-.btn-secondary:hover {
-    background: var(--border-color);
-    color: white;
 }
 
 /* Players Section */
@@ -1232,13 +1071,11 @@ body {
     padding: 15px 20px;
     border-top: 1px solid var(--border-color);
     background: rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .match-link-btn {
-    padding: 12px 20px;
+    width: 100%;
+    padding: 12px;
     background: var(--secondary-color);
     color: white;
     border: none;
@@ -1345,19 +1182,6 @@ body {
     .players-grid-cs2 {
         grid-template-columns: 1fr;
     }
-    
-    .maps-list {
-        grid-template-columns: 1fr;
-    }
-    
-    .score-inputs {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .vs-separator {
-        margin: 10px 0;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1415,17 +1239,5 @@ body {
     
     .match-score-large {
         font-size: 2rem;
-    }
-    
-    .team-logo-small {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    
-    .score-input {
-        width: 80px;
-        height: 50px;
-        font-size: 1.5rem;
     }
 }

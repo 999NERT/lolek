@@ -294,7 +294,7 @@
     {
       "id": 6,
       "date": "26.01.2026, 18:00",
-      "status": "finished",
+      "status": "upcoming",
       "format": "bo3",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -307,24 +307,24 @@
         "hasAngelkacs": false
       },
       "score": {
-        "team1": 2,
-        "team2": 1
+        "team1": 0,
+        "team2": 0
       },
       "maps": [
         {
           "name": "Mirage",
-          "score_team1": 16,
-          "score_team2": 12
+          "score_team1": 0,
+          "score_team2": 0
         },
         {
           "name": "Inferno",
-          "score_team1": 10,
-          "score_team2": 16
+          "score_team1": 0,
+          "score_team2": 0
         },
         {
           "name": "Nuke",
-          "score_team1": 16,
-          "score_team2": 9
+          "score_team1": 0,
+          "score_team2": 0
         }
       ],
       "playersTeam1": [

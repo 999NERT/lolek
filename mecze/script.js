@@ -1,4 +1,4 @@
-// System turniejów Angelkacs - Kompletnie przepisany
+// System turniejów Angelkacs - Kompaktowa wersja
 
 // Zmienne globalne
 let tournaments = [];
@@ -359,6 +359,7 @@ function openMatchModal(tournamentId) {
     
     // Zapisz ID turnieju w modal dla późniejszego użycia
     matchModal.dataset.tournamentId = tournamentId;
+    matchModal.dataset.tournamentGame = tournament.game;
     
     // Wyświetl mecze
     if (matches.length === 0) {
@@ -502,6 +503,7 @@ function togglePlayers(matchId) {
     } else {
         // Znajdź dane meczu
         const tournamentId = matchModal.dataset.tournamentId;
+        const gameType = matchModal.dataset.tournamentGame;
         const tournamentData = tournaments.find(t => t.tournament.id === tournamentId);
         
         if (tournamentData && tournamentData.matches[matchId]) {
@@ -511,7 +513,7 @@ function togglePlayers(matchId) {
             const allPlayers = [...playersTeam1, ...(playersTeam2 || [])];
             
             if (allPlayers.length > 0) {
-                displayAllPlayers(matchId, allPlayers, match.team1, match.team2);
+                displayAllPlayers(matchId, allPlayers, match.team1, match.team2, gameType);
                 playersSection.classList.add('expanded');
                 toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Ukryj graczy';
                 toggleBtn.classList.add('active');
@@ -520,31 +522,69 @@ function togglePlayers(matchId) {
     }
 }
 
-// Wyświetl wszystkich graczy razem
-function displayAllPlayers(matchId, players, team1, team2) {
+// Wyświetl wszystkich graczy razem - NOWY UKŁAD
+function displayAllPlayers(matchId, players, team1, team2, gameType) {
     const playersSection = document.getElementById(`playersSection${matchId}`);
     
-    const playersHTML = players.map(player => {
-        const isAngelkacs = player.isAngelkacs || false;
-        const teamName = getPlayerTeam(player, team1, team2);
+    if (gameType === 'cs2' && team2) {
+        // Dla CS2: 2 rzędy po 5 graczy
+        const playersTeam1 = players.filter(p => team1.hasAngelkacs && p.isAngelkacs || 
+                                               players.slice(0, 5).includes(p));
+        const playersTeam2 = players.filter(p => team2.hasAngelkacs && p.isAngelkacs || 
+                                               players.slice(5).includes(p));
         
-        return `
-            <div class="player-card ${isAngelkacs ? 'angelkacs' : ''}">
-                <div class="player-icon">
-                    <i class="fas fa-user${isAngelkacs ? '-crown' : ''}"></i>
+        const team1HTML = playersTeam1.map(player => createPlayerCard(player, team1)).join('');
+        const team2HTML = playersTeam2.map(player => createPlayerCard(player, team2)).join('');
+        
+        playersSection.innerHTML = `
+            <div class="players-container">
+                <div class="players-title">Gracze w meczu</div>
+                <div class="players-grid-cs2">
+                    <div class="team-players-section">
+                        <div class="team-header">
+                            <div class="team-label team1">${team1.name}</div>
+                        </div>
+                        <div class="players-row">
+                            ${team1HTML}
+                        </div>
+                    </div>
+                    
+                    <div class="team-players-section">
+                        <div class="team-header">
+                            <div class="team-label team2">${team2.name}</div>
+                        </div>
+                        <div class="players-row">
+                            ${team2HTML}
+                        </div>
+                    </div>
                 </div>
-                <div class="player-name">${player.name}</div>
-                ${teamName ? `<div class="player-team">${teamName}</div>` : ''}
             </div>
         `;
-    }).join('');
-    
-    playersSection.innerHTML = `
-        <div class="players-container">
-            <div class="players-title">Gracze w meczu</div>
-            <div class="all-players-grid">
-                ${playersHTML}
+    } else {
+        // Dla Fortnite lub innych gier
+        const playersHTML = players.map(player => createPlayerCard(player, team1)).join('');
+        
+        playersSection.innerHTML = `
+            <div class="players-container">
+                <div class="players-title">Gracze w meczu</div>
+                <div class="players-grid-fortnite">
+                    ${playersHTML}
+                </div>
             </div>
+        `;
+    }
+}
+
+// Utwórz kartę gracza
+function createPlayerCard(player, team) {
+    const isAngelkacs = player.isAngelkacs || false;
+    
+    return `
+        <div class="player-card ${isAngelkacs ? 'angelkacs' : ''}">
+            <div class="player-icon">
+                <i class="fas fa-user${isAngelkacs ? '-crown' : ''}"></i>
+            </div>
+            <div class="player-name">${player.name}</div>
         </div>
     `;
 }
@@ -588,24 +628,6 @@ function getPolishPlural(count) {
     if (count === 1) return '';
     if (count >= 2 && count <= 4) return 'e';
     return 'ów';
-}
-
-function getPlayerTeam(player, team1, team2) {
-    // Prosta heurystyka - sprawdź, czy gracz jest w którejś drużynie
-    if (team1 && team1.hasAngelkacs && player.isAngelkacs) {
-        return team1.name;
-    }
-    if (team2 && team2.hasAngelkacs && player.isAngelkacs) {
-        return team2.name;
-    }
-    
-    // Dla zwykłych graczy - możesz dodać bardziej zaawansowaną logikę
-    // na podstawie danych z plików JSON
-    if (player.team) {
-        return player.team;
-    }
-    
-    return '';
 }
 
 // Eksport funkcji do globalnego scope

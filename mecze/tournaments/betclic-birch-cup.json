@@ -293,8 +293,8 @@
     },
     {
       "id": 6,
-      "date": "26.01.2026, 18:00",
-      "status": "upcoming",
+      "date": "26.01.2026, 20:00",
+      "status": "action",
       "format": "bo3",
       "team1": {
         "name": "TEAM_ANGELKA",
@@ -312,12 +312,12 @@
       },
       "maps": [
         {
-          "name": "Mirage",
+          "name": "Dust2",
           "score_team1": 0,
           "score_team2": 0
         },
         {
-          "name": "Inferno",
+          "name": "Mirage",
           "score_team1": 0,
           "score_team2": 0
         },

@@ -313,8 +313,8 @@
       "maps": [
         {
           "name": "Dust2",
-          "score_team1": 0,
-          "score_team2": 0
+          "score_team1": 11,
+          "score_team2": 13
         },
         {
           "name": "Mirage",

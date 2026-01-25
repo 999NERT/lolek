@@ -308,7 +308,7 @@
       },
       "score": {
         "team1": 0,
-        "team2": 1
+        "team2": 2
       },
       "maps": [
         {
@@ -318,8 +318,8 @@
         },
         {
           "name": "Mirage",
-          "score_team1": 0,
-          "score_team2": 0
+          "score_team1": 8,
+          "score_team2": 13
         },
         {
           "name": "Nuke",

@@ -3,159 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANGELKACS - Streamer & Content Creator</title>
+    <title>ANGELKACS | Streamer</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="angelka.png">
-    <meta name="description" content="Oficjalna strona ANGELKACS - streamer, content creator">
-    <meta name="keywords" content="angelkacs, stream, twitch, youtube, gaming">
-    <style>
-        /* Mobile redirect */
-        @media (max-width: 768px) {
-            .mobile-redirect {
-                display: flex;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: #000;
-                color: white;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                padding: 20px;
-                z-index: 9999;
-            }
-            .mobile-redirect a {
-                color: #ff0000;
-                margin-top: 20px;
-                font-size: 1.2em;
-                text-decoration: none;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Mobile Redirect -->
-    <div class="mobile-redirect" id="mobileRedirect">
-        <h2>Strona mobilna</h2>
-        <p>Ta wersja strony jest zoptymalizowana dla komputerów.</p>
-        <p>Przejdź do wersji mobilnej:</p>
-        <a href="https://mobile.angelkacs.pl" id="mobileLink">mobile.angelkacs.pl</a>
-        <button onclick="continueToDesktop()" style="margin-top: 20px; padding: 10px 20px; background: #333; color: white; border: none; cursor: pointer;">
-            Kontynuuj na desktopie
-        </button>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container" id="mainContainer">
-        <!-- Header -->
-        <header class="header">
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
             <div class="logo">
-                <h1>ANGELKACS</h1>
-                <p class="tagline">Streamer & Content Creator</p>
+                <span class="logo-text">ANGELKACS</span>
+                <span class="logo-subtitle">Streamer</span>
+            </div>
+            <div class="nav-controls">
+                <button class="nav-btn" id="refreshBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                    </svg>
+                </button>
+                <button class="nav-btn" id="tournamentsBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                        <path d="M22 4L12 14.01l-3-3"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero / YouTube Section -->
+        <section class="section hero">
+            <div class="section-header">
+                <h1 class="section-title">
+                    <span class="icon-red">▶</span> Ostatni film
+                </h1>
+                <p class="section-subtitle">Obejrzyj najnowszy materiał</p>
             </div>
             
-            <div class="header-controls">
-                <button id="refreshBtn" class="btn-control">
-                    <span class="btn-icon">🔄</span>
-                    <span class="btn-text">Odśwież</span>
-                </button>
-                <button id="tournamentsBtn" class="btn-control">
-                    <span class="btn-icon">🏆</span>
-                    <span class="btn-text">Turnieje</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- YouTube Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <span class="icon">🎬</span>
-                Najnowszy film na YouTube
-            </h2>
-            <div class="video-container" id="videoContainer">
-                <div class="video-loader" id="videoLoader">
-                    <div class="spinner"></div>
-                    <p>Szukam najnowszego filmu...</p>
+            <div class="video-card" id="videoContainer">
+                <div class="video-loading" id="videoLoader">
+                    <div class="loader"></div>
+                    <p class="loading-text">Ładuję film...</p>
                 </div>
                 
-                <div class="video-player" id="videoPlayer" style="display: none;">
-                    <img id="videoThumbnail" class="video-thumbnail" alt="Miniatura filmu">
-                    <a id="watchButton" class="play-btn" target="_blank">
-                        <svg viewBox="0 0 24 24" width="64" height="64">
-                            <path fill="white" d="M8 5v14l11-7z"/>
-                        </svg>
-                    </a>
+                <div class="video-content" id="videoPlayer" style="display: none;">
+                    <div class="thumbnail-wrapper">
+                        <img id="videoThumbnail" class="thumbnail" alt="Miniatura filmu">
+                        <div class="thumbnail-overlay"></div>
+                        <a id="watchButton" class="play-button" target="_blank">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3 id="videoTitle" class="video-title">Ładowanie...</h3>
+                        <p id="videoDate" class="video-date"></p>
+                    </div>
                 </div>
                 
                 <div class="video-error" id="videoError" style="display: none;">
-                    <div class="error-icon">⚠️</div>
-                    <h3>Nie można załadować filmu</h3>
-                    <p id="errorMessage">Spróbuj ponownie za chwilę</p>
-                    <button id="retryBtn" class="btn-primary">🔄 Spróbuj ponownie</button>
+                    <div class="error-content">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <h3>Nie można załadować filmu</h3>
+                        <p id="errorMessage">Spróbuj ponownie</p>
+                        <button id="retryBtn" class="btn">Odśwież</button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Partners Section -->
+        <!-- Partners -->
         <section class="section">
-            <h2 class="section-title">
-                <span class="icon">🤝</span>
-                Współprace
-            </h2>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="icon-blue">🤝</span> Współprace
+                </h2>
+                <p class="section-subtitle">Korzystaj z kodów rabatowych</p>
+            </div>
+            
             <div class="partners-grid" id="partnersGrid">
-                <!-- Partners loaded via JavaScript -->
+                <!-- Partners will be loaded here -->
             </div>
         </section>
 
         <!-- Live Streams -->
         <section class="section">
-            <h2 class="section-title">
-                <span class="icon">🔴</span>
-                Na żywo
-            </h2>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="icon-green">🔴</span> Na żywo
+                </h2>
+                <p class="section-subtitle">Gdzie mnie znajdziesz</p>
+            </div>
+            
             <div class="streams-grid">
-                <!-- Twitch -->
                 <div class="stream-card">
                     <a href="https://www.twitch.tv/angelkacs" class="stream-link" target="_blank">
-                        <div class="stream-icon">
-                            <img src="1twitch.png" alt="Twitch">
+                        <div class="stream-icon twitch">
+                            <img src="1twitch.png" alt="Twitch" class="stream-logo">
                         </div>
-                        <div class="stream-info">
+                        <div class="stream-details">
                             <h3>Twitch</h3>
                             <div class="stream-status">
                                 <span class="status-dot" id="twitchDot"></span>
-                                <span class="status-text" id="twitchStatus">Sprawdzam...</span>
+                                <span class="status-text" id="twitchStatus">Ładuję...</span>
                             </div>
                         </div>
                     </a>
                 </div>
-
-                <!-- Kick -->
+                
                 <div class="stream-card">
                     <a href="https://kick.com/angelkacs" class="stream-link" target="_blank">
-                        <div class="stream-icon">
-                            <img src="1KOPNIAK.png" alt="Kick">
+                        <div class="stream-icon kick">
+                            <img src="1KOPNIAK.png" alt="Kick" class="stream-logo">
                         </div>
-                        <div class="stream-info">
+                        <div class="stream-details">
                             <h3>Kick</h3>
                             <div class="stream-status">
                                 <span class="status-dot" id="kickDot"></span>
-                                <span class="status-text" id="kickStatus">Sprawdzam...</span>
+                                <span class="status-text" id="kickStatus">Ładuję...</span>
                             </div>
                         </div>
                     </a>
                 </div>
-
-                <!-- Discord -->
+                
                 <div class="stream-card">
                     <a href="https://discord.gg/rKGKQbuBxm" class="stream-link" target="_blank">
-                        <div class="stream-icon">
-                            <img src="1discord.png" alt="Discord">
+                        <div class="stream-icon discord">
+                            <img src="1discord.png" alt="Discord" class="stream-logo">
                         </div>
-                        <div class="stream-info">
+                        <div class="stream-details">
                             <h3>Discord</h3>
                             <div class="stream-status">
                                 <span class="status-dot" style="background: #5865F2;"></span>
@@ -169,29 +155,46 @@
 
         <!-- Social Media -->
         <section class="section">
-            <h2 class="section-title">
-                <span class="icon">🌐</span>
-                Social Media
-            </h2>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="icon-purple">🌐</span> Social Media
+                </h2>
+                <p class="section-subtitle">Obserwuj mnie</p>
+            </div>
+            
             <div class="social-grid">
-                <a href="https://www.youtube.com/@angelkacs" class="social-link youtube" target="_blank">
-                    <img src="ytclick.png" alt="YouTube">
+                <a href="https://www.youtube.com/@angelkacs" class="social-card youtube" target="_blank">
+                    <div class="social-icon">
+                        <img src="ytclick.png" alt="YouTube">
+                    </div>
                     <span>YouTube</span>
                 </a>
-                <a href="https://www.instagram.com/angelkacs" class="social-link instagram" target="_blank">
-                    <img src="1instagram.png" alt="Instagram">
+                
+                <a href="https://www.instagram.com/angelkacs" class="social-card instagram" target="_blank">
+                    <div class="social-icon">
+                        <img src="1instagram.png" alt="Instagram">
+                    </div>
                     <span>Instagram</span>
                 </a>
-                <a href="https://x.com/angelkaacs" class="social-link twitter" target="_blank">
-                    <img src="1x.png" alt="X/Twitter">
-                    <span>X / Twitter</span>
+                
+                <a href="https://x.com/angelkaacs" class="social-card twitter" target="_blank">
+                    <div class="social-icon">
+                        <img src="1x.png" alt="X/Twitter">
+                    </div>
+                    <span>Twitter</span>
                 </a>
-                <a href="https://www.tiktok.com/@angelkacs2" class="social-link tiktok" target="_blank">
-                    <img src="1tiktok.png" alt="TikTok">
+                
+                <a href="https://www.tiktok.com/@angelkacs2" class="social-card tiktok" target="_blank">
+                    <div class="social-icon">
+                        <img src="1tiktok.png" alt="TikTok">
+                    </div>
                     <span>TikTok</span>
                 </a>
-                <a href="https://www.facebook.com/angelkacs" class="social-link facebook" target="_blank">
-                    <img src="1facebook.png" alt="Facebook">
+                
+                <a href="https://www.facebook.com/angelkacs" class="social-card facebook" target="_blank">
+                    <div class="social-icon">
+                        <img src="1facebook.png" alt="Facebook">
+                    </div>
                     <span>Facebook</span>
                 </a>
             </div>
@@ -200,82 +203,114 @@
         <!-- Donate -->
         <section class="section">
             <div class="donate-card">
-                <div class="donate-icon">❤️</div>
+                <div class="donate-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                    </svg>
+                </div>
                 <div class="donate-content">
-                    <h3>Wesprzyj moją działalność</h3>
-                    <p>Twoje wsparcie pomaga mi tworzyć lepsze treści!</p>
-                    <a href="https://angelkacs.pl/donate" class="btn-donate" target="_blank">Wesprzyj</a>
+                    <h3>Wesprzyj moją twórczość</h3>
+                    <p>Twoje wsparcie pomaga mi tworzyć lepsze treści dla społeczności</p>
+                    <a href="https://angelkacs.pl/donate" class="btn donate-btn" target="_blank">Wesprzyj</a>
                 </div>
             </div>
         </section>
+    </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-left">
-                    <p>&copy; 2025 ANGELKACS. Wszelkie prawa zastrzeżone.</p>
-                </div>
-                <div class="footer-right">
-                    <p>Współpraca: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
-                </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2025 ANGELKACS</p>
+                <p class="footer-sub">Streamer & Content Creator</p>
             </div>
-        </footer>
-    </div>
+            <div class="footer-right">
+                <p>Współpraca: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
+            </div>
+        </div>
+    </footer>
 
-    <!-- Partner Modal -->
-    <div class="modal" id="partnerModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
+    <!-- Modals -->
+    <div class="modal-overlay" id="partnerModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
             <div class="modal-header">
-                <h2 id="modalTitle">Nazwa partnera</h2>
+                <div class="modal-icon" id="modalIcon"></div>
+                <h2 id="modalTitle">Partner</h2>
             </div>
             <div class="modal-body">
                 <div class="modal-section">
-                    <h3>🎁 Kod rabatowy</h3>
-                    <div class="code-box">
-                        <code id="modalCode" class="code">LOADING...</code>
-                        <button id="copyBtn" class="copy-btn">Kopiuj</button>
+                    <h3>Kod rabatowy</h3>
+                    <div class="code-container">
+                        <code id="modalCode" class="code">ŁADOWANIE...</code>
+                        <button id="copyBtn" class="copy-btn">
+                            <span class="copy-text">Kopiuj</span>
+                            <span class="copied-text">Skopiowano!</span>
+                        </button>
                     </div>
                 </div>
                 <div class="modal-section">
-                    <h3>📋 Opis</h3>
+                    <h3>Opis</h3>
                     <p id="modalDescription">Ładowanie opisu...</p>
                 </div>
-                <div class="modal-section">
-                    <h3>🏆 Konkursy</h3>
-                    <div id="modalContests" class="contests-list">
-                        <p>Ładowanie konkursów...</p>
+                <div class="modal-section" id="contestsSection">
+                    <h3>Konkursy</h3>
+                    <div id="modalContests" class="contests">
+                        <!-- Contests will be loaded here -->
                     </div>
                 </div>
                 <div class="modal-section">
-                    <h3>🔗 Link</h3>
-                    <a id="modalLink" class="modal-link" target="_blank">Odwiedź stronę</a>
+                    <h3>Odwiedź stronę</h3>
+                    <a id="modalLink" class="modal-link" target="_blank">Przejdź do strony</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tournaments Modal -->
-    <div class="modal" id="tournamentsModal">
-        <div class="modal-content">
-            <button class="modal-close" id="tournamentsClose">&times;</button>
+    <div class="modal-overlay" id="tournamentsModal">
+        <div class="modal">
+            <button class="modal-close" id="tournamentsClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
             <div class="modal-header">
-                <h2>🏆 Turnieje & Eventy</h2>
+                <div class="modal-icon">🏆</div>
+                <h2>Turnieje & Eventy</h2>
             </div>
             <div class="modal-body">
                 <div class="tournament-card-modal">
                     <h3>T-Mobile Esports Championship 2025</h3>
-                    <p><strong>Prize Pool:</strong> 100 000€</p>
-                    <p><strong>Zapisy do:</strong> 18-20 września 2025</p>
-                    <p><strong>Finał LAN:</strong> 15-16 listopada, Budapeszt</p>
-                    <p><strong>Wymagania:</strong> 16+ lat</p>
-                    <a href="https://tesports.gg/pl" class="btn-primary" target="_blank">Zarejestruj się</a>
+                    <div class="tournament-details">
+                        <div class="detail">
+                            <span class="detail-label">Nagrody:</span>
+                            <span class="detail-value">100 000€</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Zapisy do:</span>
+                            <span class="detail-value">18-20 września</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Finał LAN:</span>
+                            <span class="detail-value">15-16 listopada, Budapeszt</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Wymagania:</span>
+                            <span class="detail-value">16+ lat</span>
+                        </div>
+                    </div>
+                    <a href="https://tesports.gg/pl" class="btn tournament-btn" target="_blank">Zarejestruj się</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>

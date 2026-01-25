@@ -1,1110 +1,661 @@
-/* === RESET & BASE === */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    /* Kolory */
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #111111;
-    --bg-card: #1a1a1a;
-    --bg-modal: rgba(0, 0, 0, 0.85);
-    
-    /* Tekst */
-    --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
-    --text-accent: #ffffff;
-    
-    /* Akcenty */
-    --accent-red: #ff0000;
-    --accent-purple: #9146ff;
-    --accent-green: #00ff00;
-    --accent-blue: #1da1f2;
-    --accent-pink: #ff0080;
-    --accent-orange: #ff6b00;
-    
-    /* Border */
-    --border-color: #333333;
-    --border-radius: 12px;
-    --border-radius-sm: 8px;
-    
-    /* Shadow */
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
-    
-    /* Spacing */
-    --spacing-xs: 8px;
-    --spacing-sm: 16px;
-    --spacing-md: 24px;
-    --spacing-lg: 32px;
-    --spacing-xl: 48px;
-    
-    /* Typography */
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: var(--font-primary);
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* === LAYOUT === */
-.main-header {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-}
-
-.header-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-md);
-}
-
-.logo-section {
-    display: flex;
-    flex-direction: column;
-}
-
-.site-title {
-    font-size: 2rem;
-    font-weight: 800;
-    background: linear-gradient(45deg, var(--accent-red), var(--accent-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.5px;
-}
-
-.site-subtitle {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.main-nav {
-    display: flex;
-    gap: var(--spacing-sm);
-    align-items: center;
-}
-
-.nav-btn {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--border-radius-sm);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    text-decoration: none;
-}
-
-.nav-btn:hover {
-    background: #222222;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
-}
-
-.nav-btn.tournaments-btn {
-    background: linear-gradient(45deg, #ff6b00, #ff0080);
-    border: none;
-}
-
-.nav-btn.settings-btn {
-    background: #333333;
-}
-
-.nav-icon {
-    font-size: 1.1rem;
-}
-
-.main-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: var(--spacing-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-}
-
-/* === SECTIONS === */
-.section-header {
-    margin-bottom: var(--spacing-md);
-}
-
-.section-header h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: var(--spacing-xs);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.section-subtitle {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
-
-/* === YOUTUBE SECTION === */
-.youtube-section {
-    margin-top: var(--spacing-sm);
-}
-
-.video-container {
-    background: var(--bg-card);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    position: relative;
-    min-height: 400px;
-}
-
-.video-loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-md);
-    background: var(--bg-card);
-    z-index: 2;
-}
-
-.loader-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid var(--border-color);
-    border-top: 4px solid var(--accent-red);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loader-text {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
-
-.video-player {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    overflow: hidden;
-}
-
-.video-thumbnail {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.play-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
-    transition: background 0.3s ease;
-}
-
-.play-overlay:hover {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.play-overlay:hover .play-button {
-    transform: scale(1.1);
-}
-
-.play-button {
-    width: 100px;
-    height: 100px;
-    background: var(--accent-red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    box-shadow: 0 8px 32px rgba(255, 0, 0, 0.3);
-}
-
-.play-button svg {
-    width: 40px;
-    height: 40px;
-    margin-left: 5px;
-}
-
-.video-error {
-    padding: var(--spacing-xl);
-    text-align: center;
-    background: var(--bg-card);
-}
-
-.error-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-md);
-}
-
-.error-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: var(--spacing-xs);
-}
-
-.error-content p {
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-md);
-}
-
-.error-btn {
-    background: var(--accent-red);
-    color: white;
-    border: none;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--border-radius-sm);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-}
-
-.error-btn:hover {
-    background: #cc0000;
-    transform: translateY(-1px);
-}
-
-/* === PARTNERS SECTION === */
-.partners-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
-}
-
-.partner-card {
-    background: var(--bg-card);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.partner-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--accent-red);
-}
-
-.partner-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-.partner-badge.new {
-    background: var(--accent-orange);
-    color: white;
-}
-
-.partner-badge.age {
-    background: var(--accent-red);
-    color: white;
-}
-
-.partner-header {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.partner-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: white;
-}
-
-.partner-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.partner-description {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    flex-grow: 1;
-}
-
-.partner-code {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    color: var(--accent-green);
-    text-align: center;
-    margin-top: var(--spacing-sm);
-}
-
-/* === STREAMS SECTION === */
-.streams-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
-}
-
-.stream-card {
-    background: var(--bg-card);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.stream-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-
-.stream-link {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-md);
-    gap: var(--spacing-md);
-    text-decoration: none;
-    color: inherit;
-}
-
-.stream-icon-wrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.stream-platform-icon {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
-
-.stream-info {
-    flex-grow: 1;
-}
-
-.stream-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.stream-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.status-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #666666;
-}
-
-.status-indicator.live {
-    background: var(--accent-green);
-    animation: pulse 2s infinite;
-}
-
-.status-indicator.join {
-    background: var(--accent-blue);
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-.status-text {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-/* Kolory kart streamów */
-.twitch-card {
-    border-left: 4px solid var(--accent-purple);
-}
-
-.kick-card {
-    border-left: 4px solid #53fc18;
-}
-
-.discord-card {
-    border-left: 4px solid #5865f2;
-}
-
-/* === SOCIAL SECTION === */
-.social-section {
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--border-color);
-}
-
-.social-title {
-    font-size: 1.3rem;
-    margin-bottom: var(--spacing-md);
-    text-align: center;
-}
-
-.social-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-}
-
-.social-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: var(--spacing-xs) var(--spacing-md);
-    background: var(--bg-card);
-    border-radius: 50px;
-    text-decoration: none;
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.social-link:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-
-.social-link img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
-
-.social-link span {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-/* Kolory social */
-.youtube-social:hover {
-    border-color: var(--accent-red);
-    background: rgba(255, 0, 0, 0.1);
-}
-
-.instagram-social:hover {
-    border-color: #e4405f;
-    background: rgba(228, 64, 95, 0.1);
-}
-
-.twitter-social:hover {
-    border-color: var(--accent-blue);
-    background: rgba(29, 161, 242, 0.1);
-}
-
-.tiktok-social:hover {
-    border-color: #000000;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.facebook-social:hover {
-    border-color: #1877f2;
-    background: rgba(24, 119, 242, 0.1);
-}
-
-/* === DONATE SECTION === */
-.donate-section {
-    margin-top: var(--spacing-lg);
-}
-
-.donate-card {
-    background: linear-gradient(135deg, #9146ff 0%, #ff0080 100%);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-lg);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
-    color: white;
-}
-
-.donate-icon {
-    font-size: 3rem;
-}
-
-.donate-content {
-    flex-grow: 1;
-}
-
-.donate-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: var(--spacing-xs);
-}
-
-.donate-content p {
-    opacity: 0.9;
-    margin-bottom: var(--spacing-md);
-}
-
-.donate-button {
-    background: white;
-    color: #9146ff;
-    border: none;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--border-radius-sm);
-    font-size: 1rem;
-    font-weight: 700;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s ease;
-}
-
-.donate-button:hover {
-    background: #f0f0f0;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* === FOOTER === */
-.main-footer {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: var(--spacing-lg);
-    margin-top: var(--spacing-xl);
-}
-
-.footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-}
-
-.footer-left p,
-.footer-right p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.footer-right a {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.footer-right a:hover {
-    color: var(--accent-red);
-}
-
-/* === MODALS === */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--bg-modal);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: var(--spacing-md);
-    backdrop-filter: blur(10px);
-}
-
-.modal-overlay.active {
-    display: flex;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.modal-content {
-    background: var(--bg-card);
-    border-radius: var(--border-radius);
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    animation: slideUp 0.3s ease;
-    border: 1px solid var(--border-color);
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+// ===== KONFIGURACJA =====
+const CONFIG = {
+    youtube: {
+        channelId: "UCb4KZzyxv9-PL_BcKOrpFyQ",
+        rssUrl: "https://www.youtube.com/feeds/videos.xml?channel_id=UCb4KZzyxv9-PL_BcKOrpFyQ",
+        checkShorts: true
+    },
+    streams: {
+        twitch: {
+            username: "angelkacs",
+            apiUrl: "https://decapi.me/twitch/uptime/angelkacs"
+        },
+        kick: {
+            username: "angelkacs",
+            apiUrl: "https://kick.com/api/v2/channels/angelkacs"
+        }
+    },
+    partners: [
+        {
+            id: "logitech",
+            name: "Logitech",
+            description: "Najlepsze peryferia gamingowe - myszki, klawiatury, słuchawki.",
+            code: "ANGELKACS",
+            discount: "-5% na cały asortyment",
+            link: "https://logitechg-emea.sjv.io/vPmBE3",
+            contests: ["Regularne konkursy na Discordzie", "Nagrody: sprzęt gamingowy"],
+            color: "#00FFFF",
+            icon: "🖱️"
+        },
+        {
+            id: "pirateswap",
+            name: "PirateSwap",
+            description: "Platforma do doładowań gamingowych z najlepszymi bonusami.",
+            code: "ANGELKACS",
+            discount: "+35% więcej do doładowania",
+            link: "https://pirateswap.com/?ref=angelkacs",
+            contests: [],
+            color: "#ff4300",
+            icon: "🏴‍☠️"
+        },
+        {
+            id: "csgoskins",
+            name: "CSGOSKINS",
+            description: "Platforma do zakupu i sprzedaży skinów CS:GO/CS2. Bezpieczne transakcje.",
+            code: "ANGELKACS",
+            discount: "Konkurs z nagrodami 3x $50",
+            link: "https://csgo-skins.com/?ref=ANGELKACS",
+            contests: [
+                "Wpłać 10 PLN z kodem ANGELKACS",
+                "Weź udział w konkursie discordowym",
+                "Nagrody: 3x $50 dla pojedynczej osoby"
+            ],
+            color: "#14A3C7",
+            icon: "🔫",
+            ageRestricted: true
+        },
+        {
+            id: "skinplace",
+            name: "SKIN.PLACE",
+            description: "Kupuj i sprzedawaj skiny wygodnie z dodatkowym bonusem.",
+            code: "ANGELKACS",
+            discount: "+2% do ceny przy sprzedaży",
+            link: "https://skin.place/?ref=ANGELKACS",
+            contests: [],
+            color: "#FF6B00",
+            icon: "💎",
+            isNew: true
+        },
+        {
+            id: "wkdzik",
+            name: "WKDZIK",
+            description: "Sklep z akcesoriami gamingowymi i elektroniką.",
+            code: "ANGELKA",
+            discount: "-5% na cały asortyment",
+            link: "https://wkdzik.pl",
+            contests: [],
+            color: "#de74ff",
+            icon: "🎮"
+        },
+        {
+            id: "fcoins",
+            name: "FCOINS",
+            description: "Kupuj taniej coinsy do gier lub sprzedawaj z zyskiem.",
+            code: "ANGELKACS",
+            discount: "+5% więcej monet",
+            link: "http://fcoins.gg/?code=ANGELKACS",
+            contests: [],
+            color: "#07E864",
+            icon: "🪙"
+        }
+    ],
+    refreshIntervals: {
+        video: 300000, // 5 minut
+        streams: 30000 // 30 sekund
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+};
+
+// ===== STAN APLIKACJI =====
+let state = {
+    currentVideo: null,
+    streamStatus: {
+        twitch: null,
+        kick: null
+    },
+    partners: CONFIG.partners
+};
+
+// ===== INICJALIZACJA =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Inicjalizacja strony ANGELKACS...');
+    
+    // Ukryj mobile redirect na desktopie
+    if (window.innerWidth > 768) {
+        document.getElementById('mobileRedirect').style.display = 'none';
+        document.getElementById('mainContainer').style.display = 'block';
+    }
+    
+    // Inicjalizuj moduły
+    initYouTube();
+    initPartners();
+    initStreams();
+    initModals();
+    initEventListeners();
+    
+    // Rozpocznij automatyczne odświeżanie
+    startAutoRefresh();
+    
+    console.log('✅ Strona gotowa!');
+});
+
+// ===== MOBILE REDIRECT =====
+function continueToDesktop() {
+    document.getElementById('mobileRedirect').style.display = 'none';
+    document.getElementById('mainContainer').style.display = 'block';
+}
+
+// ===== YOUTUBE =====
+async function initYouTube() {
+    console.log('🎬 Inicjalizacja modułu YouTube...');
+    await loadLatestVideo();
+    
+    // Obsługa przycisków
+    document.getElementById('refreshBtn').addEventListener('click', loadLatestVideo);
+    document.getElementById('retryBtn').addEventListener('click', loadLatestVideo);
+}
+
+async function loadLatestVideo() {
+    const loader = document.getElementById('videoLoader');
+    const player = document.getElementById('videoPlayer');
+    const error = document.getElementById('videoError');
+    
+    // Pokaż loader, ukryj resztę
+    loader.style.display = 'flex';
+    player.style.display = 'none';
+    error.style.display = 'none';
+    
+    try {
+        console.log('📹 Szukam najnowszego filmu...');
+        
+        // Użyj CORS proxy aby ominąć ograniczenia
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const rssUrl = `${proxyUrl}${encodeURIComponent(CONFIG.youtube.rssUrl)}`;
+        
+        const response = await fetch(rssUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const xmlText = await response.text();
+        
+        // Parsuj XML
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        
+        // Pobierz wszystkie wpisy
+        const entries = xmlDoc.getElementsByTagName('entry');
+        
+        if (entries.length === 0) {
+            throw new Error('Nie znaleziono filmów na kanale');
+        }
+        
+        console.log(`📊 Znaleziono ${entries.length} filmów, szukam normalnego...`);
+        
+        // Przeszukaj filmy (maksymalnie 15 najnowszych)
+        for (let i = 0; i < Math.min(entries.length, 15); i++) {
+            const entry = entries[i];
+            
+            // Pobierz ID filmu
+            const videoIdElement = entry.querySelector('yt\\:videoId, videoId');
+            if (!videoIdElement) continue;
+            
+            const videoId = videoIdElement.textContent;
+            
+            // Pobierz tytuł
+            const titleElement = entry.querySelector('title');
+            const title = titleElement ? titleElement.textContent : '';
+            
+            console.log(`🔍 Sprawdzam: ${title.substring(0, 50)}...`);
+            
+            // Sprawdź czy to nie short
+            if (CONFIG.youtube.checkShorts && isShortVideo(title)) {
+                console.log(`⏭️ Pomijam short: ${title.substring(0, 30)}...`);
+                continue;
+            }
+            
+            // Sprawdź czy miniaturka jest dostępna (czy film nie jest prywatny)
+            const isAvailable = await checkVideoAvailability(videoId);
+            
+            if (isAvailable) {
+                console.log(`✅ Znaleziono film: ${videoId}`);
+                displayVideo(videoId, title);
+                return;
+            }
+        }
+        
+        throw new Error('Nie znaleziono dostępnych filmów (tylko shorts lub prywatne)');
+        
+    } catch (error) {
+        console.error('❌ Błąd ładowania filmu:', error);
+        showVideoError(error.message);
     }
 }
 
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 2rem;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    z-index: 10;
+function isShortVideo(title) {
+    if (!title) return false;
+    
+    const titleLower = title.toLowerCase();
+    
+    // Lista słów kluczowych wskazujących na short
+    const shortKeywords = [
+        '#short', '#shorts', 'shorts', 'short',
+        '#shortsfeed', '#shortsvideo', '#youtubeshorts',
+        '#ytshorts', '#shortsyoutube', '#shortsbeta',
+        'shorts #', 'short #'
+    ];
+    
+    // Sprawdź czy tytuł zawiera którekolwiek słowo kluczowe
+    return shortKeywords.some(keyword => titleLower.includes(keyword));
 }
 
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+async function checkVideoAvailability(videoId) {
+    return new Promise((resolve) => {
+        const testImg = new Image();
+        
+        testImg.onload = () => {
+            console.log(`✅ Film ${videoId} jest dostępny`);
+            resolve(true);
+        };
+        
+        testImg.onerror = () => {
+            console.log(`❌ Film ${videoId} nie jest dostępny`);
+            resolve(false);
+        };
+        
+        // Spróbuj załadować miniaturkę
+        testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        
+        // Timeout po 3 sekundach
+        setTimeout(() => resolve(false), 3000);
+    });
 }
 
-.modal-header {
-    padding: var(--spacing-lg);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
+function displayVideo(videoId, title) {
+    const loader = document.getElementById('videoLoader');
+    const player = document.getElementById('videoPlayer');
+    const thumbnail = document.getElementById('videoThumbnail');
+    const watchButton = document.getElementById('watchButton');
+    
+    // Ustaw miniaturkę (spróbuj najpierw maxres, potem hq)
+    thumbnail.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    thumbnail.onerror = function() {
+        this.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    };
+    
+    // Ustaw link do filmu
+    watchButton.href = `https://www.youtube.com/watch?v=${videoId}`;
+    
+    // Zapisz w stanie
+    state.currentVideo = { id: videoId, title: title };
+    
+    // Pokaż player, ukryj loader
+    loader.style.display = 'none';
+    player.style.display = 'block';
+    
+    console.log(`🎥 Wyświetlam film: ${title}`);
 }
 
-.modal-logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    object-fit: contain;
-    background: white;
-    padding: 4px;
+function showVideoError(message) {
+    const loader = document.getElementById('videoLoader');
+    const error = document.getElementById('videoError');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    loader.style.display = 'none';
+    errorMessage.textContent = message;
+    error.style.display = 'block';
 }
 
-.modal-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.modal-body {
-    padding: var(--spacing-lg);
-}
-
-.modal-section {
-    margin-bottom: var(--spacing-lg);
-}
-
-.modal-section:last-child {
-    margin-bottom: 0;
-}
-
-.modal-section h3 {
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-sm);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.modal-icon {
-    font-size: 1.2rem;
-}
-
-.code-display {
-    display: flex;
-    gap: var(--spacing-sm);
-    align-items: center;
-}
-
-.partner-code {
-    flex-grow: 1;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-mono);
-    font-size: 1.1rem;
-    color: var(--accent-green);
-    text-align: center;
-    font-weight: 600;
-}
-
-.copy-btn {
-    background: var(--accent-red);
-    color: white;
-    border: none;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius-sm);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.2s ease;
-    min-width: 80px;
-}
-
-.copy-btn:hover {
-    background: #cc0000;
-}
-
-.copy-btn .copied-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent-green);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.copy-btn.copied .copy-text {
-    opacity: 0;
-}
-
-.copy-btn.copied .copied-text {
-    opacity: 1;
-}
-
-.modal-description {
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
-
-.contests-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.contest-item {
-    background: rgba(255, 255, 255, 0.05);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-    border-left: 3px solid var(--accent-orange);
-}
-
-.partner-link {
-    display: inline-block;
-    background: var(--accent-red);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--border-radius-sm);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.partner-link:hover {
-    background: #cc0000;
-    transform: translateY(-1px);
-}
-
-/* Tournament Modal */
-.tournaments-modal .modal-header {
-    background: linear-gradient(45deg, #ff6b00, #ff0080);
-    color: white;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
-}
-
-.tournaments-icon {
-    font-size: 1.5rem;
-}
-
-.tournament-card {
-    background: var(--bg-secondary);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    border: 1px solid var(--border-color);
-}
-
-.tournament-card.upcoming {
-    opacity: 0.8;
-}
-
-.tournament-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-}
-
-.tournament-header h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.tournament-badge {
-    padding: 4px 8px;
-    background: var(--accent-green);
-    color: black;
-    font-size: 0.7rem;
-    font-weight: 700;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-.tournament-badge.upcoming-badge {
-    background: var(--text-secondary);
-    color: white;
-}
-
-.tournament-details {
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-md);
-}
-
-.tournament-details p {
-    margin-bottom: 4px;
-}
-
-.tournament-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    background: linear-gradient(45deg, #ff6b00, #ff0080);
-    color: white;
-    border: none;
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.tournament-btn:hover:not(.disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-}
-
-.tournament-btn.disabled {
-    background: #666;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-        gap: var(--spacing-sm);
+// ===== PARTNERZY =====
+function initPartners() {
+    console.log('🤝 Ładuję współprace...');
+    
+    const partnersGrid = document.getElementById('partnersGrid');
+    
+    if (!partnersGrid) {
+        console.error('❌ Nie znaleziono kontenera partnerów');
+        return;
     }
     
-    .main-nav {
-        width: 100%;
-        justify-content: center;
-    }
+    // Wyczyść grid
+    partnersGrid.innerHTML = '';
     
-    .nav-text {
-        display: none;
-    }
+    // Dodaj karty partnerów
+    state.partners.forEach(partner => {
+        const card = createPartnerCard(partner);
+        partnersGrid.appendChild(card);
+    });
     
-    .nav-btn {
-        padding: var(--spacing-sm);
-    }
+    console.log(`✅ Załadowano ${state.partners.length} współprac`);
+}
+
+function createPartnerCard(partner) {
+    const card = document.createElement('div');
+    card.className = 'partner-card';
+    card.dataset.partnerId = partner.id;
     
-    .main-content {
-        padding: var(--spacing-md);
-    }
+    // Ustaw kolor obramowania
+    card.style.borderColor = partner.color;
     
-    .partners-grid {
-        grid-template-columns: 1fr;
-    }
+    // HTML karty
+    card.innerHTML = `
+        ${partner.isNew ? '<div class="partner-badge badge-new">NEW</div>' : ''}
+        ${partner.ageRestricted ? '<div class="partner-badge badge-age">+18</div>' : ''}
+        
+        <div class="partner-header">
+            <div class="partner-icon" style="background: ${partner.color}">
+                ${partner.icon || '🤝'}
+            </div>
+            <div>
+                <h3 class="partner-name">${partner.name}</h3>
+                <p class="partner-desc">${partner.description}</p>
+            </div>
+        </div>
+        
+        <div class="partner-code-display">
+            Kod: <strong>${partner.code}</strong> - ${partner.discount}
+        </div>
+    `;
     
-    .streams-grid {
-        grid-template-columns: 1fr;
-    }
+    // Kliknięcie otwiera modal
+    card.addEventListener('click', () => openPartnerModal(partner));
     
-    .social-grid {
-        flex-direction: column;
-        align-items: stretch;
-    }
+    return card;
+}
+
+// ===== STREAMY =====
+async function initStreams() {
+    console.log('🔴 Inicjalizacja statusów streamów...');
     
-    .social-link {
-        justify-content: center;
-    }
+    // Sprawdź status początkowy
+    await checkAllStreams();
     
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-        gap: var(--spacing-sm);
-    }
+    // Ustaw okresowe sprawdzanie
+    setInterval(checkAllStreams, CONFIG.refreshIntervals.streams);
+}
+
+async function checkAllStreams() {
+    console.log('📡 Sprawdzam statusy streamów...');
     
-    .modal-content {
-        margin: var(--spacing-sm);
-    }
+    // Sprawdź Twitch
+    await checkTwitchStatus();
     
-    .donate-card {
-        flex-direction: column;
-        text-align: center;
-        gap: var(--spacing-md);
+    // Sprawdź Kick
+    await checkKickStatus();
+}
+
+async function checkTwitchStatus() {
+    try {
+        console.log('🎮 Sprawdzam Twitch...');
+        
+        // Użyjemy prostego API bez potrzeby klucza
+        const response = await fetch(CONFIG.streams.twitch.apiUrl, {
+            headers: {
+                'Accept': 'text/plain'
+            }
+        });
+        
+        if (response.ok) {
+            const uptime = await response.text();
+            
+            // Jeśli nie zawiera "offline" ani "error" i nie jest pusty - jest live
+            const isLive = uptime && 
+                          !uptime.toLowerCase().includes('offline') && 
+                          !uptime.toLowerCase().includes('error') &&
+                          uptime.trim() !== '';
+            
+            updateStreamStatus('twitch', isLive);
+            console.log(`🎮 Twitch: ${isLive ? 'LIVE' : 'OFFLINE'}`);
+        } else {
+            console.warn('⚠️ Błąd odpowiedzi Twitch API');
+            updateStreamStatus('twitch', false);
+        }
+    } catch (error) {
+        console.error('❌ Błąd sprawdzania Twitch:', error);
+        updateStreamStatus('twitch', false);
     }
 }
 
-@media (max-width: 480px) {
-    .site-title {
-        font-size: 1.5rem;
+async function checkKickStatus() {
+    try {
+        console.log('🥊 Sprawdzam Kick...');
+        
+        const response = await fetch(CONFIG.streams.kick.apiUrl, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            // Kick API zwraca is_live w livestream
+            const isLive = data.livestream && data.livestream.is_live === true;
+            
+            updateStreamStatus('kick', isLive);
+            console.log(`🥊 Kick: ${isLive ? 'LIVE' : 'OFFLINE'}`);
+        } else {
+            console.warn('⚠️ Błąd odpowiedzi Kick API');
+            updateStreamStatus('kick', false);
+        }
+    } catch (error) {
+        console.error('❌ Błąd sprawdzania Kick:', error);
+        updateStreamStatus('kick', false);
+    }
+}
+
+function updateStreamStatus(platform, isLive) {
+    const dotElement = document.getElementById(`${platform}Dot`);
+    const textElement = document.getElementById(`${platform}Status`);
+    
+    if (dotElement && textElement) {
+        if (isLive) {
+            dotElement.classList.add('live');
+            textElement.textContent = 'LIVE';
+            textElement.style.color = '#00ff00';
+        } else {
+            dotElement.classList.remove('live');
+            textElement.textContent = 'OFFLINE';
+            textElement.style.color = '#ff4444';
+        }
     }
     
-    .section-header h2 {
-        font-size: 1.5rem;
+    // Zapisz w stanie
+    state.streamStatus[platform] = isLive;
+}
+
+// ===== MODALE =====
+function initModals() {
+    console.log('📱 Inicjalizacja modalów...');
+    
+    // Modal partnera
+    const partnerModal = document.getElementById('partnerModal');
+    const modalClose = document.getElementById('modalClose');
+    
+    if (modalClose) {
+        modalClose.addEventListener('click', () => {
+            partnerModal.classList.remove('active');
+        });
     }
     
-    .play-button {
-        width: 70px;
-        height: 70px;
+    // Zamykanie kliknięciem w tło
+    partnerModal.addEventListener('click', (e) => {
+        if (e.target === partnerModal) {
+            partnerModal.classList.remove('active');
+        }
+    });
+    
+    // Modal turniejów
+    const tournamentsModal = document.getElementById('tournamentsModal');
+    const tournamentsBtn = document.getElementById('tournamentsBtn');
+    const tournamentsClose = document.getElementById('tournamentsClose');
+    
+    if (tournamentsBtn) {
+        tournamentsBtn.addEventListener('click', () => {
+            tournamentsModal.classList.add('active');
+        });
     }
     
-    .play-button svg {
-        width: 30px;
-        height: 30px;
+    if (tournamentsClose) {
+        tournamentsClose.addEventListener('click', () => {
+            tournamentsModal.classList.remove('active');
+        });
+    }
+    
+    tournamentsModal.addEventListener('click', (e) => {
+        if (e.target === tournamentsModal) {
+            tournamentsModal.classList.remove('active');
+        }
+    });
+    
+    // Przycisk kopiowania kodu
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', copyPartnerCode);
     }
 }
 
-/* === UTILITY CLASSES === */
-.hidden {
-    display: none !important;
+function openPartnerModal(partner) {
+    console.log(`📋 Otwieram modal: ${partner.name}`);
+    
+    const modal = document.getElementById('partnerModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCode = document.getElementById('modalCode');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalContests = document.getElementById('modalContests');
+    const modalLink = document.getElementById('modalLink');
+    const copyBtn = document.getElementById('copyBtn');
+    
+    // Wypełnij dane
+    modalTitle.textContent = partner.name;
+    modalCode.textContent = partner.code;
+    modalDescription.textContent = partner.description;
+    modalLink.href = partner.link;
+    modalLink.textContent = `Odwiedź ${partner.name}`;
+    
+    // Konkursy
+    if (partner.contests && partner.contests.length > 0) {
+        modalContests.innerHTML = '';
+        
+        partner.contests.forEach(contest => {
+            const contestItem = document.createElement('div');
+            contestItem.className = 'contest-item';
+            contestItem.textContent = contest;
+            modalContests.appendChild(contestItem);
+        });
+    } else {
+        modalContests.innerHTML = '<p>Brak aktualnych konkursów</p>';
+    }
+    
+    // Reset przycisku kopiowania
+    copyBtn.classList.remove('copied');
+    copyBtn.textContent = 'Kopiuj';
+    
+    // Otwórz modal
+    modal.classList.add('active');
 }
 
-.yt-red {
-    color: var(--accent-red);
+async function copyPartnerCode() {
+    const codeElement = document.getElementById('modalCode');
+    const code = codeElement.textContent;
+    const copyBtn = document.getElementById('copyBtn');
+    
+    try {
+        await navigator.clipboard.writeText(code);
+        
+        // Wizualne potwierdzenie
+        copyBtn.classList.add('copied');
+        copyBtn.textContent = 'Skopiowano!';
+        
+        setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtn.textContent = 'Kopiuj';
+        }, 2000);
+        
+        console.log('📋 Skopiowano kod:', code);
+    } catch (error) {
+        console.error('❌ Błąd kopiowania:', error);
+        
+        // Fallback dla starych przeglądarek
+        const textArea = document.createElement('textarea');
+        textArea.value = code;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        copyBtn.classList.add('copied');
+        copyBtn.textContent = 'Skopiowano!';
+        
+        setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtn.textContent = 'Kopiuj';
+        }, 2000);
+    }
 }
 
-.partners-icon {
-    color: #ff6b00;
+// ===== EVENT LISTENERS =====
+function initEventListeners() {
+    console.log('🎯 Inicjalizacja event listenerów...');
+    
+    // Blokada DevTools (podstawowa)
+    document.addEventListener('keydown', (e) => {
+        // F12
+        if (e.key === 'F12') {
+            e.preventDefault();
+            console.log('🚫 Próba otwarcia DevTools zablokowana');
+        }
+        
+        // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
+        if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
+            e.preventDefault();
+            console.log('🚫 Próba otwarcia DevTools zablokowana');
+        }
+        
+        // Ctrl+U (view source)
+        if (e.ctrlKey && e.key.toUpperCase() === 'U') {
+            e.preventDefault();
+            console.log('🚫 Próba wyświetlenia źródła strony zablokowana');
+        }
+    });
+    
+    // Obsługa błędów obrazków
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            console.warn(`⚠️ Błąd ładowania obrazka: ${this.src}`);
+            this.style.opacity = '0.5';
+        });
+    });
 }
 
-.stream-icon {
-    color: var(--accent-green);
+// ===== AUTO REFRESH =====
+function startAutoRefresh() {
+    // Automatyczne odświeżanie filmu co 5 minut
+    setInterval(async () => {
+        console.log('🔄 Automatyczne odświeżanie filmu...');
+        await loadLatestVideo();
+    }, CONFIG.refreshIntervals.video);
 }
 
-/* === OPTIMIZATION === */
-img {
-    max-width: 100%;
-    height: auto;
+// ===== OBSŁUGA BŁĘDÓW =====
+window.addEventListener('error', function(e) {
+    console.error('🚨 Globalny błąd:', e.error);
+});
+
+window.addEventListener('unhandledrejection', function(e) {
+    console.error('🚨 Nieobsłużony Promise:', e.reason);
+});
+
+// ===== POMOCNICZE FUNKCJE =====
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
-* {
-    -webkit-tap-highlight-color: transparent;
+// Inicjalizacja po załadowaniu strony
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
 }
 
-/* Prevents layout shifts */
-.aspect-ratio {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
-}
-
-.aspect-ratio > * {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Smooth scrolling for the whole page */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Focus styles for accessibility */
-button:focus,
-a:focus,
-input:focus {
-    outline: 2px solid var(--accent-red);
-    outline-offset: 2px;
-}
-
-/* Remove focus styles for mouse users */
-button:focus:not(:focus-visible),
-a:focus:not(:focus-visible) {
-    outline: none;
+function init() {
+    console.log('✨ Strona ANGELKACS załadowana!');
 }

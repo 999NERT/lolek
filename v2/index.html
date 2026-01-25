@@ -3,310 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANGELKACS | Streamer</title>
+    <title>ANGELKACS | Gaming & Streaming</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="angelka.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-text">ANGELKACS</span>
-                <span class="logo-subtitle">Streamer</span>
-            </div>
-            <div class="nav-controls">
-                <button class="nav-btn" id="refreshBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-                    </svg>
-                </button>
-                <button class="nav-btn" id="tournamentsBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                        <path d="M22 4L12 14.01l-3-3"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main">
-        <!-- Hero / YouTube Section -->
-        <section class="section hero">
-            <div class="section-header">
-                <h1 class="section-title">
-                    <span class="icon-red">▶</span> Ostatni film
-                </h1>
-                <p class="section-subtitle">Obejrzyj najnowszy materiał</p>
+    <!-- Gradient Background -->
+    <div class="gradient-bg"></div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ANGELKACS</h1>
+                        <p class="tagline">Gaming Content Creator</p>
+                    </div>
+                </div>
             </div>
             
-            <div class="video-card" id="videoContainer">
-                <div class="video-loading" id="videoLoader">
-                    <div class="loader"></div>
-                    <p class="loading-text">Ładuję film...</p>
+            <div class="header-right">
+                <div class="quick-links">
+                    <a href="https://angelkacs.pl/mecze/" class="quick-link tournaments-link" target="_blank">
+                        <i class="fas fa-trophy"></i>
+                        <span>Turnieje</span>
+                    </a>
+                    <a href="https://angelkacs.pl/game/" class="quick-link game-link" target="_blank">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Ustawienia</span>
+                    </a>
+                    <button class="quick-link refresh-link" id="refreshBtn">
+                        <i class="fas fa-redo"></i>
+                        <span>Odśwież</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- YouTube Section -->
+            <section class="card-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="title-icon youtube-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h2>Najnowszy film</h2>
+                    </div>
+                    <p class="section-description">Obejrzyj mój najnowszy materiał na YouTube</p>
                 </div>
                 
-                <div class="video-content" id="videoPlayer" style="display: none;">
-                    <div class="thumbnail-wrapper">
-                        <img id="videoThumbnail" class="thumbnail" alt="Miniatura filmu">
-                        <div class="thumbnail-overlay"></div>
-                        <a id="watchButton" class="play-button" target="_blank">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
+                <div class="youtube-card" id="videoContainer">
+                    <div class="video-loading" id="videoLoader">
+                        <div class="loader">
+                            <div class="loader-circle"></div>
+                        </div>
+                        <p class="loading-text">Wyszukuję najnowszy film...</p>
+                    </div>
+                    
+                    <div class="video-content" id="videoPlayer" style="display: none;">
+                        <div class="thumbnail-container">
+                            <img id="videoThumbnail" class="video-thumbnail" alt="Miniatura filmu">
+                            <div class="thumbnail-overlay">
+                                <a id="watchButton" class="play-button" target="_blank">
+                                    <i class="fas fa-play"></i>
+                                </a>
+                            </div>
+                            <div class="video-badge">
+                                <i class="fas fa-play-circle"></i> ODTWÓRZ
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 id="videoTitle" class="video-title">Ładowanie tytułu...</h3>
+                            <div class="video-meta">
+                                <span class="meta-item">
+                                    <i class="far fa-calendar"></i>
+                                    <span id="videoDate">Ładowanie daty...</span>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="far fa-eye"></i>
+                                    <span>YouTube</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-error" id="videoError" style="display: none;">
+                        <div class="error-content">
+                            <div class="error-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h3>Nie można załadować filmu</h3>
+                            <p id="errorMessage">Spróbuj ponownie za chwilę</p>
+                            <button id="retryBtn" class="btn btn-primary">
+                                <i class="fas fa-redo"></i>
+                                Spróbuj ponownie
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Partners Section -->
+            <section class="card-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="title-icon partners-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h2>Współprace</h2>
+                    </div>
+                    <p class="section-description">Korzystaj z kodów rabatowych od moich partnerów</p>
+                </div>
+                
+                <div class="partners-container">
+                    <div class="partners-grid" id="partnersGrid">
+                        <!-- Partners loaded via JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Streams Section -->
+            <section class="card-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="title-icon streams-icon">
+                            <i class="fas fa-broadcast-tower"></i>
+                        </div>
+                        <h2>Streamy na żywo</h2>
+                    </div>
+                    <p class="section-description">Obserwuj mnie na platformach streamingowych</p>
+                </div>
+                
+                <div class="streams-grid">
+                    <!-- Twitch -->
+                    <div class="stream-card twitch-card">
+                        <a href="https://www.twitch.tv/angelkacs" class="stream-link" target="_blank">
+                            <div class="stream-header">
+                                <div class="stream-logo">
+                                    <img src="1twitch.png" alt="Twitch">
+                                </div>
+                                <div class="stream-info">
+                                    <h3>Twitch</h3>
+                                    <div class="stream-status">
+                                        <span class="status-indicator" id="twitchIndicator"></span>
+                                        <span class="status-text" id="twitchStatus">Sprawdzam...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stream-footer">
+                                <span class="stream-action">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Otwórz stream
+                                </span>
+                            </div>
                         </a>
                     </div>
-                    <div class="video-info">
-                        <h3 id="videoTitle" class="video-title">Ładowanie...</h3>
-                        <p id="videoDate" class="video-date"></p>
-                    </div>
-                </div>
-                
-                <div class="video-error" id="videoError" style="display: none;">
-                    <div class="error-content">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
-                        <h3>Nie można załadować filmu</h3>
-                        <p id="errorMessage">Spróbuj ponownie</p>
-                        <button id="retryBtn" class="btn">Odśwież</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Partners -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="icon-blue">🤝</span> Współprace
-                </h2>
-                <p class="section-subtitle">Korzystaj z kodów rabatowych</p>
-            </div>
-            
-            <div class="partners-grid" id="partnersGrid">
-                <!-- Partners will be loaded here -->
-            </div>
-        </section>
-
-        <!-- Live Streams -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="icon-green">🔴</span> Na żywo
-                </h2>
-                <p class="section-subtitle">Gdzie mnie znajdziesz</p>
-            </div>
-            
-            <div class="streams-grid">
-                <div class="stream-card">
-                    <a href="https://www.twitch.tv/angelkacs" class="stream-link" target="_blank">
-                        <div class="stream-icon twitch">
-                            <img src="1twitch.png" alt="Twitch" class="stream-logo">
-                        </div>
-                        <div class="stream-details">
-                            <h3>Twitch</h3>
-                            <div class="stream-status">
-                                <span class="status-dot" id="twitchDot"></span>
-                                <span class="status-text" id="twitchStatus">Ładuję...</span>
+                    
+                    <!-- Kick -->
+                    <div class="stream-card kick-card">
+                        <a href="https://kick.com/angelkacs" class="stream-link" target="_blank">
+                            <div class="stream-header">
+                                <div class="stream-logo">
+                                    <img src="1KOPNIAK.png" alt="Kick">
+                                </div>
+                                <div class="stream-info">
+                                    <h3>Kick</h3>
+                                    <div class="stream-status">
+                                        <span class="status-indicator" id="kickIndicator"></span>
+                                        <span class="status-text" id="kickStatus">Sprawdzam...</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="stream-card">
-                    <a href="https://kick.com/angelkacs" class="stream-link" target="_blank">
-                        <div class="stream-icon kick">
-                            <img src="1KOPNIAK.png" alt="Kick" class="stream-logo">
-                        </div>
-                        <div class="stream-details">
-                            <h3>Kick</h3>
-                            <div class="stream-status">
-                                <span class="status-dot" id="kickDot"></span>
-                                <span class="status-text" id="kickStatus">Ładuję...</span>
+                            <div class="stream-footer">
+                                <span class="stream-action">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Otwórz stream
+                                </span>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="stream-card">
-                    <a href="https://discord.gg/rKGKQbuBxm" class="stream-link" target="_blank">
-                        <div class="stream-icon discord">
-                            <img src="1discord.png" alt="Discord" class="stream-logo">
-                        </div>
-                        <div class="stream-details">
-                            <h3>Discord</h3>
-                            <div class="stream-status">
-                                <span class="status-dot" style="background: #5865F2;"></span>
-                                <span class="status-text">Dołącz</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Discord -->
+                    <div class="stream-card discord-card">
+                        <a href="https://discord.gg/rKGKQbuBxm" class="stream-link" target="_blank">
+                            <div class="stream-header">
+                                <div class="stream-logo">
+                                    <img src="1discord.png" alt="Discord">
+                                </div>
+                                <div class="stream-info">
+                                    <h3>Discord</h3>
+                                    <div class="stream-status">
+                                        <span class="status-indicator" style="background: #5865F2;"></span>
+                                        <span class="status-text">Dołącz do serwera</span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="stream-footer">
+                                <span class="stream-action">
+                                    <i class="fas fa-user-plus"></i>
+                                    Dołącz teraz
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social Media & Donate -->
+            <div class="grid-section">
+                <!-- Social Media -->
+                <section class="card-section social-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon social-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h2>Social Media</h2>
                         </div>
-                    </a>
+                        <p class="section-description">Obserwuj mnie w mediach społecznościowych</p>
+                    </div>
+                    
+                    <div class="social-grid">
+                        <a href="https://www.youtube.com/@angelkacs" class="social-item youtube-social" target="_blank">
+                            <div class="social-logo">
+                                <img src="ytclick.png" alt="YouTube">
+                            </div>
+                            <span>YouTube</span>
+                            <i class="fas fa-arrow-right social-arrow"></i>
+                        </a>
+                        
+                        <a href="https://www.instagram.com/angelkacs" class="social-item instagram-social" target="_blank">
+                            <div class="social-logo">
+                                <img src="1instagram.png" alt="Instagram">
+                            </div>
+                            <span>Instagram</span>
+                            <i class="fas fa-arrow-right social-arrow"></i>
+                        </a>
+                        
+                        <a href="https://x.com/angelkaacs" class="social-item twitter-social" target="_blank">
+                            <div class="social-logo">
+                                <img src="1x.png" alt="X/Twitter">
+                            </div>
+                            <span>Twitter</span>
+                            <i class="fas fa-arrow-right social-arrow"></i>
+                        </a>
+                        
+                        <a href="https://www.tiktok.com/@angelkacs2" class="social-item tiktok-social" target="_blank">
+                            <div class="social-logo">
+                                <img src="1tiktok.png" alt="TikTok">
+                            </div>
+                            <span>TikTok</span>
+                            <i class="fas fa-arrow-right social-arrow"></i>
+                        </a>
+                        
+                        <a href="https://www.facebook.com/angelkacs" class="social-item facebook-social" target="_blank">
+                            <div class="social-logo">
+                                <img src="1facebook.png" alt="Facebook">
+                            </div>
+                            <span>Facebook</span>
+                            <i class="fas fa-arrow-right social-arrow"></i>
+                        </a>
+                    </div>
+                </section>
+                
+                <!-- Donate -->
+                <section class="card-section donate-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="title-icon donate-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h2>Wesprzyj mnie</h2>
+                        </div>
+                        <p class="section-description">Twoje wsparcie pomaga mi tworzyć lepsze treści</p>
+                    </div>
+                    
+                    <div class="donate-content">
+                        <div class="donate-text">
+                            <p>Jeśli podoba Ci się moja twórczość, rozważ wsparcie mojego kanału. Każda wpłata pomaga mi rozwijać się i tworzyć jeszcze lepsze materiały dla Was!</p>
+                        </div>
+                        <a href="https://angelkacs.pl/donate" class="btn donate-btn" target="_blank">
+                            <i class="fas fa-gift"></i>
+                            Wesprzyj teraz
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="footer-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="footer-text">
+                            <h3>ANGELKACS</h3>
+                            <p>Gaming & Streaming</p>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <a href="https://angelkacs.pl/mecze/" class="footer-link" target="_blank">
+                            <i class="fas fa-trophy"></i>
+                            Turnieje
+                        </a>
+                        <a href="https://angelkacs.pl/game/" class="footer-link" target="_blank">
+                            <i class="fas fa-sliders-h"></i>
+                            Ustawienia
+                        </a>
+                        <a href="mailto:angelka@stormmedia.gg" class="footer-link">
+                            <i class="fas fa-envelope"></i>
+                            Współpraca
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p class="copyright">&copy; 2025 ANGELKACS. Wszelkie prawa zastrzeżone.</p>
+                    <p class="contact">
+                        Kontakt: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a>
+                    </p>
                 </div>
             </div>
-        </section>
+        </footer>
+    </div>
 
-        <!-- Social Media -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="icon-purple">🌐</span> Social Media
-                </h2>
-                <p class="section-subtitle">Obserwuj mnie</p>
-            </div>
-            
-            <div class="social-grid">
-                <a href="https://www.youtube.com/@angelkacs" class="social-card youtube" target="_blank">
-                    <div class="social-icon">
-                        <img src="ytclick.png" alt="YouTube">
-                    </div>
-                    <span>YouTube</span>
-                </a>
-                
-                <a href="https://www.instagram.com/angelkacs" class="social-card instagram" target="_blank">
-                    <div class="social-icon">
-                        <img src="1instagram.png" alt="Instagram">
-                    </div>
-                    <span>Instagram</span>
-                </a>
-                
-                <a href="https://x.com/angelkaacs" class="social-card twitter" target="_blank">
-                    <div class="social-icon">
-                        <img src="1x.png" alt="X/Twitter">
-                    </div>
-                    <span>Twitter</span>
-                </a>
-                
-                <a href="https://www.tiktok.com/@angelkacs2" class="social-card tiktok" target="_blank">
-                    <div class="social-icon">
-                        <img src="1tiktok.png" alt="TikTok">
-                    </div>
-                    <span>TikTok</span>
-                </a>
-                
-                <a href="https://www.facebook.com/angelkacs" class="social-card facebook" target="_blank">
-                    <div class="social-icon">
-                        <img src="1facebook.png" alt="Facebook">
-                    </div>
-                    <span>Facebook</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- Donate -->
-        <section class="section">
-            <div class="donate-card">
-                <div class="donate-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-                    </svg>
-                </div>
-                <div class="donate-content">
-                    <h3>Wesprzyj moją twórczość</h3>
-                    <p>Twoje wsparcie pomaga mi tworzyć lepsze treści dla społeczności</p>
-                    <a href="https://angelkacs.pl/donate" class="btn donate-btn" target="_blank">Wesprzyj</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <p>© 2025 ANGELKACS</p>
-                <p class="footer-sub">Streamer & Content Creator</p>
-            </div>
-            <div class="footer-right">
-                <p>Współpraca: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modals -->
-    <div class="modal-overlay" id="partnerModal">
-        <div class="modal">
-            <button class="modal-close" id="modalClose">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-            </button>
+    <!-- Partner Modal -->
+    <div class="modal" id="partnerModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-container">
             <div class="modal-header">
-                <div class="modal-icon" id="modalIcon"></div>
-                <h2 id="modalTitle">Partner</h2>
+                <div class="modal-icon-container">
+                    <div class="modal-icon" id="modalIcon"></div>
+                </div>
+                <div class="modal-title-container">
+                    <h2 id="modalTitle">Nazwa partnera</h2>
+                    <p id="modalSubtitle">Partner współpracy</p>
+                </div>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+            
             <div class="modal-body">
                 <div class="modal-section">
-                    <h3>Kod rabatowy</h3>
+                    <h3><i class="fas fa-tag"></i> Kod rabatowy</h3>
                     <div class="code-container">
-                        <code id="modalCode" class="code">ŁADOWANIE...</code>
+                        <div class="code-display">
+                            <code id="modalCode" class="partner-code">ŁADOWANIE...</code>
+                        </div>
                         <button id="copyBtn" class="copy-btn">
-                            <span class="copy-text">Kopiuj</span>
+                            <i class="far fa-copy"></i>
+                            <span class="copy-text">Kopiuj kod</span>
                             <span class="copied-text">Skopiowano!</span>
                         </button>
                     </div>
+                    <p class="code-info" id="modalDiscount">Rabat: Ładowanie...</p>
                 </div>
+                
                 <div class="modal-section">
-                    <h3>Opis</h3>
-                    <p id="modalDescription">Ładowanie opisu...</p>
+                    <h3><i class="fas fa-info-circle"></i> Opis</h3>
+                    <p id="modalDescription" class="modal-description">Ładowanie opisu partnera...</p>
                 </div>
+                
                 <div class="modal-section" id="contestsSection">
-                    <h3>Konkursy</h3>
-                    <div id="modalContests" class="contests">
-                        <!-- Contests will be loaded here -->
+                    <h3><i class="fas fa-award"></i> Konkursy & Promocje</h3>
+                    <div id="modalContests" class="contests-list">
+                        <div class="contest-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Ładowanie konkursów...
+                        </div>
                     </div>
                 </div>
+                
                 <div class="modal-section">
-                    <h3>Odwiedź stronę</h3>
-                    <a id="modalLink" class="modal-link" target="_blank">Przejdź do strony</a>
+                    <h3><i class="fas fa-external-link-alt"></i> Odwiedź stronę</h3>
+                    <a id="modalLink" class="modal-link" target="_blank">
+                        <i class="fas fa-link"></i>
+                        Przejdź do strony partnera
+                    </a>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="tournamentsModal">
-        <div class="modal">
-            <button class="modal-close" id="tournamentsClose">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-            </button>
-            <div class="modal-header">
-                <div class="modal-icon">🏆</div>
-                <h2>Turnieje & Eventy</h2>
-            </div>
-            <div class="modal-body">
-                <div class="tournament-card-modal">
-                    <h3>T-Mobile Esports Championship 2025</h3>
-                    <div class="tournament-details">
-                        <div class="detail">
-                            <span class="detail-label">Nagrody:</span>
-                            <span class="detail-value">100 000€</span>
-                        </div>
-                        <div class="detail">
-                            <span class="detail-label">Zapisy do:</span>
-                            <span class="detail-value">18-20 września</span>
-                        </div>
-                        <div class="detail">
-                            <span class="detail-label">Finał LAN:</span>
-                            <span class="detail-value">15-16 listopada, Budapeszt</span>
-                        </div>
-                        <div class="detail">
-                            <span class="detail-label">Wymagania:</span>
-                            <span class="detail-value">16+ lat</span>
-                        </div>
-                    </div>
-                    <a href="https://tesports.gg/pl" class="btn tournament-btn" target="_blank">Zarejestruj się</a>
-                </div>
+            
+            <div class="modal-footer">
+                <button class="btn modal-action-btn" id="visitSiteBtn">
+                    <i class="fas fa-external-link-alt"></i>
+                    Odwiedź stronę
+                </button>
             </div>
         </div>
     </div>

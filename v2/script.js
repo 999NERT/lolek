@@ -2,13 +2,15 @@
 const CONFIG = {
     youtube: {
         channelId: "UCb4KZzyxv9-PL_BcKOrpFyQ",
-        rssUrl: "https://www.youtube.com/feeds/videos.xml?channel_id=UCb4KZzyxv9-PL_BcKOrpFyQ",
-        checkShorts: true
+        rssUrl: "https://www.youtube.com/feeds/videos.xml?channel_id=UCb4KZzyxv9-PL_BcKOrpFyQ"
     },
     streams: {
         twitch: {
             username: "angelkacs",
-            apiUrl: "https://decapi.me/twitch/uptime/angelkacs"
+            // Używamy prostego API bez klucza
+            apiUrl: "https://api.twitch.tv/helix/streams?user_login=angelkacs",
+            // Fallback API
+            fallbackApi: "https://decapi.me/twitch/uptime/angelkacs"
         },
         kick: {
             username: "angelkacs",
@@ -19,18 +21,18 @@ const CONFIG = {
         {
             id: "logitech",
             name: "Logitech",
-            description: "Najlepsze peryferia gamingowe - myszki, klawiatury, słuchawki.",
+            description: "Najlepsze peryferia gamingowe - myszki, klawiatury, słuchawki. Oficjalny partner.",
             code: "ANGELKACS",
-            discount: "-5% na cały asortyment",
+            discount: "Rabat -5% na cały asortyment",
             link: "https://logitechg-emea.sjv.io/vPmBE3",
-            contests: ["Regularne konkursy na Discordzie", "Nagrody: sprzęt gamingowy"],
+            contests: ["Regularne konkursy na Discordzie", "Nagrody w postaci sprzętu gamingowego"],
             color: "#00FFFF",
             icon: "🖱️"
         },
         {
             id: "pirateswap",
             name: "PirateSwap",
-            description: "Platforma do doładowań gamingowych z najlepszymi bonusami.",
+            description: "Platforma do doładowań gamingowych z najlepszymi bonusami na rynku.",
             code: "ANGELKACS",
             discount: "+35% więcej do doładowania",
             link: "https://pirateswap.com/?ref=angelkacs",
@@ -41,7 +43,7 @@ const CONFIG = {
         {
             id: "csgoskins",
             name: "CSGOSKINS",
-            description: "Platforma do zakupu i sprzedaży skinów CS:GO/CS2. Bezpieczne transakcje.",
+            description: "Platforma do zakupu i sprzedaży skinów CS:GO/CS2. Bezpieczne transakcje i szybkie wypłaty.",
             code: "ANGELKACS",
             discount: "Konkurs z nagrodami 3x $50",
             link: "https://csgo-skins.com/?ref=ANGELKACS",
@@ -57,7 +59,7 @@ const CONFIG = {
         {
             id: "skinplace",
             name: "SKIN.PLACE",
-            description: "Kupuj i sprzedawaj skiny wygodnie z dodatkowym bonusem.",
+            description: "Kupuj i sprzedawaj skiny wygodnie z dodatkowym bonusem. Najlepsze ceny na rynku.",
             code: "ANGELKACS",
             discount: "+2% do ceny przy sprzedaży",
             link: "https://skin.place/?ref=ANGELKACS",
@@ -69,9 +71,9 @@ const CONFIG = {
         {
             id: "wkdzik",
             name: "WKDZIK",
-            description: "Sklep z akcesoriami gamingowymi i elektroniką.",
+            description: "Sklep z akcesoriami gamingowymi i elektroniką. Oficjalny partner.",
             code: "ANGELKA",
-            discount: "-5% na cały asortyment",
+            discount: "Rabat -5% na cały asortyment",
             link: "https://wkdzik.pl",
             contests: [],
             color: "#de74ff",
@@ -80,7 +82,7 @@ const CONFIG = {
         {
             id: "fcoins",
             name: "FCOINS",
-            description: "Kupuj taniej coinsy do gier lub sprzedawaj z zyskiem.",
+            description: "Kupuj taniej coinsy do gier lub sprzedawaj z zyskiem. Najlepsze kursy wymiany.",
             code: "ANGELKACS",
             discount: "+5% więcej monet",
             link: "http://fcoins.gg/?code=ANGELKACS",
@@ -88,11 +90,7 @@ const CONFIG = {
             color: "#07E864",
             icon: "🪙"
         }
-    ],
-    refreshIntervals: {
-        video: 300000, // 5 minut
-        streams: 30000 // 30 sekund
-    }
+    ]
 };
 
 // ===== STAN APLIKACJI =====
@@ -101,38 +99,22 @@ let state = {
     streamStatus: {
         twitch: null,
         kick: null
-    },
-    partners: CONFIG.partners
+    }
 };
 
 // ===== INICJALIZACJA =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Inicjalizacja strony ANGELKACS...');
     
-    // Ukryj mobile redirect na desktopie
-    if (window.innerWidth > 768) {
-        document.getElementById('mobileRedirect').style.display = 'none';
-        document.getElementById('mainContainer').style.display = 'block';
-    }
-    
-    // Inicjalizuj moduły
+    // Inicjalizuj wszystkie moduły
     initYouTube();
     initPartners();
     initStreams();
     initModals();
     initEventListeners();
     
-    // Rozpocznij automatyczne odświeżanie
-    startAutoRefresh();
-    
     console.log('✅ Strona gotowa!');
 });
-
-// ===== MOBILE REDIRECT =====
-function continueToDesktop() {
-    document.getElementById('mobileRedirect').style.display = 'none';
-    document.getElementById('mainContainer').style.display = 'block';
-}
 
 // ===== YOUTUBE =====
 async function initYouTube() {
@@ -140,8 +122,15 @@ async function initYouTube() {
     await loadLatestVideo();
     
     // Obsługa przycisków
-    document.getElementById('refreshBtn').addEventListener('click', loadLatestVideo);
-    document.getElementById('retryBtn').addEventListener('click', loadLatestVideo);
+    document.getElementById('refreshBtn').addEventListener('click', async () => {
+        console.log('🔃 Ręczne odświeżanie filmu...');
+        await loadLatestVideo();
+    });
+    
+    document.getElementById('retryBtn').addEventListener('click', async () => {
+        console.log('🔄 Ponawianie ładowania filmu...');
+        await loadLatestVideo();
+    });
 }
 
 async function loadLatestVideo() {
@@ -157,17 +146,18 @@ async function loadLatestVideo() {
     try {
         console.log('📹 Szukam najnowszego filmu...');
         
-        // Użyj CORS proxy aby ominąć ograniczenia
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        // Użyj CORS proxy
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
         const rssUrl = `${proxyUrl}${encodeURIComponent(CONFIG.youtube.rssUrl)}`;
         
         const response = await fetch(rssUrl);
         
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Błąd HTTP: ${response.status}`);
         }
         
-        const xmlText = await response.text();
+        const data = await response.json();
+        const xmlText = data.contents;
         
         // Parsuj XML
         const parser = new DOMParser();
@@ -177,13 +167,13 @@ async function loadLatestVideo() {
         const entries = xmlDoc.getElementsByTagName('entry');
         
         if (entries.length === 0) {
-            throw new Error('Nie znaleziono filmów na kanale');
+            throw new Error('Brak filmów na kanale');
         }
         
-        console.log(`📊 Znaleziono ${entries.length} filmów, szukam normalnego...`);
+        console.log(`📊 Znaleziono ${entries.length} filmów`);
         
-        // Przeszukaj filmy (maksymalnie 15 najnowszych)
-        for (let i = 0; i < Math.min(entries.length, 15); i++) {
+        // Szukaj pierwszego normalnego filmu (nie short)
+        for (let i = 0; i < Math.min(entries.length, 20); i++) {
             const entry = entries[i];
             
             // Pobierz ID filmu
@@ -196,25 +186,29 @@ async function loadLatestVideo() {
             const titleElement = entry.querySelector('title');
             const title = titleElement ? titleElement.textContent : '';
             
+            // Pobierz datę publikacji
+            const publishedElement = entry.querySelector('published');
+            const published = publishedElement ? publishedElement.textContent : '';
+            
             console.log(`🔍 Sprawdzam: ${title.substring(0, 50)}...`);
             
             // Sprawdź czy to nie short
-            if (CONFIG.youtube.checkShorts && isShortVideo(title)) {
+            if (isShortVideo(title)) {
                 console.log(`⏭️ Pomijam short: ${title.substring(0, 30)}...`);
                 continue;
             }
             
-            // Sprawdź czy miniaturka jest dostępna (czy film nie jest prywatny)
+            // Sprawdź dostępność filmu
             const isAvailable = await checkVideoAvailability(videoId);
             
             if (isAvailable) {
                 console.log(`✅ Znaleziono film: ${videoId}`);
-                displayVideo(videoId, title);
+                displayVideo(videoId, title, published);
                 return;
             }
         }
         
-        throw new Error('Nie znaleziono dostępnych filmów (tylko shorts lub prywatne)');
+        throw new Error('Nie znaleziono dostępnych filmów');
         
     } catch (error) {
         console.error('❌ Błąd ładowania filmu:', error);
@@ -227,12 +221,12 @@ function isShortVideo(title) {
     
     const titleLower = title.toLowerCase();
     
-    // Lista słów kluczowych wskazujących na short
+    // Słowa kluczowe shortsów
     const shortKeywords = [
         '#short', '#shorts', 'shorts', 'short',
         '#shortsfeed', '#shortsvideo', '#youtubeshorts',
         '#ytshorts', '#shortsyoutube', '#shortsbeta',
-        'shorts #', 'short #'
+        '#shorts_video', 'shorts #', 'short #'
     ];
     
     // Sprawdź czy tytuł zawiera którekolwiek słowo kluczowe
@@ -256,30 +250,46 @@ async function checkVideoAvailability(videoId) {
         // Spróbuj załadować miniaturkę
         testImg.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         
-        // Timeout po 3 sekundach
-        setTimeout(() => resolve(false), 3000);
+        // Timeout po 2 sekundach
+        setTimeout(() => resolve(false), 2000);
     });
 }
 
-function displayVideo(videoId, title) {
+function displayVideo(videoId, title, published) {
     const loader = document.getElementById('videoLoader');
     const player = document.getElementById('videoPlayer');
     const thumbnail = document.getElementById('videoThumbnail');
     const watchButton = document.getElementById('watchButton');
+    const videoTitle = document.getElementById('videoTitle');
+    const videoDate = document.getElementById('videoDate');
     
-    // Ustaw miniaturkę (spróbuj najpierw maxres, potem hq)
+    // Ustaw miniaturkę
     thumbnail.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     thumbnail.onerror = function() {
         this.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
     };
     
-    // Ustaw link do filmu
+    // Ustaw link
     watchButton.href = `https://www.youtube.com/watch?v=${videoId}`;
+    
+    // Ustaw tytuł
+    videoTitle.textContent = title.length > 60 ? title.substring(0, 60) + '...' : title;
+    
+    // Formatuj datę
+    if (published) {
+        const date = new Date(published);
+        const formattedDate = date.toLocaleDateString('pl-PL', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        videoDate.textContent = `Opublikowano: ${formattedDate}`;
+    }
     
     // Zapisz w stanie
     state.currentVideo = { id: videoId, title: title };
     
-    // Pokaż player, ukryj loader
+    // Pokaż player
     loader.style.display = 'none';
     player.style.display = 'block';
     
@@ -311,12 +321,12 @@ function initPartners() {
     partnersGrid.innerHTML = '';
     
     // Dodaj karty partnerów
-    state.partners.forEach(partner => {
+    CONFIG.partners.forEach(partner => {
         const card = createPartnerCard(partner);
         partnersGrid.appendChild(card);
     });
     
-    console.log(`✅ Załadowano ${state.partners.length} współprac`);
+    console.log(`✅ Załadowano ${CONFIG.partners.length} współprac`);
 }
 
 function createPartnerCard(partner) {
@@ -333,16 +343,16 @@ function createPartnerCard(partner) {
         ${partner.ageRestricted ? '<div class="partner-badge badge-age">+18</div>' : ''}
         
         <div class="partner-header">
-            <div class="partner-icon" style="background: ${partner.color}">
-                ${partner.icon || '🤝'}
+            <div class="partner-icon" style="background: ${partner.color}20; color: ${partner.color}">
+                ${partner.icon}
             </div>
-            <div>
+            <div class="partner-info">
                 <h3 class="partner-name">${partner.name}</h3>
-                <p class="partner-desc">${partner.description}</p>
+                <p class="partner-description">${partner.description}</p>
             </div>
         </div>
         
-        <div class="partner-code-display">
+        <div class="partner-code">
             Kod: <strong>${partner.code}</strong> - ${partner.discount}
         </div>
     `;
@@ -360,49 +370,69 @@ async function initStreams() {
     // Sprawdź status początkowy
     await checkAllStreams();
     
-    // Ustaw okresowe sprawdzanie
-    setInterval(checkAllStreams, CONFIG.refreshIntervals.streams);
+    // Ustaw okresowe sprawdzanie co 30 sekund
+    setInterval(checkAllStreams, 30000);
 }
 
 async function checkAllStreams() {
     console.log('📡 Sprawdzam statusy streamów...');
     
-    // Sprawdź Twitch
-    await checkTwitchStatus();
+    try {
+        await checkTwitchStatus();
+    } catch (error) {
+        console.error('❌ Błąd Twitch:', error);
+    }
     
-    // Sprawdź Kick
-    await checkKickStatus();
+    try {
+        await checkKickStatus();
+    } catch (error) {
+        console.error('❌ Błąd Kick:', error);
+    }
 }
 
 async function checkTwitchStatus() {
     try {
         console.log('🎮 Sprawdzam Twitch...');
         
-        // Użyjemy prostego API bez potrzeby klucza
-        const response = await fetch(CONFIG.streams.twitch.apiUrl, {
-            headers: {
-                'Accept': 'text/plain'
+        // Próba 1: Proste API (bez klucza)
+        try {
+            const response = await fetch(CONFIG.streams.twitch.fallbackApi, {
+                headers: { 'Accept': 'text/plain' }
+            });
+            
+            if (response.ok) {
+                const text = await response.text();
+                const isLive = text && 
+                              !text.toLowerCase().includes('offline') && 
+                              !text.toLowerCase().includes('error') &&
+                              text.trim() !== '';
+                
+                updateStreamStatus('twitch', isLive, text);
+                return;
             }
-        });
-        
-        if (response.ok) {
-            const uptime = await response.text();
-            
-            // Jeśli nie zawiera "offline" ani "error" i nie jest pusty - jest live
-            const isLive = uptime && 
-                          !uptime.toLowerCase().includes('offline') && 
-                          !uptime.toLowerCase().includes('error') &&
-                          uptime.trim() !== '';
-            
-            updateStreamStatus('twitch', isLive);
-            console.log(`🎮 Twitch: ${isLive ? 'LIVE' : 'OFFLINE'}`);
-        } else {
-            console.warn('⚠️ Błąd odpowiedzi Twitch API');
-            updateStreamStatus('twitch', false);
+        } catch (e) {
+            console.log('⚠️ Pierwsze API Twitch nie działa, próbuję innego...');
         }
+        
+        // Próba 2: Alternatywne API
+        try {
+            const response = await fetch(`https://api.crunchprank.net/twitch/uptime/angelkacs`);
+            if (response.ok) {
+                const text = await response.text();
+                const isLive = text && text !== 'offline';
+                updateStreamStatus('twitch', isLive, text);
+                return;
+            }
+        } catch (e) {
+            console.log('⚠️ Drugie API Twitch nie działa...');
+        }
+        
+        // Jeśli oba API zawiodą, oznacz jako offline
+        updateStreamStatus('twitch', false, 'Brak danych');
+        
     } catch (error) {
         console.error('❌ Błąd sprawdzania Twitch:', error);
-        updateStreamStatus('twitch', false);
+        updateStreamStatus('twitch', false, 'Błąd');
     }
 }
 
@@ -411,9 +441,7 @@ async function checkKickStatus() {
         console.log('🥊 Sprawdzam Kick...');
         
         const response = await fetch(CONFIG.streams.kick.apiUrl, {
-            headers: {
-                'Accept': 'application/json'
-            }
+            headers: { 'Accept': 'application/json' }
         });
         
         if (response.ok) {
@@ -422,31 +450,30 @@ async function checkKickStatus() {
             // Kick API zwraca is_live w livestream
             const isLive = data.livestream && data.livestream.is_live === true;
             
-            updateStreamStatus('kick', isLive);
-            console.log(`🥊 Kick: ${isLive ? 'LIVE' : 'OFFLINE'}`);
+            updateStreamStatus('kick', isLive, isLive ? 'Na żywo' : 'Offline');
         } else {
             console.warn('⚠️ Błąd odpowiedzi Kick API');
-            updateStreamStatus('kick', false);
+            updateStreamStatus('kick', false, 'Błąd');
         }
     } catch (error) {
         console.error('❌ Błąd sprawdzania Kick:', error);
-        updateStreamStatus('kick', false);
+        updateStreamStatus('kick', false, 'Błąd');
     }
 }
 
-function updateStreamStatus(platform, isLive) {
+function updateStreamStatus(platform, isLive, message = '') {
     const dotElement = document.getElementById(`${platform}Dot`);
     const textElement = document.getElementById(`${platform}Status`);
     
     if (dotElement && textElement) {
         if (isLive) {
             dotElement.classList.add('live');
-            textElement.textContent = 'LIVE';
-            textElement.style.color = '#00ff00';
+            textElement.textContent = message || 'LIVE';
+            textElement.style.color = '#10b981';
         } else {
             dotElement.classList.remove('live');
-            textElement.textContent = 'OFFLINE';
-            textElement.style.color = '#ff4444';
+            textElement.textContent = message || 'OFFLINE';
+            textElement.style.color = '#666666';
         }
     }
     
@@ -509,22 +536,28 @@ function openPartnerModal(partner) {
     console.log(`📋 Otwieram modal: ${partner.name}`);
     
     const modal = document.getElementById('partnerModal');
+    const modalIcon = document.getElementById('modalIcon');
     const modalTitle = document.getElementById('modalTitle');
     const modalCode = document.getElementById('modalCode');
     const modalDescription = document.getElementById('modalDescription');
     const modalContests = document.getElementById('modalContests');
     const modalLink = document.getElementById('modalLink');
     const copyBtn = document.getElementById('copyBtn');
+    const contestsSection = document.getElementById('contestsSection');
     
     // Wypełnij dane
+    modalIcon.textContent = partner.icon;
+    modalIcon.style.color = partner.color;
+    modalIcon.style.background = `${partner.color}20`;
     modalTitle.textContent = partner.name;
     modalCode.textContent = partner.code;
     modalDescription.textContent = partner.description;
     modalLink.href = partner.link;
-    modalLink.textContent = `Odwiedź ${partner.name}`;
+    modalLink.textContent = `Przejdź do ${partner.name}`;
     
     // Konkursy
     if (partner.contests && partner.contests.length > 0) {
+        contestsSection.style.display = 'block';
         modalContests.innerHTML = '';
         
         partner.contests.forEach(contest => {
@@ -534,12 +567,11 @@ function openPartnerModal(partner) {
             modalContests.appendChild(contestItem);
         });
     } else {
-        modalContests.innerHTML = '<p>Brak aktualnych konkursów</p>';
+        contestsSection.style.display = 'none';
     }
     
     // Reset przycisku kopiowania
     copyBtn.classList.remove('copied');
-    copyBtn.textContent = 'Kopiuj';
     
     // Otwórz modal
     modal.classList.add('active');
@@ -555,18 +587,16 @@ async function copyPartnerCode() {
         
         // Wizualne potwierdzenie
         copyBtn.classList.add('copied');
-        copyBtn.textContent = 'Skopiowano!';
         
         setTimeout(() => {
             copyBtn.classList.remove('copied');
-            copyBtn.textContent = 'Kopiuj';
         }, 2000);
         
         console.log('📋 Skopiowano kod:', code);
     } catch (error) {
         console.error('❌ Błąd kopiowania:', error);
         
-        // Fallback dla starych przeglądarek
+        // Fallback
         const textArea = document.createElement('textarea');
         textArea.value = code;
         document.body.appendChild(textArea);
@@ -575,11 +605,8 @@ async function copyPartnerCode() {
         document.body.removeChild(textArea);
         
         copyBtn.classList.add('copied');
-        copyBtn.textContent = 'Skopiowano!';
-        
         setTimeout(() => {
             copyBtn.classList.remove('copied');
-            copyBtn.textContent = 'Kopiuj';
         }, 2000);
     }
 }
@@ -588,24 +615,25 @@ async function copyPartnerCode() {
 function initEventListeners() {
     console.log('🎯 Inicjalizacja event listenerów...');
     
-    // Blokada DevTools (podstawowa)
+    // Basic protection
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+    
     document.addEventListener('keydown', (e) => {
         // F12
         if (e.key === 'F12') {
             e.preventDefault();
-            console.log('🚫 Próba otwarcia DevTools zablokowana');
         }
         
         // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
         if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
             e.preventDefault();
-            console.log('🚫 Próba otwarcia DevTools zablokowana');
         }
         
-        // Ctrl+U (view source)
+        // Ctrl+U
         if (e.ctrlKey && e.key.toUpperCase() === 'U') {
             e.preventDefault();
-            console.log('🚫 Próba wyświetlenia źródła strony zablokowana');
         }
     });
     
@@ -613,19 +641,16 @@ function initEventListeners() {
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('error', function() {
             console.warn(`⚠️ Błąd ładowania obrazka: ${this.src}`);
-            this.style.opacity = '0.5';
         });
     });
 }
 
 // ===== AUTO REFRESH =====
-function startAutoRefresh() {
-    // Automatyczne odświeżanie filmu co 5 minut
-    setInterval(async () => {
-        console.log('🔄 Automatyczne odświeżanie filmu...');
-        await loadLatestVideo();
-    }, CONFIG.refreshIntervals.video);
-}
+// Automatyczne odświeżanie filmu co 5 minut
+setInterval(async () => {
+    console.log('🔄 Automatyczne odświeżanie filmu...');
+    await loadLatestVideo();
+}, 300000);
 
 // ===== OBSŁUGA BŁĘDÓW =====
 window.addEventListener('error', function(e) {
@@ -636,26 +661,5 @@ window.addEventListener('unhandledrejection', function(e) {
     console.error('🚨 Nieobsłużony Promise:', e.reason);
 });
 
-// ===== POMOCNICZE FUNKCJE =====
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Inicjalizacja po załadowaniu strony
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
-
-function init() {
-    console.log('✨ Strona ANGELKACS załadowana!');
-}
+// ===== START =====
+console.log('✨ Strona ANGELKACS załadowana!');

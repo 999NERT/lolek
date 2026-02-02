@@ -8,11 +8,11 @@
     "details": "Specjalne konkurs tylko i wlacznie dla{color:#52FF6D,fontFamily:'Space Grotesk',bold:true} Moderatorow",
     "rewards": [
       {
-        "type": "Wygrany", 
+        "type": "1 Osoba", 
         "value": "{color:#52FF6D,bold:true}250 PLN SKIN + 10$ KOD{color:#ffffff,bold:false}"
       },
       {
-        "type": "Przegryw", 
+        "type": "2 Osoba", 
         "value": "{color:#52FF6D,bold:true}150 PLN SKIN + 10$ KOD{color:#ffffff,bold:false}"
       }
     ],
@@ -31,11 +31,11 @@
     "details": "Specjalne konkurs nagrod tylko i wlacznie dla{color:#DC52FF,bold:true} VIP ",
     "rewards": [
       {
-        "type": "Wygrany", 
+        "type": "1 Osoba", 
         "value": "{color:#DC52FF,bold:true}200 PLN SKIN"
       },
       {
-        "type": "Przegryw", 
+        "type": "2 Osoba", 
         "value": "{color:#DC52FF,bold:true}20$ KOD"
       }
     ],

@@ -1,0 +1,94 @@
+[
+  {
+    "id": "modzi",
+    "type": "modzi",
+    "title": "{color:#52FF6D,fontFamily:'Space Grotesk',bold:true}MODERATORZY{color:#ffffff,fontFamily:'Inter',bold:false}",
+    "description": "Specjalne nagrody dla Moderatorow",
+    "date": "01.02.2026 - 27.02.2026",
+    "details": "Specjalne losowanie tylko i wlacznie dla{color:#52FF6D,fontFamily:'Space Grotesk',bold:true} Moderatorow",
+    "rewards": [
+      {
+        "type": "Wygrany", 
+        "value": "{color:#52FF6D,bold:true}250 PLN SKIN + 10$ KOD{color:#ffffff,bold:false}"
+      },
+      {
+        "type": "Przegryw", 
+        "value": "{color:#52FF6D,bold:true}150 PLN SKIN + 10$ KOD{color:#ffffff,bold:false}"
+      }
+    ],
+    "important": [
+      "Kazdy Moderatorow musi byc aktywny, podczas losowania",
+      "Losowanie odbedzie sie, pod koncu{color:#E175FF, bold:true} LIVE, na koncu danego miesiaca",
+      "{color:#FF5E3B, bold:true} CO MIESIAC, BEDZIE TO ORGANIZOWANE"
+    ]
+  },
+  {
+    "id": "vip",
+    "type": "vip",
+    "title": "{color:#DC52FF,fontFamily:'Space Grotesk',bold:true}VIP",
+    "description": "Specjalne losowanie dla {color:#DC52FF,bold:true}VIP",
+    "date": "01.02.2026 - 27.02.2026",
+    "details": "Specjalne losowanie nagrod tylko i wlacznie dla{color:#DC52FF,bold:true} VIP ",
+    "rewards": [
+      {
+        "type": "Wygrany", 
+        "value": "{color:#DC52FF,bold:true}200 PLN SKIN"
+      },
+      {
+        "type": "Przegryw", 
+        "value": "{color:#DC52FF,bold:true}20$ KOD"
+      }
+    ],
+    "important": [
+      "Tylko dla osob z ranga {color:#DC52FF,bold:true}VIP",
+      "Trzeba byc aktywny na czacie, podczas losowanie",
+      "Losowanie odbedzie sie, pod koncu {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, na koncu danego miesiaca",
+      "{color:#FF5E3B, bold:true} CO MIESIAC, BEDZIE TO ORGANIZOWANE"
+
+    ]
+  },
+  {
+    "id": "klipy",
+    "type": "klipy",
+    "title": "{color:#06b6d4,fontFamily:'Space Grotesk',bold:true}NAJLEPSZY KLIP{color:#ffffff,fontFamily:'Inter',bold:false}",
+    "description": "{color:#06b6d4,fontFamily:'Space Grotesk',bold:true} KLIP {color:#cbcbdb,bold:false}- Najwieksza iloscia wyswietlen",
+    "date": "01.02.2026 - 27.02.2026",
+    "details": "Nagroda dla osoby ktora zrobi Klipa z najwieksza {color:#06b6d4,fontFamily:'Space Grotesk',bold:true} liczba wyswietlen pod koniec miesiaca",
+    "rewards": [
+      {
+        "type": "Nagroda dla TOP1", 
+        "value": "{color:#06b6d4,bold:true}100 PLN SKIN + 10$ KOD{color:#ffffff,bold:false}"
+      },
+       {
+        "type": "Przegryw", 
+        "value": "Reszta nic"
+      }
+    ],
+    "important": [
+      "Klipy musza byc stworzone w aktualnym miesiacu",
+      "Liczy sie liczba wyswietlen",
+      "Klip musi byc zwiazany z streamem Angelkacs",
+      "{color:#FF5E3B, bold:true} CO MIESIAC, BEDZIE TO ORGANIZOWANE"
+    ]
+  },
+  {
+    "id": "PKT",
+    "type": "pkt",
+    "title": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}NAJWIECEJ MONET",
+    "description": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true} MONETY {color:#cbcbdb,bold:false}- Najwieksza ilosc zdobytych monet", 
+    "date": "01.02.2026 - 28.02.2026",
+    "details": "Nagroda dla osoby ktora zdobedzie jak najwiecej {color:#FFFF00,fontFamily:'Space Grotesk',bold:true}monet (PKT. streamelements) pod koniec miesiaca.",
+    "rewards": [
+      {
+        "type": "nagroda", 
+        "value": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}150 PLN"
+      }
+    ],
+    "important": [
+      "Klipy musza byc stworzone w aktualnym miesiacu",
+      "Liczy sie liczba wyswietlen",
+      "Klip musi byc zwiazany z streamem Angelkacs",
+      "{color:#FF5E3B, bold:true} CO MIESIAC, BEDZIE TO ORGANIZOWANE"
+    ]
+  }
+]

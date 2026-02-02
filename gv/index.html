@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANGELKACS Giveaway</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="angelka.png">
+</head>
+<body>
+    <!-- EKRAN LADOWANIA -->
+    <div id="loadingScreen">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <span class="logo-text">ANGELKACS</span>
+                <span class="logo-subtitle">GIVEAWAY</span>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="background-overlay"></div>
+
+    <div class="main-container">
+        <!-- NAGLÓWEK -->
+        <header class="site-header">
+            <div class="header-content">
+                <h3 class="main-title"> WSZYSTKO JEST LOSOWANE NA LIVE</h3>
+                <div class="current-month">
+                    <i class="fas fa-calendar"></i>
+                    <span id="currentMonth">Luty 2026</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- NAGRODY MIESIECZNE -->
+        <section class="section monthly-rewards">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt section-icon"></i>
+                    Nagrody co miesiac
+                </h2>
+                <p class="section-subtitle">Kalendarz losowan na biezacy miesiac</p>
+            </div>
+            
+            <div class="rewards-container" id="monthlyRewardsContainer">
+                <!-- Ladowane dynamicznie z monthly_rewards.json -->
+            </div>
+        </section>
+
+        <!-- NOWOSCI OD LUTEGO -->
+        <section class="section news-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-bullhorn section-icon"></i>
+                    Nowosci od lutego
+                </h2>
+                <p class="section-subtitle">Nowe konkursy, miesieczne</p>
+            </div>
+            
+            <div class="giveaways-grid" id="newsContainer">
+                <!-- Ladowane dynamicznie z news_february.json -->
+            </div>
+        </section>
+
+        <!-- AKTUALNE KONKURSY -->
+        <section class="section active-giveaways">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy section-icon"></i>
+                    Aktualne konkursy
+                </h2>
+                <p class="section-subtitle">Wez udzial w biezacych giveawayach</p>
+                <div class="giveaway-count">
+                    <span id="activeGiveawaysCount">0</span> aktywnych konkursow
+                </div>
+            </div>
+            
+            <div class="giveaways-grid" id="giveawaysContainer">
+                <!-- Ladowane dynamicznie z active_giveaways.json -->
+            </div>
+        </section>
+
+        <!-- INFORMACJA DISCORD -->
+        <div class="discord-notice">
+            <div class="notice-content">
+                <i class="fab fa-discord notice-icon"></i>
+                <div class="notice-text">
+                    <h3>Wszystko na Discordzie</h3>
+                    <p>Screenshoty, wyniki losowan, regulaminy i pomoc dostepne sa na naszym serwerze Discord</p>
+                </div>
+                <a href="https://discord.gg/rKGKQbuBxm" class="notice-btn" target="_blank">
+                    Dolacz teraz
+                </a>
+            </div>
+        </div>
+
+        <!-- STOPKA -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="footer-logo-text">ANGELKACS</span>
+                    <span class="footer-subtitle">Giveaway</span>
+                </div>
+                <p class="footer-copyright">
+                    © <span id="currentYear">2026</span> ANGELKACS Wszelkie prawa zastrzezone - All rights reserved.
+                </p>
+                <p class="footer-contact">
+                    Wspolpraca: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL NAGRODY MIESIECZNE -->
+    <div class="modal-overlay" id="monthlyModalOverlay">
+        <div class="modal" id="monthlyModal">
+            <button class="modal-close" id="monthlyModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <h3 class="modal-title" id="monthlyModalTitle"></h3>
+                <div class="modal-subtitle" id="monthlyModalSubtitle"></div>
+                <div class="modal-date" id="monthlyModalDate"></div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4 class="modal-section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Opis nagrody
+                    </h4>
+                    <p class="modal-description" id="monthlyModalDescription"></p>
+                </div>
+                
+                <div class="modal-section">
+                    <h4 class="modal-section-title">
+                        <i class="fas fa-users"></i>
+                        Dla kogo?
+                    </h4>
+                    <p class="modal-description" id="monthlyModalParticipants"></p>
+                </div>
+                
+                <div class="modal-section" id="monthlyModalImportantSection">
+                    <h4 class="modal-section-title">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Wazne informacje
+                    </h4>
+                    <ul class="modal-important" id="monthlyModalImportant"></ul>
+                </div>
+                
+                <div class="modal-section" id="monthlyModalTwitchSection">
+                    <h4 class="modal-section-title">
+                        <i class="fab fa-twitch"></i>
+                        Twitch
+                    </h4>
+                    <div class="modal-discord" id="monthlyModalTwitch">https://twitch.tv/angelkacs</div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn secondary close-monthly-modal">
+                    <i class="fas fa-times"></i> Zamknij
+                </button>
+                <a href="https://twitch.tv/angelkacs" class="modal-btn primary" target="_blank">
+                    <i class="fab fa-twitch"></i> Ogladaj na Twitch
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NOWOSCI -->
+    <div class="modal-overlay" id="newsModalOverlay">
+        <div class="modal" id="newsModal">
+            <button class="modal-close" id="newsModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <h3 class="modal-title" id="newsModalTitle"></h3>
+                <div class="modal-subtitle" id="newsModalSubtitle"></div>
+                <div class="modal-date" id="newsModalDate"></div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4 class="modal-section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Opis
+                    </h4>
+                    <p class="modal-description" id="newsModalDescription"></p>
+                </div>
+                
+                <div class="modal-section" id="newsModalRewardsSection">
+                    <h4 class="modal-section-title">
+                        <i class="fas fa-gift"></i>
+                        Nagrody
+                    </h4>
+                    <ul class="modal-important" id="newsModalRewards"></ul>
+                </div>
+                
+                <div class="modal-section" id="newsModalImportantSection">
+                    <h4 class="modal-section-title">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Wazne informacje
+                    </h4>
+                    <ul class="modal-important" id="newsModalImportant"></ul>
+                </div>
+                
+                <div class="modal-section" id="newsModalTwitchSection">
+                    <h4 class="modal-section-title">
+                        <i class="fab fa-twitch"></i>
+                        Twitch
+                    </h4>
+                    <div class="modal-discord" id="newsModalTwitch">https://twitch.tv/angelkacs</div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn secondary close-news-modal">
+                    <i class="fas fa-times"></i> Zamknij
+                </button>
+                <a href="https://twitch.tv/angelkacs" class="modal-btn primary" target="_blank">
+                    <i class="fab fa-twitch"></i> Ogladaj na Twitch
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

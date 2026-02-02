@@ -1,0 +1,969 @@
+/* === RESET & BASE === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    color: #f0f0f0;
+    background: #0a0a0f;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* === EKRAN LADOWANIA === */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s;
+}
+
+#loadingScreen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-container {
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.loading-logo {
+    margin-bottom: 2rem;
+}
+
+.logo-text {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff4081;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.logo-subtitle {
+    display: block;
+    font-size: 1rem;
+    color: #8a8a9e;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.loading-progress {
+    width: 100%;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 2px;
+    background: #2a2a3a;
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #ff4081;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* === TLO === */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 15% 20%, rgba(255, 64, 129, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(0, 150, 255, 0.03) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* === MAIN CONTAINER === */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* === HEADER === */
+.site-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #252538;
+}
+
+.header-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.main-title {
+    font-size: 2.8rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.current-month {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #252538;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #ff4081;
+    font-weight: 500;
+}
+
+.current-month i {
+    font-size: 0.9rem;
+}
+
+/* === SECTIONS === */
+.section {
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-icon {
+    color: #ff4081;
+    font-size: 1.25rem;
+}
+
+.section-subtitle {
+    color: #8a8a9e;
+    font-size: 1rem;
+}
+
+.giveaway-count {
+    display: inline-block;
+    background: #252538;
+    color: #ff4081;
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+/* === MONTHLY REWARDS === */
+.rewards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.reward-card {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.reward-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.reward-date {
+    color: #ffffff;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-width: 70px;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.reward-date.all {
+    background: #06b6d4;
+}
+
+.reward-date.subs {
+    background: #f59e0b;
+}
+
+.reward-date.vip {
+    background: #8b5cf6;
+}
+
+.reward-type {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.reward-type.all {
+    color: #8a8a9e;
+}
+
+.reward-type.subs {
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+.reward-type.vip {
+    color: #8b5cf6;
+}
+
+.reward-title {
+    font-size: 1.25rem;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 60px;
+}
+
+.reward-description {
+    color: #d0d0e0;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.reward-title .formatted-text,
+.reward-description .formatted-text,
+.giveaway-title .formatted-text,
+.giveaway-description .formatted-text,
+.modal-title .formatted-text,
+.modal-description .formatted-text,
+.modal-steps .formatted-text,
+.modal-important .formatted-text {
+    display: inline;
+}
+
+.reward-title .colored,
+.reward-description .colored,
+.giveaway-title .colored,
+.giveaway-description .colored,
+.modal-title .colored,
+.modal-description .colored,
+.modal-steps .colored,
+.modal-important .colored {
+    display: inline;
+}
+
+.reward-title .bold,
+.reward-description .bold,
+.giveaway-title .bold,
+.giveaway-description .bold,
+.modal-title .bold,
+.modal-description .bold,
+.modal-steps .bold,
+.modal-important .bold {
+    font-weight: 700;
+}
+
+.reward-title .italic,
+.reward-description .italic,
+.giveaway-title .italic,
+.giveaway-description .italic,
+.modal-title .italic,
+.modal-description .italic,
+.modal-steps .italic,
+.modal-important .italic {
+    font-style: italic;
+}
+
+.reward-title .underline,
+.reward-description .underline,
+.giveaway-title .underline,
+.giveaway-description .underline,
+.modal-title .underline,
+.modal-description .underline,
+.modal-steps .underline,
+.modal-important .underline {
+    text-decoration: underline;
+}
+
+.reward-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #252538;
+    min-height: 44px;
+}
+
+.reward-participants {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #8a8a9e;
+    font-size: 0.85rem;
+}
+
+.reward-participants i {
+    color: #06b6d4;
+    font-size: 0.9rem;
+}
+
+.reward-participants.subs {
+    color: #fbbf24;
+}
+
+.reward-participants.subs i {
+    color: #f59e0b;
+}
+
+.reward-participants.vip {
+    color: #8b5cf6;
+}
+
+.reward-participants.vip i {
+    color: #8b5cf6;
+}
+
+.monthly-details-btn {
+    background: transparent;
+    color: #ff4081;
+    border: 1px solid #ff4081;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.monthly-details-btn:hover {
+    background: rgba(255, 64, 129, 0.1);
+}
+
+/* === GIVEAWAYS GRID === */
+.giveaways-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.giveaway-card {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 1.75rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.news-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.news-badge.modzi {
+    background: #3AB54F;
+    color: #ffffff;
+}
+.news-badge.pkt {
+    background: #000000;
+    color: #FFFF00; 
+}
+
+.news-badge.vip {
+    background: #8b5cf6;
+    color: #ffffff;
+}
+
+.news-badge.klipy {
+    background: #06b6d4;
+    color: #ffffff;
+}
+
+.news-badge.subs {
+    background: #f59e0b;
+    color: #000000;
+}
+
+.news-badge.all {
+    background: #06b6d4;
+    color: #ffffff;
+}
+
+.giveaway-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Space Grotesk', sans-serif;
+    z-index: 1;
+}
+
+.giveaway-badge.active {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.giveaway-badge.ended {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.giveaway-badge.soon {
+    background: #f59e0b;
+    color: #000000;
+}
+
+.giveaway-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    padding-right: 80px;
+    min-height: 60px;
+}
+
+.giveaway-description {
+    color: #b0b0c0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.rewards-list {
+    margin-top: 1rem;
+    padding-left: 1.5rem;
+}
+
+.rewards-list li {
+    margin-bottom: 0.5rem;
+    color: #d0d0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.rewards-list li strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Nowosci od lutego - przycisk jak wczesniej */
+.news-giveaway-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #252538;
+    min-height: 44px;
+}
+
+.news-giveaway-date {
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: #ff4081;
+}
+
+.news-giveaway-date i {
+    color: #ff4081;
+    font-size: 0.9rem;
+}
+
+.news-details-btn {
+    background: transparent;
+    color: #ff4081;
+    border: 1px solid #ff4081;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.news-details-btn:hover {
+    background: rgba(255, 64, 129, 0.1);
+}
+
+/* Aktualne konkursy - przycisk jak teraz */
+.giveaway-date-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: #ff4081;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.giveaway-date-container i {
+    color: #ff4081;
+    font-size: 0.9rem;
+}
+
+.giveaway-discord-btn {
+    background: #5865f2;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.giveaway-discord-btn:hover {
+    background: #4752c4;
+}
+
+/* === DISCORD NOTICE === */
+.discord-notice {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin: 2rem 0 3rem;
+}
+
+.notice-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.notice-icon {
+    color: #5865f2;
+    font-size: 2rem;
+}
+
+.notice-text {
+    flex: 1;
+}
+
+.notice-text h3 {
+    color: #ffffff;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.notice-text p {
+    color: #b0b0c0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.notice-btn {
+    background: #5865f2;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.notice-btn:hover {
+    background: #4752c4;
+}
+
+/* === FOOTER === */
+.site-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #252538;
+    text-align: center;
+}
+
+.footer-logo {
+    margin-bottom: 1rem;
+}
+
+.footer-logo-text {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff4081;
+    margin-bottom: 0.25rem;
+}
+
+.footer-subtitle {
+    display: block;
+    font-size: 0.8rem;
+    color: #8a8a9e;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.footer-copyright {
+    color: #8a8a9e;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact {
+    color: #8a8a9e;
+    font-size: 0.85rem;
+}
+
+.footer-contact a {
+    color: #ff4081;
+    transition: color 0.3s;
+}
+
+.footer-contact a:hover {
+    color: #06b6d4;
+}
+
+/* === MODAL === */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    position: relative;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    color: #8a8a9e;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: #252538;
+    color: #ffffff;
+}
+
+.modal-header {
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid #252538;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.modal-subtitle {
+    color: #b0b0c0;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-date {
+    color: #ff4081;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.modal-body {
+    padding: 1.5rem 2rem;
+}
+
+.modal-section {
+    margin-bottom: 1.5rem;
+}
+
+.modal-section:last-child {
+    margin-bottom: 0;
+}
+
+.modal-section-title {
+    font-size: 1.1rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.modal-section-title i {
+    color: #ff4081;
+    font-size: 1rem;
+}
+
+.modal-description {
+    color: #d0d0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.modal-steps, .modal-important {
+    padding-left: 1.5rem;
+    color: #d0d0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.modal-steps li, .modal-important li {
+    margin-bottom: 0.5rem;
+}
+
+.modal-steps li:last-child, .modal-important li:last-child {
+    margin-bottom: 0;
+}
+
+.modal-discord {
+    background: #252538;
+    border: 1px solid #3a3a4a;
+    border-radius: 8px;
+    padding: 1rem;
+    color: #d0d0e0;
+    font-size: 0.95rem;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #252538;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.modal-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.modal-btn.secondary {
+    background: #252538;
+    color: #ffffff;
+    border-color: #3a3a4a;
+}
+
+.modal-btn.secondary:hover {
+    background: #2a2a3a;
+}
+
+.modal-btn.primary {
+    background: #ff4081;
+    color: white;
+}
+
+.modal-btn.primary:hover {
+    background: #e91e63;
+}
+
+/* === RESPONSYWNOSC === */
+@media (max-width: 900px) {
+    .giveaways-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+    
+    .giveaway-title {
+        padding-right: 70px;
+        min-height: 55px;
+    }
+    
+    .reward-title {
+        min-height: 55px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .rewards-container,
+    .giveaways-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .notice-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+    }
+    
+    .modal-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .giveaway-title,
+    .reward-title {
+        padding-right: 0;
+        min-height: auto;
+    }
+    
+    .news-giveaway-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.75rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .logo-text {
+        font-size: 2rem;
+    }
+    
+    .reward-card,
+    .giveaway-card {
+        padding: 1.25rem;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1.25rem;
+    }
+    
+    .giveaway-badge,
+    .news-badge {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+}

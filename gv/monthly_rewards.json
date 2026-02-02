@@ -1,0 +1,72 @@
+[
+  {
+    "id": "nagroda1",
+    "title": "GIFTCARD {color:#06b6d4,bold:true,fontFamily:'Space Grotesk'}20${color:#ffffff,bold:false,fontFamily:'Inter'}",
+    "date": "10.02",
+    "description": "Kodzik na {color:#06b6d4,bold:true}CSGO-SKINS{color:#ffffff,bold:false}",
+    "participants": "all",
+    "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
+    "important": [
+      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
+      "Obecnosc podczas losowania, nie jest wymagana",
+      "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
+    ]
+  },
+  {
+    "id": "nagroda2",
+    "title": "{color:#f59e0b,bold:true,fontFamily:'Space Grotesk'}KOSA {color:#ffffff,bold:false,fontFamily:'Inter'} DO CS2",
+    "date": "15.02",
+    "description": "Losowanie kosy dla subskrybentow",
+    "participants": "subs",
+    "details": "Dla subow, bedzie losowanie kosy",
+    "important": [
+      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
+      "Obecnosc podczas losowania, nie jest wymagana",
+      "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
+    ]
+  },
+  {
+    "id": "nagroda3",
+    "title": "GIFTCARD {color:#06b6d4,bold:true,fontFamily:'Space Grotesk'}20${color:#ffffff,bold:false,fontFamily:'Inter'}",
+    "date": "20.02",
+    "description": "Kodzik na {color:#06b6d4,bold:true}CSGO-SKINS{color:#ffffff,bold:false}",
+    "participants": "all",
+    "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
+    "important": [
+      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
+      "Obecnosc podczas losowania, nie jest wymagana",
+      "Wystarczy przyjsc na mojego{color:#E175FF,bold:1} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
+    ]
+  },
+  {
+    "id": "nagroda4",
+    "title": "VOUCHER{color:#f59e0b,bold:true,fontFamily:'Space Grotesk'} 100PLN{color:#ffffff,bold:false,fontFamily:'Inter'}",
+    "date": "25.02",
+    "description": "Voucher na sklep{color:#ffffff,bold:true} WKDZIK.PL",
+    "participants": "subs",
+    "details": "Do wygranania {color:#ffffff,bold:true} VOUCHER{color:#cbcbdb,bold:false} na caly asortyment o wartosci {color:#f59e0b,bold:true,fontFamily:'Space Grotesk'} 100PLN",
+    "important": [
+      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
+      "Obecnosc podczas losowania, nie jest wymagana",
+      "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
+    ]
+  },
+  {
+    "id": "nagroda5",
+    "title": "GIFTCARD {color:#06b6d4,bold:true,fontFamily:'Space Grotesk'}20${color:#ffffff,bold:false,fontFamily:'Inter'}",
+    "date": "28.02",
+    "description": "Kodzik na {color:#06b6d4,bold:true}CSGO-SKINS{color:#ffffff,bold:false}",
+    "participants": "all",
+    "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
+    "important": [
+      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
+      "Obecnosc podczas losowania, nie jest wymagana",
+      "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
+    ]
+  }
+]

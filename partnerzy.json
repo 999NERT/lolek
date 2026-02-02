@@ -1,0 +1,201 @@
+{
+  "logitech": {
+    "name": "LOGITECH",
+    "description": "{color:#00FFFF,bold:false}-5%{color:#ffffff,bold:true} znizki z kodem  na caly asortyment logitech",
+    "kod": [
+      "Wejdz w koszyk",
+      "Wprowadz kod promocyjny ANGELKACS",
+      "Nacisnij PRZESLIJ"
+    ],
+    "code": "ANGELKACS",
+    "discord": "https://discord.gg/rKGKQbuBxm",
+    "link": "https://logitechg-emea.sjv.io/vPmBE3",
+    "color": "#00FFFF",
+    "icon": "fas fa-mouse",
+    "badgeType": "",
+    "badgeText": "",
+    "showGiveawayInfo": false,
+    "tileStyle": {
+      "fontFamily": "'Titillium Web', sans-serif",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "backgroundColor": "rgba(30, 30, 45, 0.95)",
+      "borderColor": "#333344",
+      "fontSize": "1rem"
+    },
+    "modalStyle": {
+      "titleFontFamily": "'Paytone One', sans-serif",
+      "titleFontWeight": "700",
+      "titleColor": "#00FFFF",
+      "descriptionFontFamily": "'Inter', sans-serif",
+      "descriptionFontWeight": "400",
+      "descriptionColor": "#ffffff"
+    }
+  },
+  "pirateswap": {
+    "name": "PIRATESWAP",
+    "description": "{color:#ff4300,bold:true}+35%{color:#ffffff,bold:false} Wiecej do doladowania",
+    "kod": [
+      "Zaloguj sie przez steam",
+      "Nacisnij + z portfelem",
+      "WPROWADZ KOD PROMOCYJNY ANGELKACS",
+      "NACISNIJ ZASTOSOWANIE"
+    ],
+    "code": "ANGELKACS",
+    "discord": "https://discord.gg/rKGKQbuBxm",
+    "link": "https://pirateswap.com/?ref=angelkacs",
+    "color": "#ff4300",
+    "icon": "fas fa-coins",
+    "badgeType": "",
+    "badgeText": "",
+    "showGiveawayInfo": true,
+    "tileStyle": {
+      "fontFamily": "'Titillium Web', sans-serif",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "backgroundColor": "rgba(30, 30, 45, 0.95)",
+      "borderColor": "#333344",
+      "fontSize": "1rem"
+    },
+    "modalStyle": {
+      "titleFontFamily": "'Paytone One', sans-serif",
+      "titleFontWeight": "700",
+      "titleColor": "#ff4300",
+      "descriptionFontFamily": "'Inter', sans-serif",
+      "descriptionFontWeight": "400",
+      "descriptionColor": "#ffffff"
+    }
+  },
+  "csgoskins": {
+    "name": "CSGOSKINS",
+    "description": "Darmowe {color:#14A3C7,bold:true}2.10 zl{color:#ffffff,bold:false} dla nowych graczy i bonus {color:#14A3C7,bold:true}10%{color:#ffffff,bold:false} przy kazdej wplacie",
+    "kod": [
+      "Wejdz w link powyzej",
+      "Nacisnij przycisk Odbierz",
+      "Druga opcja:",
+      "Wejdz na strone",
+      "Zielony plusik",
+      "Wprowadz kod promocyjny ANGELKACS",
+      "Nacisnij Aktywuj"
+    ],
+    "code": "ANGELKACS",
+    "discord": "https://discord.gg/rKGKQbuBxm",
+    "link": "https://csgo-skins.com/?ref=ANGELKACS",
+    "color": "#14A3C7",
+    "icon": "fas fa-gem",
+    "badgeType": "age",
+    "badgeText": "+18",
+    "showGiveawayInfo": true,
+    "tileStyle": {
+      "fontFamily": "'Titillium Web', sans-serif",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "backgroundColor": "rgba(30, 30, 45, 0.95)",
+      "borderColor": "#333344",
+      "fontSize": "1rem"
+    },
+    "modalStyle": {
+      "titleFontFamily": "'Paytone One', sans-serif",
+      "titleFontWeight": "700",
+      "titleColor": "#14A3C7",
+      "descriptionFontFamily": "'Inter', sans-serif",
+      "descriptionFontWeight": "400",
+      "descriptionColor": "#ffffff"
+    }
+  },
+  "skinplace": {
+    "name": "SKIN.PLACE",
+    "description": "{color:#FF6B00,bold:true}+2%{color:#ffffff,bold:false} do ceny przy sprzedazy skinow{color:#ffffff,bold:false} z kodem! Kupuj i sprzedawaj wygodnie!",
+    "kod": [
+      "Zaloguj sie przez steam",
+      "Kod sam sie odpali",
+      "Czas operacyjny 12h na sfinalizowanie transakcji"
+    ],
+    "code": "ANGELKACS",
+    "discord": "https://discord.gg/rKGKQbuBxm",
+    "link": "https://skin.place/?ref=ANGELKACS",
+    "color": "#FF6B00",
+    "icon": "fas fa-shopping-cart",
+    "badgeType": "",
+    "badgeText": "",
+    "showGiveawayInfo": false,
+    "tileStyle": {
+      "fontFamily": "'Titillium Web', sans-serif",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "backgroundColor": "rgba(30, 30, 45, 0.95)",
+      "borderColor": "#333344",
+      "fontSize": "1rem"
+    },
+    "modalStyle": {
+      "titleFontFamily": "'Paytone One', sans-serif",
+      "titleFontWeight": "700",
+      "titleColor": "#FF6B00",
+      "descriptionFontFamily": "'Inter', sans-serif",
+      "descriptionFontWeight": "400",
+      "descriptionColor": "#ffffff"
+    }
+  },
+  "wkdzik": {
+    "name": "WKDZIK",
+    "description": "{color:#de74ff,bold:true}-5% {color:#ffffff,bold:false} Sprawdz pelny asortyment marki DZIK w tym Dzik Energy, czyli najsilniejszy energetyk 200 mg kofeiny BEZ CUKRU, BEZ KALORII dostepny na {color:#de74ff,bold:true} WKDZIK.PL oraz w pobliskich sklepach",
+    "kod": [
+      "Wejdz w koszyk",
+      "Wpisz kod rabatowy ANGELKA",
+      "Aktywuj"
+    ],
+    "code": "ANGELKA",
+    "discord": "https://discord.gg/rKGKQbuBxm",
+    "link": "https://wkdzik.pl",
+    "color": "#de74ff",
+    "icon": "fas fa-wine-bottle",
+    "badgeType": "",
+    "badgeText": "",
+    "showGiveawayInfo": false,
+    "tileStyle": {
+      "fontFamily": "'Titillium Web', sans-serif",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "backgroundColor": "rgba(30, 30, 45, 0.95)",
+      "borderColor": "#333344",
+      "fontSize": "1rem"
+    },
+    "modalStyle": {
+      "titleFontFamily": "'Paytone One', sans-serif",
+      "titleFontWeight": "700",
+      "titleColor": "#de74ff",
+      "descriptionFontFamily": "'Inter', sans-serif",
+      "descriptionFontWeight": "400",
+      "descriptionColor": "#ffffff"
+    }
+  },
+  "rushkrk": {
+    "name": "RUSHKRK",
+    "description": "{color:#ff0000,bold:true} RUSH KRK ~ {color:#ffffff,bold:false} Wielki wyscig z Katowic do Krakowa podczas IEM 2026",
+    "kod": [],
+    "code": "",
+    "discord": "https://discord.gg/rKGKQbuBxm",
+    "link": "https://rushkrk.pl",
+    "color": "#ff0000",
+    "icon": "fas fa-calendar-alt",
+    "badgeType": "event",
+    "badgeText": "EVENT",
+    "showGiveawayInfo": false,
+    "tileStyle": {
+      "fontFamily": "'Titillium Web', sans-serif",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "backgroundColor": "rgba(30, 30, 45, 0.95)",
+      "borderColor": "#333344",
+      "fontSize": "1rem"
+    },
+    "modalStyle": {
+      "titleFontFamily": "'Paytone One', sans-serif",
+      "titleFontWeight": "700",
+      "titleColor": "#ff0000",
+      "descriptionFontFamily": "'Inter', sans-serif",
+      "descriptionFontWeight": "400",
+      "descriptionColor": "#ffffff"
+    }
+  }
+}

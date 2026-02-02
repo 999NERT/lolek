@@ -76,7 +76,7 @@
     "details": "Prezent dla osoby ktora zdobedzie jak najwiecej {color:#FFFF00,fontFamily:'Space Grotesk',bold:true}monet (PKT. streamelements) pod koniec miesiaca.",
     "rewards": [
       {
-        "type": "prezent", 
+        "type": "Prezent dla TOP1", 
         "value": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}150 PLN"
       }
     ],

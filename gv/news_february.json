@@ -18,7 +18,7 @@
     ],
     "important": [
       "Kazdy Moderatorow musi byc aktywny, podczas losowania",
-      "Losowanie odbedzie sie, pod koniec {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, na koncu danego miesiaca",
+      "Losowanie odbedzie sie, pod koniec {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, przed ostatni dzien danego miesiaca",
       "{color:#FF5E3B, bold:true} CO MIESIAC, BEDZIE TO ORGANIZOWANE"
     ]
   },
@@ -42,7 +42,7 @@
     "important": [
       "Tylko dla osob z ranga {color:#DC52FF,bold:true}VIP",
       "Trzeba byc aktywny na czacie, podczas losowanie",
-      "Losowanie odbedzie sie, pod koniec {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, na koncu danego miesiaca",
+      "Losowanie odbedzie sie, pod koniec {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, przed ostatni dzien danego miesiaca",
       "{color:#FF5E3B, bold:true} CO MIESIAC, BEDZIE TO ORGANIZOWANE"
 
     ]

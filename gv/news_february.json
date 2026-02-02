@@ -41,8 +41,8 @@
     ],
     "important": [
       "Tylko dla osob z ranga {color:#DC52FF,bold:true}VIP",
-      "Trzeba byc aktywny na czacie, podczas konkursu",
-      "Konkurs odbedzie sie, pod koniec {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, przed ostatni dzien danego miesiaca",
+      "Trzeba byc aktywny na czacie podczas konkursu",
+      "Konkurs odbedzie sie pod koniec {color:#E175FF, bold:true} LIVE{color:#cbcbdb,bold:false}, przed ostatni dniu danego miesiaca",
       "{color:#FF5E3B, bold:true} CO MIESIAC"
 
     ]
@@ -73,10 +73,10 @@
     "title": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}NAJWIECEJ MONET",
     "description": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true} MONETY {color:#cbcbdb,bold:false}- Najwieksza ilosc zdobytych monet", 
     "date": "01.02.2026 - 28.02.2026",
-    "details": "Nagroda dla osoby ktora zdobedzie jak najwiecej {color:#FFFF00,fontFamily:'Space Grotesk',bold:true}monet (PKT. streamelements) pod koniec miesiaca.",
+    "details": "Prezent dla osoby ktora zdobedzie jak najwiecej {color:#FFFF00,fontFamily:'Space Grotesk',bold:true}monet (PKT. streamelements) pod koniec miesiaca.",
     "rewards": [
       {
-        "type": "nagroda", 
+        "type": "prezent", 
         "value": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}150 PLN"
       }
     ],

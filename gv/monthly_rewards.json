@@ -7,9 +7,9 @@
     "participants": "all",
     "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
     "important": [
-      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Wszystko jest realizowane na koniec {color:#E175FF, bold:true}LIVE",
       "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
-      "Obecnosc podczas losowania, nie jest wymagana",
+      "Obecnosc podczas konkursu, nie jest wymagana",
       "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
     ]
   },
@@ -17,13 +17,13 @@
     "id": "nagroda2",
     "title": "{color:#f59e0b,bold:true,fontFamily:'Space Grotesk'}KOSA {color:#ffffff,bold:false,fontFamily:'Inter'} DO CS2",
     "date": "15.02",
-    "description": "Losowanie kosy dla subskrybentow",
+    "description": "Konkurs na kosy dla subskrybentow",
     "participants": "subs",
-    "details": "Dla subow, bedzie losowanie kosy",
+    "details": "",
     "important": [
-      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Wszystko jest realizowane na koniec {color:#E175FF, bold:true}LIVE",
       "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
-      "Obecnosc podczas losowania, nie jest wymagana",
+      "Obecnosc podczas konkursu, nie jest wymagana",
       "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
     ]
   },
@@ -35,10 +35,10 @@
     "participants": "all",
     "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
     "important": [
-      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Wszystko jest realizowane na koniec {color:#E175FF, bold:true}LIVE",
       "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
-      "Obecnosc podczas losowania, nie jest wymagana",
-      "Wystarczy przyjsc na mojego{color:#E175FF,bold:1} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
+      "Obecnosc podczas konkursu, nie jest wymagana",
+      "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
     ]
   },
   {
@@ -47,11 +47,11 @@
     "date": "25.02",
     "description": "Voucher na sklep{color:#ffffff,bold:true} WKDZIK.PL",
     "participants": "subs",
-    "details": "Do wygranania {color:#ffffff,bold:true} VOUCHER{color:#cbcbdb,bold:false} na caly asortyment o wartosci {color:#f59e0b,bold:true,fontFamily:'Space Grotesk'} 100PLN",
+    "details": "Konkurs na {color:#ffffff,bold:true} VOUCHER{color:#cbcbdb,bold:false} na caly asortyment o wartosci {color:#f59e0b,bold:true,fontFamily:'Space Grotesk'} 100PLN",
     "important": [
-      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Wszystko jest realizowane na koniec {color:#E175FF, bold:true}LIVE",
       "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
-      "Obecnosc podczas losowania, nie jest wymagana",
+      "Obecnosc podczas konkursu, nie jest wymagana",
       "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
     ]
   },
@@ -63,9 +63,9 @@
     "participants": "all",
     "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
     "important": [
-      "Wszystko jest losowane na koniec {color:#E175FF, bold:true}LIVE",
+      "Wszystko jest realizowane na koniec {color:#E175FF, bold:true}LIVE",
       "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do losowania",
-      "Obecnosc podczas losowania, nie jest wymagana",
+      "Obecnosc podczas konkursu, nie jest wymagana",
       "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
     ]
   }

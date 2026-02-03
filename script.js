@@ -18,7 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(loadYouTubeVideo, 500);
     
     // Sprawdzaj status streamow (NAPRAWIONE)
-    setTimeout(checkStreamStatus, 800);
+    setTimeout(checkAllStreams, 800);
+    
+    // Inicjalizuj przycisk odświeżania
+    initRefreshButton();
     
     console.log('Inicjalizacja zakonczona');
 });
@@ -302,115 +305,210 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// === STATUS STREAMÓW (NAPRAWIONE - NIE BUGUJE SIE) ===
-let twitchIsLive = false;
-let kickIsLive = false;
+// === STATUS STREAMÓW (NAPRAWIONE - DZIAŁAJĄCE API) ===
+let streamCheckInterval;
 
-async function checkStreamStatus() {
-    console.log('Sprawdzanie statusu streamow...');
+async function checkAllStreams() {
+    console.log('Sprawdzanie statusu wszystkich streamow...');
     
-    // Twitch - sprawdzanie przez niezawodne API
+    // Ustaw status "sprawdzam"
+    setStreamStatus('twitch', 'checking');
+    setStreamStatus('kick', 'checking');
+    
+    // Sprawdz Twitch
     try {
-        const twitchStatus = document.getElementById('twitchStatus');
-        const twitchCard = document.getElementById('twitchCard');
-        
-        if (twitchStatus && twitchCard) {
-            // Uzyj prostego API bez klucza
-            const response = await fetch('https://twitch-api-proxy.herokuapp.com/stream?channel=angelkacs', {
-                mode: 'cors',
-                timeout: 5000
-            }).catch(() => null);
-            
-            let isLive = false;
-            
-            if (response && response.ok) {
-                const data = await response.json();
-                isLive = data && data.is_live === true;
-            } else {
-                // Fallback - uzyj publicznego API
-                const fallbackResponse = await fetch(`https://decapi.me/twitch/uptime/angelkacs?format=json`, {
-                    mode: 'no-cors'
-                }).catch(() => null);
-                
-                if (fallbackResponse) {
-                    try {
-                        const text = await fallbackResponse.text();
-                        isLive = text && !text.includes('offline') && !text.includes('error') && text.trim().length > 5;
-                    } catch (e) {
-                        isLive = false;
-                    }
-                }
-            }
-            
-            // Aktualizuj stan tylko jesli sie zmienil
-            if (isLive !== twitchIsLive) {
-                twitchIsLive = isLive;
-                
-                const dot = twitchStatus.querySelector('.status-dot');
-                const textEl = twitchStatus.querySelector('.status-text');
-                
-                if (isLive) {
-                    if (dot) dot.classList.add('live');
-                    if (textEl) textEl.textContent = 'LIVE';
-                    twitchStatus.classList.add('live');
-                    twitchCard.classList.add('live');
-                    console.log('Twitch: LIVE (aktualizacja)');
-                } else {
-                    if (dot) dot.classList.remove('live');
-                    if (textEl) textEl.textContent = 'OFFLINE';
-                    twitchStatus.classList.remove('live');
-                    twitchCard.classList.remove('live');
-                    console.log('Twitch: OFFLINE (aktualizacja)');
-                }
-            }
-        }
+        const isLive = await checkTwitchStatus();
+        setStreamStatus('twitch', isLive ? 'live' : 'offline');
     } catch (error) {
-        console.error('Blad Twitch API:', error);
+        console.error('Błąd Twitch:', error);
+        setStreamStatus('twitch', 'error');
     }
     
-    // Kick - niezalezne sprawdzenie
+    // Sprawdz Kick
     try {
-        const kickStatus = document.getElementById('kickStatus');
-        const kickCard = document.getElementById('kickCard');
+        const isLive = await checkKickStatus();
+        setStreamStatus('kick', isLive ? 'live' : 'offline');
+    } catch (error) {
+        console.error('Błąd Kick:', error);
+        setStreamStatus('kick', 'error');
+    }
+    
+    // Ustaw Discord jako "dołącz"
+    setStreamStatus('discord', 'join');
+    
+    // Ustaw automatyczne odświeżanie co 2 minuty
+    if (streamCheckInterval) {
+        clearInterval(streamCheckInterval);
+    }
+    
+    streamCheckInterval = setInterval(() => {
+        checkAllStreams();
+    }, 120000); // 2 minuty
+}
+
+async function checkTwitchStatus() {
+    // API 1: Proste API zwracające true/false
+    try {
+        const response = await fetch('https://api.crunchprank.net/twitch/islive/angelkacs', {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
         
-        if (kickStatus && kickCard) {
-            // Uzyj oficjalnego API Kick
-            const response = await fetch('https://kick.com/api/v2/channels/angelkacs', {
-                mode: 'cors',
-                timeout: 5000
-            }).catch(() => null);
-            
-            let isLive = false;
-            
-            if (response && response.ok) {
-                const data = await response.json();
-                isLive = data && data.livestream && data.livestream.is_live === true;
-            }
-            
-            // Aktualizuj stan tylko jesli sie zmienil
-            if (isLive !== kickIsLive) {
-                kickIsLive = isLive;
-                
-                const dot = kickStatus.querySelector('.status-dot');
-                const textEl = kickStatus.querySelector('.status-text');
-                
-                if (isLive) {
-                    if (dot) dot.classList.add('live');
-                    if (textEl) textEl.textContent = 'LIVE';
-                    kickStatus.classList.add('live');
-                    kickCard.classList.add('live');
-                    console.log('Kick: LIVE (aktualizacja)');
-                } else {
-                    if (dot) dot.classList.remove('live');
-                    if (textEl) textEl.textContent = 'OFFLINE';
-                    kickStatus.classList.remove('live');
-                    kickCard.classList.remove('live');
-                    console.log('Kick: OFFLINE (aktualizacja)');
-                }
-            }
+        if (response.ok) {
+            const text = await response.text();
+            const isLive = text.trim().toLowerCase() === 'true';
+            console.log('Twitch API 1:', isLive);
+            return isLive;
         }
     } catch (error) {
-        console.error('Blad Kick API:', error);
+        console.log('Twitch API 1 nie działa');
+    }
+    
+    // API 2: Alternatywne API
+    try {
+        const response = await fetch('https://twitch.crunchprank.net/angelkacs/status', {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+        
+        if (response.ok) {
+            const text = await response.text();
+            const isLive = text.trim().toLowerCase() === 'online';
+            console.log('Twitch API 2:', isLive);
+            return isLive;
+        }
+    } catch (error) {
+        console.log('Twitch API 2 nie działa');
+    }
+    
+    // API 3: Publiczne API z uptime
+    try {
+        const response = await fetch('https://decapi.me/twitch/uptime/angelkacs', {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+        
+        if (response.ok) {
+            const text = await response.text();
+            const isLive = !text.includes('offline') && text.trim().length > 0;
+            console.log('Twitch API 3:', isLive, text);
+            return isLive;
+        }
+    } catch (error) {
+        console.log('Twitch API 3 nie działa');
+    }
+    
+    return false;
+}
+
+async function checkKickStatus() {
+    // API 1: Oficjalne API Kick przez proxy
+    try {
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const kickApiUrl = 'https://kick.com/api/v2/channels/angelkacs';
+        
+        const response = await fetch(proxyUrl + encodeURIComponent(kickApiUrl), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+            cache: 'no-cache'
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            const isLive = data.livestream && data.livestream.is_live === true;
+            console.log('Kick API 1:', isLive);
+            return isLive;
+        }
+    } catch (error) {
+        console.log('Kick API 1 nie działa');
+    }
+    
+    // API 2: Alternatywne API Kick
+    try {
+        const response = await fetch('https://kick.com/api/v1/channel/angelkacs', {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            const isLive = data.livestream && data.livestream.is_live === true;
+            console.log('Kick API 2:', isLive);
+            return isLive;
+        }
+    } catch (error) {
+        console.log('Kick API 2 nie działa');
+    }
+    
+    return false;
+}
+
+function setStreamStatus(platform, status) {
+    const card = document.getElementById(`${platform}Card`);
+    const statusElement = document.getElementById(`${platform}Status`);
+    const dot = statusElement ? statusElement.querySelector('.status-dot') : null;
+    const text = statusElement ? statusElement.querySelector('.status-text') : null;
+    
+    if (!card || !statusElement || !dot || !text) return;
+    
+    // Resetuj wszystkie klasy
+    card.classList.remove('live', 'offline', 'error');
+    statusElement.classList.remove('live');
+    dot.classList.remove('live', 'checking');
+    
+    switch (status) {
+        case 'live':
+            card.classList.add('live');
+            statusElement.classList.add('live');
+            dot.classList.add('live');
+            text.textContent = 'LIVE';
+            break;
+            
+        case 'offline':
+            card.classList.add('offline');
+            text.textContent = 'OFFLINE';
+            break;
+            
+        case 'checking':
+            text.textContent = 'SPRAWDZAM...';
+            dot.classList.add('checking');
+            break;
+            
+        case 'error':
+            text.textContent = 'BŁĄD';
+            card.classList.add('error');
+            break;
+            
+        case 'join':
+            text.textContent = 'DOŁĄCZ';
+            dot.classList.add('join-dot');
+            break;
+    }
+}
+
+// === PRZYCISK ODSWIEŻANIA ===
+function initRefreshButton() {
+    const refreshBtn = document.getElementById('refreshStreamsBtn');
+    
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+            // Dodaj animację obrotu
+            this.classList.add('spinning');
+            
+            // Sprawdź statusy
+            checkAllStreams();
+            
+            // Usuń animację po 2 sekundach
+            setTimeout(() => {
+                this.classList.remove('spinning');
+            }, 2000);
+        });
     }
 }
 
@@ -418,9 +516,6 @@ async function checkStreamStatus() {
 function setAutoRefresh() {
     // Odswiez film co 10 minut
     setInterval(loadYouTubeVideo, 10 * 60 * 1000);
-    
-    // Odswiez status streamow co 2 minuty
-    setInterval(checkStreamStatus, 2 * 60 * 1000);
     
     console.log('Ustawiono auto-odswiezanie');
 }

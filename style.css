@@ -641,6 +641,19 @@ body::before {
     background: rgba(46, 204, 113, 0.15);
     border-color: #2ecc71;
     box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+    animation: live-pulse 2s infinite;
+}
+
+@keyframes live-pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
+    }
 }
 
 .stream-card.live:hover {
@@ -681,42 +694,52 @@ body::before {
 
 .status-dot.live {
     background: #ffffff;
-    box-shadow: 0 0 8px #ffffff;
+    box-shadow: 0 0 10px #2ecc71;
     animation: pulse-live 1.5s infinite;
 }
 
 @keyframes pulse-live {
-    0%, 100% { box-shadow: 0 0 8px #ffffff; }
-    50% { box-shadow: 0 0 15px #ffffff; }
+    0%, 100% { 
+        box-shadow: 0 0 5px #2ecc71;
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 15px #2ecc71;
+        transform: scale(1.2);
+    }
 }
 
-.status-dot.join {
+.status-dot.join-dot {
     background: #5865F2;
     box-shadow: 0 0 8px #5865F2;
 }
 
-.join-status .status-text {
-    color: #5865F2;
-}
-
-.join-status {
-    background: rgba(88, 101, 242, 0.2);
-}
-
-.live-glow {
+.live-badge {
     position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: radial-gradient(circle at center, rgba(46, 204, 113, 0.3) 0%, transparent 70%);
-    z-index: -1;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
 }
 
-.stream-card.live .live-glow {
+.stream-card.live .live-badge {
     opacity: 1;
+    transform: translateY(0);
+    animation: badge-pulse 1.5s infinite;
+}
+
+@keyframes badge-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 /* === STOPKA === */
@@ -746,6 +769,46 @@ body::before {
 .site-footer a:hover {
     color: #ff0066;
     text-decoration: underline;
+}
+
+/* === PRZYCISK ODSWIEŻANIA STREAMÓW === */
+.refresh-streams-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #ff1493, #ff0066);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+}
+
+.refresh-streams-btn:hover {
+    background: linear-gradient(135deg, #ff0066, #ff1493);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 20, 147, 0.6);
+}
+
+.refresh-streams-btn:active {
+    transform: rotate(180deg) scale(0.95);
+}
+
+.refresh-streams-btn.spinning {
+    animation: spin-refresh 1s linear infinite;
+}
+
+@keyframes spin-refresh {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* === MINIMALISTYCZNE OKNO MODALNE PARTNEROW === */
@@ -1124,7 +1187,7 @@ body::before {
     position: relative;
 }
 
-/* === RESPONSYWNOSC === */
+/* === RESPONSYWNOŚĆ === */
 @media (max-width: 992px) {
     .actions-grid {
         gap: 20px;
@@ -1264,6 +1327,14 @@ body::before {
         align-items: flex-start;
         gap: 10px;
     }
+    
+    .refresh-streams-btn {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1339,6 +1410,14 @@ body::before {
     
     .giveaway-discord-btn {
         padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .refresh-streams-btn {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
         font-size: 0.9rem;
     }
 }

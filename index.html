@@ -25,7 +25,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
                 </div>
-                <span class="loading-text">Ladowanie strony...</span>
+                <span class="loading-text">Ładowanie strony...</span>
             </div>
         </div>
     </div>
@@ -65,9 +65,9 @@
                 <h2 class="section-title-left">NAJNOWSZY FILM</h2>
                 
                 <div class="giveaway-center">
-                    <a href="https://angelkacs.pl/gv" class="giveaway-btn" target="_blank">
+                    <a href="https://angelkacs.pl/giveaway" class="giveaway-btn" target="_blank">
                         <i class="fas fa-gift giveaway-icon"></i>
-                        <span class="giveaway-text">KONKURS</span>
+                        <span class="giveaway-text">GIVEAWAY</span>
                         <span class="giveaway-badge">NEW</span>
                     </a>
                 </div>
@@ -107,7 +107,7 @@
                     <div id="videoError" class="video-error">
                         <div class="error-content">
                             <i class="fas fa-exclamation-triangle error-icon"></i>
-                            <p>Nie mozna zaladowac filmu</p>
+                            <p>Nie można załadować filmu</p>
                             <button id="retryButton" class="retry-btn">
                                 <i class="fas fa-redo"></i> Spróbuj ponownie
                             </button>
@@ -124,21 +124,23 @@
                     <img src="images/1twitch.png" alt="Twitch" class="stream-img">
                     <div class="status-indicator" id="twitchStatus">
                         <span class="status-dot"></span>
-                        <span class="status-text">OFFLINE</span>
+                        <span class="status-text">SPRAWDZAM...</span>
                     </div>
+                    <div class="live-badge">LIVE</div>
                 </a>
                 <a href="https://kick.com/angelkacs" class="stream-card" target="_blank" id="kickCard">
                     <img src="images/1KOPNIAK.png" alt="Kick" class="stream-img">
                     <div class="status-indicator" id="kickStatus">
                         <span class="status-dot"></span>
-                        <span class="status-text">OFFLINE</span>
+                        <span class="status-text">SPRAWDZAM...</span>
                     </div>
+                    <div class="live-badge">LIVE</div>
                 </a>
-                <a href="https://discord.gg/rKGKQbuBxm" class="stream-card" target="_blank">
+                <a href="https://discord.gg/rKGKQbuBxm" class="stream-card" target="_blank" id="discordCard">
                     <img src="images/1discord.png" alt="Discord" class="stream-img">
-                    <div class="status-indicator join-status">
-                        <span class="status-dot join"></span>
-                        <span class="status-text">JOIN</span>
+                    <div class="status-indicator" id="discordStatus">
+                        <span class="status-dot join-dot"></span>
+                        <span class="status-text">DOŁĄCZ</span>
                     </div>
                 </a>
             </div>
@@ -147,8 +149,8 @@
         <!-- STOPKA -->
         <footer class="site-footer">
             <div class="footer-content">
-                <p>@ <span id="currentYear"></span> ANGELKACS  Wszelkie prawa zastrzezone</p>
-                <p>Wspolpraca: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
+                <p>@ <span id="currentYear"></span> ANGELKACS Wszelkie prawa zastrzeżone</p>
+                <p>Współpraca: <a href="mailto:angelka@stormmedia.gg">angelka@stormmedia.gg</a></p>
             </div>
         </footer>
     </div>
@@ -180,7 +182,7 @@
                 <div class="modal-code-section" id="modalCodeSection">
                     <div class="code-label">
                         <i class="fas fa-gift"></i>
-                        <span>Twoj kod</span>
+                        <span>Twój kod</span>
                     </div>
                     <div class="code-display">
                         <div class="code-value" id="modalCode"></div>
@@ -200,31 +202,36 @@
                         <i class="fas fa-gift"></i>
                         <div>
                             <strong>Giveaway trwa!</strong>
-                            <span>Po wiecej informacji dolacz na nasz Discord</span>
+                            <span>Po więcej informacji dołącz na nasz Discord</span>
                         </div>
                     </div>
                     <a href="https://discord.gg/rKGKQbuBxm" class="modal-btn giveaway-discord-btn" target="_blank">
                         <i class="fab fa-discord"></i>
-                        <span>Dolacz na Discord</span>
+                        <span>Dołącz na Discord</span>
                     </a>
                 </div>
                 
                 <div class="modal-actions">
                     <a href="#" class="modal-btn partner-btn" id="modalPartnerLink" target="_blank">
                         <i class="fas fa-external-link-alt"></i>
-                        <span>Przejdz do strony</span>
+                        <span>Przejdź do strony</span>
                     </a>
                 </div>
                 
                 <div class="modal-instructions" id="modalInstructions">
                     <div class="instructions-title">
-                        <span>Jak uzyc kodu?</span>
+                        <span>Jak użyć kodu?</span>
                     </div>
                     <div class="instructions-steps" id="modalInstructionsSteps"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Przycisk odświeżania statusów -->
+    <button class="refresh-streams-btn" id="refreshStreamsBtn" title="Odśwież statusy streamów">
+        <i class="fas fa-sync-alt"></i>
+    </button>
 
     <script src="script.js"></script>
     <script src="modal.js"></script>

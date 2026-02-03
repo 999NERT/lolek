@@ -77,10 +77,13 @@
     "rewards": [
       {
         "type": "Prezent dla TOP1", 
-        "value": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}150 PLN"
+        "value": "{color:#FFFF00,fontFamily:'Space Grotesk',bold:true}150 PLN SKIN"
       }
     ],
     "important": [
+      "Losowanie o punkty (raffle) co godzine",
+      "Można gamblować punktami -> !gamble",
+      "Nie można oddawać innym punktów",
       "{color:#FF5E3B, bold:true} CO MIESIAC"
     ]
   }

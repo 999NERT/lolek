@@ -168,34 +168,5 @@
       "descriptionFontWeight": "400",
       "descriptionColor": "#ffffff"
     }
-  },
-  "rushkrk": {
-    "name": "RUSHKRK",
-    "description": "{color:#ff0000,bold:true} RUSH KRK ~ {color:#ffffff,bold:false} Wielki wyscig z Katowic do Krakowa podczas IEM 2026",
-    "kod": [],
-    "code": "",
-    "discord": "https://discord.gg/rKGKQbuBxm",
-    "link": "https://rushkrk.pl",
-    "color": "#ff0000",
-    "icon": "fas fa-calendar-alt",
-    "badgeType": "event",
-    "badgeText": "EVENT",
-    "showGiveawayInfo": false,
-    "tileStyle": {
-      "fontFamily": "'Titillium Web', sans-serif",
-      "fontWeight": "700",
-      "color": "#ffffff",
-      "backgroundColor": "rgba(30, 30, 45, 0.95)",
-      "borderColor": "#333344",
-      "fontSize": "1rem"
-    },
-    "modalStyle": {
-      "titleFontFamily": "'Paytone One', sans-serif",
-      "titleFontWeight": "700",
-      "titleColor": "#ff0000",
-      "descriptionFontFamily": "'Inter', sans-serif",
-      "descriptionFontWeight": "400",
-      "descriptionColor": "#ffffff"
-    }
   }
 }

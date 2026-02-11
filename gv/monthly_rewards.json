@@ -1,19 +1,5 @@
 [
   {
-    "id": "nagroda1",
-    "title": "GIFTCARD {color:#06b6d4,bold:true,fontFamily:'Space Grotesk'}20${color:#ffffff,bold:false,fontFamily:'Inter'}",
-    "date": "10.02",
-    "description": "Kodzik na {color:#06b6d4,bold:true}CSGO-SKINS{color:#ffffff,bold:false}",
-    "participants": "all",
-    "details": "Do wygrania jest kodzik na {color:#06b6d4,bold:true}20$",
-    "important": [
-      "Wszystko jest realizowane na koniec {color:#E175FF, bold:true}LIVE",
-      "Przez calego {color:#E175FF, bold:true}LIVE {color:#cbcbdb,bold:false}bedzie mozna dolaczyc do konkursu",
-      "Obecnosc podczas konkursu, nie jest wymagana",
-      "Wystarczy przyjsc na mojego{color:#E175FF,bold:true} LIVE {color:#cbcbdb,bold:false}i wpisac na czacie {color:#FFFFFF,bold:true}!ticket 1"
-    ]
-  },
-  {
     "id": "nagroda2",
     "title": "{color:#f59e0b,bold:true,fontFamily:'Space Grotesk'}KOSA {color:#ffffff,bold:false,fontFamily:'Inter'} DO CS2",
     "date": "15.02",

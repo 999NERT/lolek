@@ -1,6 +1,6 @@
 {
   "cs2Settings": [
-    {"name": "RESOLUTION", "value": "1280×960"},
+    {"name": "RESOLUTION", "value": "1280x960"},
     {"name": "ASPECT RATIO", "value": "4:3"},
     {"name": "SCALING MODE", "value": "STRETCHED"},
     {"name": "DISPLAY MODE", "value": "FULLSCREEN"},
